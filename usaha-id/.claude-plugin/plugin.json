@@ -1,0 +1,9 @@
+{
+  "name": "usaha-id",
+  "version": "0.1.0",
+  "description": "Multi-entity Indonesian business operations for Cowork/Claude Code. Entity-aware router (PT ANI, PT MMI, IJBA, Glu, portfolio) plus payroll (BPJS + PPh 21 TER), month-end close (PSAK + Coretax), tax prep, mining royalty/PNBP + HPM, and a multi-entity Monday brief. Localized rebuild of Anthropic's Small Business plugin on Indonesian regulatory rails. You approve every step that touches money, a counterparty, or a government filing.",
+  "author": {
+    "name": "Aero Aswar"
+  },
+  "keywords": ["indonesia", "smb", "finance", "pajak", "bpjs", "pph21", "ppn", "psak", "coretax", "rkab", "pnbp", "royalti", "hpm", "nikel", "mining", "multi-entity", "usaha"]
+}

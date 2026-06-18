@@ -1,0 +1,71 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "disertasi-threshold",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/disertasi-threshold && exec python3 -m http.server 4187"],
+      "port": 4187
+    },
+    {
+      "name": "celeste-marais",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/celeste-marais && exec python3 -m http.server 4198"],
+      "port": 4198
+    },
+    {
+      "name": "aeroaswar",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/aeroaswar-site && exec python3 -m http.server 4194"],
+      "port": 4194
+    },
+    {
+      "name": "fable-five",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/fable-five && exec python3 -m http.server 4197"],
+      "port": 4197
+    },
+    {
+      "name": "bank-card-carousel",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd '/Users/aeroaswar/Library/Mobile Documents/com~apple~CloudDocs/AI/bank-card-carousel' && exec npm run dev -- --port 5180 --strictPort"],
+      "port": 5180
+    },
+    {
+      "name": "automation-hero",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/automation-hero-dist && exec python3 -m http.server 4192"],
+      "port": 4192
+    },
+    {
+      "name": "vectr",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/vectr-preview && exec python3 -m http.server 4188"],
+      "port": 4188
+    },
+    {
+      "name": "phantom-sphere",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/phantom-sphere-preview && exec python3 -m http.server 4174"],
+      "port": 4174
+    },
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/mara-voss-preview && exec python3 -m http.server 4181"],
+      "port": 4181
+    },
+    {
+      "name": "static",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd /tmp/apex-preview && exec python3 -m http.server 4173"],
+      "port": 4173
+    },
+    {
+      "name": "ptmmi-brand",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-lc", "cd '/Users/aeroaswar/Library/Mobile Documents/com~apple~CloudDocs/AI/Projects & Portfolio/ptmmi-brand' && exec npm run dev -- --port 3009"],
+      "port": 3009
+    }
+  ]
+}
