@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+<title>Composites — Architecture of New Possibilities</title>
+<meta name="description" content="An immersive, scroll-driven WebGL showcase of composite materials in architecture — strength and lightness reconciled. Built with Three.js, GSAP & Lenis." />
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Composites — Architecture of New Possibilities" />
+<meta property="og:description" content="Strength and lightness, reconciled. A scroll-driven WebGL study of composite materials in architecture." />
+<meta name="theme-color" content="#0a0a0b" />
+
+<!-- Inline SVG favicon (a woven-lattice mark) — keeps the page self-contained -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0b'/%3E%3Cg stroke='%23C9A15F' stroke-width='1.4' fill='none'%3E%3Cpath d='M4 10h24M4 16h24M4 22h24M10 4v24M16 4v24M22 4v24'/%3E%3C/g%3E%3C/svg%3E" />
+
+<!-- Fonts: Inter (architectural neo-grotesque). Preconnect + display:swap = no render-block. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+     Dark cinematic palette + warm "golden-hour" rim accent.
+     ============================================================ */
+  :root{
+    --bg:        #0a0a0b;   /* near-black, faintly warm */
+    --bg-2:      #121214;
+    --ink:       #ECEAE6;   /* warm white */
+    --muted:     #8d8a82;   /* greige text */
+    --faint:     #5a574f;
+    --line:      rgba(255,255,255,.10);
+    --line-soft: rgba(255,255,255,.06);
+    --accent:    #C9A15F;   /* warm bronze — "sun on material" */
+    --accent-dim:#9c7c44;
+    --glass:     rgba(22,22,25,.55);
+    --maxw:      1320px;
+    --ease:      cubic-bezier(.22,1,.36,1); /* expo-out */
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+  html{ -webkit-text-size-adjust:100%; }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    /* Lenis drives scrolling; keep native overscroll calm. */
+    overscroll-behavior:none;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  /* Lenis sets these while smoothing is active */
+  html.lenis, html.lenis body{ height:auto; }
+  .lenis.lenis-smooth{ scroll-behavior:auto !important; }
+  .lenis.lenis-stopped{ overflow:hidden; }
+
+  ::selection{ background:var(--accent); color:#0a0a0b; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  /* ============================================================
+     THE FIXED WEBGL STAGE
+     One canvas, pinned behind all DOM, isolated on its own GPU
+     layer. pointer-events:none so the page scrolls over it.
+     ============================================================ */
+  #stage{
+    position:fixed; inset:0;
+    width:100vw; height:100svh; /* svh = stable on mobile URL-bar resize */
+    z-index:0;
+    pointer-events:none;
+    /* Promote to its own compositor layer */
+    transform:translateZ(0);
+    contain:strict;
+    /* Fallback gradient shows if WebGL fails or before first frame */
+    background:
+      radial-gradient(120% 80% at 50% 18%, #18181c 0%, #0a0a0b 60%, #060607 100%);
+  }
+  #stage canvas{ display:block; width:100% !important; height:100% !important; }
+
+  /* When WebGL is unavailable we add .no-webgl and dress the stage up */
+  body.no-webgl #stage::after{
+    content:""; position:absolute; inset:0;
+    background:
+      radial-gradient(60% 50% at 70% 30%, rgba(201,161,95,.20), transparent 70%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,.04) 0 2px, transparent 2px 26px);
+  }
+
+  /* ============================================================
+     DOM CONTENT — sits above the canvas
+     ============================================================ */
+  .content{ position:relative; z-index:2; }
+
+  /* Most copy must not eat scroll/clicks meant for the canvas… */
+  section{ pointer-events:none; }
+  /* …but interactive things must. */
+  a, button, .interactive{ pointer-events:auto; }
+
+  .wrap{ width:min(92vw, var(--maxw)); margin-inline:auto; }
+
+  /* ---- Top navigation ---- */
+  header.nav{
+    position:fixed; top:0; left:0; right:0; z-index:6;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px clamp(18px,4vw,46px);
+    pointer-events:none;
+    mix-blend-mode:difference; /* stays legible over light or dark frames */
+  }
+  header.nav .brand{
+    pointer-events:auto;
+    font-weight:600; letter-spacing:.22em; font-size:13px; text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+  }
+  header.nav .brand .dot{ width:8px; height:8px; background:var(--accent); border-radius:1px;
+    box-shadow:0 0 14px var(--accent); }
+  header.nav nav{ display:flex; gap:30px; pointer-events:auto; }
+  header.nav nav a{
+    font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink);
+    opacity:.78; transition:opacity .3s var(--ease);
+  }
+  header.nav nav a:hover{ opacity:1; }
+  @media (max-width:760px){ header.nav nav{ display:none; } }
+
+  /* ---- Generic section scaffolding ---- */
+  .panel{
+    min-height:108svh;
+    display:flex; align-items:center;
+    padding:14svh clamp(18px,4vw,46px);
+  }
+  .panel.center{ justify-content:center; text-align:center; }
+  .panel.right{ justify-content:flex-end; text-align:right; }
+
+  .eyebrow{
+    font-size:12px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--accent); font-weight:500; margin-bottom:22px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow::before{ content:""; width:34px; height:1px; background:var(--accent); opacity:.8; }
+  .panel.right .eyebrow{ flex-direction:row-reverse; }
+  .panel.center .eyebrow{ justify-content:center; }
+
+  h1,h2{ font-weight:300; letter-spacing:-.02em; line-height:1.02; }
+  h1{ font-size:clamp(42px, 8.2vw, 116px); }
+  h2{ font-size:clamp(32px, 5.4vw, 72px); }
+  h1 .em, h2 .em{ font-style:italic; font-weight:400; color:var(--accent); }
+  .lede{
+    margin-top:26px; max-width:46ch; color:var(--muted);
+    font-size:clamp(15px,1.5vw,19px); font-weight:300;
+  }
+  .panel.right .lede{ margin-left:auto; }
+  .panel.center .lede{ margin-inline:auto; }
+
+  /* Hero */
+  #hero{ min-height:100svh; align-items:flex-end; padding-bottom:11svh; }
+  /* Soft halo keeps the thin display type legible over the sunlit canopy */
+  #hero h1{ text-shadow:0 2px 40px rgba(0,0,0,.45); }
+  #hero .lede{ text-shadow:0 1px 24px rgba(0,0,0,.55); }
+  #hero .hero-foot{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:30px; flex-wrap:wrap; width:100%;
+  }
+  #hero h1{ max-width:14ch; }
+
+  /* Stat cards — frosted glass */
+  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:46px; max-width:880px; }
+  .panel.right .stats{ margin-left:auto; }
+  .stat{
+    pointer-events:auto;
+    background:var(--glass);
+    border:1px solid var(--line);
+    border-radius:14px; padding:22px 20px;
+    backdrop-filter:blur(10px) saturate(120%);
+    -webkit-backdrop-filter:blur(10px) saturate(120%);
+  }
+  .stat .num{ font-size:clamp(28px,3.4vw,42px); font-weight:300; letter-spacing:-.02em; }
+  .stat .num small{ color:var(--accent); font-size:.55em; vertical-align:.2em; margin-right:2px; }
+  .stat .cap{ margin-top:8px; font-size:12px; letter-spacing:.06em; color:var(--muted); text-transform:uppercase; }
+  @media (max-width:860px){ .stats{ grid-template-columns:repeat(2,1fr); } h1{ max-width:none; } }
+
+  .foot-note{ font-size:11px; color:var(--faint); letter-spacing:.04em; margin-top:18px; }
+
+  /* CTA */
+  .btn{
+    pointer-events:auto;
+    display:inline-flex; align-items:center; gap:12px;
+    padding:16px 30px; border-radius:100px;
+    background:var(--accent); color:#0a0a0b; font-weight:600;
+    letter-spacing:.04em; font-size:15px;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease), background .3s;
+    box-shadow:0 10px 40px -12px rgba(201,161,95,.6);
+  }
+  .btn:hover{ transform:translateY(-3px); box-shadow:0 18px 50px -12px rgba(201,161,95,.75); }
+  .btn .arr{ transition:transform .4s var(--ease); }
+  .btn:hover .arr{ transform:translate(4px,-0px); }
+  .btn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line); box-shadow:none; }
+  .btn.ghost:hover{ border-color:var(--accent); color:var(--accent); }
+
+  /* Credits / footer */
+  footer.credits{
+    position:relative; z-index:2; pointer-events:auto;
+    border-top:1px solid var(--line-soft);
+    padding:40px clamp(18px,4vw,46px) 60px;
+    display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+    color:var(--muted); font-size:13px; background:linear-gradient(to bottom, transparent, rgba(6,6,7,.9));
+  }
+  footer.credits a{ color:var(--ink); border-bottom:1px solid var(--line); }
+  footer.credits a:hover{ color:var(--accent); border-color:var(--accent); }
+
+  /* ---- Scroll progress rail (right edge) ---- */
+  .progress{
+    position:fixed; top:0; right:0; width:2px; height:100svh; z-index:6;
+    background:var(--line-soft); pointer-events:none;
+  }
+  .progress .bar{
+    position:absolute; top:0; left:0; right:0; height:100%;
+    background:linear-gradient(var(--accent), var(--accent-dim));
+    transform:scaleY(0); transform-origin:top; will-change:transform;
+  }
+
+  /* ---- Scroll cue (hero) ---- */
+  .cue{
+    position:fixed; bottom:26px; left:50%; translate:-50% 0; z-index:6;
+    font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    pointer-events:none; transition:opacity .6s var(--ease);
+  }
+  .cue .line{ width:1px; height:42px; background:linear-gradient(var(--accent), transparent);
+    animation:cueDrop 2.2s var(--ease) infinite; transform-origin:top; }
+  @keyframes cueDrop{ 0%{ transform:scaleY(0); opacity:0 } 30%{ opacity:1 } 100%{ transform:scaleY(1); opacity:0 } }
+
+  /* ============================================================
+     REVEAL CHOREOGRAPHY (no-FOUC)
+     Elements start hidden; GSAP reveals them. If JS/motion is
+     off, the reduced-motion block below forces them visible.
+     ============================================================ */
+  [data-reveal]{ opacity:0; transform:translateY(26px); will-change:transform,opacity; }
+  [data-reveal-line]{ display:block; overflow:hidden; }
+  [data-reveal-line] > span{ display:block; transform:translateY(110%); }
+
+  /* ============================================================
+     PRELOADER
+     ============================================================ */
+  #loader{
+    position:fixed; inset:0; z-index:50; background:var(--bg);
+    display:flex; align-items:flex-end; justify-content:space-between;
+    padding:clamp(24px,5vw,60px);
+    transition:opacity .8s var(--ease), visibility .8s;
+  }
+  #loader.done{ opacity:0; visibility:hidden; }
+  #loader .lbl{ font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
+  #loader .pct{ font-size:clamp(58px,16vw,200px); font-weight:300; line-height:.8; letter-spacing:-.03em; }
+  #loader .pct small{ font-size:.3em; color:var(--accent); vertical-align:.9em; }
+  #loader .track{ position:absolute; left:0; bottom:0; height:2px; width:100%; background:var(--line-soft); }
+  #loader .track i{ display:block; height:100%; width:0%; background:var(--accent); }
+
+  /* ============================================================
+     DEBUG OVERLAY (?debug=1)
+     ============================================================ */
+  #hud{
+    position:fixed; top:64px; left:14px; z-index:40; display:none;
+    font:11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    color:#bfeacb; background:rgba(0,0,0,.6); border:1px solid rgba(255,255,255,.12);
+    border-radius:8px; padding:10px 12px; white-space:pre; pointer-events:none;
+    backdrop-filter:blur(4px);
+  }
+  body.debug #hud{ display:block; }
+
+  /* ============================================================
+     ACCESSIBILITY — full static, readable fallback
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal]{ opacity:1 !important; transform:none !important; }
+    [data-reveal-line] > span{ transform:none !important; }
+    .cue, .cue .line{ animation:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+
+<body>
+  <!-- ============ FIXED WEBGL STAGE ============ -->
+  <div id="stage" aria-hidden="true"></div>
+
+  <!-- ============ PRELOADER ============ -->
+  <div id="loader" aria-hidden="true">
+    <div class="lbl">Composites<br>Architecture of new possibilities</div>
+    <div class="pct"><span id="pctNum">0</span><small>%</small></div>
+    <div class="track"><i id="loadBar"></i></div>
+  </div>
+
+  <!-- ============ DEBUG HUD ============ -->
+  <pre id="hud"></pre>
+
+  <!-- ============ SCROLL PROGRESS RAIL ============ -->
+  <div class="progress" aria-hidden="true"><div class="bar" id="progBar"></div></div>
+
+  <!-- ============ SCROLL CUE ============ -->
+  <div class="cue" id="cue"><span>Scroll</span><span class="line"></span></div>
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav">
+    <a class="brand" href="#hero"><span class="dot"></span>Composites</a>
+    <nav>
+      <a href="#strength">Material</a>
+      <a href="#facade">Façade</a>
+      <a href="#form">Form</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ============ CONTENT ============ -->
+  <main class="content">
+
+    <!-- 0 · HERO -->
+    <section id="hero" class="panel">
+      <div class="wrap">
+        <div class="eyebrow" data-reveal>Composite materials in architecture</div>
+        <h1>
+          <span data-reveal-line><span>Architecture of</span></span>
+          <span data-reveal-line><span><span class="em">new possibilities</span></span></span>
+        </h1>
+        <div class="hero-foot">
+          <p class="lede" data-reveal>Strength and lightness, reconciled. A new structural language
+            for forms that were, until now, impossible to build.</p>
+          <p class="lede" data-reveal style="max-width:24ch; color:var(--faint)">An interactive study in
+            Three.js, GSAP &amp; Lenis — scroll to explore.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1 · STRENGTH / LIGHTNESS -->
+    <section id="strength" class="panel">
+      <div class="wrap">
+        <div class="eyebrow" data-reveal>01 — Strength &amp; lightness</div>
+        <h2 data-reveal>Stronger. <span class="em">Lighter.</span><br>Both at once.</h2>
+        <p class="lede" data-reveal>Fibre-reinforced composites deliver structural strength at a fraction
+          of the mass of steel or concrete — so spans grow, foundations shrink, and the whole logic of a
+          building can be rethought from the load path up.</p>
+        <div class="stats">
+          <div class="stat" data-reveal><div class="num"><small>−</small>70%</div><div class="cap">Mass vs. steel</div></div>
+          <div class="stat" data-reveal><div class="num">5<small>×</small></div><div class="cap">Strength-to-weight</div></div>
+          <div class="stat" data-reveal><div class="num">0</div><div class="cap">Corrosion</div></div>
+          <div class="stat" data-reveal><div class="num">100<small>yr</small></div><div class="cap">Design life</div></div>
+        </div>
+        <p class="foot-note" data-reveal>Representative properties; values vary by composite system and application.</p>
+      </div>
+    </section>
+
+    <!-- 2 · FAÇADE / MATERIAL -->
+    <section id="facade" class="panel right">
+      <div class="wrap">
+        <div class="eyebrow" data-reveal>02 — The façade, reimagined</div>
+        <h2 data-reveal>A skin that <span class="em">performs</span></h2>
+        <p class="lede" data-reveal>The façade is where composites speak loudest. Woven reinforcement and
+          moulded panels turn the building envelope into a single continuous gesture — self-shading,
+          weather-sealed, and finished in the same pass it is formed.</p>
+      </div>
+    </section>
+
+    <!-- 3 · FORM FREEDOM -->
+    <section id="form" class="panel">
+      <div class="wrap">
+        <div class="eyebrow" data-reveal>03 — Form without compromise</div>
+        <h2 data-reveal>Double-curved,<br><span class="em">single-piece.</span></h2>
+        <p class="lede" data-reveal>Moulding frees geometry from the straight line. Compound curvature
+          that would demand thousands of bespoke steel nodes is cast as one continuous shell —
+          complex on the outside, constructible on the inside.</p>
+      </div>
+    </section>
+
+    <!-- 4 · ENDURANCE / SUSTAINABILITY -->
+    <section id="endure" class="panel center">
+      <div class="wrap">
+        <div class="eyebrow" data-reveal>04 — Built to endure</div>
+        <h2 data-reveal>Quiet for <span class="em">decades.</span></h2>
+        <p class="lede" data-reveal>Corrosion-free and dimensionally stable, composite assemblies shrug off
+          salt air, freeze–thaw and fatigue. Less maintenance, longer service life, lighter lifetime
+          footprint — performance measured not in years, but in generations.</p>
+      </div>
+    </section>
+
+    <!-- 5 · CTA / CONTACT -->
+    <section id="contact" class="panel center">
+      <div class="wrap">
+        <div class="eyebrow" data-reveal>05 — Begin</div>
+        <h2 data-reveal>Build what couldn't<br>be built.</h2>
+        <p class="lede" data-reveal>Bring composites into your next project — from concept geometry to
+          moulded reality.</p>
+        <p data-reveal style="margin-top:36px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap">
+          <a class="btn" href="#hero">Explore the material <span class="arr">→</span></a>
+          <a class="btn ghost" href="#hero">Back to top</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ CREDITS ============ -->
+  <footer class="credits content">
+    <div>Independent WebGL homage — inspired by <a href="https://www.composites.archi" target="_blank" rel="noopener noreferrer">composites.archi</a> (JEC Group).</div>
+    <div>Three.js · GSAP&nbsp;ScrollTrigger · Lenis — procedural geometry, zero external assets.</div>
+  </footer>
+
+  <!-- ============================================================
+       IMPORT MAP — pin every dependency to a CDN ESM build.
+       three's addons MUST match the core version exactly.
+       ============================================================ -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
+      "gsap": "https://cdn.jsdelivr.net/npm/gsap@3/index.js",
+      "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3/ScrollTrigger.js",
+      "lenis": "https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.mjs"
+    }
+  }
+  </script>
+
+  <script type="module">
+  /* ================================================================
+     COMPOSITES — Architecture of New Possibilities
+     A scroll-driven WebGL experience. Single source of truth for
+     motion is a GSAP master timeline scrubbed by Lenis-smoothed
+     scroll; Three.js renders in one shared gsap.ticker loop.
+
+     Module map:
+       0. Imports + config + quality detection
+       1. Smooth scroll (Lenis) ↔ ScrollTrigger ↔ ticker
+       2. Renderer / scene / camera / environment
+       3. Lighting
+       4. Hero geometry + materials (procedural composite canopy)
+       5. Async GLTF + DRACO loader utility (drop-in model slot)
+       6. Post-processing (optional bloom)
+       7. Master scroll timeline (camera waypoints + uniforms)
+       8. DOM reveal choreography
+       9. Single render loop + resize
+      10. Reduced-motion / WebGL fallback / capture / debug
+     ================================================================ */
+
+  import * as THREE from 'three';
+  import { RoomEnvironment }   from 'three/addons/environments/RoomEnvironment.js';
+  import { GLTFLoader }        from 'three/addons/loaders/GLTFLoader.js';
+  import { DRACOLoader }       from 'three/addons/loaders/DRACOLoader.js';
+  import { KTX2Loader }        from 'three/addons/loaders/KTX2Loader.js';
+  import { EffectComposer }    from 'three/addons/postprocessing/EffectComposer.js';
+  import { RenderPass }        from 'three/addons/postprocessing/RenderPass.js';
+  import { UnrealBloomPass }   from 'three/addons/postprocessing/UnrealBloomPass.js';
+  import { OutputPass }        from 'three/addons/postprocessing/OutputPass.js';
+  import { gsap }              from 'gsap';
+  import { ScrollTrigger }     from 'gsap/ScrollTrigger';
+  import Lenis                 from 'lenis';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ---------------------------------------------------------------
+     0 · CONFIG + QUALITY DETECTION
+     A single QUALITY object lets every subsystem degrade together.
+     --------------------------------------------------------------- */
+  const params   = new URLSearchParams(location.search);
+  const DEBUG    = params.has('debug');
+  const CAP      = params.get('cap');                 // ?cap=0.4  |  ?cap=facade
+  const REDUCED  = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const IS_TOUCH = matchMedia('(max-width: 820px)').matches ||
+                   matchMedia('(hover: none)').matches;
+
+  // Optional real model: ?model=/pavilion.glb (else procedural form is used)
+  const HERO_MODEL_URL = params.get('model') || null;
+
+  const QUALITY = {
+    dpr:     Math.min(window.devicePixelRatio || 1, 2), // never exceed 2 (DPR safety)
+    shadows: !IS_TOUCH && !REDUCED,
+    post:    !IS_TOUCH && !REDUCED,                      // bloom only where it's affordable
+    fins:    IS_TOUCH ? 22 : 42,                         // louver grid resolution (n×n)
+    surfaceSeg: IS_TOUCH ? 80 : 130,                     // canopy mesh subdivisions
+    dust:    !REDUCED,
+  };
+
+  if (DEBUG) document.body.classList.add('debug');
+
+  // Brand colors mirrored into 3D space
+  const COL = {
+    bg:     new THREE.Color('#0a0a0b'),
+    surface:new THREE.Color('#b7b0a4'),  // greige composite
+    fins:   new THREE.Color('#6c675e'),
+    ground: new THREE.Color('#0c0c0d'),
+    accent: new THREE.Color('#C9A15F'),  // warm bronze rim
+    keyLt:  new THREE.Color('#fff1dc'),  // golden-hour key
+    rimLt:  new THREE.Color('#9fb4d8'),  // cool counter-rim
+  };
+
+  const stage = document.getElementById('stage');
+
+  /* ---------------------------------------------------------------
+     1 · SMOOTH SCROLL (Lenis) ↔ ScrollTrigger ↔ ticker
+     The canonical integration: Lenis emits scroll → ScrollTrigger
+     updates; gsap.ticker drives Lenis' RAF (so there is ONE loop).
+     --------------------------------------------------------------- */
+  let lenis = null;
+  if (!REDUCED) {
+    lenis = new Lenis({
+      duration: 1.1,
+      lerp: 0.10,
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+  }
+
+  /* ---------------------------------------------------------------
+     2 · RENDERER / SCENE / CAMERA / ENVIRONMENT
+     --------------------------------------------------------------- */
+  let renderer, scene, camera, composer = null;
+  let envRT = null;
+
+  // Camera is driven through these holders by the timeline; the live
+  // camera = camPos (+ tiny float) looking at camLook every frame.
+  const camPos  = new THREE.Vector3(0, 18, 64);
+  const camLook = new THREE.Vector3(0, 6, 0);
+
+  // Shared uniforms for the hero shader (mutated by GSAP, read on GPU)
+  const heroUniforms = {
+    uTime:    { value: 0 },
+    uReveal:  { value: 0 },                 // 0→1 assembly on load
+    uWeave:   { value: 0 },                 // 0→1 carbon-weave at façade
+    uMorph:   { value: 0 },                 // canopy flex at "form" section
+    uRim:     { value: 0.6 },               // fresnel rim strength
+    uAccent:  { value: COL.accent.clone() },
+  };
+
+  let hero = null;        // group holding canopy + fins
+  let dust = null;
+
+  function initThree() {
+    // --- Renderer: high-DPI-safe, sRGB output, filmic tonemap ---
+    renderer = new THREE.WebGLRenderer({
+      antialias: !IS_TOUCH,                 // MSAA off on mobile (fillrate)
+      powerPreference: 'high-performance',
+      alpha: false,
+      stencil: false,
+    });
+    renderer.setPixelRatio(QUALITY.dpr);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.outputColorSpace   = THREE.SRGBColorSpace;
+    renderer.toneMapping        = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure= 1.06;
+    if (QUALITY.shadows) {
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
+    }
+    stage.appendChild(renderer.domElement);
+
+    // --- Scene + depth fog (premium falloff into the dark) ---
+    scene = new THREE.Scene();
+    scene.background = COL.bg;
+    scene.fog = new THREE.FogExp2(COL.bg, 0.0072);
+
+    // --- Camera ---
+    camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 600);
+    camera.position.copy(camPos);
+    camera.lookAt(camLook);
+
+    // --- Image-based lighting from a procedural room (no asset) ---
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
+    scene.environment = envRT.texture;
+    pmrem.dispose();
+
+    buildLights();
+    buildGround();
+    buildHero();
+    if (QUALITY.dust) buildDust();
+    if (QUALITY.post) initPost();
+  }
+
+  /* ---------------------------------------------------------------
+     3 · LIGHTING — warm key + cool rim + soft fill
+     --------------------------------------------------------------- */
+  function buildLights() {
+    const hemi = new THREE.HemisphereLight(COL.rimLt, COL.ground, 0.35);
+    scene.add(hemi);
+
+    const key = new THREE.DirectionalLight(COL.keyLt, 3.1);
+    key.position.set(46, 54, 26);
+    if (QUALITY.shadows) {
+      key.castShadow = true;
+      key.shadow.mapSize.set(1024, 1024);
+      const d = 60;
+      key.shadow.camera.left = -d; key.shadow.camera.right = d;
+      key.shadow.camera.top  =  d; key.shadow.camera.bottom = -d;
+      key.shadow.camera.near = 10; key.shadow.camera.far = 220;
+      key.shadow.bias = -0.0004;
+      key.shadow.normalBias = 0.6;
+    }
+    scene.add(key);
+
+    const rim = new THREE.DirectionalLight(COL.rimLt, 1.15);
+    rim.position.set(-38, 20, -44);
+    scene.add(rim);
+  }
+
+  /* ---------------------------------------------------------------
+     4 · HERO — procedural composite canopy
+     A doubly-curved shell (PlaneGeometry displaced by layered
+     trig) + an instanced field of louver "fins" following it.
+     The shell material is a StandardMaterial patched via
+     onBeforeCompile to add: assembly reveal + morph (vertex) and
+     carbon-weave + fresnel rim (fragment), all driven by uniforms.
+     --------------------------------------------------------------- */
+
+  // Canopy height field — the single source of the surface shape.
+  function canopyHeight(x, z) {
+    const r = Math.sqrt(x * x + z * z);
+    let y = 0;
+    y += Math.cos(r * 0.10) * 3.0;                          // central swell
+    y += Math.sin(x * 0.17) * Math.cos(z * 0.15) * 2.3;     // cross undulation
+    y += Math.sin((x + z) * 0.08) * 1.6;                    // diagonal wave
+    y -= r * r * 0.0042;                                    // edges droop (canopy)
+    return y + 6.5;                                         // lift above ground
+  }
+
+  function buildHero() {
+    hero = new THREE.Group();
+    scene.add(hero);
+
+    if (HERO_MODEL_URL) {
+      // Real model requested — load it; procedural form is skipped.
+      loadHeroModel(HERO_MODEL_URL);
+    } else {
+      buildCanopy();
+      buildFins();
+    }
+  }
+
+  // --- 4a · the shell ---
+  function buildCanopy() {
+    const SIZE = 70;
+    const geo = new THREE.PlaneGeometry(SIZE, SIZE, QUALITY.surfaceSeg, QUALITY.surfaceSeg);
+    geo.rotateX(-Math.PI / 2);                              // lie flat in XZ
+    const pos = geo.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      pos.setY(i, canopyHeight(pos.getX(i), pos.getZ(i)));
+    }
+    geo.computeVertexNormals();
+
+    const mat = new THREE.MeshStandardMaterial({
+      color: COL.surface, roughness: 0.55, metalness: 0.18,
+      side: THREE.DoubleSide, envMapIntensity: 0.9,
+    });
+    patchHeroMaterial(mat);                                 // inject custom shader
+
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.castShadow = QUALITY.shadows;
+    mesh.receiveShadow = QUALITY.shadows;
+    mesh.name = 'canopy';
+    hero.add(mesh);
+  }
+
+  // --- 4b · instanced louver fins (one draw call) ---
+  function buildFins() {
+    const N = QUALITY.fins;
+    const SPAN = 58, step = SPAN / N;
+    const blade = new THREE.BoxGeometry(0.16, 1, 1.7);     // unit blade (scaled per instance)
+    const mat = new THREE.MeshStandardMaterial({
+      color: COL.fins, roughness: 0.4, metalness: 0.35, envMapIntensity: 1.0,
+    });
+    const inst = new THREE.InstancedMesh(blade, mat, N * N);
+    inst.castShadow = false; inst.receiveShadow = false;   // fins skip shadows (perf)
+    inst.name = 'fins';
+
+    const dummy = new THREE.Object3D();
+    let i = 0;
+    for (let a = 0; a < N; a++) {
+      for (let b = 0; b < N; b++) {
+        const x = -SPAN / 2 + a * step + step / 2;
+        const z = -SPAN / 2 + b * step + step / 2;
+        const r = Math.sqrt(x * x + z * z);
+        if (r > 33) continue;                              // clip to a disc
+        const surfaceY = canopyHeight(x, z);
+        const h = 1.1 + (Math.sin(x * 0.3) * Math.cos(z * 0.3) * 0.5 + 0.5) * 2.6;
+        dummy.position.set(x, surfaceY + h / 2 - 0.2, z);
+        // radial brise-soleil with slight organic jitter (less "comb"-like)
+        dummy.rotation.set(0, Math.atan2(x, z) + (Math.random() - 0.5) * 0.16, 0);
+        dummy.scale.set(0.7 + Math.random() * 0.7, h, 0.8 + Math.random() * 0.5);
+        dummy.updateMatrix();
+        inst.setMatrixAt(i++, dummy.matrix);
+      }
+    }
+    inst.count = i;                                        // only the placed ones
+    inst.instanceMatrix.needsUpdate = true;
+    hero.add(inst);
+  }
+
+  // --- 4c · shader injection: reveal/morph + weave + fresnel ---
+  function patchHeroMaterial(mat) {
+    mat.onBeforeCompile = (shader) => {
+      Object.assign(shader.uniforms, heroUniforms);
+
+      // ---- VERTEX ----
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', /* glsl */`
+          #include <common>
+          uniform float uTime; uniform float uReveal; uniform float uMorph;
+          varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vUvC;
+          float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453); }
+        `)
+        .replace('#include <beginnormal_vertex>', /* glsl */`
+          #include <beginnormal_vertex>
+          vWNrm = normalize(mat3(modelMatrix) * objectNormal);
+        `)
+        .replace('#include <begin_vertex>', /* glsl */`
+          #include <begin_vertex>
+          vUvC = uv;
+          // morph: animated flex layered on at the "form" section
+          float m = sin(position.x * 0.20 + uTime * 0.5) * cos(position.z * 0.18 - uTime * 0.4);
+          transformed.y += m * uMorph * 2.0;
+          // reveal: vertices start scattered downward, then settle (assembly)
+          float h = hash(floor(position.xz * 0.6));
+          transformed.y -= (1.0 - uReveal) * (8.0 + h * 14.0);
+          vWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
+        `);
+
+      // ---- FRAGMENT ----
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', /* glsl */`
+          #include <common>
+          uniform float uWeave; uniform float uRim; uniform vec3 uAccent;
+          varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vUvC;
+        `)
+        .replace('#include <color_fragment>', /* glsl */`
+          #include <color_fragment>
+          // procedural carbon-fibre twill: two crossing high-freq bands
+          float s1 = abs(sin((vUvC.x + vUvC.y) * 220.0));
+          float s2 = abs(sin((vUvC.x - vUvC.y) * 220.0));
+          float weave = smoothstep(0.85, 1.0, max(s1, s2));
+          vec3 dark = diffuseColor.rgb * 0.35;
+          diffuseColor.rgb = mix(diffuseColor.rgb, mix(diffuseColor.rgb, dark, weave), uWeave);
+        `)
+        .replace('#include <dithering_fragment>', /* glsl */`
+          #include <dithering_fragment>
+          // fresnel rim — warm accent grazing the silhouette
+          vec3 V = normalize(cameraPosition - vWPos);
+          float fres = pow(1.0 - max(dot(normalize(vWNrm), V), 0.0), 3.0);
+          gl_FragColor.rgb += fres * uAccent * uRim;
+        `);
+
+      mat.userData.shader = shader;
+    };
+  }
+
+  // --- 4d · atmospheric dust motes ---
+  function buildDust() {
+    const COUNT = 600;
+    const g = new THREE.BufferGeometry();
+    const p = new Float32Array(COUNT * 3);
+    for (let i = 0; i < COUNT; i++) {
+      p[i*3+0] = (Math.random() - 0.5) * 120;
+      p[i*3+1] = Math.random() * 50;
+      p[i*3+2] = (Math.random() - 0.5) * 120;
+    }
+    g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+    const m = new THREE.PointsMaterial({
+      color: COL.accent, size: 0.13, transparent: true, opacity: 0.5,
+      depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true,
+    });
+    dust = new THREE.Points(g, m);
+    scene.add(dust);
+  }
+
+  // --- 4e · ground (catches the key-light shadow) ---
+  function buildGround() {
+    const g = new THREE.CircleGeometry(150, 64).rotateX(-Math.PI / 2);
+    const m = new THREE.MeshStandardMaterial({ color: COL.ground, roughness: 0.95, metalness: 0.0 });
+    const mesh = new THREE.Mesh(g, m);
+    mesh.position.y = -0.4;
+    mesh.receiveShadow = QUALITY.shadows;
+    scene.add(mesh);
+  }
+
+  /* ---------------------------------------------------------------
+     5 · ASYNC GLTF + DRACO + KTX2 LOADER UTILITY
+     Off-main-thread decode via the Draco worker; reports progress
+     to the preloader. Drop in a real model with ?model=URL.
+     --------------------------------------------------------------- */
+  function makeGLTFLoader() {
+    const draco = new DRACOLoader()
+      .setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
+    const ktx2 = new KTX2Loader()
+      .setTranscoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/basis/')
+      .detectSupport(renderer);
+    return new GLTFLoader()
+      .setDRACOLoader(draco)
+      .setKTX2Loader(ktx2);
+  }
+
+  function loadHeroModel(url) {
+    const loader = makeGLTFLoader();
+    setProgress(0.05);
+    loader.load(
+      url,
+      (gltf) => {
+        const model = gltf.scene;
+        model.traverse((o) => {
+          if (o.isMesh) {
+            o.castShadow = QUALITY.shadows;
+            o.receiveShadow = QUALITY.shadows;
+            if (o.material) { o.material.envMapIntensity = 1.0; patchHeroMaterial(o.material); o.material.needsUpdate = true; }
+          }
+        });
+        // Normalize: center + scale to a consistent ~40-unit footprint
+        const box = new THREE.Box3().setFromObject(model);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+        const s = 40 / Math.max(size.x, size.y, size.z);
+        model.scale.setScalar(s);
+        model.position.sub(center.multiplyScalar(s)).add(new THREE.Vector3(0, 7, 0));
+        hero.add(model);
+        finishLoad();
+      },
+      (e) => { if (e.total) setProgress(0.05 + 0.9 * (e.loaded / e.total)); },
+      (err) => { console.error('[composites] model load failed, using procedural form', err);
+        buildCanopy(); buildFins(); finishLoad(); }
+    );
+  }
+
+  /* ---------------------------------------------------------------
+     6 · POST-PROCESSING — restrained bloom on the rim highlights
+     Wrapped in try/catch; any failure falls back to direct render.
+     --------------------------------------------------------------- */
+  function initPost() {
+    try {
+      composer = new EffectComposer(renderer);
+      composer.setPixelRatio(QUALITY.dpr);
+      composer.setSize(window.innerWidth, window.innerHeight);
+      composer.addPass(new RenderPass(scene, camera));
+      const bloom = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        0.42,   // strength (subtle)
+        0.85,   // radius
+        0.85    // threshold (only bright rim/accents bloom)
+      );
+      composer.addPass(bloom);
+      composer.addPass(new OutputPass());
+    } catch (err) {
+      console.warn('[composites] post-processing unavailable, direct render', err);
+      composer = null; QUALITY.post = false;
+    }
+  }
+
+  /* ---------------------------------------------------------------
+     7 · MASTER SCROLL TIMELINE — the core engine
+     Camera waypoints (x,y,z + lookAt) and shader uniforms are tweened
+     along ONE scrubbed timeline whose progress === scroll progress.
+     --------------------------------------------------------------- */
+  // Waypoints keyed by normalized scroll progress p∈[0,1].
+  const WAYPOINTS = [
+    { p: 0.00, cam: [  0, 18, 64], look: [ 0, 6,  0] }, // hero — far, high
+    { p: 0.20, cam: [-26,  9, 34], look: [-4, 5,  2] }, // strength — push in low
+    { p: 0.40, cam: [ 19,  6, 19], look: [ 3, 7, -2] }, // façade — close orbit
+    { p: 0.62, cam: [  2, 33, 30], look: [ 0, 8,  0] }, // form — rise above
+    { p: 0.82, cam: [ 36, 13, 44], look: [ 2, 6,  0] }, // endure — wide
+    { p: 1.00, cam: [  0, 15, 54], look: [ 0, 7,  0] }, // cta — resolve
+  ];
+
+  let scrollProgress = 0;
+
+  function buildTimeline() {
+    // Seat the camera holders at waypoint 0 before tweening.
+    camPos.set(...WAYPOINTS[0].cam);
+    camLook.set(...WAYPOINTS[0].look);
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },                 // linear; smoothing comes from scrub
+      scrollTrigger: {
+        start: 0, end: 'max', scrub: 1,           // 1s catch-up = buttery
+        onUpdate: (self) => { scrollProgress = self.progress; },
+      },
+    });
+
+    // Camera path: chain segment-to-segment using absolute time = p.
+    for (let i = 1; i < WAYPOINTS.length; i++) {
+      const a = WAYPOINTS[i - 1], b = WAYPOINTS[i], d = b.p - a.p;
+      tl.to(camPos,  { x: b.cam[0],  y: b.cam[1],  z: b.cam[2],  duration: d }, a.p);
+      tl.to(camLook, { x: b.look[0], y: b.look[1], z: b.look[2], duration: d }, a.p);
+    }
+
+    // Slow signature rotation of the whole structure across the scroll.
+    tl.to(hero.rotation, { y: Math.PI * 0.55, duration: 1 }, 0);
+
+    // Carbon-weave fades in approaching the façade, eases back after.
+    tl.to(heroUniforms.uWeave, { value: 1, duration: 0.16 }, 0.30);
+    tl.to(heroUniforms.uWeave, { value: 0.25, duration: 0.20 }, 0.52);
+
+    // Canopy flex pulses through the "form" section.
+    tl.to(heroUniforms.uMorph, { value: 1, duration: 0.14 }, 0.50)
+      .to(heroUniforms.uMorph, { value: 0, duration: 0.18 }, 0.68);
+
+    // Rim glow swells at the close.
+    tl.to(heroUniforms.uRim, { value: 1.15, duration: 0.3 }, 0.7);
+  }
+
+  /* ---------------------------------------------------------------
+     8 · DOM REVEAL CHOREOGRAPHY
+     Per-element entrances via ScrollTrigger.batch (cheap, batched).
+     Hero headline does a line-mask reveal once at start.
+     --------------------------------------------------------------- */
+  function buildDomReveals() {
+    if (REDUCED) return;                           // CSS already shows everything
+
+    // Generic [data-reveal] entrances
+    ScrollTrigger.batch('[data-reveal]', {
+      start: 'top 88%',
+      onEnter: (els) => gsap.to(els, {
+        opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', stagger: 0.08, overwrite: true,
+      }),
+      onLeaveBack: (els) => gsap.to(els, { opacity: 0, y: 26, duration: 0.4, overwrite: true }),
+    });
+
+    // Hero headline line-mask reveal (runs after the intro)
+    gsap.set('[data-reveal-line] > span', { y: '110%' });
+  }
+
+  function revealHero() {
+    gsap.to('[data-reveal-line] > span', {
+      y: '0%', duration: 1.2, ease: 'power4.out', stagger: 0.12, delay: 0.15,
+    });
+    // Fade the hero's own [data-reveal] bits in immediately (they're above the fold)
+    gsap.to('#hero [data-reveal]', {
+      opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.1, delay: 0.4,
+    });
+  }
+
+  /* ---------------------------------------------------------------
+     9 · RENDER LOOP (single) + RESIZE
+     One gsap.ticker callback advances Lenis, updates uniforms, floats
+     the camera, and renders. lagSmoothing(0) keeps scrub in lockstep.
+     --------------------------------------------------------------- */
+  const progBar = document.getElementById('progBar');
+  const cue     = document.getElementById('cue');
+  const hud     = document.getElementById('hud');
+  let   running = true;
+  let   lastLog = 0;
+
+  function frame(time) {                            // time is in seconds
+    if (lenis) lenis.raf(time * 1000);
+
+    const t = running ? time : heroUniforms.uTime.value; // pause() freezes anim time
+    heroUniforms.uTime.value = t;
+
+    // Live camera = tweened holder + a tiny handheld float (life).
+    const fx = REDUCED ? 0 : Math.sin(t * 0.35) * 0.6;
+    const fy = REDUCED ? 0 : Math.cos(t * 0.27) * 0.4;
+    camera.position.set(camPos.x + fx, camPos.y + fy, camPos.z);
+    camera.lookAt(camLook);
+
+    if (hero && running) hero.rotation.z = Math.sin(t * 0.18) * 0.012; // gentle sway
+    if (dust && running) { dust.rotation.y = t * 0.018; }
+
+    // Render (composer when bloom is on, else straight to screen).
+    if (QUALITY.post && composer) composer.render();
+    else renderer.render(scene, camera);
+
+    // Progress rail + scroll cue
+    progBar.style.transform = `scaleY(${scrollProgress})`;
+    cue.style.opacity = scrollProgress > 0.02 ? '0' : '1';
+
+    // Debug HUD + throttled camera log (for fine-tuning waypoints)
+    if (DEBUG && time - lastLog > 0.25) {
+      lastLog = time;
+      const c = camera.position, r = camera.rotation;
+      const txt =
+        `progress  ${scrollProgress.toFixed(3)}\n` +
+        `cam.pos   ${c.x.toFixed(1)}, ${c.y.toFixed(1)}, ${c.z.toFixed(1)}\n` +
+        `cam.rot   ${r.x.toFixed(2)}, ${r.y.toFixed(2)}, ${r.z.toFixed(2)}\n` +
+        `lookAt    ${camLook.x.toFixed(1)}, ${camLook.y.toFixed(1)}, ${camLook.z.toFixed(1)}\n` +
+        `fps       ${(1 / (time - (frame._p || time) || 1)).toFixed(0)}`;
+      hud.textContent = txt;
+      // eslint-disable-next-line no-console
+      console.log(`[composites] p=${scrollProgress.toFixed(3)} cam=(${c.x.toFixed(1)}, ${c.y.toFixed(1)}, ${c.z.toFixed(1)}) look=(${camLook.x.toFixed(1)}, ${camLook.y.toFixed(1)}, ${camLook.z.toFixed(1)})`);
+    }
+    frame._p = time;
+  }
+
+  function onResize() {
+    const w = window.innerWidth, h = window.innerHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setPixelRatio(QUALITY.dpr);
+    renderer.setSize(w, h);
+    if (composer) { composer.setPixelRatio(QUALITY.dpr); composer.setSize(w, h); }
+  }
+  // Debounced refresh so ScrollTrigger recomputes after layout settles.
+  let rT;
+  window.addEventListener('resize', () => {
+    onResize();
+    clearTimeout(rT); rT = setTimeout(() => ScrollTrigger.refresh(), 180);
+  });
+
+  /* ---------------------------------------------------------------
+     10 · PRELOADER, CAPTURE, DEBUG HANDLE, BOOT
+     --------------------------------------------------------------- */
+  const loaderEl = document.getElementById('loader');
+  const pctNum   = document.getElementById('pctNum');
+  const loadBar  = document.getElementById('loadBar');
+  let   shownPct = 0;
+
+  function setProgress(p) {                         // p ∈ [0,1]
+    shownPct = Math.max(shownPct, Math.round(p * 100));
+    pctNum.textContent = shownPct;
+    loadBar.style.width = shownPct + '%';
+  }
+
+  function finishLoad() {
+    setProgress(1);
+    gsap.delayedCall(0.25, () => {
+      loaderEl.classList.add('done');
+      revealHero();
+      ScrollTrigger.refresh();                      // heights are final now
+    });
+  }
+
+  // Anchor links route through Lenis for smooth in-page nav.
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const el = document.querySelector(a.getAttribute('href'));
+      if (!el) return;
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(el, { offset: 0, duration: 1.4 });
+      else el.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
+    });
+  });
+
+  // ?cap=<id|0..1> — jump to a deterministic frame for static capture.
+  function applyCapture() {
+    if (!CAP) return;
+    const limit = () => document.documentElement.scrollHeight - window.innerHeight;
+    let y;
+    if (/^[0-9.]+$/.test(CAP)) y = parseFloat(CAP) * limit();
+    else { const el = document.getElementById(CAP); y = el ? el.offsetTop : 0; }
+    if (lenis) { lenis.scrollTo(y, { immediate: true }); ScrollTrigger.update(); }
+    else window.scrollTo(0, y);
+  }
+
+  // Public debug handle (house convention: window.__<name>)
+  function exposeHandle() {
+    const limit = () => document.documentElement.scrollHeight - window.innerHeight;
+    window.__composites = {
+      snap(p) {                                     // jump to scroll progress 0..1
+        const y = p * limit();
+        if (lenis) { lenis.scrollTo(y, { immediate: true }); ScrollTrigger.update(); }
+        else window.scrollTo(0, y);
+      },
+      play()  { running = true;  if (lenis) lenis.start(); },
+      pause() { running = false; if (lenis) lenis.stop(); },
+      uniforms: heroUniforms,
+      get three() { return { scene, camera, renderer, hero }; },
+    };
+  }
+
+  /* ---- WebGL capability gate + boot ---- */
+  function boot() {
+    // Probe WebGL before committing to the full pipeline.
+    try {
+      const test = document.createElement('canvas');
+      if (!(test.getContext('webgl2') || test.getContext('webgl'))) throw new Error('no webgl');
+    } catch (err) {
+      document.body.classList.add('no-webgl');
+      loaderEl.classList.add('done');
+      // CSS fallback hero + readable content remain; reveal text statically.
+      gsap.set('[data-reveal],[data-reveal-line] > span', { clearProps: 'all', opacity: 1, y: 0 });
+      console.warn('[composites] WebGL unavailable — static fallback', err);
+      return;
+    }
+
+    initThree();
+    buildTimeline();
+    buildDomReveals();
+    exposeHandle();
+
+    // Drive everything from one ticker; disable lag smoothing for scrub fidelity.
+    gsap.ticker.add(frame);
+    gsap.ticker.lagSmoothing(0);
+
+    if (REDUCED) {
+      // Static, readable: seat camera at a flattering frame, fully assembled.
+      camPos.set(-18, 11, 40); camLook.set(0, 6, 0);
+      heroUniforms.uReveal.value = 1; heroUniforms.uWeave.value = 0.4;
+      setProgress(1); loaderEl.classList.add('done');
+      ScrollTrigger.refresh();
+    } else {
+      // Procedural form needs no network — simulate a brief load, then
+      // play the cinematic assembly (uReveal 0→1) and reveal the hero.
+      if (!HERO_MODEL_URL) {
+        const fake = { v: 0 };
+        gsap.to(fake, { v: 1, duration: 1.1, ease: 'power1.inOut',
+          onUpdate: () => setProgress(fake.v * 0.95), onComplete: finishLoad });
+      }
+      gsap.to(heroUniforms.uReveal, { value: 1, duration: 2.2, ease: 'power3.out', delay: 0.35 });
+    }
+
+    // Re-measure once fonts are in (prevents reveal trigger drift).
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => ScrollTrigger.refresh());
+    }
+
+    applyCapture();
+  }
+
+  boot();
+  </script>
+</body>
+</html>

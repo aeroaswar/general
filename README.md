@@ -1,5 +1,11 @@
 # general
 
+> **▶ Live WebGL experience:** [`index.html`](./index.html) — *Composites: Architecture of
+> New Possibilities*, a scroll-driven Three.js + GSAP + Lenis architectural showcase
+> (homage to [composites.archi](https://www.composites.archi)). Run `python3 -m http.server`
+> and open it; full docs + DevTools verification protocol in
+> [`COMPOSITES-EXPERIENCE.md`](./COMPOSITES-EXPERIENCE.md).
+
 Imported content from the Google Drive **`AI`** workspace, excluding all
 MMI/IJBA material.
 
