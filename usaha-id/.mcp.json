@@ -1,0 +1,37 @@
+{
+  "_comment": "Aero's actual stack. No QuickBooks/PayPal/HubSpot. Indonesian accounting SaaS (Accurate, Mekari Jurnal/Talenta) and Coretax have no public MCP yet — those flows use CSV/XLSX export + Zapier, or manual. Shopify powers Glu; Supabase powers mmi-ops.",
+  "mcpServers": {
+    "gmail": {
+      "type": "http",
+      "url": "https://gmailmcp.googleapis.com/mcp/v1"
+    },
+    "google calendar": {
+      "type": "http",
+      "url": "https://calendarmcp.googleapis.com/mcp/v1"
+    },
+    "google drive": {
+      "type": "http",
+      "url": "https://drivemcp.googleapis.com/mcp/v1"
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp"
+    },
+    "canva": {
+      "type": "http",
+      "url": "https://mcp.canva.com/mcp"
+    },
+    "notion": {
+      "type": "http",
+      "url": "https://mcp.notion.com/mcp"
+    },
+    "shopify": {
+      "type": "http",
+      "url": "https://mcp.shopify.com/mcp"
+    },
+    "zapier": {
+      "type": "http",
+      "url": "https://mcp.zapier.com/api/v1/connect"
+    }
+  }
+}
