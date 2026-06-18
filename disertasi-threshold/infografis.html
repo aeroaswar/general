@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Infografis — Rekonstruksi Ambang Batas Parlemen (Putusan MK 116/PUU-XXI/2023)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<style>
+  :root{
+    --canvas:#f4f2ec; --canvas-2:#efece4;
+    --ink:#16181d; --ink-soft:#2a2e36; --body:#5d6268; --body-2:#787d84;
+    --line:rgb(22 24 29 / 0.10); --line-2:rgb(22 24 29 / 0.07);
+    --garnet:#8a2526; --garnet-2:#a8413f; --garnet-wash:#f3e7e3;
+    --navy:#1f3550; --navy-2:#33597f; --navy-wash:#e7ecf1;
+    --amber:#a8813a; --amber-2:#caa24a;
+    --green:#2f6d52;
+    --paper-card:linear-gradient(165deg,#fbfaf6 0%,#f1eee6 100%);
+    --navy-card:linear-gradient(160deg,#22364f 0%,#16202f 100%);
+    --garnet-card:linear-gradient(160deg,#7e2324 0%,#581717 100%);
+    --shadow:0 24px 60px rgb(20 22 28 / 0.10);
+    --shadow-sm:0 10px 30px rgb(20 22 28 / 0.06);
+    --serif:"Spectral",Georgia,serif; --sans:"Geist","Inter",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--canvas);color:var(--ink);font-family:var(--sans);font-weight:380;-webkit-font-smoothing:antialiased;line-height:1.55;}
+  ::selection{background:var(--garnet);color:#fff;}
+  .poster{max-width:920px;margin:0 auto;padding:clamp(20px,4vw,40px);}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--garnet);font-weight:560;}
+  .eyebrow::before{content:"";width:24px;height:1px;background:var(--garnet);opacity:.55;}
+
+  /* Header */
+  .head{border-bottom:2px solid var(--ink);padding-bottom:26px;margin-bottom:30px;}
+  .head h1{font-weight:230;font-size:clamp(2rem,5vw,3.5rem);line-height:1.04;letter-spacing:-0.025em;margin:16px 0 0;}
+  .head h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--garnet);}
+  .head .sub{margin-top:16px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font-size:13.5px;color:var(--body);}
+  .head .sub b{color:var(--ink-soft);font-weight:540;}
+  .head .sub .dot{width:4px;height:4px;border-radius:50%;background:var(--garnet);}
+
+  /* Stat row */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:34px;}
+  .stat{background:var(--paper-card);border:1px solid var(--line);border-radius:16px;padding:22px 22px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+  .stat .rule{position:absolute;left:0;top:0;width:3px;height:100%;}
+  .stat.s-garnet .rule{background:var(--garnet);} .stat.s-navy .rule{background:var(--navy);} .stat.s-amber .rule{background:var(--amber);}
+  .stat .big{font-family:var(--serif);font-weight:600;font-size:2.4rem;line-height:1;letter-spacing:-0.01em;}
+  .stat.s-garnet .big{color:var(--garnet);} .stat.s-navy .big{color:var(--navy);} .stat.s-amber .big{color:var(--amber);}
+  .stat .lab{margin-top:10px;font-size:.92rem;color:var(--body);line-height:1.45;}
+  .stat .lab b{color:var(--ink);font-weight:540;}
+
+  .sec-title{display:flex;align-items:baseline;gap:14px;margin:0 0 18px;}
+  .sec-title .n{font-family:var(--serif);font-style:italic;color:var(--garnet);font-size:1rem;}
+  .sec-title h2{font-weight:330;font-size:1.5rem;letter-spacing:-0.015em;}
+  .sec-title h2 em{font-family:var(--serif);font-style:italic;color:var(--garnet);}
+
+  /* Mandate quote */
+  .mandate{background:var(--navy-card);color:#eef2f6;border-radius:18px;padding:28px 30px;margin-bottom:36px;box-shadow:var(--shadow);display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;}
+  .mandate .ic{width:52px;height:52px;border-radius:13px;background:rgb(255 255 255 / 0.08);display:grid;place-items:center;font-size:26px;color:#9cc1e6;flex-shrink:0;}
+  .mandate q{font-family:var(--serif);font-style:italic;font-size:1.18rem;line-height:1.5;display:block;}
+  .mandate cite{display:block;margin-top:12px;font-style:normal;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:#9fb0c0;}
+
+  /* Spectrum centerpiece */
+  .spectrum-wrap{background:var(--paper-card);border:1px solid var(--line);border-radius:20px;padding:30px clamp(24px,4vw,40px) 26px;box-shadow:var(--shadow);margin-bottom:38px;}
+  .spectrum-wrap .cap{font-size:.95rem;color:var(--body);margin-bottom:34px;max-width:62ch;}
+  .spectrum-wrap .cap b{color:var(--ink);font-weight:540;}
+  .axis{position:relative;height:172px;margin:0 10px;}
+  .track{position:absolute;left:0;right:0;top:80px;height:14px;border-radius:999px;background:repeating-linear-gradient(90deg,var(--line-2),var(--line-2) 1px,transparent 1px,transparent 20%);border:1px solid var(--line);}
+  .band{position:absolute;top:78px;height:18px;border-radius:999px;background:linear-gradient(90deg,var(--green),#3f8567);box-shadow:0 4px 12px rgb(47 109 82 / 0.3);}
+  .band-cap{position:absolute;top:52px;left:49.7%;transform:translateX(-50%);font-size:11px;letter-spacing:.05em;text-transform:uppercase;font-weight:560;color:var(--green);white-space:nowrap;}
+  .tick{position:absolute;top:72px;width:1px;height:30px;background:var(--line);}
+  .tick .tv{position:absolute;top:34px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--body-2);}
+  .ep{position:absolute;}
+  .ep .cap{position:absolute;top:2px;left:50%;transform:translateX(-50%);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--body-2);font-weight:500;white-space:nowrap;}
+  .ep .val{position:absolute;top:18px;left:50%;transform:translateX(-50%);font-family:var(--serif);font-weight:600;font-size:1.4rem;line-height:1;white-space:nowrap;}
+  .ep .pin{position:absolute;top:52px;left:50%;transform:translateX(-50%);width:2px;height:30px;}
+  .ep .dot{position:absolute;top:80px;left:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;border:2.5px solid var(--canvas);}
+  .ep.eff .val{color:var(--navy);} .ep.eff .pin,.ep.eff .dot{background:var(--navy);}
+  .ep.max .val{color:var(--garnet);} .ep.max .pin,.ep.max .dot{background:var(--garnet);}
+  .cur{position:absolute;}
+  .cur .dot{position:absolute;top:87px;left:50%;transform:translate(-50%,-50%);width:13px;height:13px;border-radius:50%;border:2.5px solid var(--canvas);background:var(--ink);}
+  .cur .pin{position:absolute;top:87px;left:50%;transform:translateX(-50%);width:2px;height:30px;background:var(--ink);}
+  .cur .cap{position:absolute;top:120px;left:50%;transform:translateX(-50%);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--garnet);font-weight:560;white-space:nowrap;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line);font-size:.86rem;color:var(--body);}
+  .legend span{display:inline-flex;align-items:center;gap:8px;}
+  .legend i{width:12px;height:12px;border-radius:3px;display:inline-block;}
+
+  /* Formula cards */
+  .formulas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px;}
+  .fcard{border-radius:16px;padding:24px 22px;border:1px solid var(--line);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;}
+  .fcard.f-navy{background:var(--navy-card);color:#eef2f6;}
+  .fcard.f-garnet{background:var(--garnet-card);color:#fbeeea;}
+  .fcard.f-paper{background:var(--paper-card);}
+  .fcard .ftag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:560;}
+  .f-navy .ftag{color:#9cc1e6;} .f-garnet .ftag{color:#f0c3b6;} .f-paper .ftag{color:var(--garnet);}
+  .fcard h3{margin-top:8px;font-weight:380;font-size:1.16rem;letter-spacing:-0.01em;}
+  .formula-box{margin:18px 0;padding:16px 12px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--serif);font-size:1.25rem;min-height:78px;}
+  .f-navy .formula-box{background:rgb(255 255 255 / 0.07);border:1px solid rgb(255 255 255 / 0.12);}
+  .f-garnet .formula-box{background:rgb(255 255 255 / 0.09);border:1px solid rgb(255 255 255 / 0.16);}
+  .f-paper .formula-box{background:rgb(31 53 80 / 0.05);border:1px solid rgb(31 53 80 / 0.12);}
+  .mvar{font-style:italic;}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;}
+  .frac .num{padding:0 9px 3px;} .frac .den{padding:5px 9px 0;border-top:1.5px solid currentColor;}
+  .sqrt{display:inline-flex;align-items:baseline;} .sqrt .under{border-top:1.5px solid currentColor;padding-top:1px;}
+  .eq{font-style:normal;opacity:.8;}
+  .fres{margin-top:auto;padding-top:14px;border-top:1px solid;display:flex;align-items:baseline;justify-content:space-between;gap:10px;}
+  .f-navy .fres,.f-garnet .fres{border-color:rgb(255 255 255 / 0.16);} .f-paper .fres{border-color:var(--line);}
+  .fres .l{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;opacity:.75;}
+  .fres .v{font-family:var(--serif);font-weight:600;font-size:1.7rem;}
+  .fres .v small{font-size:.9rem;}
+  .legend-vars{display:flex;flex-wrap:wrap;gap:10px 26px;margin:14px 0 40px;padding:16px 20px;border:1px dashed var(--line);border-radius:12px;background:rgb(255 255 255 / 0.4);font-size:.86rem;color:var(--body);}
+  .legend-vars b{font-family:var(--serif);font-style:italic;color:var(--ink);margin-right:5px;}
+
+  /* Kebaruan */
+  .nov{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:34px;}
+  .ncard{background:var(--garnet-card);color:#fbeeea;border-radius:16px;padding:24px 22px;box-shadow:var(--shadow-sm);}
+  .ncard .nn{font-family:var(--serif);font-style:italic;font-size:1.5rem;color:#f0c3b6;line-height:1;}
+  .ncard h4{margin-top:12px;font-weight:540;font-size:1.04rem;color:#fff;}
+  .ncard p{margin-top:8px;font-size:.9rem;color:#e9cfc8;line-height:1.5;}
+
+  /* Footer */
+  .foot{border-top:1px solid var(--line);padding-top:22px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;align-items:flex-end;}
+  .foot .left{max-width:62ch;font-size:11.5px;color:var(--body-2);line-height:1.65;}
+  .foot .brand{font-size:12px;color:var(--body);text-align:right;line-height:1.7;}
+  .foot .brand b{color:var(--ink);font-weight:540;}
+
+  @media(max-width:820px){
+    .stats,.formulas,.nov{grid-template-columns:1fr;}
+    .mandate{grid-template-columns:1fr;text-align:left;}
+    .axis{height:150px;}
+  }
+  @media print{
+    body{background:#fff;} .poster{max-width:100%;padding:0;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .stat,.fcard,.ncard,.spectrum-wrap,.mandate{box-shadow:none;break-inside:avoid;}
+    @page{margin:14mm;}
+  }
+</style>
+</head>
+<body>
+<div class="poster">
+
+  <!-- HEADER -->
+  <header class="head">
+    <span class="eyebrow">Infografis · Rekayasa Sistem Pemilu</span>
+    <h1>Ambang Batas Parlemen yang <em>Dihitung</em>, Bukan yang <em>Ditawar</em></h1>
+    <div class="sub">
+      <span><b>Rekonstruksi</b> desain <i>parliamentary threshold</i></span>
+      <span class="dot"></span>
+      <span>Pasca-Putusan <b>MK No. 116/PUU-XXI/2023</b></span>
+      <span class="dot"></span>
+      <span>Simulasi <b>Pemilu 2024</b></span>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat s-amber">
+      <span class="rule"></span>
+      <div class="big">4%</div>
+      <div class="lab"><b>Ambang batas berlaku</b> (UU 7/2017) — ditetapkan secara politis &amp; sewenang-wenang.</div>
+    </div>
+    <div class="stat s-garnet">
+      <span class="rule"></span>
+      <div class="big">13,5&nbsp;jt</div>
+      <div class="lab"><b>Suara terbuang</b> pada Pemilu 2019 — tak terkonversi jadi satu kursi pun di DPR.</div>
+    </div>
+    <div class="stat s-navy">
+      <span class="rule"></span>
+      <div class="big">1 &rarr; ∞</div>
+      <div class="lab"><b>Mandat MK:</b> angka diganti <b>rumus</b> — kalkulasi rasional &amp; objektif tiap periode.</div>
+    </div>
+  </div>
+
+  <!-- MANDATE -->
+  <div class="mandate">
+    <div class="ic"><i class="ph ph-scales"></i></div>
+    <div>
+      <q>Besaran angka ambang batas harus dihitung dengan parameter dan kalkulasi yang rasional serta objektif — bukan ditetapkan secara sewenang-wenang.</q>
+      <cite>Intisari pertimbangan — Putusan MK No. 116/PUU-XXI/2023</cite>
+    </div>
+  </div>
+
+  <!-- SPECTRUM -->
+  <div class="sec-title"><span class="n">01</span><h2>Rentang ambang batas yang <em>konstitusional</em></h2></div>
+  <div class="spectrum-wrap">
+    <p class="cap">Dua formula matematis menetapkan <b>batas alamiah (1,03%)</b> dan <b>batas maksimal (3,94%)</b>. Di antara keduanya terbentang rentang yang sah secara konstitusional. Ambang <b>4%</b> yang berlaku justru berada <b>tepat di luar</b> plafon maksimal tersebut.</p>
+    <div class="axis">
+      <div class="track"></div>
+      <div class="band" style="left:20.6%;width:58.2%;"></div>
+      <div class="band-cap">Rentang konstitusional &amp; proporsional</div>
+
+      <div class="tick" style="left:0%;"><span class="tv">0%</span></div>
+      <div class="tick" style="left:20%;"><span class="tv">1%</span></div>
+      <div class="tick" style="left:40%;"><span class="tv">2%</span></div>
+      <div class="tick" style="left:60%;"><span class="tv">3%</span></div>
+      <div class="tick" style="left:80%;"><span class="tv">4%</span></div>
+      <div class="tick" style="left:100%;"><span class="tv">5%</span></div>
+
+      <div class="ep eff" style="left:20.6%;">
+        <div class="cap">Effective · batas alamiah</div>
+        <div class="val">1,03%</div>
+        <div class="pin"></div><div class="dot"></div>
+      </div>
+      <div class="ep max" style="left:78.8%;">
+        <div class="cap">Maximal · batas maksimal</div>
+        <div class="val">3,94%</div>
+        <div class="pin"></div><div class="dot"></div>
+      </div>
+      <div class="cur" style="left:80%;">
+        <div class="dot"></div><div class="pin"></div>
+        <div class="cap">↑ 4% berlaku · di luar rentang</div>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i style="background:linear-gradient(90deg,var(--green),#3f8567)"></i> Rentang konstitusional (1,03%–3,94%)</span>
+      <span><i style="background:var(--navy)"></i> Batas alamiah (effective)</span>
+      <span><i style="background:var(--garnet)"></i> Batas maksimal (maximal)</span>
+      <span><i style="background:var(--ink)"></i> Ambang 4% yang berlaku</span>
+    </div>
+  </div>
+
+  <!-- FORMULAS -->
+  <div class="sec-title"><span class="n">02</span><h2>Tiga formula <em>ambang batas</em></h2></div>
+  <div class="formulas">
+    <article class="fcard f-navy">
+      <span class="ftag">Adaptasi Taagepera</span>
+      <h3>Effective Threshold</h3>
+      <div class="formula-box">
+        <span class="mvar">T</span><span class="eq">=</span>
+        <span class="frac"><span class="num">75%</span><span class="den">(<span class="mvar">M</span>&nbsp;+&nbsp;1)&nbsp;<span class="sqrt">√<span class="under"><span class="mvar">E</span></span></span></span></span>
+      </div>
+      <div class="fres"><span class="l">Simulasi 2024</span><span class="v">1,03<small>%</small></span></div>
+    </article>
+    <article class="fcard f-garnet">
+      <span class="ftag">Inovasi Siahaan</span>
+      <h3>Maximal Threshold</h3>
+      <div class="formula-box">
+        <span class="mvar">T</span><span style="font-style:italic;font-size:.62em;align-self:flex-end;padding-bottom:.4em;">maks</span><span class="eq">=</span>
+        <span class="frac"><span class="num">75%</span><span class="den">(<span class="mvar">N</span>&nbsp;+&nbsp;1)</span></span>
+      </div>
+      <div class="fres"><span class="l">Simulasi 2024</span><span class="v">3,94<small>%</small></span></div>
+    </article>
+    <article class="fcard f-paper">
+      <span class="ftag">Tawaran Konsep</span>
+      <h3>Dynamic Threshold</h3>
+      <div class="formula-box" style="font-size:.95rem;flex-direction:column;gap:5px;text-align:center;">
+        <span style="font-style:normal;">1,03% ≤ <span class="mvar">T</span> ≤ 3,94%</span>
+        <span style="font-size:.72em;opacity:.7;font-style:italic;">yang dikunci UU: rumusnya, bukan angkanya</span>
+      </div>
+      <div class="fres"><span class="l">Dikunci dalam UU</span><span class="v" style="font-size:1.25rem;">Formula</span></div>
+    </article>
+  </div>
+  <div class="legend-vars">
+    <div><b>M</b> = besaran rata-rata dapil</div>
+    <div><b>E</b> = jumlah daerah pemilihan</div>
+    <div><b>N</b> = jumlah partai peserta pemilu</div>
+    <div><b>T</b> = ambang batas parlemen</div>
+  </div>
+
+  <!-- KEBARUAN -->
+  <div class="sec-title"><span class="n">03</span><h2>Kebaruan <em>penelitian</em></h2></div>
+  <div class="nov">
+    <div class="ncard">
+      <div class="nn">α</div>
+      <h4>Dynamic Threshold</h4>
+      <p>UU mengunci <i>rumus</i> ambang batas — bukan persentase mutlaknya — sehingga angka menyesuaikan parameter pemilu (M·E·N) tiap periode.</p>
+    </div>
+    <div class="ncard">
+      <div class="nn">β</div>
+      <h4>District Magnitude Downsizing</h4>
+      <p>Sederhanakan partai dengan memperkecil alokasi kursi per dapil — yang menaikkan ambang efektif secara alamiah — bukan dengan menaikkan threshold.</p>
+    </div>
+    <div class="ncard">
+      <div class="nn">γ</div>
+      <h4>Jembatan Doktrinal–Kuantitatif</h4>
+      <p>Mengubah perintah normatif MK menjadi norma legislatif yang operasional — celah yang belum diisi literatur HTN kepemiluan.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <div class="left">
+      Catatan: angka simulasi (1,03% &amp; 3,94% untuk Pemilu 2024) dan rumus <i>effective</i>/<i>maximal threshold</i> merujuk pendekatan Nico Handani Siahaan (adaptasi <i>effective threshold</i> Taagepera). Parameter M·E·N perlu diverifikasi terhadap data resmi KPU. Infografis ringkasan proposal — bukan naskah final.
+    </div>
+    <div class="brand">
+      <b>Proposal Disertasi · Doktoral (S3)</b><br>
+      Hukum Tata Negara — Metode Normatif<br>
+      Putusan MK No. 116/PUU-XXI/2023
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

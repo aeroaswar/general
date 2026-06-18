@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Proposal Disertasi — Rekonstruksi Ambang Batas Parlemen Pasca-Putusan MK 116/PUU-XXI/2023</title>
+<script>
+  // Enable JS-only hidden state before first paint, and only when the observer exists.
+  if ('IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('js');
+  }
+</script>
+<meta name="description" content="Draf proposal disertasi doktoral Ilmu Hukum Tata Negara: rekonstruksi desain Parliamentary Threshold yang konstitusional dan proporsional di Indonesia, berbasis kalkulasi matematis (Effective Threshold, Maximal Threshold, dan Dynamic Threshold)." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+<style>
+  :root{
+    /* Adapted precision-bento tokens — scholarly / constitutional register */
+    --canvas:#f4f2ec;          /* warm paper */
+    --canvas-2:#efece4;
+    --ink:#16181d;             /* near-black navy */
+    --ink-soft:#2a2e36;
+    --body:#5d6268;            /* desaturated slate body copy */
+    --body-2:#787d84;
+    --line:rgb(22 24 29 / 0.10);
+    --line-2:rgb(22 24 29 / 0.07);
+
+    --garnet:#8a2526;          /* constitutional oxblood / Merah-Putih */
+    --garnet-2:#a8413f;
+    --garnet-wash:#f3e7e3;
+    --navy:#1f3550;            /* secondary scholarly ink-blue */
+    --navy-wash:#e7ecf1;
+
+    --paper-card:linear-gradient(165deg,#fbfaf6 0%,#f1eee6 100%);
+    --navy-card:linear-gradient(160deg,#22364f 0%,#16202f 100%);
+    --garnet-card:linear-gradient(160deg,#7e2324 0%,#581717 100%);
+
+    --shadow:0 24px 60px rgb(20 22 28 / 0.08);
+    --shadow-sm:0 10px 30px rgb(20 22 28 / 0.06);
+
+    --r-card:18px;
+    --r-pill:14px;
+    --r-btn:999px;
+
+    --maxw:1180px;
+    --serif:"Spectral",Georgia,serif;
+    --sans:"Geist","Inter",system-ui,sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-weight:360;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--garnet);color:#fff;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,48px);}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgb(244 242 236 / 0.78);
+    border-bottom:1px solid var(--line-2);
+  }
+  .topbar-in{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    height:62px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;font-weight:560;letter-spacing:-0.01em;font-size:15px;}
+  .brand .seal{
+    width:30px;height:30px;border-radius:9px;flex-shrink:0;
+    background:var(--garnet-card);color:#fff;
+    display:grid;place-items:center;font-family:var(--serif);font-style:italic;
+    font-weight:500;font-size:15px;box-shadow:var(--shadow-sm);
+  }
+  .brand small{display:block;font-weight:400;color:var(--body-2);font-size:11px;letter-spacing:0.02em;white-space:nowrap;}
+  @media(max-width:920px){.brand small{white-space:normal;}}
+  .topnav{display:flex;gap:22px;}
+  .topnav a{color:var(--body);text-decoration:none;font-size:13.5px;font-weight:420;white-space:nowrap;transition:color .2s;}
+  .topnav a:hover{color:var(--ink);}
+  @media(max-width:860px){.topnav{display:none;}}
+
+  /* ---------- Eyebrow ---------- */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:12px;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--garnet);font-weight:560;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--garnet);opacity:.55;}
+
+  .kicker-num{
+    font-family:var(--serif);font-style:italic;color:var(--garnet);
+    font-size:14px;font-weight:500;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:clamp(60px,9vw,120px) 0 clamp(40px,6vw,70px);position:relative;}
+  .hero-grid-bg{
+    position:absolute;inset:0;z-index:0;pointer-events:none;
+    background-image:linear-gradient(var(--line-2) 1px,transparent 1px),linear-gradient(90deg,var(--line-2) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 0%,transparent 78%);
+            mask-image:radial-gradient(ellipse 80% 60% at 50% 30%,#000 0%,transparent 78%);
+    opacity:.6;
+  }
+  .hero .wrap{position:relative;z-index:1;}
+  .hero h1{
+    font-weight:230;
+    font-size:clamp(2.4rem,5.6vw,4.6rem);
+    line-height:1.05;
+    letter-spacing:-0.025em;
+    max-width:17ch;
+    margin:26px 0 0;
+  }
+  .hero h1 em{
+    font-family:var(--serif);font-style:italic;font-weight:400;color:var(--garnet);
+  }
+  .hero .lede{
+    margin-top:26px;max-width:60ch;
+    font-size:clamp(1.02rem,1.5vw,1.18rem);
+    color:var(--body);font-weight:380;line-height:1.7;
+  }
+  .meta-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px;}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:9px 15px;border-radius:var(--r-pill);
+    background:rgb(255 255 255 / 0.6);
+    border:1px solid var(--line);
+    box-shadow:inset 0 1px 0 rgb(255 255 255 / 0.7);
+    font-size:12.5px;color:var(--ink-soft);font-weight:460;
+  }
+  .pill i{color:var(--garnet);font-size:15px;}
+
+  /* ---------- Section frame ---------- */
+  section{padding:clamp(54px,8vw,96px) 0;position:relative;scroll-margin-top:74px;}
+  .sec-head{max-width:62ch;margin-bottom:clamp(32px,5vw,52px);}
+  .sec-head h2{
+    font-weight:250;font-size:clamp(1.9rem,3.6vw,3rem);
+    line-height:1.1;letter-spacing:-0.02em;margin:14px 0 0;
+  }
+  .sec-head h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--garnet);}
+  .sec-head p{margin-top:18px;color:var(--body);font-size:1.04rem;line-height:1.75;max-width:58ch;}
+  .divider{height:1px;background:var(--line);margin:0;}
+
+  /* ---------- Title cards (3 judul) ---------- */
+  .titles{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .title-card{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:var(--r-card);
+    padding:28px 26px 30px;
+    box-shadow:var(--shadow-sm);
+    position:relative;overflow:hidden;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
+  }
+  .title-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .title-card .alt{
+    font-family:var(--serif);font-style:italic;color:var(--garnet);
+    font-size:13px;font-weight:500;letter-spacing:.02em;
+  }
+  .title-card h3{
+    margin-top:16px;font-weight:420;font-size:1.16rem;line-height:1.34;
+    letter-spacing:-0.01em;color:var(--ink);
+  }
+  .title-card .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px;}
+  .tag{
+    font-size:11px;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--body-2);border:1px solid var(--line);border-radius:999px;
+    padding:4px 11px;font-weight:500;
+  }
+  .title-card .rule{position:absolute;left:0;top:0;width:3px;height:100%;background:var(--garnet);opacity:.85;}
+
+  /* ---------- Prose blocks ---------- */
+  .prose{max-width:none;}
+  .prose-grid{display:grid;grid-template-columns:1.55fr 1fr;gap:clamp(26px,4vw,56px);align-items:start;}
+  .prose p{color:var(--body);font-size:1.05rem;line-height:1.82;margin-top:18px;}
+  .prose p:first-child{margin-top:0;}
+  .prose strong{color:var(--ink);font-weight:560;}
+  .prose .lead{font-size:1.14rem;color:var(--ink-soft);font-weight:400;line-height:1.7;}
+
+  .paradox{
+    background:var(--navy-card);color:#eef2f6;border-radius:var(--r-card);
+    padding:30px 28px;box-shadow:var(--shadow);position:sticky;top:84px;
+  }
+  .paradox .eyebrow{color:#e7b4a8;}
+  .paradox .eyebrow::before{background:#e7b4a8;}
+  .paradox h4{margin-top:18px;font-weight:340;font-size:1.3rem;line-height:1.3;letter-spacing:-0.01em;}
+  .vs-row{display:flex;flex-direction:column;gap:14px;margin-top:22px;}
+  .vs-item{display:flex;gap:13px;align-items:flex-start;}
+  .vs-item i{color:#e7b4a8;font-size:19px;margin-top:2px;flex-shrink:0;}
+  .vs-item span{font-size:.94rem;color:#c8d0d8;line-height:1.55;}
+  .vs-mid{
+    align-self:center;font-family:var(--serif);font-style:italic;color:#e7b4a8;
+    font-size:14px;letter-spacing:.08em;padding:2px 0;
+  }
+  .quote-mk{
+    margin-top:24px;padding-top:22px;border-top:1px solid rgb(255 255 255 / 0.14);
+    font-family:var(--serif);font-style:italic;font-size:1.02rem;line-height:1.55;color:#eef2f6;
+  }
+  .quote-mk cite{display:block;margin-top:12px;font-style:normal;font-size:12px;letter-spacing:.05em;
+    text-transform:uppercase;color:#9fb0c0;font-family:var(--sans);}
+
+  /* ---------- Formula showcase ---------- */
+  .formulas{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .fcard{
+    border-radius:var(--r-card);padding:30px 26px 28px;
+    border:1px solid var(--line);box-shadow:var(--shadow-sm);
+    display:flex;flex-direction:column;position:relative;overflow:hidden;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s;
+  }
+  .fcard:hover{transform:translateY(-4px);box-shadow:var(--shadow);}
+  .fcard.f-paper{background:var(--paper-card);}
+  .fcard.f-navy{background:var(--navy-card);color:#eef2f6;}
+  .fcard.f-garnet{background:var(--garnet-card);color:#fbeeea;}
+  .fcard .ftag{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:560;}
+  .fcard.f-paper .ftag{color:var(--garnet);}
+  .fcard.f-navy .ftag{color:#9cc1e6;}
+  .fcard.f-garnet .ftag{color:#f0c3b6;}
+  .fcard h3{margin-top:12px;font-weight:380;font-size:1.32rem;letter-spacing:-0.01em;line-height:1.25;}
+  .fcard .fdesc{margin-top:12px;font-size:.95rem;line-height:1.6;flex-grow:1;}
+  .fcard.f-paper .fdesc{color:var(--body);}
+  .fcard.f-navy .fdesc{color:#bcc8d4;}
+  .fcard.f-garnet .fdesc{color:#e9cfc8;}
+
+  /* math */
+  .formula-box{
+    margin:22px 0;padding:20px 16px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    font-family:var(--serif);font-size:1.45rem;min-height:92px;
+  }
+  .f-paper .formula-box{background:rgb(138 37 38 / 0.06);border:1px solid rgb(138 37 38 / 0.14);}
+  .f-navy .formula-box{background:rgb(255 255 255 / 0.07);border:1px solid rgb(255 255 255 / 0.12);}
+  .f-garnet .formula-box{background:rgb(255 255 255 / 0.09);border:1px solid rgb(255 255 255 / 0.16);}
+  .mvar{font-style:italic;}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;line-height:1.05;}
+  .frac .num{padding:0 10px 4px;}
+  .frac .den{padding:6px 10px 0;border-top:1.6px solid currentColor;}
+  .sqrt{display:inline-flex;align-items:baseline;}
+  .sqrt .rad{font-size:1.05em;margin-right:1px;}
+  .sqrt .under{border-top:1.6px solid currentColor;padding-top:1px;}
+  .eq{font-style:normal;opacity:.8;}
+
+  .fresult{
+    margin-top:auto;padding-top:18px;border-top:1px solid;
+    display:flex;align-items:baseline;justify-content:space-between;gap:10px;
+  }
+  .f-paper .fresult{border-color:var(--line);}
+  .f-navy .fresult,.f-garnet .fresult{border-color:rgb(255 255 255 / 0.16);}
+  .fresult .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:.7;}
+  .fresult .val{font-family:var(--serif);font-weight:600;font-size:2rem;letter-spacing:-0.01em;}
+  .fresult .val small{font-size:1rem;font-weight:500;opacity:.8;}
+
+  .legend{
+    margin-top:26px;display:flex;flex-wrap:wrap;gap:18px 30px;
+    padding:20px 24px;border:1px dashed var(--line);border-radius:14px;background:rgb(255 255 255 / 0.4);
+  }
+  .legend div{font-size:.9rem;color:var(--body);}
+  .legend b{color:var(--ink);font-family:var(--serif);font-style:italic;font-weight:500;margin-right:6px;}
+
+  /* ---------- Research questions ---------- */
+  .rq-list{display:grid;gap:16px;}
+  .rq{
+    display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;
+    background:var(--paper-card);border:1px solid var(--line);border-radius:var(--r-card);
+    padding:26px 30px;box-shadow:var(--shadow-sm);transition:transform .3s,box-shadow .3s;
+  }
+  .rq:hover{transform:translateX(5px);box-shadow:var(--shadow);}
+  .rq .no{
+    font-family:var(--serif);font-style:italic;font-weight:500;
+    font-size:2.6rem;color:var(--garnet);line-height:1;min-width:54px;
+  }
+  .rq p{font-size:1.1rem;line-height:1.5;color:var(--ink-soft);font-weight:400;letter-spacing:-0.01em;}
+
+  /* ---------- Two-col benefit grid ---------- */
+  .goal-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .gcard{
+    background:var(--paper-card);border:1px solid var(--line);border-radius:var(--r-card);
+    padding:30px 28px;box-shadow:var(--shadow-sm);
+  }
+  .gcard .ic{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+    background:var(--garnet-wash);color:var(--garnet);font-size:22px;margin-bottom:18px;
+  }
+  .gcard.alt .ic{background:var(--navy-wash);color:var(--navy);}
+  .gcard h3{font-weight:480;font-size:1.18rem;letter-spacing:-0.01em;}
+  .gcard ul{list-style:none;margin-top:16px;display:grid;gap:12px;}
+  .gcard li{display:flex;gap:11px;font-size:.97rem;color:var(--body);line-height:1.55;}
+  .gcard li i{color:var(--garnet);font-size:16px;margin-top:3px;flex-shrink:0;}
+  .gcard.alt li i{color:var(--navy);}
+
+  /* ---------- Theory tiers ---------- */
+  .tiers{display:grid;gap:14px;}
+  .tier{
+    display:grid;grid-template-columns:200px 1fr;gap:30px;align-items:start;
+    padding:28px 30px;border:1px solid var(--line);border-radius:var(--r-card);
+    background:var(--paper-card);box-shadow:var(--shadow-sm);
+  }
+  .tier .tlabel{display:flex;flex-direction:column;gap:8px;}
+  .tier .tlabel .lvl{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--garnet);font-weight:560;}
+  .tier .tlabel .nm{font-family:var(--serif);font-style:italic;font-size:1.32rem;font-weight:500;color:var(--ink);line-height:1.2;}
+  .tier .tbody{color:var(--body);font-size:1rem;line-height:1.72;}
+  .tier .tbody strong{color:var(--ink-soft);font-weight:540;}
+  .tier .thinkers{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;}
+  .tier .thinkers .tag{border-color:var(--line);}
+
+  /* ---------- Novelty / litreview ---------- */
+  .nov-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(26px,4vw,52px);align-items:start;}
+  .lit-list{display:grid;gap:14px;}
+  .lit{padding:20px 22px;border:1px solid var(--line);border-radius:14px;background:rgb(255 255 255 / 0.5);}
+  .lit .au{font-weight:540;font-size:.96rem;color:var(--ink);}
+  .lit .au span{font-weight:400;color:var(--body-2);}
+  .lit p{margin-top:7px;font-size:.92rem;color:var(--body);line-height:1.55;}
+  .nov-card{
+    background:var(--garnet-card);color:#fbeeea;border-radius:var(--r-card);
+    padding:34px 32px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  .nov-card .eyebrow{color:#f0c3b6;}
+  .nov-card .eyebrow::before{background:#f0c3b6;}
+  .nov-card h3{margin-top:16px;font-weight:340;font-size:1.55rem;line-height:1.28;letter-spacing:-0.01em;}
+  .nov-card .nlist{margin-top:24px;display:grid;gap:18px;}
+  .nov-card .nitem{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;}
+  .nov-card .nitem .nn{font-family:var(--serif);font-style:italic;font-size:1.4rem;color:#f0c3b6;line-height:1;}
+  .nov-card .nitem h5{font-weight:540;font-size:1.04rem;color:#fff;}
+  .nov-card .nitem p{margin-top:5px;font-size:.93rem;color:#e9cfc8;line-height:1.55;}
+
+  /* ---------- Method ---------- */
+  .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .mcard{
+    background:var(--paper-card);border:1px solid var(--line);border-radius:var(--r-card);
+    padding:28px 26px;box-shadow:var(--shadow-sm);
+  }
+  .mcard .mnum{font-family:var(--serif);font-style:italic;color:var(--garnet);font-size:13px;font-weight:500;}
+  .mcard h3{margin-top:10px;font-weight:480;font-size:1.12rem;letter-spacing:-0.01em;}
+  .mcard p{margin-top:10px;font-size:.95rem;color:var(--body);line-height:1.62;}
+  .method-base{
+    margin-bottom:20px;display:flex;flex-wrap:wrap;gap:12px 26px;
+    padding:22px 26px;border-radius:14px;background:var(--navy-card);color:#dde5ee;
+  }
+  .method-base div{display:flex;align-items:center;gap:10px;font-size:.95rem;}
+  .method-base i{color:#9cc1e6;font-size:18px;}
+  .method-base b{color:#fff;font-weight:540;}
+
+  /* ---------- Footer ---------- */
+  footer{padding:clamp(50px,7vw,80px) 0 60px;border-top:1px solid var(--line);background:var(--canvas-2);}
+  .foot-grid{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;}
+  footer h3{font-weight:240;font-size:clamp(1.5rem,3vw,2.3rem);letter-spacing:-0.02em;max-width:18ch;line-height:1.15;}
+  footer h3 em{font-family:var(--serif);font-style:italic;color:var(--garnet);}
+  .foot-meta{font-size:.9rem;color:var(--body-2);line-height:1.7;text-align:right;}
+  .foot-note{margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:12.5px;color:var(--body-2);line-height:1.7;max-width:80ch;}
+
+  /* reveal — progressive enhancement: visible by default, hidden only when JS is present */
+  .reveal{opacity:1;transform:none;}
+  .js .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);}
+  .js .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- Responsive ---------- */
+  @media(max-width:1000px){
+    .titles,.formulas,.method-grid{grid-template-columns:1fr;}
+    .prose-grid,.nov-grid,.goal-grid{grid-template-columns:1fr;}
+    .paradox{position:static;}
+    .tier{grid-template-columns:1fr;gap:16px;}
+    .rq{grid-template-columns:auto 1fr;gap:18px;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* ---------- Scroll-progress bar + active nav ---------- */
+  .progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;background:transparent;pointer-events:none;}
+  .progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--garnet),var(--garnet-2));box-shadow:0 0 8px rgb(138 37 38 / 0.4);transition:width .08s linear;}
+  .topnav a{position:relative;}
+  .topnav a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1.5px;background:var(--garnet);transition:right .3s cubic-bezier(.2,.7,.2,1);}
+  .topnav a.active{color:var(--ink);font-weight:520;}
+  .topnav a.active::after{right:0;}
+  .btn-print{
+    display:inline-flex;align-items:center;gap:7px;cursor:pointer;
+    padding:8px 15px;border-radius:var(--r-btn);border:1px solid var(--line);
+    background:rgb(255 255 255 / 0.6);color:var(--ink-soft);font-family:var(--sans);
+    font-size:12.5px;font-weight:480;transition:background .2s,border-color .2s,transform .2s;
+  }
+  .btn-print:hover{background:#fff;border-color:var(--garnet);color:var(--garnet);transform:translateY(-1px);}
+  .btn-print i{font-size:15px;}
+  @media(max-width:860px){.btn-print span{display:none;}.btn-print{padding:8px 11px;}}
+
+  /* ---------- Footnotes ---------- */
+  sup.fn{font-size:.62em;line-height:0;vertical-align:super;font-weight:560;margin-left:1px;}
+  sup.fn a{color:var(--garnet);text-decoration:none;padding:0 1px;border-radius:3px;transition:background .2s;}
+  sup.fn a:hover{background:var(--garnet-wash);}
+  sup.fn a::before{content:"[";}
+  sup.fn a::after{content:"]";}
+
+  /* ---------- Daftar Pustaka ---------- */
+  .refs{display:grid;gap:2px;counter-reset:ref;}
+  .ref-item{
+    display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:baseline;
+    padding:16px 8px;border-bottom:1px solid var(--line-2);scroll-margin-top:80px;
+  }
+  .ref-item:target{background:var(--garnet-wash);border-radius:10px;border-bottom-color:transparent;}
+  .ref-item .rnum{font-family:var(--serif);font-style:italic;color:var(--garnet);font-size:1rem;font-weight:500;min-width:26px;}
+  .ref-item .rtext{font-size:.96rem;color:var(--ink-soft);line-height:1.6;}
+  .ref-item .rtext em{font-family:var(--serif);font-style:italic;}
+  .ref-item .rtext .rkind{
+    display:inline-block;margin-left:8px;font-family:var(--sans);font-size:10px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--body-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px;vertical-align:middle;
+  }
+
+  /* ---------- Ringkasan / Abstrak ---------- */
+  .abstract{
+    display:grid;grid-template-columns:1.7fr 1fr;gap:0;
+    border:1px solid var(--line);border-radius:var(--r-card);overflow:hidden;
+    box-shadow:var(--shadow);background:var(--paper-card);
+  }
+  .abstract .ab-main{padding:clamp(28px,4vw,44px);}
+  .abstract .ab-main .eyebrow{margin-bottom:18px;}
+  .abstract .ab-main p{color:var(--ink-soft);font-size:1.05rem;line-height:1.78;font-weight:380;}
+  .abstract .ab-main p + p{margin-top:16px;}
+  .abstract .ab-main p strong{font-weight:560;color:var(--ink);}
+  .abstract .ab-main .ab-lead{font-family:var(--serif);font-size:1.18rem;line-height:1.55;color:var(--ink);font-weight:400;}
+  .abstract .ab-side{
+    background:var(--navy-card);color:#dde5ee;padding:clamp(26px,3.5vw,40px);
+    display:flex;flex-direction:column;gap:22px;
+  }
+  .abstract .ab-side .eyebrow{color:#9cc1e6;}
+  .abstract .ab-side .eyebrow::before{background:#9cc1e6;}
+  .ab-keys{display:flex;flex-wrap:wrap;gap:8px;}
+  .ab-keys span{
+    font-size:11.5px;letter-spacing:.03em;padding:6px 12px;border-radius:999px;
+    background:rgb(255 255 255 / 0.08);border:1px solid rgb(255 255 255 / 0.16);color:#eef2f6;
+  }
+  .ab-facts{display:grid;gap:12px;margin-top:auto;}
+  .ab-facts .row{display:flex;justify-content:space-between;gap:14px;font-size:.9rem;padding-bottom:10px;border-bottom:1px solid rgb(255 255 255 / 0.12);}
+  .ab-facts .row:last-child{border-bottom:none;padding-bottom:0;}
+  .ab-facts .row .k{color:#9fb0c0;}
+  .ab-facts .row .v{color:#fff;font-weight:500;text-align:right;}
+  @media(max-width:860px){.abstract{grid-template-columns:1fr;}}
+
+  /* ---------- Sistematika Penulisan ---------- */
+  .chapters{display:grid;gap:12px;}
+  .chapter{
+    display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;
+    padding:24px 28px;border:1px solid var(--line);border-radius:var(--r-card);
+    background:var(--paper-card);box-shadow:var(--shadow-sm);
+  }
+  .chapter .cbab{
+    font-family:var(--serif);font-style:italic;color:var(--garnet);font-weight:500;
+    font-size:1.05rem;line-height:1.1;min-width:84px;
+  }
+  .chapter .cbab small{display:block;font-family:var(--sans);font-style:normal;font-size:10px;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--body-2);margin-bottom:4px;font-weight:560;}
+  .chapter h3{font-weight:500;font-size:1.12rem;letter-spacing:-0.01em;color:var(--ink);}
+  .chapter p{margin-top:8px;font-size:.96rem;color:var(--body);line-height:1.6;}
+  .chapter .sub{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+  .chapter .sub span{font-size:11px;color:var(--body-2);border:1px solid var(--line);border-radius:6px;padding:3px 9px;}
+
+  /* ---------- Jadwal Penelitian (Gantt) ---------- */
+  .gantt-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r-card);box-shadow:var(--shadow-sm);background:var(--paper-card);}
+  .gantt{min-width:720px;}
+  .gantt-row{display:grid;grid-template-columns:240px repeat(12,1fr);align-items:center;border-bottom:1px solid var(--line-2);}
+  .gantt-row:last-child{border-bottom:none;}
+  .gantt-row.head{background:rgb(31 53 80 / 0.04);}
+  .gantt-row.head .glabel{font-weight:560;color:var(--ink);font-size:.86rem;text-transform:uppercase;letter-spacing:.06em;}
+  .gantt-row.head .m{text-align:center;font-size:11px;color:var(--body-2);font-weight:500;padding:12px 0;border-left:1px solid var(--line-2);}
+  .gantt-row .glabel{padding:14px 18px;font-size:.92rem;color:var(--ink-soft);line-height:1.35;}
+  .gantt-row .track{grid-column:2 / -1;display:grid;grid-template-columns:repeat(12,1fr);align-items:center;height:100%;
+    background-image:repeating-linear-gradient(90deg,transparent,transparent calc(8.333% - 1px),var(--line-2) calc(8.333% - 1px),var(--line-2) 8.333%);}
+  .gantt-row .bar{
+    height:15px;border-radius:999px;margin:11px 4px;position:relative;
+    box-shadow:0 2px 6px rgb(20 22 28 / 0.12);
+  }
+  .bar.g-garnet{background:linear-gradient(90deg,var(--garnet),var(--garnet-2));}
+  .bar.g-navy{background:linear-gradient(90deg,#33597f,#1f3550);}
+  .bar.g-amber{background:linear-gradient(90deg,#caa24a,#a8813a);}
+  .gantt-legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;font-size:.85rem;color:var(--body);}
+  .gantt-legend span{display:inline-flex;align-items:center;gap:8px;}
+  .gantt-legend i{width:14px;height:14px;border-radius:4px;display:inline-block;}
+
+  /* ---------- Print / PDF ---------- */
+  @media print{
+    @page{margin:18mm 16mm;}
+    :root{--maxw:100%;}
+    html{scroll-behavior:auto;}
+    body{background:#fff;color:#16181d;font-size:11pt;line-height:1.5;}
+    .topbar,.progress,.hero-grid-bg,.btn-print,.topnav{display:none !important;}
+    .reveal{opacity:1 !important;transform:none !important;}
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+    .wrap{padding:0;max-width:100%;}
+    section,.hero{padding:14px 0 !important;break-inside:avoid;}
+    .hero{padding-top:0 !important;}
+    .hero h1{font-size:24pt;}
+    .sec-head h2{font-size:18pt;}
+    .title-card,.fcard,.rq,.gcard,.tier,.mcard,.lit,.nov-card,.paradox,.ref-item{
+      box-shadow:none !important;break-inside:avoid;page-break-inside:avoid;
+    }
+    .titles,.formulas,.method-grid{grid-template-columns:repeat(3,1fr) !important;}
+    .goal-grid,.nov-grid,.prose-grid{grid-template-columns:1fr 1fr !important;}
+    .paradox{position:static !important;}
+    a{color:inherit;text-decoration:none;}
+    sup.fn a{color:#8a2526;}
+    .divider{display:none;}
+    section{border-top:1px solid #e7e2d8;}
+    .formula-box{break-inside:avoid;}
+    footer{background:#fff;}
+    /* Abstract = its own opening page */
+    #ringkasan{break-after:page;border-top:none !important;padding-top:0 !important;}
+    .abstract{box-shadow:none !important;break-inside:avoid;}
+    .chapter,.gantt-row{break-inside:avoid;}
+    .gantt-scroll{overflow:visible !important;}
+    .gantt{min-width:0 !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== SCROLL PROGRESS ===== -->
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- ===== TOP BAR ===== -->
+<header class="topbar">
+  <div class="wrap topbar-in">
+    <div class="brand">
+      <span class="seal">A</span>
+      <div>Proposal Disertasi
+        <small>Program Doktor (S3) Ilmu Hukum · Hukum Tata Negara</small>
+      </div>
+    </div>
+    <nav class="topnav">
+      <a href="#latar">Latar</a>
+      <a href="#formula">Rumus</a>
+      <a href="#masalah">Masalah</a>
+      <a href="#teori">Teori</a>
+      <a href="#novelty">Kebaruan</a>
+      <a href="#metode">Metode</a>
+      <a href="#jadwal">Jadwal</a>
+      <a href="#pustaka">Pustaka</a>
+    </nav>
+    <button class="btn-print" onclick="window.print()" aria-label="Cetak atau simpan sebagai PDF">
+      <i class="ph ph-file-pdf" aria-hidden="true"></i><span>Cetak / PDF</span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="wrap">
+    <span class="eyebrow">Rekayasa Sistem Pemilu · Hukum Konstitusi</span>
+    <h1>Merekonstruksi Ambang Batas Parlemen yang <em>Konstitusional</em> &amp; <em>Proporsional</em></h1>
+    <p class="lede">
+      Sebuah proposal disertasi yang menawarkan desain <strong>Parliamentary Threshold</strong> berbasis
+      kalkulasi matematis yang rasional dan objektif — menjawab perintah <strong>Putusan Mahkamah Konstitusi
+      Nomor 116/PUU-XXI/2023</strong> untuk mengakhiri penetapan angka ambang batas yang sewenang-wenang.
+    </p>
+    <div class="meta-pills">
+      <span class="pill"><i class="ph ph-scales"></i> Putusan MK 116/PUU-XXI/2023</span>
+      <span class="pill"><i class="ph ph-function"></i> Effective · Maximal · Dynamic Threshold</span>
+      <span class="pill"><i class="ph ph-books"></i> Penelitian Hukum Normatif</span>
+      <span class="pill"><i class="ph ph-chart-bar"></i> Simulasi Pemilu 2024</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RINGKASAN / ABSTRAK ===== -->
+<section id="ringkasan" style="padding-top:clamp(20px,3vw,40px);">
+  <div class="wrap">
+    <div class="abstract reveal">
+      <div class="ab-main">
+        <span class="eyebrow">Ringkasan · Abstrak</span>
+        <p class="ab-lead">
+          Putusan Mahkamah Konstitusi Nomor 116/PUU-XXI/2023 memerintahkan agar ambang batas parlemen tidak lagi
+          ditetapkan secara sewenang-wenang, melainkan dihitung dengan parameter matematis yang rasional dan objektif.
+        </p>
+        <p>
+          Penelitian ini merekonstruksi desain <strong>parliamentary threshold</strong> yang konstitusional dan
+          proporsional bagi Indonesia dengan mengadaptasi konsep <em>effective threshold</em> Taagepera melalui pendekatan
+          Nico Handani Siahaan — menghasilkan batas alamiah <strong>1,03%</strong> dan batas maksimal <strong>3,94%</strong>
+          pada simulasi Pemilu 2024. Atas dasar itu, penelitian menawarkan konsep <strong>Dynamic Threshold</strong>, yakni
+          mengunci <em>rumus</em> ambang batas di dalam Undang-Undang alih-alih persentase mutlaknya, serta menegaskan bahwa
+          penyederhanaan partai sebaiknya ditempuh melalui <em>district magnitude downsizing</em> — bukan dengan menaikkan
+          ambang secara artifisial. Dengan metode penelitian hukum normatif, kajian ini menjembatani doktrin hukum tata
+          negara dan kalkulasi sistem pemilu agar suara terbuang dapat ditekan tanpa mengorbankan stabilitas presidensial.
+        </p>
+      </div>
+      <div class="ab-side">
+        <div>
+          <span class="eyebrow">Kata Kunci</span>
+          <div class="ab-keys" style="margin-top:14px;">
+            <span>Ambang Batas Parlemen</span>
+            <span>Putusan MK 116/2023</span>
+            <span>Dynamic Threshold</span>
+            <span>Proporsionalitas</span>
+            <span>Electoral Engineering</span>
+          </div>
+        </div>
+        <div class="ab-facts">
+          <div class="row"><span class="k">Batas alamiah (2024)</span><span class="v">1,03%</span></div>
+          <div class="row"><span class="k">Batas maksimal (2024)</span><span class="v">3,94%</span></div>
+          <div class="row"><span class="k">Metode</span><span class="v">Normatif / Doktrinal</span></div>
+          <div class="row"><span class="k">Jenjang</span><span class="v">Doktoral (S3)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TIGA JUDUL ===== -->
+<section id="judul">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">01 — Usulan Judul Disertasi</span>
+      <h2>Tiga alternatif judul yang <em>kuat dan berbobot</em></h2>
+      <p>Ketiganya menempatkan kebaruan utama — formula <em>dynamic threshold</em> dan <em>district magnitude downsizing</em> — sebagai poros argumentasi, sembari menautkannya secara eksplisit pada mandat Putusan MK 116/2023.</p>
+    </div>
+    <div class="titles">
+      <article class="title-card reveal">
+        <span class="rule"></span>
+        <span class="alt">Alternatif I</span>
+        <h3>Rekonstruksi Desain Ambang Batas Parlemen yang Konstitusional dan Proporsional: Formulasi <em>Dynamic Threshold</em> Berbasis Kalkulasi Matematis Pasca-Putusan Mahkamah Konstitusi Nomor 116/PUU-XXI/2023.</h3>
+        <div class="tags"><span class="tag">Dynamic Threshold</span><span class="tag">Konstitusional</span></div>
+      </article>
+      <article class="title-card reveal">
+        <span class="rule"></span>
+        <span class="alt">Alternatif II</span>
+        <h3>Dari Angka Sewenang-wenang Menuju Ambang Batas Rasional: Reformulasi <em>Parliamentary Threshold</em> melalui Pendekatan <em>Effective</em> dan <em>Maximal Threshold</em> dalam Sistem Pemilu Proporsional Indonesia.</h3>
+        <div class="tags"><span class="tag">Effective Threshold</span><span class="tag">Maximal Threshold</span></div>
+      </article>
+      <article class="title-card reveal">
+        <span class="rule"></span>
+        <span class="alt">Alternatif III</span>
+        <h3>Menekan Suara Terbuang, Menjaga Penyederhanaan: <em>District Magnitude Downsizing</em> dan Ambang Batas Dinamis sebagai Model Keterwakilan Proporsional Pasca-Putusan MK 116/2023.</h3>
+        <div class="tags"><span class="tag">Wasted Votes</span><span class="tag">District Magnitude</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== LATAR BELAKANG ===== -->
+<section id="latar">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">02 — Latar Belakang Masalah</span>
+      <h2>Paradoks penyederhanaan partai dan <em>suara terbuang</em></h2>
+    </div>
+    <div class="prose prose-grid">
+      <div>
+        <p class="lead">
+          Sejak diperkenalkan melalui Undang-Undang Nomor 10 Tahun 2008 dan dinaikkan secara bertahap hingga
+          <strong>4% suara sah nasional</strong> dalam Undang-Undang Nomor 7 Tahun 2017<sup class="fn"><a href="#ref-1" id="cite-1">1</a></sup>, ambang batas parlemen
+          dibingkai sebagai instrumen untuk menyederhanakan jumlah partai demi menopang sistem presidensial yang
+          efektif. Namun, dalil tersebut menyimpan paradoks fundamental.
+        </p>
+        <p>
+          Di satu sisi, penyederhanaan partai diyakini menghasilkan koalisi pemerintahan yang stabil dan mengurangi
+          fragmentasi di parlemen. Di sisi lain, pemberlakuan ambang batas yang tinggi justru menggerus prinsip
+          <strong>proporsionalitas keterwakilan</strong> — jantung dari sistem pemilu proporsional yang dianut Indonesia.
+          Pada Pemilu 2019, lebih dari <strong>13,5 juta suara</strong> menjadi <em>wasted votes</em> karena diberikan
+          kepada partai yang gagal melampaui ambang 4%. Suara-suara itu tidak terkonversi menjadi satu kursi pun di DPR,
+          sehingga sebagian kedaulatan rakyat hilang tanpa representasi<sup class="fn"><a href="#ref-3" id="cite-3">3</a></sup>.
+        </p>
+        <p>
+          Persoalan terdalamnya bukan sekadar besaran angka, melainkan <strong>cara angka itu ditetapkan</strong>.
+          Penentuan threshold 4% selama ini dilakukan secara politis dan inkremental melalui tarik-menarik kepentingan
+          di parlemen, tanpa dasar metodologis yang dapat dipertanggungjawabkan. Angka tersebut tidak diturunkan dari
+          karakteristik sistem pemilu Indonesia — besaran daerah pemilihan, jumlah dapil, maupun jumlah peserta — sehingga
+          bersifat <strong>sewenang-wenang (arbitrary)</strong> dan rentan menjadi alat pembatas kompetisi yang tidak proporsional.
+        </p>
+        <p>
+          Inilah titik yang dikoreksi oleh Mahkamah Konstitusi melalui <strong>Putusan Nomor 116/PUU-XXI/2023</strong><sup class="fn"><a href="#ref-4" id="cite-4">4</a></sup>.
+          Mahkamah menyatakan ambang batas parlemen 4% inkonstitusional bersyarat dan, yang paling penting bagi penelitian
+          ini, memerintahkan agar perubahan besaran ambang batas ke depan <strong>tidak lagi ditetapkan secara
+          sewenang-wenang</strong>, melainkan dihitung berdasarkan <strong>parameter matematis serta kalkulasi yang rasional
+          dan objektif</strong> yang berakar pada desain sistem pemilu itu sendiri. Putusan ini secara efektif memindahkan
+          perdebatan dari ranah tawar-menawar politik ke ranah <em>electoral engineering</em> yang terukur — dan membuka
+          ruang akademik untuk merekonstruksi formula ambang batas yang sah secara konstitusional.
+        </p>
+      </div>
+      <aside class="paradox reveal">
+        <span class="eyebrow">Inti Paradoks</span>
+        <h4>Stabilitas presidensial vs. hak suara yang setara</h4>
+        <div class="vs-row">
+          <div class="vs-item"><i class="ph ph-buildings"></i><span><b>Tujuan:</b> menyederhanakan partai demi efektivitas sistem presidensial.</span></div>
+          <div class="vs-mid">— berbenturan dengan —</div>
+          <div class="vs-item"><i class="ph ph-users-three"></i><span><b>Biaya:</b> jutaan suara terbuang &amp; proporsionalitas yang tergerus.</span></div>
+        </div>
+        <div class="quote-mk">
+          “Besaran angka ambang batas harus dihitung dengan parameter dan kalkulasi yang rasional serta objektif, bukan ditetapkan secara sewenang-wenang.”
+          <cite>Intisari pertimbangan — Putusan MK No. 116/PUU-XXI/2023</cite>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== PENDEKATAN RUMUS / FORMULA ===== -->
+<section id="formula">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">— Pendekatan Teori &amp; Rumus</span>
+      <h2>Menerjemahkan mandat MK menjadi <em>kalkulasi yang objektif</em></h2>
+      <p>Penelitian ini mengadopsi pendekatan matematis yang ditawarkan <strong>Nico Handani Siahaan</strong><sup class="fn"><a href="#ref-5" id="cite-5">5</a></sup> — adaptasi atas konsep <em>effective threshold</em> Rein Taagepera<sup class="fn"><a href="#ref-2" id="cite-2">2</a></sup> — sebagai dua titik jangkar: batas alamiah (natural) dan batas maksimal yang masih konstitusional.</p>
+    </div>
+
+    <div class="formulas">
+      <!-- Effective -->
+      <article class="fcard f-paper reveal">
+        <span class="ftag">Batas Alamiah</span>
+        <h3>Effective Threshold</h3>
+        <p class="fdesc">Adaptasi Taagepera. Mengukur ambang batas <em>de facto</em> yang sudah dihasilkan sistem secara alamiah dari besaran dapil dan jumlah dapil.</p>
+        <div class="formula-box">
+          <span class="mvar">T</span><span class="eq">=</span>
+          <span class="frac">
+            <span class="num">75%</span>
+            <span class="den">(<span class="mvar">M</span>&nbsp;+&nbsp;1)&nbsp;<span class="sqrt"><span class="rad">√</span><span class="under"><span class="mvar">E</span></span></span></span>
+          </span>
+        </div>
+        <div class="fresult">
+          <span class="lbl">Simulasi Pemilu 2024</span>
+          <span class="val">1,03<small>%</small></span>
+        </div>
+      </article>
+
+      <!-- Maximal -->
+      <article class="fcard f-garnet reveal">
+        <span class="ftag">Batas Maksimal</span>
+        <h3>Maximal Threshold</h3>
+        <p class="fdesc">Inovasi Siahaan. Menetapkan plafon tertinggi yang masih proporsional, diturunkan dari jumlah partai politik peserta pemilu.</p>
+        <div class="formula-box">
+          <span class="mvar">T</span><span style="font-style:italic;font-size:.7em;align-self:flex-end;padding-bottom:.4em;">maks</span><span class="eq">=</span>
+          <span class="frac">
+            <span class="num">75%</span>
+            <span class="den">(<span class="mvar">N</span>&nbsp;+&nbsp;1)</span>
+          </span>
+        </div>
+        <div class="fresult">
+          <span class="lbl">Simulasi Pemilu 2024</span>
+          <span class="val">3,94<small>%</small></span>
+        </div>
+      </article>
+
+      <!-- Dynamic -->
+      <article class="fcard f-navy reveal">
+        <span class="ftag">Tawaran Konsep</span>
+        <h3>Dynamic Threshold</h3>
+        <p class="fdesc">Kebaruan disertasi. Yang dikunci dalam UU bukan persentase mutlak, melainkan <em>rumusnya</em> — sehingga angka menyesuaikan parameter pemilu di tiap periode.</p>
+        <div class="formula-box" style="font-size:1.05rem;line-height:1.4;text-align:center;flex-direction:column;gap:6px;">
+          <span style="font-style:normal;">1,03% &nbsp;≤&nbsp; <span class="mvar">T</span><span style="font-size:.75em;">dinamis</span> &nbsp;≤&nbsp; 3,94%</span>
+          <span style="font-size:.7em;opacity:.7;font-style:italic;">rentang konstitusional yang dikunci oleh formula, bukan oleh angka</span>
+        </div>
+        <div class="fresult">
+          <span class="lbl">Yang dikunci dalam UU</span>
+          <span class="val" style="font-size:1.5rem;">Formula</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="legend reveal">
+      <div><b>M</b> = besaran rata-rata daerah pemilihan (<em>district magnitude</em>)</div>
+      <div><b>E</b> = jumlah daerah pemilihan</div>
+      <div><b>N</b> = jumlah partai politik peserta pemilu</div>
+      <div><b>T</b> = ambang batas parlemen (<em>parliamentary threshold</em>)</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== RUMUSAN MASALAH ===== -->
+<section id="masalah">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">03 — Rumusan Masalah</span>
+      <h2>Tiga pertanyaan penelitian <em>utama</em></h2>
+    </div>
+    <div class="rq-list">
+      <div class="rq reveal">
+        <span class="no">i</span>
+        <p>Bagaimana konstruksi hukum dan implikasi normatif Putusan Mahkamah Konstitusi Nomor 116/PUU-XXI/2023 terhadap kewajiban negara untuk menetapkan ambang batas parlemen berdasarkan parameter matematis yang rasional dan objektif?</p>
+      </div>
+      <div class="rq reveal">
+        <span class="no">ii</span>
+        <p>Sejauh mana pendekatan <em>effective threshold</em> dan <em>maximal threshold</em> mampu menghasilkan desain ambang batas yang memenuhi prinsip konstitusionalitas dan proporsionalitas keterwakilan dalam sistem pemilu proporsional Indonesia?</p>
+      </div>
+      <div class="rq reveal">
+        <span class="no">iii</span>
+        <p>Bagaimana formulasi <em>dynamic threshold</em> dan kebijakan <em>district magnitude downsizing</em> dapat direkonstruksi ke dalam Undang-Undang Pemilu sebagai model penyederhanaan partai yang konstitusional tanpa mengorbankan hak suara yang setara?</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== TUJUAN & MANFAAT ===== -->
+<section id="tujuan">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">04 — Tujuan &amp; Manfaat Penelitian</span>
+      <h2>Kontribusi <em>teoretis</em> dan <em>praktis</em></h2>
+      <p>Tujuan penelitian dirumuskan sejajar dengan ketiga rumusan masalah; manfaatnya menjangkau pengembangan ilmu hukum tata negara sekaligus pembaruan kebijakan legislasi pemilu.</p>
+    </div>
+    <div class="goal-grid">
+      <div class="gcard reveal">
+        <div class="ic"><i class="ph ph-graduation-cap"></i></div>
+        <h3>Manfaat Teoretis</h3>
+        <ul>
+          <li><i class="ph ph-arrow-bend-down-right"></i><span>Memperkaya teori sistem pemilu dengan jembatan antara <em>electoral engineering</em> kuantitatif dan doktrin hukum konstitusi.</span></li>
+          <li><i class="ph ph-arrow-bend-down-right"></i><span>Menawarkan konsep <strong>dynamic threshold</strong> sebagai kebaruan dalam khazanah hukum tata negara kepemiluan.</span></li>
+          <li><i class="ph ph-arrow-bend-down-right"></i><span>Menegaskan tolok ukur konstitusionalitas pembatasan hak pilih melalui prinsip proporsionalitas keterwakilan.</span></li>
+        </ul>
+      </div>
+      <div class="gcard alt reveal">
+        <div class="ic"><i class="ph ph-gavel"></i></div>
+        <h3>Manfaat Praktis</h3>
+        <ul>
+          <li><i class="ph ph-arrow-bend-down-right"></i><span>Menyediakan rumusan normatif yang dapat diadopsi pembentuk UU dalam merevisi Undang-Undang Pemilu pasca-putusan MK.</span></li>
+          <li><i class="ph ph-arrow-bend-down-right"></i><span>Memberi pedoman teknokratis bagi KPU dan DPR untuk menghitung ambang batas secara objektif tiap periode.</span></li>
+          <li><i class="ph ph-arrow-bend-down-right"></i><span>Menjadi rujukan untuk meminimalkan <em>wasted votes</em> tanpa membuka kembali fragmentasi partai yang tak terkendali.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== KERANGKA TEORETIS ===== -->
+<section id="teori">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">05 — Kerangka Teoretis &amp; Konseptual</span>
+      <h2>Piramida teori dari <em>grand</em> hingga <em>applied</em></h2>
+      <p>Penelitian disusun di atas tiga lapis teori yang saling menopang — dari fondasi filosofis kedaulatan rakyat, turun ke teori sistem pemilu, hingga teori terapan proporsionalitas dan rekayasa ambang batas.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier reveal">
+        <div class="tlabel">
+          <span class="lvl">Grand Theory</span>
+          <span class="nm">Teori Kedaulatan Rakyat &amp; Negara Hukum Demokratis</span>
+        </div>
+        <div class="tbody">
+          <strong>Fondasi legitimasi.</strong> Setiap suara warga adalah pecahan kedaulatan yang setara (<em>one person, one vote, one value</em>).
+          Ambang batas yang membuang jutaan suara harus diuji terhadap prinsip kedaulatan rakyat (Rousseau, Sieyès) dan gagasan
+          negara hukum demokratis dalam Pasal 1 ayat (2) dan ayat (3) UUD 1945 — pembatasan hak pilih hanya sah bila proporsional dan beralasan.
+          <div class="thinkers"><span class="tag">Rousseau</span><span class="tag">Kedaulatan Rakyat</span><span class="tag">UUD 1945 Psl 1</span></div>
+        </div>
+      </div>
+      <div class="tier reveal">
+        <div class="tlabel">
+          <span class="lvl">Middle-Range Theory</span>
+          <span class="nm">Teori Sistem Pemilu</span>
+        </div>
+        <div class="tbody">
+          <strong>Mekanisme konversi.</strong> Bagaimana suara diterjemahkan menjadi kursi. Hukum Duverger, tipologi sistem pemilu
+          Sartori<sup class="fn"><a href="#ref-6" id="cite-6">6</a></sup> dan Lijphart, serta hubungan antara besaran dapil dan proporsionalitas (Taagepera &amp; Shugart) menjelaskan
+          mengapa <em>district magnitude</em> — bukan threshold artifisial — adalah variabel utama yang membentuk derajat
+          penyederhanaan partai secara alamiah.
+          <div class="thinkers"><span class="tag">Duverger</span><span class="tag">Sartori</span><span class="tag">Lijphart</span><span class="tag">Taagepera &amp; Shugart</span></div>
+        </div>
+      </div>
+      <div class="tier reveal">
+        <div class="tlabel">
+          <span class="lvl">Applied Theory</span>
+          <span class="nm">Proporsionalitas Keterwakilan &amp; Electoral Engineering</span>
+        </div>
+        <div class="tbody">
+          <strong>Pisau analisis operasional.</strong> Konsep <em>effective threshold</em> (Lijphart, Taagepera) dan rekayasa
+          sistem pemilu (Sartori, Reynolds<sup class="fn"><a href="#ref-7" id="cite-7">7</a></sup>) dipakai untuk mengukur dan mendesain ambang batas. Di lapis inilah formula
+          Siahaan dan gagasan <em>dynamic threshold</em> bekerja — menerjemahkan prinsip konstitusional menjadi angka yang
+          terukur, sah, dan dapat diuji.
+          <div class="thinkers"><span class="tag">Effective Threshold</span><span class="tag">Reynolds</span><span class="tag">Proporsionalitas</span><span class="tag">Siahaan</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== TINJAUAN PUSTAKA & NOVELTY ===== -->
+<section id="novelty">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">06 — Tinjauan Pustaka &amp; Kebaruan</span>
+      <h2>Mengisi celah antara <em>doktrin hukum</em> dan <em>kalkulasi pemilu</em></h2>
+    </div>
+    <div class="nov-grid">
+      <div class="lit-list">
+        <div class="lit reveal">
+          <div class="au">Rein Taagepera & Matthew Shugart <span>— Seats and Votes (1989)</span></div>
+          <p>Meletakkan dasar <em>effective threshold</em> dan relasi besaran dapil–proporsionalitas, namun tidak menyentuh konteks konstitusional Indonesia maupun threshold dinamis.</p>
+        </div>
+        <div class="lit reveal">
+          <div class="au">Arend Lijphart <span>— Electoral Systems and Party Systems (1994)</span></div>
+          <p>Menegaskan threshold efektif sebagai produk sistem, bukan penetapan politik — landasan kritik atas angka 4% yang arbitrer.</p>
+        </div>
+        <div class="lit reveal">
+          <div class="au">Nico Handani Siahaan <span>— Formula Effective & Maximal Threshold</span></div>
+          <p>Menyumbang dua rumus jangkar (1,03% &amp; 3,94% untuk Pemilu 2024). Belum dikembangkan menjadi norma hukum yang dapat dikunci dalam UU Pemilu.</p>
+        </div>
+        <div class="lit reveal">
+          <div class="au">Putusan MK No. 116/PUU-XXI/2023 <span>— sumber primer</span></div>
+          <p>Memerintahkan kalkulasi rasional-objektif, tetapi tidak menentukan metode. Di sinilah ruang rekonstruksi akademik terbuka.</p>
+        </div>
+      </div>
+      <aside class="nov-card reveal">
+        <span class="eyebrow">Kebaruan Penelitian (Novelty)</span>
+        <h3>Mengunci formula, bukan persentase — dan menyederhanakan lewat dapil, bukan ambang batas.</h3>
+        <div class="nlist">
+          <div class="nitem">
+            <span class="nn">α</span>
+            <div>
+              <h5>Dynamic Threshold yang dikunci dalam UU</h5>
+              <p>Undang-Undang Pemilu mengunci <em>rumus</em> ambang batas, bukan angka mutlaknya — sehingga threshold otomatis menyesuaikan parameter pemilu (M, E, N) tiap periode dan selalu berada dalam rentang konstitusional 1,03%–3,94%.</p>
+            </div>
+          </div>
+          <div class="nitem">
+            <span class="nn">β</span>
+            <div>
+              <h5>District Magnitude Downsizing</h5>
+              <p>Penyederhanaan partai dilakukan dengan memperkecil alokasi kursi per dapil — yang secara matematis menaikkan ambang efektif secara alamiah — bukan dengan menaikkan threshold formal secara sewenang-wenang.</p>
+            </div>
+          </div>
+          <div class="nitem">
+            <span class="nn">γ</span>
+            <div>
+              <h5>Jembatan doktrinal–kuantitatif</h5>
+              <p>Mengubah perintah normatif MK menjadi norma legislatif yang operasional — kontribusi yang belum ada dalam literatur hukum tata negara kepemiluan Indonesia.</p>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== METODE ===== -->
+<section id="metode">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">07 — Metode Penelitian</span>
+      <h2>Penelitian hukum <em>normatif / doktrinal</em></h2>
+    </div>
+    <div class="method-base reveal">
+      <div><i class="ph ph-book-open-text"></i><span><b>Jenis:</b> Penelitian Hukum Normatif (doktrinal)</span></div>
+      <div><i class="ph ph-stack"></i><span><b>Bahan hukum:</b> primer, sekunder, tersier</span></div>
+      <div><i class="ph ph-magnifying-glass"></i><span><b>Analisis:</b> preskriptif-kualitatif</span></div>
+    </div>
+    <div class="method-grid">
+      <div class="mcard reveal">
+        <span class="mnum">Pendekatan 01</span>
+        <h3>Perundang-undangan <span style="font-weight:380;color:var(--body-2)">(Statute Approach)</span></h3>
+        <p>Menelaah UUD 1945, UU No. 7 Tahun 2017 tentang Pemilu, dan peraturan turunannya untuk memetakan kerangka norma ambang batas serta titik singgungnya dengan prinsip proporsionalitas.</p>
+      </div>
+      <div class="mcard reveal">
+        <span class="mnum">Pendekatan 02</span>
+        <h3>Konseptual <span style="font-weight:380;color:var(--body-2)">(Conceptual Approach)</span></h3>
+        <p>Membangun konstruksi <em>dynamic threshold</em> dari doktrin kedaulatan rakyat, teori sistem pemilu, dan konsep <em>effective threshold</em> — termasuk simulasi parameter M, E, dan N.</p>
+      </div>
+      <div class="mcard reveal">
+        <span class="mnum">Pendekatan 03</span>
+        <h3>Kasus / Putusan <span style="font-weight:380;color:var(--body-2)">(Case Approach)</span></h3>
+        <p>Menganalisis <em>ratio decidendi</em> Putusan MK No. 116/PUU-XXI/2023 dan putusan terkait sebagai sumber kewajiban konstitusional untuk kalkulasi ambang batas yang rasional-objektif.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== SISTEMATIKA PENULISAN ===== -->
+<section id="sistematika">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">08 — Sistematika Penulisan</span>
+      <h2>Kerangka <em>lima bab</em> disertasi</h2>
+      <p>Alur penulisan disusun dari pembangunan masalah, kerangka teori, metode, analisis rekonstruksi formula, hingga simpulan dan rekomendasi normatif.</p>
+    </div>
+    <div class="chapters">
+      <div class="chapter reveal">
+        <span class="cbab"><small>Bab</small>I</span>
+        <div>
+          <h3>Pendahuluan</h3>
+          <p>Latar belakang, rumusan masalah, tujuan dan manfaat, kerangka teoretis-konseptual, metode, serta sistematika penulisan.</p>
+          <div class="sub"><span>Latar Belakang</span><span>Rumusan Masalah</span><span>Kerangka Teori</span><span>Metode</span></div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <span class="cbab"><small>Bab</small>II</span>
+        <div>
+          <h3>Tinjauan Pustaka &amp; Kerangka Teori</h3>
+          <p>Teori kedaulatan rakyat, teori sistem pemilu, proporsionalitas keterwakilan, dan konsep <em>effective threshold</em>; pemetaan penelitian terdahulu serta posisi kebaruan.</p>
+          <div class="sub"><span>Grand–Middle–Applied Theory</span><span>State of the Art</span><span>Novelty</span></div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <span class="cbab"><small>Bab</small>III</span>
+        <div>
+          <h3>Metode Penelitian</h3>
+          <p>Jenis penelitian hukum normatif, pendekatan perundang-undangan, konseptual, dan kasus; jenis &amp; sumber bahan hukum, teknik pengumpulan, dan analisis preskriptif.</p>
+          <div class="sub"><span>Statute</span><span>Conceptual</span><span>Case Approach</span></div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <span class="cbab"><small>Bab</small>IV</span>
+        <div>
+          <h3>Analisis &amp; Rekonstruksi</h3>
+          <p>Konstruksi hukum Putusan MK 116/2023, pengujian <em>effective</em> dan <em>maximal threshold</em>, simulasi parameter M·E·N, serta perumusan <em>dynamic threshold</em> dan <em>district magnitude downsizing</em>.</p>
+          <div class="sub"><span>Pembahasan RM 1–3</span><span>Simulasi</span><span>Formulasi Norma</span></div>
+        </div>
+      </div>
+      <div class="chapter reveal">
+        <span class="cbab"><small>Bab</small>V</span>
+        <div>
+          <h3>Penutup</h3>
+          <p>Simpulan atas ketiga rumusan masalah dan rekomendasi normatif bagi revisi Undang-Undang Pemilu pasca-putusan Mahkamah Konstitusi.</p>
+          <div class="sub"><span>Simpulan</span><span>Rekomendasi</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== JADWAL PENELITIAN (GANTT) ===== -->
+<section id="jadwal">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">09 — Jadwal Penelitian</span>
+      <h2>Rencana kerja <em>dua belas bulan</em></h2>
+      <p>Estimasi durasi tiap tahapan; bersifat indikatif dan akan disesuaikan dengan kalender akademik serta agenda ujian program.</p>
+    </div>
+    <div class="gantt-scroll reveal">
+      <div class="gantt">
+        <div class="gantt-row head">
+          <div class="glabel">Tahapan</div>
+          <div class="m">1</div><div class="m">2</div><div class="m">3</div><div class="m">4</div>
+          <div class="m">5</div><div class="m">6</div><div class="m">7</div><div class="m">8</div>
+          <div class="m">9</div><div class="m">10</div><div class="m">11</div><div class="m">12</div>
+        </div>
+        <div class="gantt-row">
+          <div class="glabel">Studi pendahuluan &amp; penyusunan proposal</div>
+          <div class="track"><div class="bar g-garnet" style="grid-column:1/4"></div></div>
+        </div>
+        <div class="gantt-row">
+          <div class="glabel">Seminar proposal &amp; perbaikan</div>
+          <div class="track"><div class="bar g-amber" style="grid-column:3/5"></div></div>
+        </div>
+        <div class="gantt-row">
+          <div class="glabel">Pengumpulan bahan hukum</div>
+          <div class="track"><div class="bar g-navy" style="grid-column:4/7"></div></div>
+        </div>
+        <div class="gantt-row">
+          <div class="glabel">Analisis &amp; rekonstruksi formula (M·E·N)</div>
+          <div class="track"><div class="bar g-garnet" style="grid-column:6/10"></div></div>
+        </div>
+        <div class="gantt-row">
+          <div class="glabel">Penulisan naskah disertasi (Bab I–V)</div>
+          <div class="track"><div class="bar g-navy" style="grid-column:5/12"></div></div>
+        </div>
+        <div class="gantt-row">
+          <div class="glabel">Seminar hasil &amp; validasi ahli</div>
+          <div class="track"><div class="bar g-amber" style="grid-column:10/12"></div></div>
+        </div>
+        <div class="gantt-row">
+          <div class="glabel">Ujian tertutup, revisi &amp; ujian terbuka</div>
+          <div class="track"><div class="bar g-garnet" style="grid-column:11/13"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="gantt-legend">
+      <span><i style="background:linear-gradient(90deg,var(--garnet),var(--garnet-2))"></i> Tahap inti penelitian</span>
+      <span><i style="background:linear-gradient(90deg,#33597f,#1f3550)"></i> Pengumpulan &amp; penulisan</span>
+      <span><i style="background:linear-gradient(90deg,#caa24a,#a8813a)"></i> Forum akademik / ujian</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><div class="divider"></div></div>
+
+<!-- ===== DAFTAR PUSTAKA ===== -->
+<section id="pustaka">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker-num">10 — Daftar Pustaka (Sementara)</span>
+      <h2>Rujukan utama &amp; <em>sumber hukum</em></h2>
+      <p>Catatan kaki bertaut ke daftar di bawah. Penulisan disertasi penuh akan memperluas daftar ini dan menyelaraskan gaya sitasi (mis. <em>Chicago</em>/<em>OSCOLA</em>) sesuai pedoman program.</p>
+    </div>
+    <ol class="refs">
+      <li class="ref-item" id="ref-1">
+        <span class="rnum">1.</span>
+        <span class="rtext">Republik Indonesia. <em>Undang-Undang Nomor 7 Tahun 2017 tentang Pemilihan Umum</em>, Lembaran Negara RI Tahun 2017 Nomor 182. <span class="rkind">Sumber Primer</span></span>
+      </li>
+      <li class="ref-item" id="ref-2">
+        <span class="rnum">2.</span>
+        <span class="rtext">Taagepera, Rein &amp; Matthew S. Shugart. <em>Seats and Votes: The Effects and Determinants of Electoral Systems</em>. New Haven: Yale University Press, 1989. <span class="rkind">Sekunder</span></span>
+      </li>
+      <li class="ref-item" id="ref-3">
+        <span class="rnum">3.</span>
+        <span class="rtext">Lijphart, Arend. <em>Electoral Systems and Party Systems: A Study of Twenty-Seven Democracies, 1945–1990</em>. Oxford: Oxford University Press, 1994. <span class="rkind">Sekunder</span></span>
+      </li>
+      <li class="ref-item" id="ref-4">
+        <span class="rnum">4.</span>
+        <span class="rtext">Mahkamah Konstitusi Republik Indonesia. <em>Putusan Nomor 116/PUU-XXI/2023</em> perihal pengujian ambang batas parlemen terhadap UUD 1945. <span class="rkind">Sumber Primer</span></span>
+      </li>
+      <li class="ref-item" id="ref-5">
+        <span class="rnum">5.</span>
+        <span class="rtext">Siahaan, Nico Handani. “Formulasi <em>Effective Threshold</em> dan <em>Maximal Threshold</em> dalam Penentuan Ambang Batas Parlemen yang Proporsional” <span style="color:var(--body-2)">(judul indikatif — wajib diverifikasi)</span>. <span class="rkind">Verifikasi</span></span>
+      </li>
+      <li class="ref-item" id="ref-6">
+        <span class="rnum">6.</span>
+        <span class="rtext">Sartori, Giovanni. <em>Comparative Constitutional Engineering: An Inquiry into Structures, Incentives and Outcomes</em>. London: Macmillan, 1994. <span class="rkind">Sekunder</span></span>
+      </li>
+      <li class="ref-item" id="ref-7">
+        <span class="rnum">7.</span>
+        <span class="rtext">Reynolds, Andrew, Ben Reilly &amp; Andrew Ellis. <em>Electoral System Design: The New International IDEA Handbook</em>. Stockholm: International IDEA, 2005. <span class="rkind">Sekunder</span></span>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <h3>Ambang batas yang <em>dihitung</em>, bukan yang <em>ditawar</em>.</h3>
+      <div class="foot-meta">
+        Draf Proposal Disertasi · Program Doktor (S3) Ilmu Hukum<br>
+        Konsentrasi Hukum Tata Negara — Rekayasa Sistem Pemilu<br>
+        Berbasis Putusan MK No. 116/PUU-XXI/2023
+      </div>
+    </div>
+    <p class="foot-note">
+      Catatan akademik: angka simulasi (1,03% dan 3,94% untuk Pemilu 2024) serta rumus <em>effective</em> dan <em>maximal threshold</em>
+      merujuk pada pendekatan yang ditawarkan Nico Handani Siahaan sebagai adaptasi konsep <em>effective threshold</em> Taagepera.
+      Seluruh parameter (M, E, N) perlu diverifikasi ulang terhadap data resmi KPU dalam penulisan disertasi penuh. Dokumen ini adalah
+      kerangka proposal, bukan naskah final.
+    </p>
+  </div>
+</footer>
+
+<script>
+  // Reveal-on-scroll (respects reduced motion)
+  const rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!rm) {
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    document.querySelectorAll('.reveal').forEach((el,i)=>{
+      el.style.transitionDelay = (i % 3 * 0.06) + 's';
+      io.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+  }
+
+  // Scroll-progress bar (rAF-throttled)
+  const bar = document.getElementById('progressBar');
+  let ticking = false;
+  function updateProgress(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop || window.scrollY) / max * 100 : 0;
+    bar.style.width = Math.min(100, Math.max(0, pct)) + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', ()=>{ if(!ticking){ requestAnimationFrame(updateProgress); ticking = true; } }, {passive:true});
+  updateProgress();
+
+  // Active-section highlight in nav
+  const navLinks = Array.from(document.querySelectorAll('.topnav a'));
+  const linkFor = id => navLinks.find(a => a.getAttribute('href') === '#' + id);
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          navLinks.forEach(a=>a.classList.remove('active'));
+          const link = linkFor(e.target.id);
+          if(link) link.classList.add('active');
+        }
+      });
+    },{rootMargin:'-45% 0px -50% 0px'});
+    ['latar','formula','masalah','teori','novelty','metode','jadwal','pustaka']
+      .map(id=>document.getElementById(id)).filter(Boolean)
+      .forEach(s=>spy.observe(s));
+  }
+</script>
+</body>
+</html>
