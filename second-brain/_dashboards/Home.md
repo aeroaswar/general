@@ -5,6 +5,7 @@ tags: [dashboard]
 # 🧠 Second Brain — Home
 
 > Pin this note (right-click → Pin) or set it as your start page.
+> New here? Read [[START-HERE]] first.
 
 ## 🔥 Today
 - [[01-Daily/{{date:YYYY-MM-DD}}|Open today's daily note]]
