@@ -52,7 +52,7 @@ em{font-style:italic}
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none}
 #bg canvas{display:block;width:100%!important;height:100%!important}
 /* liquid-blob background — soft brand-colour pools drifting playfully */
-#blobs{position:fixed;inset:-15%;z-index:0;overflow:hidden;pointer-events:none;filter:blur(46px) saturate(1.25);opacity:.9}
+#blobs{position:fixed;inset:-15%;z-index:0;overflow:hidden;pointer-events:none;filter:blur(calc(46px + var(--sv,0px))) saturate(1.25);opacity:.9;animation:blobsIn 1.5s cubic-bezier(.2,.8,.2,1) both}
 .blob{position:absolute;width:48vw;height:48vw;min-width:360px;min-height:360px;border-radius:50%;will-change:transform}
 .b1{background:radial-gradient(circle at 50% 50%,#F2E400 0%,rgba(242,228,0,0) 68%);left:-6%;top:-10%;animation:blobA 24s ease-in-out infinite}
 .b2{background:radial-gradient(circle at 50% 50%,#2FE4A4 0%,rgba(47,228,164,0) 68%);right:-10%;top:-2%;animation:blobB 30s ease-in-out infinite}
@@ -187,7 +187,7 @@ footer .col.lead-col{grid-column:span 2}
 footer p.about{margin-top:14px;font-size:13px;line-height:1.65;color:var(--muted);max-width:42ch}
 footer .kicker{margin-bottom:12px;display:block}
 footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px}
-footer a:hover{text-decoration:underline}
+footer a:hover{text-decoration:none}
 
 /* scroll cue — CSS-only loop (spares the JS thread), Animista-style */
 .cue{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;
@@ -275,6 +275,27 @@ footer a:hover{text-decoration:underline}
 .mini .tags{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:14px;line-height:1.5}
 /* iOS-26 liquid-glass on the cards: frosted blur + vibrancy + a bright top rim */
 .pcard,.svc,.step,.work,.mini,.stat,.metric,.scard,.sheet{-webkit-backdrop-filter:blur(13px) saturate(1.6);backdrop-filter:blur(13px) saturate(1.6);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 26%,transparent)}
+/* ── polish: living-glass hover (specular sheen sweep + gentle lift) ── */
+.pcard,.svc,.work,.step,.mini,.stat,.sheet{position:relative;overflow:hidden}
+.pcard::after,.svc::after,.work::after,.step::after,.mini::after,.stat::after,.sheet::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 33%,color-mix(in srgb,#fff 26%,transparent) 48%,transparent 63%);transform:translateX(-130%);transition:transform .85s cubic-bezier(.2,.8,.2,1);pointer-events:none;z-index:3}
+.pcard:hover::after,.svc:hover::after,.work:hover::after,.step:hover::after,.mini:hover::after,.stat:hover::after,.sheet:hover::after{transform:translateX(130%)}
+.pcard,.work,.step,.sheet{transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s}
+.pcard:hover,.work:hover,.step:hover,.sheet:hover{transform:translateY(-5px)}
+/* animated link underline (footer + contact) */
+footer ul a,.contact-side a{position:relative;display:inline-block}
+footer ul a::after,.contact-side a::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+footer ul a:hover::after,.contact-side a:hover::after{transform:scaleX(1)}
+/* crisp focus states */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+/* custom cursor (fine pointer only; difference blend stays visible on any colour) */
+#cursor{position:fixed;top:0;left:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:95;opacity:0;transition:width .25s,height .25s,margin .25s,opacity .3s,background-color .25s}
+#cursor.big{width:46px;height:46px;margin:-23px 0 0 -23px;background:transparent;border:1.5px solid #fff}
+#cursor.down{width:8px;height:8px;margin:-4px 0 0 -4px}
+html.has-cursor,html.has-cursor a,html.has-cursor button,html.has-cursor .work,html.has-cursor .svc,html.has-cursor .pcard,html.has-cursor .mini,html.has-cursor .step{cursor:none}
+html.has-cursor input,html.has-cursor textarea{cursor:auto}
+/* blob bloom-in on load */
+@keyframes blobsIn{from{opacity:0;transform:scale(1.12)}to{opacity:.9;transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){#blobs{animation:none!important}.pcard::after,.svc::after,.work::after,.step::after,.mini::after,.stat::after,.sheet::after{display:none}}
 
 /* responsive */
 @media(min-width:700px){
@@ -784,6 +805,32 @@ body.no-webgl{background-image:
   });
 
   if(ST && document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ ST.refresh(); });
+
+  // ── signature micro-interactions: custom cursor (fine pointers only) ──
+  if(matchMedia('(pointer:fine)').matches && !reduced){
+    d.classList.add('has-cursor');
+    var cur = document.createElement('div'); cur.id = 'cursor'; document.body.appendChild(cur);
+    var cx = innerWidth/2, cy = innerHeight/2, tx = cx, ty = cy;
+    addEventListener('pointermove', function(e){ tx = e.clientX; ty = e.clientY; cur.style.opacity = '1'; }, {passive:true});
+    addEventListener('pointerdown', function(){ cur.classList.add('down'); }, {passive:true});
+    addEventListener('pointerup',   function(){ cur.classList.remove('down'); }, {passive:true});
+    var HIT = 'a,button,.work,.svc,.pcard,.mini,.step,.scard';
+    document.addEventListener('pointerover', function(e){ if(e.target.closest && e.target.closest(HIT)) cur.classList.add('big'); });
+    document.addEventListener('pointerout',  function(e){ if(e.target.closest && e.target.closest(HIT)) cur.classList.remove('big'); });
+    (function curLoop(){ requestAnimationFrame(curLoop); cx += (tx-cx)*0.22; cy += (ty-cy)*0.22; cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px)'; })();
+  }
+
+  // ── cinematic touch: scroll velocity softens the liquid blobs (extra blur on fast scroll) ──
+  (function(){
+    var blobsEl = document.getElementById('blobs'); if(!blobsEl) return;
+    var lastY = window.scrollY, sv = 0, lastSet = -1;
+    (function svLoop(){ requestAnimationFrame(svLoop);
+      var y = window.scrollY, v = Math.abs(y - lastY); lastY = y;
+      var target = reduced ? 0 : Math.min(22, v*0.35); sv += (target - sv)*0.15;
+      var val = Math.round(sv*10)/10;
+      if(val !== lastSet){ blobsEl.style.setProperty('--sv', val + 'px'); lastSet = val; }
+    })();
+  })();
 })();
 </script>
 
