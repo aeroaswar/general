@@ -1,0 +1,6 @@
+{
+  "framework": null,
+  "installCommand": "npm install --prefix bodega-scroll",
+  "buildCommand": "npm run build --prefix bodega-scroll",
+  "outputDirectory": "bodega-scroll/dist"
+}
