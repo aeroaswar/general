@@ -140,6 +140,20 @@ function brickTexture() {
   return t
 }
 
+// Soft radial alpha disc — used for the contact shadow under the product and the
+// floor light pool. Cheap grounding that reads "lit", not "floating".
+function radialTexture(inner = 'rgba(0,0,0,0.55)', outer = 'rgba(0,0,0,0)') {
+  const [c, ctx] = makeCanvas(256, 256)
+  const g = ctx.createRadialGradient(128, 128, 8, 128, 128, 128)
+  g.addColorStop(0, inner)
+  g.addColorStop(1, outer)
+  ctx.fillStyle = g
+  ctx.fillRect(0, 0, 256, 256)
+  const t = new THREE.CanvasTexture(c)
+  t.colorSpace = THREE.SRGBColorSpace
+  return t
+}
+
 export default class BodegaScene {
   constructor(canvas, opts = {}) {
     this.canvas = canvas
@@ -178,7 +192,8 @@ export default class BodegaScene {
     this.scene.fog = new THREE.Fog(this.nightFog.getHex(), 6, 26)
     this.scene.background = this.nightFog.clone()
 
-    this.camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, 0.1, 100)
+    this.baseFov = 48
+    this.camera = new THREE.PerspectiveCamera(this.baseFov, window.innerWidth / window.innerHeight, 0.1, 100)
     this.camera.position.set(0, 1.6, 9.5)
   }
 
@@ -204,6 +219,11 @@ export default class BodegaScene {
     this.interiorLight.position.set(0, 5.5, -6)
     this.interiorLight.target.position.set(0, 0.8, -7)
     s.add(this.interiorLight, this.interiorLight.target)
+
+    // soft cool fill so the gallery resolve isn't flat/contrasty (ramps with the grade)
+    this.fillLight = new THREE.DirectionalLight(0xdfe7f5, 0.0)
+    this.fillLight.position.set(-4, 4, -2)
+    s.add(this.fillLight)
 
     // ---- ground ----
     const ground = new THREE.Mesh(
@@ -248,6 +268,14 @@ export default class BodegaScene {
     this.neonSign.position.set(0, 4.35, 0.95)
     s.add(this.neonSign)
 
+    // halo behind the sign — a big faint amber disc = cheap bloom without a post pass
+    this.haloMat = this._track(
+      new THREE.MeshBasicMaterial({ map: radialTexture('rgba(255,200,61,0.85)', 'rgba(255,200,61,0)'), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false }),
+    )
+    this.halo = new THREE.Mesh(this._track(new THREE.PlaneGeometry(7, 4)), this.haloMat)
+    this.halo.position.set(0, 4.35, 0.9)
+    s.add(this.halo)
+
     // ---- cooler door (the secret door) on a hinge pivot ----
     this.doorPivot = new THREE.Group()
     this.doorPivot.position.set(-doorW / 2, 0, 0.16) // hinge at left edge
@@ -285,6 +313,23 @@ export default class BodegaScene {
     back.position.set(0, 3, -9)
     s.add(back)
 
+    // volumetric spotlight cone — additive, opacity ramps with the interior light (premium, cheap)
+    this.coneMat = this._track(
+      new THREE.MeshBasicMaterial({ color: 0xeaf2ff, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide }),
+    )
+    const cone = new THREE.Mesh(this._track(new THREE.ConeGeometry(1.7, 4.6, 32, 1, true)), this.coneMat)
+    cone.position.set(0, 2.7, -7)
+    s.add(cone)
+
+    // contact shadow under the product so it sits on the pedestal, not floats
+    const shadow = new THREE.Mesh(
+      this._track(new THREE.PlaneGeometry(1.7, 1.7)),
+      this._track(new THREE.MeshBasicMaterial({ map: radialTexture('rgba(0,0,0,0.5)', 'rgba(0,0,0,0)'), transparent: true, depthWrite: false })),
+    )
+    shadow.rotation.x = -Math.PI / 2
+    shadow.position.set(0, 0.92, -7)
+    s.add(shadow)
+
     // ---- pedestal + product (rotates deterministically with progress) ----
     const ped = new THREE.Mesh(
       this._track(new THREE.CylinderGeometry(0.7, 0.8, 0.9, 48)),
@@ -306,9 +351,15 @@ export default class BodegaScene {
     this.progress = clamp01(p)
     const P = this.progress
 
-    // camera dolly + look
+    // camera dolly + look, with a tiny deterministic sway for life (not physics)
     sampleKeyframes(CAM, P, this._camOut)
-    this.camera.position.set(this._camOut.pos[0], this._camOut.pos[1], this._camOut.pos[2])
+    const swayX = Math.sin(P * 21) * 0.02
+    const swayY = Math.cos(P * 17) * 0.015
+    this.camera.position.set(this._camOut.pos[0] + swayX, this._camOut.pos[1] + swayY, this._camOut.pos[2])
+    // FOV "push": widen as we pass through the doorway, settle once inside
+    const push = Math.sin(range(P, 0.3, 0.6) * Math.PI)
+    this.camera.fov = this.baseFov + push * 5
+    this.camera.updateProjectionMatrix()
     this._tmpLook.set(this._camOut.look[0], this._camOut.look[1], this._camOut.look[2])
     this.camera.lookAt(this._tmpLook)
 
@@ -326,12 +377,19 @@ export default class BodegaScene {
     this.scene.fog.far = lerp(26, 18, grade)
 
     // lights cross-fade
+    const interior = smooth(range(P, 0.3, 0.58))
     this.streetLight.intensity = lerp(1.6, 0.08, grade)
-    this.interiorLight.intensity = lerp(0, 2.4, smooth(range(P, 0.3, 0.58)))
+    this.interiorLight.intensity = lerp(0, 2.4, interior)
+    this.fillLight.intensity = grade * 0.5
     this.ambient.intensity = lerp(0.25, 0.55, grade)
 
-    // neon sign fades out once inside
-    this.signMat.opacity = 1 - range(P, 0.3, 0.5)
+    // volumetric cone follows the interior spotlight
+    this.coneMat.opacity = interior * 0.16
+
+    // neon sign + halo fade out once inside
+    const signBase = 1 - range(P, 0.3, 0.5)
+    this.signMat.opacity = signBase
+    this.haloMat.opacity = signBase * 0.8
 
     // product spins + rises as you reach the drop
     this.product.rotation.y = P * Math.PI * 6
@@ -344,11 +402,13 @@ export default class BodegaScene {
   }
 
   render(time = 0) {
-    // subtle neon flicker (atmosphere) — only computed while in hero range
-    if (this._atmosphere && this.signMat.opacity > 0.01) {
-      const f = 0.86 + Math.sin(time * 0.02) * 0.06 + (Math.random() < 0.04 ? -0.25 : 0)
-      this.neonSign.scale.setScalar(1)
-      this.signMat.opacity = Math.max(0, (1 - range(this.progress, 0.3, 0.5)) * f)
+    // subtle neon buzz (atmosphere) — deterministic layered sines (no Math.random),
+    // so ?cap frames at time=0 are reproducible. Only active in the hero range.
+    if (this._atmosphere) {
+      const signBase = Math.max(0, 1 - range(this.progress, 0.3, 0.5))
+      const f = 0.9 + Math.sin(time * 0.018) * 0.05 + Math.sin(time * 0.13) * 0.03 + Math.sin(time * 0.071) * 0.02
+      this.signMat.opacity = signBase * f
+      this.haloMat.opacity = signBase * f * 0.8
       this.needsRender = true
     }
     this.renderer.render(this.scene, this.camera)

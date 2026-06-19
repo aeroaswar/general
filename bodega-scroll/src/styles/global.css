@@ -188,6 +188,8 @@ section.panel {
   display: flex; flex-direction: column; justify-content: flex-end;
   position: relative; overflow: hidden;
 }
+.collab-card { transition: transform 0.5s var(--ease-expo), border-color 0.5s, background 0.5s; }
+.collab-card:hover { transform: translateY(-8px); border-color: rgba(255,200,61,0.5); background: linear-gradient(180deg, rgba(255,200,61,0.1), rgba(255,255,255,0.02)); }
 .collab-card .tag { position: absolute; top: 16px; left: 16px; font-family: var(--grotesk); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); }
 .collab-card h3 { font-family: var(--grotesk); font-weight: 800; font-size: 1.3rem; margin: 0 0 4px; color: var(--cream); }
 .collab-card p { margin: 0; font-size: 0.9rem; color: var(--muted); }
@@ -202,6 +204,58 @@ section.panel {
 .socials a { color: var(--cream); opacity: 0.8; transition: opacity 0.3s, transform 0.3s var(--ease-expo); }
 .socials a:hover { opacity: 1; transform: translateY(-2px); }
 .colophon { font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--glass-line); padding-top: 18px; }
+
+/* ---- Intro loader (P2) ---- */
+.loader {
+  position: fixed; inset: 0; z-index: 40;
+  background: var(--night);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+  transition: opacity 0.8s var(--ease-expo), visibility 0.8s;
+}
+.loader.is-done { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader-mark { font-family: var(--display); font-size: clamp(3rem, 9vw, 6rem); letter-spacing: 0.04em; color: var(--amber); }
+.loader-bar { width: min(220px, 60vw); height: 2px; background: var(--glass-line); border-radius: 2px; overflow: hidden; }
+.loader-bar span { display: block; height: 100%; width: 40%; background: var(--amber); animation: load-sweep 1.1s var(--ease-expo) infinite; }
+@keyframes load-sweep { 0% { transform: translateX(-110%); } 100% { transform: translateX(360%); } }
+.loader-cap { font-family: var(--grotesk); font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+
+/* ---- Top nav (P3) ---- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px clamp(20px, 5vw, 56px);
+  background: linear-gradient(180deg, rgba(11,13,20,0.6), rgba(11,13,20,0));
+  backdrop-filter: blur(6px);
+  transition: transform 0.5s var(--ease-expo), opacity 0.4s;
+}
+.nav--hidden { transform: translateY(-110%); opacity: 0; }
+.nav-logo { font-family: var(--display); font-size: 1.7rem; letter-spacing: 0.06em; color: var(--cream); text-decoration: none; }
+.nav-links { display: flex; gap: 26px; }
+.nav-links a { font-family: var(--grotesk); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.04em; text-decoration: none; color: var(--muted); position: relative; }
+.nav-links a::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 100%; height: 1px; background: var(--amber); transform: scaleX(0); transform-origin: right; transition: transform 0.4s var(--ease-expo); }
+.nav-links a:hover { color: var(--cream); }
+.nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+.nav-bag { font-family: var(--grotesk); font-weight: 800; font-size: 0.82rem; letter-spacing: 0.05em; text-decoration: none; color: var(--ink); background: var(--cream); padding: 0.5em 1em; border-radius: 999px; display: inline-flex; gap: 0.4em; }
+.nav-bag span { opacity: 0.6; }
+@media (max-width: 720px) { .nav-links { display: none; } }
+
+/* ---- Scroll progress rail (P4) ---- */
+.rail { position: fixed; right: 26px; top: 50%; transform: translateY(-50%); z-index: 20; --p: 0; }
+.rail-track { position: absolute; left: 5px; top: 6px; bottom: 6px; width: 1px; background: var(--glass-line); }
+.rail-fill { position: absolute; top: 0; left: 0; width: 100%; height: calc(var(--p) * 100%); background: var(--amber); transition: height 0.1s linear; }
+.rail ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 22px; }
+.rail a { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.rail-dot { width: 11px; height: 11px; border-radius: 50%; border: 1px solid var(--glass-line); background: var(--night); transition: background 0.3s, border-color 0.3s; }
+.rail a:hover .rail-dot { background: var(--amber); border-color: var(--amber); }
+.rail-label { font-family: var(--grotesk); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); opacity: 0; transform: translateX(6px); transition: opacity 0.3s, transform 0.3s var(--ease-expo); }
+.rail a:hover .rail-label { opacity: 1; transform: translateX(0); }
+@media (max-width: 860px) { .rail { display: none; } }
+
+/* ---- Magnetic button (P5) — quick transform so it tracks the cursor ---- */
+.btn--magnetic { transition: transform 0.18s var(--ease-expo), box-shadow 0.5s var(--ease-expo); will-change: transform; }
+
+/* ---- Footer address ---- */
+.foot-address { font-family: var(--grotesk); font-size: 0.85rem; letter-spacing: 0.04em; color: var(--cream); opacity: 0.8; }
 
 /* ---- Debug overlay (?debug) ---- */
 .debug {
