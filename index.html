@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Bodega Creative Studio — Credentials 2026</title>
 <meta name="description" content="Bodega Creative is a studio for brand-first social media ecosystems — from content strategy to daily execution, built to strengthen brand presence and drive measurable growth. A scroll-driven Three.js + GSAP experience." />
-<meta name="theme-color" content="#f5f2ec" />
+<meta name="theme-color" content="#F2E400" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Bodega Creative Studio — Credentials 2026" />
 <meta property="og:description" content="Great brands don't just speak — they shape culture. A creative studio for brand-first social media ecosystems." />
@@ -22,12 +22,12 @@
    Accent: a single warm ember, used sparingly.
    ─────────────────────────────────────────────────────────────────────────── */
 :root{
-  --paper:#f5f2ec;          /* warm off-white, paper          */
-  --ink:#15120d;            /* near-black warm ink            */
-  --muted:#5c574e;          /* warm gray                      */
-  --border:rgba(21,18,13,.12);
-  --card:rgba(252,250,245,.72);
-  --ember:#c8480f;          /* burnt amber accent             */
+  --paper:#F2E400;          /* live background — set by JS to the current brand colour */
+  --ink:#0d0d0d;            /* live text colour — set by JS (black/white)            */
+  --muted:color-mix(in srgb, var(--ink) 56%, transparent);
+  --border:color-mix(in srgb, var(--ink) 18%, transparent);
+  --card:color-mix(in srgb, var(--ink) 6%, transparent);
+  --ember:var(--ink);
   --radius:.85rem;
   --logo:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARwAAABiCAYAAACCq2zlAAAGlUlEQVR4nO2d2ZLbIBREUSr//8vKQ0opjSLZLHdp0DmPMza0L9CsQtu+7wUAIIJf2QIA4D1gOAAQBoYDAGFgOAAQBoYDAGFgOAAQBoYDAGH8zsh027Yfh3/2fd8ydIAdlOnaXMv3oLWct+iDf1bCQYenMi2Fcl2BT+VbSlsZh45wPgnftm2ncgJocbTZp7a5bdve0nZTplSwDt96P5iXs9nclfO+79vxv1rTCVs0pmICrEVPm5bZpWI6NR90IuvyNJU6RjXXv52/84mQKRUVcz1qypROZD1G27L7CIeK+U4oU7gjfUpFxZwPRqzv4e581bXNftvJOuNqOFTMd0InMj9eZeh68M/ywBBowBT5XdScw/n0/ytui8aMbt4JZrMmVu057eAfFXM+6ETex7ct79Z27GI4PRVT/XkcZX0RU9eRqZT61Fq5bM9k6rRK33wNp7Zi9vaWURVAWd/ISKNXX4tpZOhrQV3fwSw6W0gxHAs8AmqpfSV93p3IU3pWaR2o6yvFvv2oGY+p4WTM8aOmC72soC9r7WaF2NUyi85RpjecUvymCVbMrE9hoXjm+NUQoVPFdMwMJ7tiNt88FqzXegpjTe+CbxTK8VM3xAMF0zE5aaxQKWs1HHd3eOu5y9fyc9bc5atQrq0ol+3od0ZRKM/0Z6ks+RZQhYB/QkmfkpZS6vRkam7JexadLvmPTqlGf0DtMK82H+upwVv1WVVM60XpjPhZ6GtNpyXd1vQzp1ZphuM57316mrWFHn29h+Na9XnHLqoTuaJctrV5WRpihk5vhgwnMogt+Y4cQovYcejV94Zt4pb4RZdtTZ6ZHUpLnlmGE/YsVcYPjG7MRzoeC8QZ+lrTtUpnZn3b5TLxjDKu4U5XyCnv3hFOdiDVT41GroG08pbYlZKjr8dwVOLobTpdu1TZZmPF3e1lSnhps+ztLdLxSjdb3wyLuNG4bosrB1JZWynoGyV1J6bhrJenTsUyajYchUCOpq9YEGfQN4a6voNZdFriMsJ5YyCtUI8d+myYRac1TYajvL9fi7o+ZdRjp67vQFVnhC7TEY5qIA/QB9m8vYyrz+FkP4NxJeMwlSfq+krRvu5hhvgpExU/sxEOBQ5WrNaZHETrVNngOVNlOKrHpGtBH1iiNtqfiaWup1BBvUKq62thFrNW1Rmta0rDWeWkcyn6+mBOVDuVr4Yz+3QKfqJaEWdB8fmkXjJ0TTfCUW8w6vpWQrUhZ6N8Xm46w1kJ1V0LuIf4jTN0H456g1HXp072CGK1eEagPLopZaIRjnrlQ9/aED8bpjEc6IfGMob35edWqI9uSpnEcNQbjLo+6GeWsp1FZ9idxr2oBxJ9Y1z1ZffAZyxid73j2APFRxieGBrheFfm2RqLGsr6nm7FO/8t+9a+ms9lN+JZdB7ITqmsehcLLV5pq+vzQllbKfM0YvU43iFpOMoFrnJf7RMt+mrSskinNU2P1+zU4nGSOFtntjGe+Wo4kcHsaczR+mo/a32zv0daNRoz9KW9FXKCRmzZoWRgMsIZDUBrEFsLO1NfyMvFOiphrWFbMNJIIjoU7/p35NH6HYs0lEY3pTS8CM9jj98qgF4954r67vJS0qcev095qLSRkfy8MTWcg9FC8U73rfo+pa+gzzt+3o3XakprNWVSM5tSGl/1mzl3jF5vaCVj4bCXUcPxQD1+GWtyIyiaTSmiu1RXVIN3UKNP5Tc86cjSt1e+blld3/nznnpmp2mEU0qsg2ctztWiru+K2igxej2jlRHzUC/nLJoNp5SYYKoXtrq+O1SmBSsbzRn1cs6gy3D+fdkhoJbBUtan3oi89KnouMOjoaqXczRDhlOK/or6m/R9SqtXv9euWFTeNUSdRfLOo5QXGM6PxBxOulqifpLUa+vX4rdEl63atM6KkTh++6662ZRibDgAVoyar8chvGw8RrDRTLEtDnDHpy3rWRrg28BwYDpaz8aswgrmKn/jH8CZmRqXB7P/fkY4IMndKGb2xgaMcEAcTGYtGOEAQBgYDgCEgeHAkqxwSG5FMBwACAPDgeVQuQQL/gfDgaVY8ZGGlcBwYBkY2ejDORyQo+d1v+rvvIK/8LQ4SNF6vYb6lSPwEwwHZPCcEmE2GrCGAwBhYDiwPIxudGDRGJYFo9GDEQ7IYGkQmI0mLBqDHF7vJ4d8GOGAHL2mgdnowwgH5Hka8WAw84HhAEAYTKkAIAwMBwDCwHAAIAwMBwDCwHAAIAwMBwDCwHAAIIw/EWF3yBER1B4AAAAASUVORK5CYII=");
 }
@@ -192,7 +192,7 @@ footer a:hover{text-decoration:underline}
 .svc{background:var(--card);padding:26px;display:flex;flex-direction:column;backdrop-filter:blur(6px)}
 .svc-head{display:flex;align-items:center;justify-content:space-between}
 .svc .n,.prin .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
-.svc h3{font-family:'Fraunces',serif;font-size:clamp(24px,3.2vw,30px);line-height:1.04;margin-top:12px;font-weight:500}
+.svc h3{font-family:'Fraunces',serif;font-size:clamp(24px,3.2vw,30px);line-height:1.04;margin-top:12px;font-weight:500;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .svc-sum{margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--muted);max-width:40ch}
 .svc-list{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--border)}
 .svc-list li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
@@ -271,18 +271,9 @@ body.no-webgl{background-image:
   linear-gradient(to right,var(--border) 1px,transparent 1px),
   linear-gradient(to bottom,var(--border) 1px,transparent 1px);background-size:34px 34px}
 
-/* ── dark theme: same tokens, inverted values (the original's product mode) ── */
-html.dark{
-  --paper:#0f0f0f;
-  --ink:#f4f1ea;
-  --muted:#9c968b;
-  --border:rgba(255,255,255,.13);
-  --card:rgba(24,23,21,.55);
-  --ember:#f67a31;
-}
-html.dark .grain{mix-blend-mode:screen;opacity:.07}
-html.dark .logo{filter:invert(1)}              /* black wordmark → white on dark */
-html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
+/* ── contrast flip: JS adds .on-dark when the bg is dark (e.g. the blue) → white text ── */
+.on-dark .logo{filter:invert(1)}               /* black wordmark → white on dark backgrounds */
+.on-dark .grain{mix-blend-mode:screen;opacity:.08}
 
 @media (prefers-reduced-motion: reduce){
   .cue .bar::after{animation:none;display:none}
@@ -291,19 +282,8 @@ html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
 }
 </style>
 <script>
-  /* Run before first paint: set the entrance-hiding class (skipped for
-     reduced-motion) and the persisted/preferred colour theme — no FOUC. */
-  (function(){
-    var d=document.documentElement;
-    if(!matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('anim');
-    try{
-      var t=localStorage.getItem('bodega-theme');
-      if(t==='dark' || (!t && matchMedia('(prefers-color-scheme: dark)').matches)) d.classList.add('dark');
-    }catch(e){}
-    if(d.classList.contains('dark')){
-      var m=document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute('content','#0f0f0f');
-    }
-  })();
+  /* set the entrance-hiding class before first paint (skipped for reduced-motion) */
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');
 </script>
 </head>
 <body>
@@ -324,10 +304,6 @@ html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
         <a href="#contact">Contact</a>
       </nav>
       <div class="right">
-        <button class="btn theme-toggle" id="themeBtn" type="button" aria-label="Toggle light or dark theme">
-          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
-          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
-        </button>
         <a href="#work" class="btn signin">Our work</a>
         <a href="#contact" class="btn ink">Start a project
           <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
@@ -766,29 +742,26 @@ function webglOK(){
    PHASE KEYFRAMES — one master progress p∈[0..3] drives camera + palette.
    0 Hero · 1 Three loops · 2 Pillars · 3 Closing surface (grades to ink).
    ──────────────────────────────────────────────────────────────────────── */
-const PHASES_LIGHT = [
-  { cam:[0.0,0.6,13.0], tgt:[0,0.0,0], bg:'#f5f2ec', point:'#1b1813', ember:'#c8480f', emix:0.16 },
-  { cam:[0.4,1.7, 9.4], tgt:[0,0.2,0], bg:'#f2eee4', point:'#1b1813', ember:'#c8480f', emix:0.52 },
-  { cam:[0.0,4.3,11.0], tgt:[0,0.7,0], bg:'#eeece5', point:'#23201a', ember:'#c8480f', emix:0.42 },
-  { cam:[0.0,7.6,10.4], tgt:[0,0.2,0], bg:'#14110d', point:'#efe9df', ember:'#ee6a2c', emix:1.0 }
+/* The brand's four credential colours — the scroll grades the whole canvas through
+   them (yellow → mint → electric blue → magenta). Camera/geometry keyframes ride along. */
+const BRAND = [
+  { cam:[0.0,0.6,13.0], tgt:[0,0.0,0], bg:'#F2E400' }, // yellow  · Intro
+  { cam:[0.4,1.7, 9.4], tgt:[0,0.2,0], bg:'#2FE4A4' }, // mint    · What makes us different
+  { cam:[0.0,4.3,11.0], tgt:[0,0.7,0], bg:'#2A46E8' }, // blue    · Our services
+  { cam:[0.0,7.6,10.4], tgt:[0,0.2,0], bg:'#FF2E93' }  // magenta · Project flow
 ];
-/* dark mode keeps the same camera/geometry but swaps to a near-black ground with
-   warm-white points and a brighter ember — the toggle re-grades the whole scene. */
-const PHASES_DARK = [
-  { cam:[0.0,0.6,13.0], tgt:[0,0.0,0], bg:'#101010', point:'#ece7dd', ember:'#f67a31', emix:0.18 },
-  { cam:[0.4,1.7, 9.4], tgt:[0,0.2,0], bg:'#0d0d0d', point:'#ece7dd', ember:'#f67a31', emix:0.58 },
-  { cam:[0.0,4.3,11.0], tgt:[0,0.7,0], bg:'#121013', point:'#e6e1d7', ember:'#f8723a', emix:0.46 },
-  { cam:[0.0,7.6,10.4], tgt:[0,0.2,0], bg:'#080808', point:'#f3eee5', ember:'#ff7d36', emix:1.0 }
-];
-let PH = document.documentElement.classList.contains('dark') ? PHASES_DARK : PHASES_LIGHT;
+let PH = BRAND;
 
-/* Map page scroll 0..1 → scene phase 0..3. The body stays in the light phases;
-   the ink grade is reserved for the final ~14% so the added content sections
-   (Services / About / Contact) stay readable over the canvas. */
-function progToPhase(prog){
-  prog = Math.max(0, Math.min(1, prog));
-  return prog < 0.86 ? (prog/0.86)*2.25 : 2.25 + ((prog-0.86)/0.14)*0.75;
+/* pick black or white text for maximum WCAG contrast against the live background */
+function _lin(c){ return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); }
+function inkForHex(hex){
+  const r=parseInt(hex.slice(1,3),16)/255, g=parseInt(hex.slice(3,5),16)/255, b=parseInt(hex.slice(5,7),16)/255;
+  const L=0.2126*_lin(r)+0.7152*_lin(g)+0.0722*_lin(b);
+  return (1.05/(L+0.05)) > ((L+0.05)/0.05) ? '#ffffff' : '#0d0d0d';
 }
+
+/* colour spreads evenly across the scroll; geometry morph is unchanged */
+function progToPhase(prog){ return Math.max(0, Math.min(1, prog)) * 3; }
 
 let api = { snap(){}, prog(){return 0} }; // becomes the window.__bodega handle
 /* Load three only if WebGL is available; a failed import just leaves the clean
@@ -849,11 +822,14 @@ function startScene(THREE){
   function smooth(t){ return t*t*(3-2*t); }
 
   /* The single source of truth: set everything from p∈[0..3] + scroll s∈[0..1]. */
+  const docEl = document.documentElement;
+  let lastPaper = null;
   function setProgress(p, s){
     p = Math.max(0, Math.min(3, p));
     curP = p; curScroll = s;
     const seg = Math.min(2, Math.floor(p));
-    const f = smooth(p - seg);
+    const rf = p - seg;
+    const f = smooth(rf);                          // camera / geometry
     const A = PH[seg], B = PH[seg+1];
 
     camA.set(...A.cam); camB.set(...B.cam);
@@ -866,16 +842,28 @@ function startScene(THREE){
     camera.position.y += -py*0.5;
     camera.lookAt(curTgt);
 
-    cBgA.set(A.bg); cBgB.set(B.bg); cBg.lerpColors(cBgA,cBgB,f); scene.background.copy(cBg);
-    cPtA.set(A.point); cPtB.set(B.point); mat.uniforms.uPoint.value.lerpColors(cPtA,cPtB,f);
-    cEmA.set(A.ember); cEmB.set(B.ember); mat.uniforms.uEmber.value.lerpColors(cEmA,cEmB,f);
-    mat.uniforms.uEmberMix.value = A.emix + (B.emix-A.emix)*f;
-    mat.uniforms.uProg.value = p;
+    // colour holds each brand colour, then crosses quickly mid-band (deck-like blocks)
+    let fc = (rf - 0.4) / 0.2; fc = smooth(Math.max(0, Math.min(1, fc)));
+    cBgA.set(A.bg); cBgB.set(B.bg); cBg.lerpColors(cBgA, cBgB, fc);
+    scene.background.copy(cBg);
 
-    // thread follows the ember colour and draws in across the whole journey
-    thread.mesh.material.color.copy(mat.uniforms.uEmber.value);
-    thread.mesh.material.opacity = 0.10 + 0.7*s;
+    const paperHex = '#' + cBg.getHexString();
+    const inkHex = inkForHex(paperHex);
+    mat.uniforms.uPoint.value.set(inkHex);
+    mat.uniforms.uEmber.value.set(inkHex);
+    mat.uniforms.uEmberMix.value = 0;
+    mat.uniforms.uProg.value = p;
+    thread.mesh.material.color.set(inkHex);
+    thread.mesh.material.opacity = 0.12 + 0.55*s;
     thread.setDraw(s);
+
+    // drive the DOM palette from the same colours (only when it actually changes)
+    if (paperHex !== lastPaper){
+      lastPaper = paperHex;
+      docEl.style.setProperty('--paper', paperHex);
+      docEl.style.setProperty('--ink', inkHex);
+      docEl.classList.toggle('on-dark', inkHex === '#ffffff');
+    }
   }
 
   /* render loop — single rAF; pauses when the tab is hidden */
@@ -927,8 +915,8 @@ function startScene(THREE){
   };
   window.__bodega = api;
 
-  /* the DOM/UX theme toggle calls this to swap the palette + repaint at current scroll */
-  window.__bodegaApplyTheme = (dark)=>{ PH = dark ? PHASES_DARK : PHASES_LIGHT; setProgress(curP, curScroll); };
+  /* colour is fully scroll-driven now; kept as a harmless repaint hook */
+  window.__bodegaApplyTheme = ()=>{ setProgress(curP, curScroll); };
 
   /* capture mode for deterministic screenshots: ?cap=0.5  or  ?cap=close */
   if (capParam!==null){
@@ -996,9 +984,9 @@ function buildField(THREE, N, PIX){
     uniforms:{
       uProg:{value:0}, uTime:{value:0}, uPix:{value:PIX},
       uSize:{value: innerWidth<700?180:230},
-      uPoint:{value:new THREE.Color(PH[0].point)},
-      uEmber:{value:new THREE.Color(PH[0].ember)},
-      uEmberMix:{value:PH[0].emix},
+      uPoint:{value:new THREE.Color('#0d0d0d')},
+      uEmber:{value:new THREE.Color('#0d0d0d')},
+      uEmberMix:{value:0},
       uAlpha:{value:0.82}
     },
     vertexShader:`
@@ -1058,7 +1046,7 @@ function buildThread(THREE){
   const TUBE=520;
   const geo=new THREE.TubeGeometry(curve, TUBE, 0.03, 6, false);
   const total=geo.index.count;
-  const mat=new THREE.MeshBasicMaterial({ color:PH[0].ember, transparent:true, opacity:0.1, depthWrite:false });
+  const mat=new THREE.MeshBasicMaterial({ color:'#0d0d0d', transparent:true, opacity:0.1, depthWrite:false });
   const mesh=new THREE.Mesh(geo, mat);
   mesh.frustumCulled=false;
   return { mesh, setDraw(s){ geo.setDrawRange(0, Math.floor(total*Math.max(0,Math.min(1,s)))); } };
