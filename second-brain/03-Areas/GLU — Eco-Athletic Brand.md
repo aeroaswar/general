@@ -7,6 +7,10 @@ tags: [area, glu, brand, business, apparel]
 
 _Women's eco-friendly athletic apparel brand — my flagship venture._
 
+> **Canonical positioning:** **eco-athletic masterbrand** (movement: "female athletes who
+> refuse to compromise"). **Loungewear** = the comfort-led **entry/wedge line** ("GLU Lounge
+> Essentials™"), not the masterbrand. → [[GLU — Website (build notes)]]
+
 ## Standards
 - Position as a **movement**, not a product: "for female athletes who refuse to
   compromise" on sustainability or performance.

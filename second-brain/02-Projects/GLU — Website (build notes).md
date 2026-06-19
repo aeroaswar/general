@@ -11,8 +11,9 @@ tags: [project, glu, web, marketing, positioning]
 The GLU strategy site — the Hormozi offer-engineering deck rendered as a single-page site.
 **Title:** "GLU — Elevated Eco-Loungewear for Women" · **Hero:** *"Comfort Without Compromise."*
 
-> Note: this page frames GLU as **eco-loungewear** (vs "eco-athletic" in the deck) — same
-> movement thesis, softer lifestyle framing. Worth deciding the canonical positioning.
+> **Canonical positioning (decided):** GLU is an **eco-athletic masterbrand**; this
+> comfort-led site is the **loungewear entry/wedge line** ("GLU Lounge Essentials™") —
+> the low-friction front door into the athletic movement. See [[GLU — Eco-Athletic Brand]].
 
 ## Page structure (nav → sections)
 1. **The Opportunity** — *"Right product. Right customer. Wrong story."* ("The Perfect Moment to Own Eco-Lounge"; "Where GLU Stands & Where to Go").
