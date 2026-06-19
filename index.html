@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>bodega® — the studio operating system</title>
+<meta name="description" content="Bodega is the operating system for studios that run editorial-grade content programs across many clients. Publish on calendar, not on vibes. A scroll-driven Three.js + GSAP experience." />
+<meta name="theme-color" content="#f5f2ec" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="bodega® — the studio operating system" />
+<meta property="og:description" content="Publish on calendar, not on vibes. Strategy in. Approved content out." />
+<link rel="icon" href="data:image/png;base64,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" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+<style>
+/* ───────────────────────────────────────────────────────────────────────────
+   bodega® — editorial-monochrome design system, reinterpreted as a cinematic
+   scroll experience. Light "paper" baseline that grades to "ink" at the close.
+   Fonts: Fraunces (display) · Instrument Sans (body) · JetBrains Mono (labels).
+   Accent: a single warm ember, used sparingly.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root{
+  --paper:#f5f2ec;          /* warm off-white, paper          */
+  --ink:#15120d;            /* near-black warm ink            */
+  --muted:#5c574e;          /* warm gray                      */
+  --border:rgba(21,18,13,.12);
+  --card:rgba(252,250,245,.72);
+  --ember:#c8480f;          /* burnt amber accent             */
+  --radius:.85rem;
+  --logo:url("data:image/png;base64,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");
+}
+*{box-sizing:border-box}
+html{ -webkit-text-size-adjust:100%; }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:'Instrument Sans',ui-sans-serif,system-ui,sans-serif;
+  font-feature-settings:"ss01","cv11"; -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision; line-height:1.5;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:'Fraunces',ui-serif,Georgia,serif;letter-spacing:-.01em;font-weight:500;margin:0}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+em{font-style:italic}
+.serif{font-family:'Fraunces',ui-serif,Georgia,serif}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+
+/* fixed WebGL backdrop + film grain — the living "operating surface" */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+#bg canvas{display:block;width:100%!important;height:100%!important}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");}
+
+/* page chrome sits above the canvas */
+.wrap{position:relative;z-index:1}
+.skip{position:fixed;left:12px;top:12px;z-index:70;background:var(--ink);color:var(--paper);
+  padding:8px 12px;font-size:12px;border-radius:6px;transform:translateY(-150%);transition:transform .36s cubic-bezier(.32,.72,0,1)}
+.skip:focus{transform:none}
+
+/* header */
+header.bar{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--border);
+  background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px) saturate(1.1)}
+.bar .row{max-width:1400px;margin:0 auto;padding:0 16px;height:64px;display:flex;align-items:center;gap:16px}
+.logo{display:inline-block;background:var(--logo) left center/contain no-repeat;height:26px;width:96px}
+.logo.white{filter:invert(1)}
+nav.main{margin-left:auto;display:none;align-items:center;gap:2px}
+nav.main a{padding:6px 12px;font-size:13px;border-radius:7px;color:color-mix(in srgb,var(--ink) 70%,transparent);transition:background-color .25s,color .25s}
+nav.main a:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.bar .right{margin-left:auto;display:flex;align-items:center;gap:8px}
+nav.main + .right{margin-left:12px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;font-size:12.5px;
+  border-radius:7px;border:1px solid var(--border);cursor:pointer;white-space:nowrap;
+  transition:transform .26s cubic-bezier(.32,.72,0,1),background-color .26s,border-color .26s,color .26s;background:transparent;color:inherit}
+.btn:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.btn:active{transform:scale(.975)}
+.btn.ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn.ink:hover{background:color-mix(in srgb,var(--ink) 88%,var(--ember))}
+.btn.lg{height:42px;padding:0 20px;font-size:13px;border-radius:8px}
+.signin{display:none}
+
+/* layout primitives */
+.container{max-width:1400px;margin:0 auto;padding-left:16px;padding-right:16px}
+.kicker{font-size:10px;text-transform:uppercase;letter-spacing:.2em;font-weight:500;
+  color:var(--muted);display:inline-flex;align-items:center;gap:8px}
+.kicker svg{width:12px;height:12px;color:var(--ember)}
+.display{font-family:'Fraunces',serif;font-optical-sizing:auto;letter-spacing:-.025em;line-height:.96;font-weight:500;text-wrap:balance}
+.rule{border-top:1px solid var(--border)}
+.sheet{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  backdrop-filter:blur(7px);box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 10px 30px -22px rgba(21,18,13,.4)}
+.muted{color:var(--muted)}
+.ember{color:var(--ember)}
+
+/* sections share generous vertical rhythm so each phase has room to breathe */
+section{position:relative}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:96px}
+.hero .container{padding-bottom:0}
+.hero h1{font-size:clamp(46px,11vw,92px);letter-spacing:-.035em;line-height:1.0;max-width:14ch}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line>span{display:block}
+.hero p{margin-top:22px;max-width:42ch;font-size:15px;line-height:1.65;color:var(--muted)}
+.cta-row{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
+
+/* hero client stripe */
+.stripe{margin-top:54px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stripe .container{display:flex;align-items:center;gap:24px;padding-top:18px;padding-bottom:18px;overflow:hidden}
+.stripe .label{flex:none}
+.marquee{display:flex;align-items:center;gap:28px;font-size:13px;color:var(--muted);white-space:nowrap;overflow-x:auto;scrollbar-width:none}
+.marquee::-webkit-scrollbar{display:none}
+.marquee .who{font-family:'Fraunces',serif;font-style:italic;color:var(--ink)}
+.dot{opacity:.5}
+
+/* generic content sections */
+.block{padding:88px 0}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:32px}
+.span4{grid-column:span 12}
+.span5{grid-column:span 12}
+.span7{grid-column:span 12}
+.span8{grid-column:span 12}
+h2.big{font-size:clamp(28px,4.4vw,34px);line-height:1.04;margin-top:12px}
+.lead{margin-top:14px;font-size:13.5px;line-height:1.7;color:var(--muted);max-width:46ch}
+
+.cards3{display:grid;gap:16px}
+.pcard{border:1px solid var(--border);border-radius:var(--radius);padding:22px;background:var(--card);
+  display:flex;flex-direction:column;gap:12px;min-height:188px;backdrop-filter:blur(6px)}
+.pcard .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.pcard h3{font-family:'Fraunces',serif;font-size:19px;line-height:1.15;font-weight:500}
+.pcard p{font-size:12.5px;line-height:1.6;color:var(--muted)}
+
+/* strategic rule */
+.spec{display:grid;gap:12px}
+.specgrid{display:grid;gap:12px}
+.scard{border:1px solid var(--border);border-radius:10px;padding:14px;background:color-mix(in srgb,var(--paper) 70%,var(--card))}
+.scard .kicker{margin-bottom:6px}
+.scard .v{font-size:13px;line-height:1.3}
+.codecard{margin-top:6px;border:1px solid var(--border);border-radius:10px;padding:16px;background:color-mix(in srgb,var(--paper) 60%,var(--card))}
+.codecard code{font-family:'JetBrains Mono',monospace;font-size:12px;color:color-mix(in srgb,var(--ink) 82%,transparent)}
+.uline{text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px;text-underline-offset:4px}
+
+/* closing — the ink panel */
+.closewrap{padding:96px 0 40px}
+.panel{border:1px solid var(--border);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr}
+.panel .text{padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.panel .text h2{font-size:clamp(30px,5vw,42px);margin-top:12px}
+.panel .text p{margin-top:16px;font-size:14px;line-height:1.7;color:var(--muted);max-width:40ch}
+.panel .brandbox{position:relative;min-height:300px;display:grid;place-items:center;
+  background:#100d09;color:#efe8dc;overflow:hidden;padding:40px}
+.panel .brandbox .gridpaper,.panel .brandbox .nz{position:absolute;inset:0}
+.panel .brandbox .gridpaper{opacity:.16;background-image:
+  linear-gradient(to right,rgba(255,255,255,.5) 1px,transparent 1px),
+  linear-gradient(to bottom,rgba(255,255,255,.5) 1px,transparent 1px);background-size:32px 32px}
+.panel .brandbox .nz{opacity:.06;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.panel .brandbox .logo{height:64px;width:230px;position:relative;z-index:2}
+.panel .brandbox .tag{position:absolute;right:18px;bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.6}
+
+/* footer */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);margin-top:40px}
+footer .container{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;padding-top:44px;padding-bottom:48px}
+footer .col.lead-col{grid-column:span 2}
+footer p.about{margin-top:14px;font-size:13px;line-height:1.65;color:var(--muted);max-width:42ch}
+footer .kicker{margin-bottom:12px;display:block}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px}
+footer a:hover{text-decoration:underline}
+
+/* scroll cue — CSS-only loop (spares the JS thread), Animista-style */
+.cue{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;
+  display:flex;flex-direction:column;align-items:center;gap:8px;font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted);transition:opacity .5s}
+.cue .bar{width:1px;height:40px;background:linear-gradient(var(--ink),transparent);position:relative;overflow:hidden}
+.cue .bar::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--ember);
+  animation:cueRun 2.1s cubic-bezier(.7,0,.3,1) infinite}
+@keyframes cueRun{0%{top:-45%}60%,100%{top:100%}}
+
+/* progress index rail (right side) */
+.rail{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:50;display:none;
+  flex-direction:column;gap:14px;align-items:flex-end}
+.rail button{appearance:none;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);transition:color .3s}
+.rail button .tick{width:18px;height:1px;background:currentColor;transition:width .3s,background-color .3s}
+.rail button[aria-current="true"]{color:var(--ink)}
+.rail button[aria-current="true"] .tick{width:30px;background:var(--ember)}
+
+/* responsive */
+@media(min-width:700px){
+  .span4{grid-column:span 4}.span5{grid-column:span 5}.span7{grid-column:span 7}.span8{grid-column:span 8}
+  .cards3{grid-template-columns:repeat(3,1fr)}
+  .specgrid{grid-template-columns:repeat(3,1fr)}
+  .panel{grid-template-columns:1fr 1fr}
+  .panel .text{padding:56px}
+  nav.main{display:flex}.signin{display:inline-flex}
+  footer .container{grid-template-columns:repeat(4,1fr)}
+  footer .col.lead-col{grid-column:span 2}
+  .rail{display:flex}
+  .container{padding-left:40px;padding-right:40px}
+  .hero{padding-top:120px}
+}
+@media(min-width:700px) and (max-width:1000px){ .signin{display:none} }
+
+/* entrance states — only applied when JS will animate (html.anim) */
+html.anim [data-reveal]{opacity:0}
+html.anim .hero h1 .line>span{transform:translateY(115%)}
+
+/* graceful: no webgl → keep a faint grid-paper so the page isn't flat */
+body.no-webgl{background-image:
+  linear-gradient(to right,var(--border) 1px,transparent 1px),
+  linear-gradient(to bottom,var(--border) 1px,transparent 1px);background-size:34px 34px}
+
+@media (prefers-reduced-motion: reduce){
+  .cue .bar::after{animation:none;display:none}
+  html.anim [data-reveal]{opacity:1}
+  html.anim .hero h1 .line>span{transform:none}
+}
+</style>
+<script>
+  /* Set the entrance-hiding class before first paint to avoid a flash of
+     content that then re-animates. Skipped for reduced-motion. */
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.documentElement.classList.add('anim');
+  }
+</script>
+</head>
+<body>
+<a href="#main" class="skip">Skip to content</a>
+
+<div id="bg" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="wrap">
+  <header class="bar">
+    <div class="row">
+      <a href="#top" class="logo" aria-label="bodega — home"></a>
+      <nav class="main" aria-label="Primary">
+        <a href="#top">Home</a>
+        <a href="#what">Services</a>
+        <a href="#rule">About</a>
+        <a href="#close">Contact</a>
+      </nav>
+      <div class="right">
+        <a href="#close" class="btn signin">Sign in</a>
+        <a href="#close" class="btn ink">Sign up
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ░░ HERO ░░ -->
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="kicker" data-reveal>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 4v16M4 8l16 8M20 8 4 16"/></svg>
+          Studio operating system · v1
+        </div>
+        <h1>
+          <span class="line"><span>Publish on calendar,</span></span>
+          <span class="line"><span><em class="serif" style="color:color-mix(in srgb,var(--ink) 64%,transparent)">not on vibes.</em></span></span>
+        </h1>
+        <p data-reveal>Bodega is the operating system for studios that run editorial-grade content programs across many clients — each with a different industry, audience, phase, and pillar framework. Strategy in. Approved content out.</p>
+        <div class="cta-row" data-reveal>
+          <a href="#close" class="btn ink lg">Sign up
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+          <a href="#what" class="btn lg">See services</a>
+        </div>
+      </div>
+      <div class="stripe" data-reveal>
+        <div class="container">
+          <div class="kicker label">In the workspace</div>
+          <div class="marquee">
+            <span><span class="who">Nusa Health Foundation</span> <span class="dot">·</span> Public Health · SEA</span>
+            <span><span class="who">Atlas Coffee Group</span> <span class="dot">·</span> Premium F&amp;B · SG/ID/PH</span>
+            <span><span class="who">Maritime EV Labs</span> <span class="dot">·</span> CleanTech · Marine</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ WHAT BODEGA DOES — three loops ░░ -->
+    <section class="block" id="what">
+      <div class="container grid12">
+        <div class="span4">
+          <div class="kicker" data-reveal>What Bodega does</div>
+          <h2 class="display big" data-reveal>Three loops,<br>one surface.</h2>
+          <p class="lead" data-reveal>Every studio runs the same three loops, badly, across spreadsheets and chat. Bodega collapses them into one editorial surface that adapts to each client.</p>
+        </div>
+        <div class="span8 cards3">
+          <div class="pcard" data-reveal>
+            <div class="n">01</div>
+            <h3>Editorial planning</h3>
+            <p>Phase-and-pillar frameworks tuned to each client — never a static template.</p>
+          </div>
+          <div class="pcard" data-reveal>
+            <div class="n">02</div>
+            <h3>Content operations</h3>
+            <p>Brief, draft, review, approve, schedule, post. One surface, one timeline.</p>
+          </div>
+          <div class="pcard" data-reveal>
+            <div class="n">03</div>
+            <h3>Client collaboration</h3>
+            <p>A clean, role-aware portal your clients will actually open on a Monday.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ STRATEGIC RULE — phases & pillars ░░ -->
+    <section class="block rule" id="rule" style="border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--card) 30%,transparent)">
+      <div class="container grid12" style="align-items:center">
+        <div class="span5">
+          <div class="kicker" data-reveal>Strategic rule</div>
+          <h2 class="display" style="font-size:clamp(28px,5vw,34px);font-style:italic;margin-top:12px;font-family:'Fraunces',serif" data-reveal>
+            Phases and pillars are <span class="uline" style="font-style:normal">never</span> universal.
+          </h2>
+          <p class="lead" data-reveal>Each project owns its own taxonomy, so a health campaign, coffee launch, and marine mobility program can operate with different logic inside the same operating surface.</p>
+        </div>
+        <div class="span7">
+          <div class="specgrid">
+            <div class="scard" data-reveal><div class="kicker">Client</div><div class="v">Nusa Health Foundation</div></div>
+            <div class="scard" data-reveal><div class="kicker">Project</div><div class="v">Public Health Trust Campaign</div></div>
+            <div class="scard" data-reveal><div class="kicker">Framework</div><div class="v">Literacy · Trust · Activation</div></div>
+            <div class="scard" data-reveal><div class="kicker">Pillars</div><div class="v">Medical Authority · Human Impact</div></div>
+            <div class="scard" data-reveal><div class="kicker">Outputs</div><div class="v">Carousel · Reels · Newsletter</div></div>
+            <div class="scard" data-reveal><div class="kicker">Report</div><div class="v">Consistency · Turnaround · Mix</div></div>
+          </div>
+          <div class="codecard" data-reveal>
+            <div class="kicker" style="margin-bottom:8px">In the data model</div>
+            <code>Project&nbsp;→&nbsp;<span class="ember">has_many</span> Phases · Pillars · AudienceSegments</code>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ CLOSING — a workspace clients actually open ░░ -->
+    <section class="closewrap" id="close">
+      <div class="container">
+        <div class="panel" data-reveal>
+          <div class="text">
+            <div>
+              <div class="kicker">Studio operating system</div>
+              <h2 class="display">A workspace clients <em class="serif ember">actually</em> open.</h2>
+              <p>Role-aware. Calm. Editorial. Bodega is for studios that take publishing seriously and treat client time as expensive.</p>
+            </div>
+            <div class="cta-row" style="margin-top:0">
+              <a href="#top" class="btn ink lg">Open the workspace</a>
+              <a href="#top" class="btn lg">Talk to the studio</a>
+            </div>
+          </div>
+          <div class="brandbox">
+            <div class="gridpaper"></div>
+            <div class="nz"></div>
+            <span class="logo white" role="img" aria-label="bodega"></span>
+            <span class="tag">bodega® · v1.0</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="col lead-col">
+        <span class="logo" aria-label="bodega"></span>
+        <p class="about">An operating system for editorial planning, content operations, and client collaboration. Built for studios that publish on calendar — not on vibes.</p>
+      </div>
+      <div class="col">
+        <span class="kicker">Product</span>
+        <ul>
+          <li><a href="#what">Services</a></li>
+          <li><a href="#close">Workspace</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <span class="kicker">Studio</span>
+        <ul>
+          <li><a href="#rule">About</a></li>
+          <li><a href="#close">Contact</a></li>
+          <li><span class="muted">© Bodega · <span id="yr"></span></span></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- scroll cue + section rail -->
+<div class="cue" aria-hidden="true"><span>Scroll</span><span class="bar"></span></div>
+<nav class="rail" aria-label="Sections">
+  <button data-go="#top" aria-current="true"><span>Hero</span><span class="tick"></span></button>
+  <button data-go="#what"><span>Loops</span><span class="tick"></span></button>
+  <button data-go="#rule"><span>Pillars</span><span class="tick"></span></button>
+  <button data-go="#close"><span>Open</span><span class="tick"></span></button>
+</nav>
+
+<!-- libraries: GSAP + ScrollTrigger + Lenis (classic, run before the module) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+/* ── footer year + scroll-rail nav (always works, even without WebGL) ── */
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const capParam = new URLSearchParams(location.search).get('cap'); // ?cap=<0..1 | section-id>
+const hasGsap = !!window.gsap;
+
+/* The <head> set html.anim (non-reduced) to pre-hide entrances. If GSAP failed
+   to load, drop it now so content can never get stuck invisible. */
+if (!hasGsap) document.documentElement.classList.remove('anim');
+
+/* WebGL capability check — if it fails, the page stays a clean static document. */
+function webglOK(){
+  try{ const c=document.createElement('canvas');
+    return !!(window.WebGLRenderingContext && (c.getContext('webgl')||c.getContext('experimental-webgl'))); }
+  catch(e){ return false; }
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   PHASE KEYFRAMES — one master progress p∈[0..3] drives camera + palette.
+   0 Hero · 1 Three loops · 2 Pillars · 3 Closing surface (grades to ink).
+   ──────────────────────────────────────────────────────────────────────── */
+const PHASES = [
+  { cam:[0.0,0.6,13.0], tgt:[0,0.0,0], bg:'#f5f2ec', point:'#1b1813', ember:'#c8480f', emix:0.16 },
+  { cam:[0.4,1.7, 9.4], tgt:[0,0.2,0], bg:'#f2eee4', point:'#1b1813', ember:'#c8480f', emix:0.52 },
+  { cam:[0.0,4.3,11.0], tgt:[0,0.7,0], bg:'#eeece5', point:'#23201a', ember:'#c8480f', emix:0.42 },
+  { cam:[0.0,7.6,10.4], tgt:[0,0.2,0], bg:'#14110d', point:'#efe9df', ember:'#ee6a2c', emix:1.0 }
+];
+
+let api = { snap(){}, prog(){return 0} }; // becomes the window.__bodega handle
+
+if (!webglOK()) {
+  document.body.classList.add('no-webgl');
+  if (hasGsap) setupScrollDom(null); // still do DOM reveals + smooth scroll
+  else document.documentElement.classList.remove('anim');
+} else {
+  startScene();
+}
+
+/* ───────────────────────────── THREE.JS SCENE ───────────────────────────── */
+function startScene(){
+  const host = document.getElementById('bg');
+  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:false, powerPreference:'high-performance' });
+  const PIX = Math.min(window.devicePixelRatio||1, 2);
+  renderer.setPixelRatio(PIX);
+  renderer.setSize(innerWidth, innerHeight);
+  host.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(PHASES[0].bg);
+
+  const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.1, 100);
+  camera.position.set(...PHASES[0].cam);
+
+  /* particle budget scales with screen — keeps mobile light (§ perf) */
+  const COUNT = innerWidth < 700 ? 2600 : (innerWidth < 1200 ? 4600 : 6400);
+
+  const { geo, mat } = buildField(COUNT, PIX);
+  const points = new THREE.Points(geo, mat);
+  points.frustumCulled = false; // positions morph on the GPU; skip CPU culling
+  scene.add(points);
+
+  /* signature ember "thread" — strategy → approved content out. Draws in on scroll. */
+  const thread = buildThread();
+  scene.add(thread.mesh);
+
+  /* subtle pointer parallax for life (desktop, non-reduced only) */
+  let px=0, py=0, tpx=0, tpy=0;
+  const finePointer = matchMedia('(pointer:fine)').matches;
+  if (finePointer && !reduced && !capParam){
+    addEventListener('pointermove', e=>{
+      tpx = (e.clientX/innerWidth - .5);
+      tpy = (e.clientY/innerHeight - .5);
+    }, {passive:true});
+  }
+
+  /* colour scratch objects (avoid per-frame allocation) */
+  const cBg=new THREE.Color(), cBgA=new THREE.Color(), cBgB=new THREE.Color();
+  const cPtA=new THREE.Color(), cPtB=new THREE.Color();
+  const cEmA=new THREE.Color(), cEmB=new THREE.Color();
+  const camA=new THREE.Vector3(), camB=new THREE.Vector3(), tgA=new THREE.Vector3(), tgB=new THREE.Vector3();
+  const curTgt=new THREE.Vector3();
+  let curP = 0, curScroll = 0;
+
+  function smooth(t){ return t*t*(3-2*t); }
+
+  /* The single source of truth: set everything from p∈[0..3] + scroll s∈[0..1]. */
+  function setProgress(p, s){
+    p = Math.max(0, Math.min(3, p));
+    curP = p; curScroll = s;
+    const seg = Math.min(2, Math.floor(p));
+    const f = smooth(p - seg);
+    const A = PHASES[seg], B = PHASES[seg+1];
+
+    camA.set(...A.cam); camB.set(...B.cam);
+    tgA.set(...A.tgt); tgB.set(...B.tgt);
+    camera.position.lerpVectors(camA, camB, f);
+    curTgt.lerpVectors(tgA, tgB, f);
+
+    // pointer parallax (tiny) — applied as an offset, never fights the scrub
+    camera.position.x += px*0.9;
+    camera.position.y += -py*0.5;
+    camera.lookAt(curTgt);
+
+    cBgA.set(A.bg); cBgB.set(B.bg); cBg.lerpColors(cBgA,cBgB,f); scene.background.copy(cBg);
+    cPtA.set(A.point); cPtB.set(B.point); mat.uniforms.uPoint.value.lerpColors(cPtA,cPtB,f);
+    cEmA.set(A.ember); cEmB.set(B.ember); mat.uniforms.uEmber.value.lerpColors(cEmA,cEmB,f);
+    mat.uniforms.uEmberMix.value = A.emix + (B.emix-A.emix)*f;
+    mat.uniforms.uProg.value = p;
+
+    // thread follows the ember colour and draws in across the whole journey
+    thread.mesh.material.color.copy(mat.uniforms.uEmber.value);
+    thread.mesh.material.opacity = 0.10 + 0.7*s;
+    thread.setDraw(s);
+
+    updateRail(s);
+  }
+
+  /* render loop — single rAF; pauses when the tab is hidden */
+  const clock = new THREE.Clock();
+  let raf = 0, running = false;
+  function tick(){
+    raf = requestAnimationFrame(tick);
+    // ease pointer parallax
+    px += (tpx-px)*0.04; py += (tpy-py)*0.04;
+    if (finePointer && !reduced) { // keep camera offset live even between scroll events
+      setProgress(curP, curScroll);
+    }
+    mat.uniforms.uTime.value = reduced ? 0 : clock.getElapsedTime();
+    renderer.render(scene, camera);
+  }
+  function play(){ if(!running){ running=true; clock.start(); tick(); } }
+  function pause(){ running=false; cancelAnimationFrame(raf); }
+  document.addEventListener('visibilitychange', ()=> document.hidden ? pause() : play());
+
+  /* resize */
+  addEventListener('resize', ()=>{
+    camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+    const pr = Math.min(window.devicePixelRatio||1, 2);
+    renderer.setPixelRatio(pr); mat.uniforms.uPix.value = pr;
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }, {passive:true});
+
+  setProgress(0,0);
+  play();
+
+  /* wire scroll → progress (and DOM reveals) */
+  setupScrollDom(setProgress);
+
+  /* public debug handle (house-style snap interface) */
+  api = {
+    snap(p){ const y=p*maxScroll(); doScrollTo(y); setProgress(p*3, p); },
+    play, pause,
+    prog(){ return curScroll; },
+    setProgress, scene, camera, renderer
+  };
+  window.__bodega = api;
+
+  /* capture mode for deterministic screenshots: ?cap=0.5  or  ?cap=close */
+  if (capParam!==null){
+    const map = { top:0, hero:0, what:0.34, loops:0.34, rule:0.66, pillars:0.66, close:1, closing:1 };
+    let v = parseFloat(capParam);
+    if (Number.isNaN(v)) v = map[capParam] ?? 0;
+    v = Math.max(0, Math.min(1, v));
+    requestAnimationFrame(()=>{ doScrollTo(v*maxScroll()); setProgress(v*3, v); });
+  }
+}
+
+/* ── build the morphing particle field: 4 target shapes per particle ── */
+function buildField(N, PIX){
+  const p0=new Float32Array(N*3), p1=new Float32Array(N*3), p2=new Float32Array(N*3), p3=new Float32Array(N*3);
+  const rnd=new Float32Array(N), emb=new Float32Array(N);
+  const TAU=Math.PI*2;
+
+  for (let i=0;i<N;i++){
+    const i3=i*3, r=Math.random();
+    rnd[i]=r;
+
+    // PHASE 0 — loose drifting editorial field (a hint of a calendar grid)
+    const gx=Math.round((Math.random()-.5)*18), gy=Math.round((Math.random()-.5)*9);
+    p0[i3  ]= gx*0.9 + (Math.random()-.5)*1.4;
+    p0[i3+1]= gy*0.7 + (Math.random()-.5)*1.2;
+    p0[i3+2]= (Math.random()-.5)*7 - 1;
+
+    // PHASE 1 — three loops side by side (the third = "approved out" → ember)
+    const g=i%3, cx=(g-1)*4.6, a=(i/ N)*TAU*9 + r*TAU, rad=2.05+(Math.random()-.5)*0.5;
+    const tilt=(g-1)*0.28;
+    let lx=Math.cos(a)*rad, ly=Math.sin(a)*rad, lz=(Math.random()-.5)*0.7;
+    p1[i3  ]= cx + lx;
+    p1[i3+1]= ly*Math.cos(tilt) - lz*Math.sin(tilt) + 0.2;
+    p1[i3+2]= ly*Math.sin(tilt) + lz*Math.cos(tilt);
+    emb[i] = g===2 ? (Math.random()<0.8?1:0) : (Math.random()<0.05?1:0);
+
+    // PHASE 2 — structured pillar lattice (columns over a phased baseline)
+    const cols=14, c=i%cols, rowsPer=Math.ceil(N/cols), rIdx=Math.floor(i/cols);
+    const colX=(c-(cols-1)/2)*1.18;
+    const hMax=1.4 + ((c*53)%7)/7*4.2;             // varied pillar heights
+    const hy=(rIdx/rowsPer)*hMax;
+    p2[i3  ]= colX + (Math.random()-.5)*0.18;
+    p2[i3+1]= hy - 0.4;
+    p2[i3+2]= ((rIdx%5)-2)*0.7 + (Math.random()-.5)*0.2;
+
+    // PHASE 3 — one calm ordered surface (a gentle grid plane)
+    const sCols=Math.ceil(Math.sqrt(N)*1.4), sx=i%sCols, sz=Math.floor(i/sCols);
+    const X=(sx/sCols-0.5)*20, Z=(sz/(N/sCols)-0.5)*13;
+    p3[i3  ]= X;
+    p3[i3+1]= Math.sin(X*0.5)*0.18 + Math.cos(Z*0.6)*0.18;
+    p3[i3+2]= Z;
+  }
+
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(p0.slice(),3)); // placeholder; shader uses aP*
+  geo.setAttribute('aP0', new THREE.BufferAttribute(p0,3));
+  geo.setAttribute('aP1', new THREE.BufferAttribute(p1,3));
+  geo.setAttribute('aP2', new THREE.BufferAttribute(p2,3));
+  geo.setAttribute('aP3', new THREE.BufferAttribute(p3,3));
+  geo.setAttribute('aRand', new THREE.BufferAttribute(rnd,1));
+  geo.setAttribute('aEmber', new THREE.BufferAttribute(emb,1));
+
+  const mat=new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false,
+    uniforms:{
+      uProg:{value:0}, uTime:{value:0}, uPix:{value:PIX},
+      uSize:{value: innerWidth<700?180:230},
+      uPoint:{value:new THREE.Color(PHASES[0].point)},
+      uEmber:{value:new THREE.Color(PHASES[0].ember)},
+      uEmberMix:{value:PHASES[0].emix},
+      uAlpha:{value:0.82}
+    },
+    vertexShader:`
+      attribute vec3 aP0; attribute vec3 aP1; attribute vec3 aP2; attribute vec3 aP3;
+      attribute float aRand; attribute float aEmber;
+      uniform float uProg, uTime, uPix, uSize;
+      varying float vEmber, vFade;
+      vec3 phasePos(float p){
+        float seg=clamp(floor(p),0.0,2.0);
+        float f=clamp(p-seg,0.0,1.0); f=f*f*(3.0-2.0*f);
+        vec3 a,b;
+        if(seg<0.5){a=aP0;b=aP1;} else if(seg<1.5){a=aP1;b=aP2;} else {a=aP2;b=aP3;}
+        return mix(a,b,f);
+      }
+      void main(){
+        vec3 pos=phasePos(uProg);
+        float t=uTime;
+        pos.x+=0.07*sin(t*0.5 + aRand*6.2831);
+        pos.y+=0.07*cos(t*0.45+ aRand*5.137);
+        pos.z+=0.05*sin(t*0.4 + aRand*4.071);
+        vec4 mv=modelViewMatrix*vec4(pos,1.0);
+        gl_Position=projectionMatrix*mv;
+        float s=uSize*(1.0/max(0.1,-mv.z));
+        gl_PointSize=clamp(s*uPix,1.0,16.0*uPix);
+        vEmber=aEmber;
+        vFade=clamp(1.0-(-mv.z-4.0)/24.0,0.12,1.0);
+      }`,
+    fragmentShader:`
+      precision mediump float;
+      uniform vec3 uPoint, uEmber; uniform float uEmberMix, uAlpha;
+      varying float vEmber, vFade;
+      void main(){
+        vec2 c=gl_PointCoord-0.5; float d=dot(c,c);
+        if(d>0.25) discard;
+        float a=smoothstep(0.25,0.03,d);
+        float em=vEmber*uEmberMix;
+        vec3 col=mix(uPoint,uEmber,em);
+        float alpha=a*uAlpha*vFade*(0.55+0.45*vEmber);
+        gl_FragColor=vec4(col,alpha);
+      }`
+  });
+  return { geo, mat };
+}
+
+/* ── the ember thread: a flowing tube that "draws" itself across the scroll ── */
+function buildThread(){
+  const pts=[];
+  for(let i=0;i<=10;i++){
+    const t=i/10;
+    pts.push(new THREE.Vector3(
+      (t-0.5)*15,
+      Math.sin(t*7.0)*1.4 + (t-0.5)*1.5,
+      Math.cos(t*5.0)*1.6 - 1.0
+    ));
+  }
+  const curve=new THREE.CatmullRomCurve3(pts);
+  const TUBE=520;
+  const geo=new THREE.TubeGeometry(curve, TUBE, 0.03, 6, false);
+  const total=geo.index.count;
+  const mat=new THREE.MeshBasicMaterial({ color:PHASES[0].ember, transparent:true, opacity:0.1, depthWrite:false });
+  const mesh=new THREE.Mesh(geo, mat);
+  mesh.frustumCulled=false;
+  return { mesh, setDraw(s){ geo.setDrawRange(0, Math.floor(total*Math.max(0,Math.min(1,s)))); } };
+}
+
+/* ───────────── scroll plumbing: Lenis + ScrollTrigger + DOM reveals ───────────── */
+let lenisRef=null;
+function maxScroll(){ return Math.max(1, document.documentElement.scrollHeight - innerHeight); }
+function doScrollTo(y){ if(lenisRef) lenisRef.scrollTo(y,{immediate:true}); else window.scrollTo(0,y); if(window.ScrollTrigger) ScrollTrigger.update(); }
+
+function setupScrollDom(setProgress){
+  if(!hasGsap){ document.documentElement.classList.remove('anim'); return; } // static doc is fine
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Lenis smooth scroll, synced to ScrollTrigger (skipped for reduced-motion / capture)
+  if(!reduced && !capParam && window.Lenis){
+    lenisRef=new Lenis({ lerp:0.11, wheelMultiplier:1, smoothWheel:true });
+    lenisRef.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(t=> lenisRef.raf(t*1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // master timeline driver — maps page scroll 0..1 to phase progress 0..3
+  if(setProgress){
+    ScrollTrigger.create({
+      trigger:'#main', start:'top top', end:'bottom bottom',
+      scrub: reduced?false:0.5,
+      onUpdate(self){ if(!capParam) setProgress(self.progress*3, self.progress); },
+      onRefresh(self){ if(!capParam) setProgress(self.progress*3, self.progress); }
+    });
+  }
+
+  // content entrances. Capture mode forces everything visible for clean stills.
+  if(capParam){
+    gsap.set('[data-reveal]',{ autoAlpha:1, y:0 });
+    gsap.set('.hero h1 .line>span',{ yPercent:0 });
+    document.documentElement.classList.remove('anim');
+  } else if(!reduced){
+    gsap.set('.hero h1 .line>span',{ yPercent:115 });
+    gsap.to('.hero h1 .line>span',{ yPercent:0, duration:1.1, ease:'expo.out', stagger:0.12, delay:0.15 });
+    gsap.utils.toArray('[data-reveal]').forEach(el=>{
+      gsap.set(el,{ y:24 });
+      gsap.to(el,{ y:0, autoAlpha:1, duration:0.9, ease:'expo.out',
+        scrollTrigger:{ trigger:el, start:'top 84%', once:true } });
+    });
+  } else {
+    document.documentElement.classList.remove('anim');
+  }
+
+  // smooth-scroll for in-page anchors + the section rail
+  function go(hash){
+    const el=document.querySelector(hash); if(!el) return;
+    const y=el===document.querySelector('#top') ? 0 : el.getBoundingClientRect().top + window.pageYOffset - 40;
+    if(lenisRef) lenisRef.scrollTo(y); else window.scrollTo({top:y,behavior:reduced?'auto':'smooth'});
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{ const h=a.getAttribute('href'); if(h.length>1){ e.preventDefault(); go(h); } });
+  });
+  document.querySelectorAll('.rail button').forEach(b=>{
+    b.addEventListener('click',()=> go(b.dataset.go));
+  });
+
+  // refresh once fonts are in (avoids layout shift in trigger positions)
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=> ScrollTrigger.refresh());
+}
+
+/* right-rail active-section indicator */
+const railBtns=[...document.querySelectorAll('.rail button')];
+function updateRail(s){
+  const idx = s<0.25?0 : s<0.52?1 : s<0.8?2 : 3;
+  railBtns.forEach((b,i)=> b.setAttribute('aria-current', i===idx ? 'true':'false'));
+  const cue=document.querySelector('.cue'); if(cue) cue.style.opacity = s>0.04 ? '0' : '1';
+}
+</script>
+</body>
+</html>
