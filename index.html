@@ -24,9 +24,9 @@
 :root{
   --paper:#F2E400;          /* live background — set by JS to the current brand colour */
   --ink:#0d0d0d;            /* live text colour — set by JS (black/white)            */
-  --muted:color-mix(in srgb, var(--ink) 80%, transparent);
+  --muted:color-mix(in srgb, var(--ink) 90%, transparent);
   --border:color-mix(in srgb, var(--ink) 28%, transparent);
-  --card:color-mix(in srgb, var(--ink) 12%, transparent);
+  --card:color-mix(in srgb, var(--ink) 8%, transparent);
   --ember:var(--ink);
   --radius:.85rem;
   --logo:url("data:image/png;base64,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");
@@ -116,7 +116,7 @@ section{position:relative}
 .dot{opacity:.5}
 
 /* generic content sections */
-.block{padding:88px 0}
+.block{padding:88px 0;background:var(--paper)}
 .grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:32px}
 .span4{grid-column:span 12}
 .span5{grid-column:span 12}
@@ -143,7 +143,7 @@ h2.big{font-size:clamp(28px,4.4vw,34px);line-height:1.04;margin-top:12px}
 .uline{text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px;text-underline-offset:4px}
 
 /* closing — the ink panel */
-.closewrap{padding:96px 0 40px}
+.closewrap{padding:96px 0 40px;background:var(--paper)}
 .panel{border:1px solid var(--border);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr}
 .panel .text{padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
 .panel .text h2{font-size:clamp(30px,5vw,42px);margin-top:12px}
@@ -159,7 +159,7 @@ h2.big{font-size:clamp(28px,4.4vw,34px);line-height:1.04;margin-top:12px}
 .panel .brandbox .tag{position:absolute;right:18px;bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.6}
 
 /* footer */
-footer{position:relative;z-index:1;border-top:1px solid var(--border);margin-top:40px}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);margin-top:40px;background:var(--paper)}
 footer .container{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;padding-top:44px;padding-bottom:48px}
 footer .col.lead-col{grid-column:span 2}
 footer p.about{margin-top:14px;font-size:13px;line-height:1.65;color:var(--muted);max-width:42ch}
@@ -381,7 +381,7 @@ body.no-webgl{background-image:
     </section>
 
     <!-- ░░ PROJECT FLOW — how we work ░░ -->
-    <section class="block rule" id="rule" style="border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--card) 30%,transparent)">
+    <section class="block rule" id="rule" style="border-bottom:1px solid var(--border)">
       <div class="container grid12" style="align-items:center">
         <div class="span5">
           <div class="kicker" data-reveal>How we work</div>
@@ -987,7 +987,7 @@ function buildField(THREE, N, PIX){
       uPoint:{value:new THREE.Color('#0d0d0d')},
       uEmber:{value:new THREE.Color('#0d0d0d')},
       uEmberMix:{value:0},
-      uAlpha:{value:0.26}
+      uAlpha:{value:0.2}
     },
     vertexShader:`
       attribute vec3 aP0; attribute vec3 aP1; attribute vec3 aP2; attribute vec3 aP3;
