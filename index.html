@@ -120,8 +120,8 @@ html.dark .theme-toggle .sun{display:inline}
 section{position:relative}
 .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:96px}
 .hero .container{padding-bottom:0}
-.hero h1{font-size:clamp(46px,11vw,92px);letter-spacing:-.035em;line-height:1.0;max-width:14ch}
-.hero h1 .line{display:block;overflow:hidden}
+.hero h1{font-size:clamp(46px,11vw,92px);letter-spacing:-.035em;line-height:1.06;max-width:14ch}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.18em;margin-bottom:-.18em}
 .hero h1 .line>span{display:block}
 .rotw{display:inline-block;transition:opacity .42s ease,transform .42s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
 .hero p{margin-top:22px;max-width:42ch;font-size:15px;line-height:1.65;color:var(--muted)}
@@ -145,7 +145,7 @@ section{position:relative}
 .dot{opacity:.5}
 
 /* generic content sections */
-.block{padding:88px 0;background:color-mix(in srgb,var(--paper) 36%,transparent);-webkit-backdrop-filter:blur(30px) saturate(1.7);backdrop-filter:blur(30px) saturate(1.7);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 32%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--ink) 7%,transparent);margin-top:72px}
+.block{padding:108px 0;background:color-mix(in srgb,var(--paper) 36%,transparent);-webkit-backdrop-filter:blur(30px) saturate(1.7);backdrop-filter:blur(30px) saturate(1.7);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 32%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--ink) 7%,transparent);margin-top:72px}
 .grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:32px}
 .span4{grid-column:span 12}
 .span5{grid-column:span 12}
@@ -418,7 +418,7 @@ body.no-webgl{background-image:
         </div>
         <h1>
           <span class="line"><span>Brands don't just speak.</span></span>
-          <span class="line"><span>They shape <em class="serif" style="color:var(--ember)" aria-label="culture"><span class="rotw" aria-hidden="true">culture</span>.</em></span></span>
+          <span class="line"><span>They shape <em class="serif" style="color:var(--ember)" aria-label="culture"><span class="rotw" aria-hidden="true">culture.</span></em></span></span>
         </h1>
         <p data-reveal>Bodega Creative is a studio for brand-first social media ecosystems — from content strategy to daily execution, designed to strengthen brand presence and drive measurable growth. We operate as an extension of your team.</p>
         <div class="cta-row" data-reveal>
@@ -881,8 +881,11 @@ body.no-webgl{background-image:
   if(matchMedia('(pointer:fine)').matches && !reduced){
     d.classList.add('has-cursor');
     var cur = document.createElement('div'); cur.id = 'cursor'; document.body.appendChild(cur);
-    var cx = innerWidth/2, cy = innerHeight/2, tx = cx, ty = cy;
-    addEventListener('pointermove', function(e){ tx = e.clientX; ty = e.clientY; cur.style.opacity = '1'; }, {passive:true});
+    var cx = -100, cy = -100, tx = -100, ty = -100, curSeen = false;
+    addEventListener('pointermove', function(e){
+      if(!curSeen){ curSeen = true; cx = tx = e.clientX; cy = ty = e.clientY; cur.style.opacity = '1'; }  // snap to the pointer on first move — never a lone dot at centre
+      else { tx = e.clientX; ty = e.clientY; }
+    }, {passive:true});
     addEventListener('pointerdown', function(){ cur.classList.add('down'); }, {passive:true});
     addEventListener('pointerup',   function(){ cur.classList.remove('down'); }, {passive:true});
     var HIT = 'a,button,.work,.svc,.pcard,.mini,.step,.scard';
@@ -928,7 +931,7 @@ body.no-webgl{background-image:
   //    where the line wraps; under reduced-motion it's an opacity-only fade (no movement). ──
   (function(){
     var rotw = document.querySelector('.rotw'); if(!rotw) return;
-    var words = ['culture','trends','stories','demand'], i = 0, rise = reduced ? '0' : '-0.32em';
+    var words = ['culture.','trends.','stories.','demand.'], i = 0, rise = reduced ? '0' : '-0.32em';
     setInterval(function(){
       rotw.style.opacity = '0'; rotw.style.transform = 'translateY(' + rise + ')';
       setTimeout(function(){
@@ -965,6 +968,36 @@ body.no-webgl{background-image:
       if(info){ el.dataset.cv = el.textContent.trim(); el.textContent = (0).toFixed(info.dec) + info.suffix; }  // pre-zero (below the fold) so there's no flash of the answer
       io.observe(el);
     });
+  })();
+
+  // ── palette fallback — if the 3D scene never takes over (WebGL off, or the CDN
+  //    libs fail), drive the same paper→ink grade straight from scroll so the page
+  //    never gets stuck on one colour. The scene sets __bodegaColorOwned and this
+  //    immediately stands down (no double-driving). ──
+  (function(){
+    var BG = ['#F2E400','#2FE4A4','#2A46E8','#FF2E93'];
+    function rgb(h){ return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]; }
+    function lp(a,b,t){ return Math.round(a+(b-a)*t); }
+    function smooth(x){ return x*x*(3-2*x); }
+    function lin(c){ c/=255; return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); }
+    var last = -1;
+    function tick(){
+      if(window.__bodegaColorOwned) return;                    // scene is driving — do nothing
+      var p = Math.max(0, Math.min(1, window.scrollY / maxScroll())) * 3;
+      if(Math.abs(p - last) < 0.004) return; last = p;
+      var seg = Math.min(2, Math.floor(p)), rf = p - seg;
+      var fc = smooth(Math.max(0, Math.min(1, (rf - 0.46) / 0.08)));
+      var a = rgb(BG[seg]), b = rgb(BG[seg+1]);
+      var r = lp(a[0],b[0],fc), g = lp(a[1],b[1],fc), bl = lp(a[2],b[2],fc);
+      var L = 0.2126*lin(r) + 0.7152*lin(g) + 0.0722*lin(bl);
+      var ink = (1.05/(L+0.05)) > ((L+0.05)/0.05) ? '#ffffff' : '#0d0d0d';
+      d.style.setProperty('--paper', 'rgb('+r+','+g+','+bl+')');
+      d.style.setProperty('--ink', ink);
+      d.classList.toggle('on-dark', ink === '#ffffff');
+    }
+    addEventListener('scroll', tick, {passive:true});
+    addEventListener('resize', tick, {passive:true});
+    tick(); setTimeout(tick, 500); setTimeout(tick, 1500);     // cover the window before the scene either loads or fails
   })();
 })();
 </script>
@@ -1085,6 +1118,7 @@ function startScene(THREE){
   }
 
   function setProgress(p, s){
+    window.__bodegaColorOwned = true;   // 3D scene is live and driving the palette — the CSS-only fallback stands down
     p = Math.max(0, Math.min(3, p));
     curP = p; curScroll = s;
     const seg = Math.min(2, Math.floor(p));
