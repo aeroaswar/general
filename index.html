@@ -216,10 +216,12 @@ footer a:hover{text-decoration:none}
 
 /* ── content sections ported from the live site: Services / About / Contact ── */
 .svc-grid,.prin-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:26px}
-.svc-grid{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.svc-grid{grid-template-columns:1fr}
 .prin-grid{grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
 .svc{background:var(--card);padding:26px;display:flex;flex-direction:column;backdrop-filter:blur(6px)}
 .svc-head{display:flex;align-items:center;justify-content:space-between}
+.svc-ico{display:inline-flex}
+.svc-ico svg{width:30px;height:30px;display:block;fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .svc .n,.prin .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
 .svc h3{font-family:'Fraunces',serif;font-size:clamp(24px,3.2vw,30px);line-height:1.04;margin-top:12px;font-weight:500;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px}
 .svc-sum{margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--muted);max-width:40ch}
@@ -260,7 +262,7 @@ footer a:hover{text-decoration:none}
 .work .desc{font-size:12.5px;color:var(--muted);line-height:1.55}
 .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:auto}
 .metric{background:var(--card);padding:13px 15px}
-.metric .v{font-family:'Fraunces',serif;font-size:21px;line-height:1}
+.metric .v{font-family:'Fraunces',serif;font-size:25px;line-height:1;font-variant-numeric:tabular-nums}
 .metric .v .up{color:var(--ember);font-size:12px;margin-left:3px}
 .metric .l{font-size:10px;color:var(--muted);margin-top:5px;text-transform:uppercase;letter-spacing:.07em}
 .more-clients{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
@@ -272,9 +274,9 @@ footer a:hover{text-decoration:none}
 
 /* impact stats + compact work portfolio */
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:28px}
-.stat{background:var(--card);padding:28px 22px}
-.stat .sv{font-family:'Fraunces',serif;font-size:clamp(36px,6vw,56px);line-height:1;font-weight:500}
-.stat .sl{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:10px}
+.stat{background:var(--card);padding:38px 24px}
+.stat .sv{font-family:'Fraunces',serif;font-size:clamp(48px,7.4vw,80px);line-height:.9;letter-spacing:-.022em;font-weight:500;font-variant-numeric:tabular-nums}
+.stat .sl{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:14px}
 .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .mini{background:var(--card);padding:20px;display:flex;flex-direction:column}
 .mini h4{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.1}
@@ -309,6 +311,7 @@ html.has-cursor input,html.has-cursor textarea{cursor:auto}
   .span4{grid-column:span 4}.span5{grid-column:span 5}.span7{grid-column:span 7}.span8{grid-column:span 8}
   .cards3{grid-template-columns:repeat(3,1fr)}
   .specgrid{grid-template-columns:repeat(3,1fr)}
+  .svc-grid{grid-template-columns:repeat(3,1fr)}
   .panel{grid-template-columns:1fr 1fr}
   .panel .text{padding:56px}
   nav.main{display:flex}.signin{display:inline-flex}
@@ -517,12 +520,12 @@ body.no-webgl{background-image:
         <h2 class="display" data-reveal style="font-size:clamp(34px,6vw,56px);margin-top:8px">Six ways we build brands.</h2>
         <p class="lead" data-reveal style="max-width:58ch">From content to strategy to production — every service scales up or down based on your brand's stage, goals, and budget.</p>
         <div class="svc-grid">
-          <article class="svc" data-reveal><div class="svc-head"><span class="n">01</span><span class="kicker">Service</span></div><h3>Branding &amp; Identity</h3><p class="svc-sum">We shape brands to speak clearly, stand out visually, and grow strategically.</p></article>
-          <article class="svc" data-reveal><div class="svc-head"><span class="n">02</span><span class="kicker">Service</span></div><h3>Marketing Strategy</h3><p class="svc-sum">Your brand's goals become actionable, precise, and achievable with a strategy engineered by Bodega.</p></article>
-          <article class="svc" data-reveal><div class="svc-head"><span class="n">03</span><span class="kicker">Service</span></div><h3>Brand Activation</h3><p class="svc-sum">Not just another tent, booth, or backdrop — fresh concepts that drive hype, conversation, and authentic engagement.</p></article>
-          <article class="svc" data-reveal><div class="svc-head"><span class="n">04</span><span class="kicker">Service</span></div><h3>Web &amp; App Development</h3><p class="svc-sum">You set the direction and Bodega turns it into a seamless digital experience.</p></article>
-          <article class="svc" data-reveal><div class="svc-head"><span class="n">05</span><span class="kicker">Service</span></div><h3>Digital Marketing</h3><p class="svc-sum">Bodega sets KPIs and drives strategies to deliver the results you're aiming for.</p></article>
-          <article class="svc" data-reveal><div class="svc-head"><span class="n">06</span><span class="kicker">Service</span></div><h3>Social Media Management &amp; Content</h3><p class="svc-sum">Your brand doesn't follow trends — it leads them and shapes conversations.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.4 7.1 7.1 2.4-7.1 2.4L12 21.5l-2.4-7.1L2.5 12l7.1-2.4z"/></svg></span><span class="n">01</span></div><h3>Branding &amp; Identity</h3><p class="svc-sum">We shape brands to speak clearly, stand out visually, and grow strategically.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></svg></span><span class="n">02</span></div><h3>Marketing Strategy</h3><p class="svc-sum">Your brand's goals become actionable, precise, and achievable with a strategy engineered by Bodega.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12z"/></svg></span><span class="n">03</span></div><h3>Brand Activation</h3><p class="svc-sum">Not just another tent, booth, or backdrop — fresh concepts that drive hype, conversation, and authentic engagement.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 8 4 12l4.5 4M15.5 8 20 12l-4.5 4M13.5 6l-3 12"/></svg></span><span class="n">04</span></div><h3>Web &amp; App Development</h3><p class="svc-sum">You set the direction and Bodega turns it into a seamless digital experience.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16.5 9 10.5l4 4 7.5-7.5"/><path d="M16 7h5v5"/></svg></span><span class="n">05</span></div><h3>Digital Marketing</h3><p class="svc-sum">Bodega sets KPIs and drives strategies to deliver the results you're aiming for.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 12a8 8 0 0 1-11.7 7.1L4 20.5l1.4-4.8A8 8 0 1 1 20.5 12z"/></svg></span><span class="n">06</span></div><h3>Social Media Management &amp; Content</h3><p class="svc-sum">Your brand doesn't follow trends — it leads them and shapes conversations.</p></article>
         </div>
         <div class="engage sheet" data-reveal>
           <div>
@@ -921,6 +924,31 @@ body.no-webgl{background-image:
         rotw.style.opacity = '1'; rotw.style.transform = 'translateY(0)';
       }, 430);
     }, 2800);
+  })();
+
+  // ── proof stats count up when they scroll into view (the numbers are the pitch) ──
+  (function(){
+    var els = [].slice.call(document.querySelectorAll('.stat .sv'));
+    if(!els.length || !('IntersectionObserver' in window) || reduced) return;
+    function parse(t){ var m = t.match(/^([\d.]+)(.*)$/); return m ? { target:parseFloat(m[1]), suffix:m[2], dec:(m[1].split('.')[1]||'').length } : null; }
+    function run(el){
+      var info = parse(el.dataset.cv || el.textContent.trim()); if(!info) return;
+      var start = performance.now(), dur = 1500;
+      requestAnimationFrame(function frame(now){
+        var p = Math.max(0, Math.min(1, (now-start)/dur)), e = 1 - Math.pow(1-p, 3);
+        el.textContent = (info.target*e).toFixed(info.dec) + info.suffix;
+        if(p < 1) requestAnimationFrame(frame);
+        else el.textContent = info.target.toFixed(info.dec) + info.suffix;
+      });
+    }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ run(en.target); io.unobserve(en.target); } });
+    }, { threshold:0.6 });
+    els.forEach(function(el){
+      var info = parse(el.textContent.trim());
+      if(info){ el.dataset.cv = el.textContent.trim(); el.textContent = (0).toFixed(info.dec) + info.suffix; }  // pre-zero (below the fold) so there's no flash of the answer
+      io.observe(el);
+    });
   })();
 })();
 </script>
