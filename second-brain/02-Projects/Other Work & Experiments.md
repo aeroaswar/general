@@ -16,12 +16,10 @@ own note when it becomes active._
 | cyberpunk-hero | Cyberpunk-styled hero section | Drive folder |
 | stay-section | Section/config source (cloned into automation-hero) | reference |
 | animista | Animation preset library / skill | `animista-skill.zip` |
-| survey-kepuasan-daerah | Regional satisfaction survey — consulting/gov work? | detail TBD |
-| disertasi-threshold | "Dissertation / threshold" — academic work? | detail TBD |
 
-## 📝 Notes
-- [ ] Confirm what **survey-kepuasan-daerah** and **disertasi-threshold** are — they
-  hint at consulting / government / academic work I haven't documented yet.
+> Resolved & promoted to their own notes: [[survey-kepuasan-daerah]] (govtech IKM survey)
+> and [[disertasi-threshold]] (doctoral law dissertation) — now under
+> [[Academia, Law & Public Sector]].
 
 ## 📦 Log
-- 2026-06-19 — created as catch-all.
+- 2026-06-19 — created as catch-all; survey + dissertation promoted out.

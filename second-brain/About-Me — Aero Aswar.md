@@ -20,6 +20,9 @@ updated: 2026-06-19
   premium product/marketing sites, dashboards. Strong, opinionated visual house style.
 - **Founder / operator** — building brands and ventures (GLU eco-athletic apparel
   the flagship), running structured strategy/knowledge systems with AI.
+- **Scholar / public-sector** — doctoral research in constitutional & electoral law
+  (parliamentary-threshold reconstruction); govtech (citizen-satisfaction surveys);
+  sport governance via IJBA. → [[Academia, Law & Public Sector]]
 
 ## Values & working style
 - **Systems thinker.** I build compounding, machine-parseable knowledge bases and
@@ -45,5 +48,5 @@ updated: 2026-06-19
 ## Pointers
 - Areas: [[Jetski Racing & Athletic Identity]] · [[GLU — Eco-Athletic Brand]] ·
   [[Creative Coding & Web]] · [[Design Practice & House Style]] ·
-  [[Ventures & Business]] · [[AI & Automation]]
+  [[Ventures & Business]] · [[AI & Automation]] · [[Academia, Law & Public Sector]]
 - Skills catalog: [[_Skills-MOC]].

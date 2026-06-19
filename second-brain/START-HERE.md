@@ -63,6 +63,7 @@ portfolio. See [[MMI — Mangkuluhur Mineral Indonesia]], [[IJBA — Jetski Fede
 - [[Design Practice & House Style]]
 - [[Ventures & Business]]
 - [[AI & Automation]]
+- [[Academia, Law & Public Sector]]
 
 ## Skills
 All my Claude skills (made + used) are cataloged in [[_Skills-MOC]] under `07-Skills/`.
