@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0b0d14"/>
+  <radialGradient id="g" cx="50%" cy="38%" r="60%">
+    <stop offset="0%" stop-color="#ffc83d" stop-opacity="0.22"/>
+    <stop offset="60%" stop-color="#0b0d14" stop-opacity="0"/>
+  </radialGradient>
+  <rect width="1200" height="630" fill="url(#g)"/>
+  <text x="600" y="300" font-family="Arial, sans-serif" font-weight="900" font-size="150" fill="#ffc83d" text-anchor="middle">BODEGA</text>
+  <text x="600" y="380" font-family="Arial, sans-serif" font-weight="600" font-size="34" letter-spacing="8" fill="#f4ecdd" text-anchor="middle">HIDDEN IN PLAIN SIGHT</text>
+</svg>
