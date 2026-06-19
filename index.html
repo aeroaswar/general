@@ -330,7 +330,7 @@ html.has-cursor input,html.has-cursor textarea{cursor:auto}
 
 /* entrance states — only applied when JS will animate (html.anim) */
 html.anim [data-reveal]{opacity:0}
-html.anim .hero h1 .line>span{transform:translateY(115%)}
+html.anim .hero h1 .line>span{opacity:0}
 
 /* graceful: no webgl → keep a faint grid-paper so the page isn't flat */
 body.no-webgl{background-image:
@@ -344,7 +344,7 @@ body.no-webgl{background-image:
 @media (prefers-reduced-motion: reduce){
   .cue .bar::after{animation:none;display:none}
   html.anim [data-reveal]{opacity:1}
-  html.anim .hero h1 .line>span{transform:none}
+  html.anim .hero h1 .line>span{opacity:1}
 }
 
 /* Short / landscape viewports (incl. phones rotated to landscape): the full-height
@@ -354,7 +354,7 @@ body.no-webgl{background-image:
   .hero{min-height:auto;justify-content:flex-start;padding-top:26px;padding-bottom:30px}
   .hero h1{font-size:clamp(30px,4.6vw,44px);line-height:1.08;max-width:24ch}
   .hero h1 .line{overflow:visible}
-  .hero h1 .line>span{transform:none!important}    /* never offset the headline here — kills the landscape overlap regardless of JS state */
+  .hero h1 .line>span{transform:none!important;opacity:1!important}    /* never offset or hide the headline here — kills the landscape overlap regardless of JS state */
   .hero p{margin-top:12px;font-size:13.5px;line-height:1.5;max-width:56ch}
   .cta-row{margin-top:16px}
   .stripe{margin-top:22px}
@@ -802,13 +802,13 @@ body.no-webgl{background-image:
     if(!g){ d.classList.remove('anim'); }
     else if(cap!==null || reduced){
       g.set('[data-reveal]', { autoAlpha:1, y:0 });
-      g.set('.hero h1 .line>span', { yPercent:0 });
+      g.set('.hero h1 .line>span', { yPercent:0, opacity:1 });
       d.classList.remove('anim');
     } else {
       if(innerHeight <= 600){
-        g.set('.hero h1 .line>span', { yPercent:0 });   // short/landscape: skip the mask so the headline can't crop
+        g.set('.hero h1 .line>span', { yPercent:0, opacity:1 });   // short/landscape: skip the mask so the headline can't crop
       } else {
-        g.set('.hero h1 .line>span', { yPercent:115 });
+        g.set('.hero h1 .line>span', { yPercent:115, opacity:1 });
         g.to('.hero h1 .line>span', { yPercent:0, duration:1.1, ease:'expo.out', stagger:0.12, delay:0.15 });
       }
       g.utils.toArray('[data-reveal]').forEach(function(el){
@@ -817,15 +817,15 @@ body.no-webgl{background-image:
           scrollTrigger:{ trigger:el, start:'top 84%', once:true } });
       });
     }
-  }catch(e){ try{ g.set('[data-reveal]',{autoAlpha:1,y:0}); g.set('.hero h1 .line>span',{yPercent:0}); }catch(_){} d.classList.remove('anim'); }
+  }catch(e){ try{ g.set('[data-reveal]',{autoAlpha:1,y:0}); g.set('.hero h1 .line>span',{yPercent:0,opacity:1}); }catch(_){} d.classList.remove('anim'); }
 
   // failsafe: the masked headline reveal must never strand or offset the lines — a
   // stalled tween (seen leaving line 1 hidden), or rotating into a short/landscape
   // viewport, would otherwise leave them hidden or overlapping the paragraph. Force
   // the resolved state shortly after load, and again whenever the viewport gets short.
   if(g){
-    setTimeout(function(){ try{ g.set('.hero h1 .line>span', { yPercent:0 }); }catch(e){} }, 2000);
-    var settleHero = function(){ if(innerHeight <= 600){ try{ g.set('.hero h1 .line>span', { yPercent:0 }); }catch(e){} } };
+    setTimeout(function(){ try{ g.set('.hero h1 .line>span', { yPercent:0, opacity:1 }); }catch(e){} }, 2000);
+    var settleHero = function(){ if(innerHeight <= 600){ try{ g.set('.hero h1 .line>span', { yPercent:0, opacity:1 }); }catch(e){} } };
     addEventListener('orientationchange', settleHero);
     addEventListener('resize', settleHero, { passive:true });
   }
