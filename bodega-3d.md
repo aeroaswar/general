@@ -10,19 +10,28 @@ ScrollTrigger master timeline (smoothed with Lenis) maps page scroll `0→1` to 
 progress `0→3` that drives the camera, a morphing particle "operating surface", the
 ember thread, and a paper→ink palette grade.
 
-## Brand fidelity
-Pulled from the original source: Fraunces (display) · Instrument Sans (body) ·
-JetBrains Mono (labels); warm paper `#f5f2ec`, near-black ink, a single burnt-amber
-ember accent; film-grain + grid-paper + hairline rules; the real `bodega®` wordmark
-(embedded, inverted to white on dark). Copy is verbatim from the live homepage.
+## Brand & content
+**Bodega Creative Studio** — a Jakarta brand-first social-media studio. Content is
+drawn from the *Bodega Credentials 2026* deck: the belief ("brands don't just speak —
+they shape culture"), the six services, the 5-step project flow, the team, real case
+studies with metrics (Maktour, Panasonic, Super Padel, Insan Hutama, Astra Daihatsu,
+Kopikalyan…), and real contact. Visual system: Fraunces (display) · Instrument Sans
+(body) · JetBrains Mono (labels); warm paper `#f5f2ec`, near-black ink, a single
+burnt-amber ember; film-grain + grid-paper + hairline rules; the real `bodega®`
+wordmark (embedded, inverted to white on dark).
 
 ## Section → motion map
-| # | Scroll section | DOM (editorial) | 3D scene |
-|---|---|---|---|
-| 0 | **Hero** — "Publish on calendar, not on vibes." | line-mask reveal, client stripe | loose drifting ink field on paper; wide camera; ember thread starts drawing |
-| 1 | **Three loops, one surface** | 3 pillar cards fade up | particles reform into **3 rotating loops**; ember marks the "approved-out" loop |
-| 2 | **Phases & pillars are never universal** | data-spec cards + `has_many` line | field reshapes into a **structured pillar lattice**; camera lifts |
-| 3 | **A workspace clients actually open** | dark panel + white logo | collapses to **one ordered surface**; bg grades to ink; ember glows |
+One scroll drives the fixed canvas through 4 visual phases. A `progToPhase` remap keeps
+the body in the light phases and reserves the ink grade for the closing.
+
+DOM sections: **Hero** ("Brands don't just speak. They shape culture.") → **What makes
+us different** (4 differentiators) → **How we work** (5-step project flow) → **Services**
+(six capabilities) → **Selected works** (real case studies + metrics) → **Studio**
+(belief, team, the name) → **Contact** (form + real studio details) → **Closing**
+("Let's have a conversation" + dark logo panel).
+
+3D phases: loose drifting field → 3 rotating loops → pillar lattice → one ordered
+surface, with the paper→ink grade and the ember thread drawing in across the scroll.
 
 ## Motion system
 - **GSAP master scrub** → camera position/target + shader `uProg` + palette + ember mix (one source of truth, `setProgress`).
