@@ -343,6 +343,22 @@ body.no-webgl{background-image:
   html.anim [data-reveal]{opacity:1}
   html.anim .hero h1 .line>span{transform:none}
 }
+
+/* Short / landscape viewports (incl. phones rotated to landscape): the full-height
+   hero would crop the headline reveal-mask, so relax the layout, shrink the headline
+   so it fits, and never clip the lines here. */
+@media (max-height:600px){
+  .hero{min-height:auto;padding-top:80px;padding-bottom:40px;justify-content:center}
+  .hero h1{font-size:clamp(28px,5.4vw,50px);line-height:1.07;max-width:26ch}
+  .hero h1 .line{overflow:visible}
+  html.anim .hero h1 .line>span{transform:none}
+  .hero p{margin-top:14px;font-size:14px;line-height:1.55;max-width:54ch}
+  .cta-row{margin-top:18px}
+  .stripe{margin-top:26px}
+  .cue{display:none}
+}
+/* the scroll cue clutters small touch screens and can overlap the CTAs — hide it there */
+@media (max-width:700px){ .cue{display:none} }
 </style>
 <script>
   /* set the entrance-hiding class before first paint (skipped for reduced-motion) */
@@ -784,8 +800,12 @@ body.no-webgl{background-image:
       g.set('.hero h1 .line>span', { yPercent:0 });
       d.classList.remove('anim');
     } else {
-      g.set('.hero h1 .line>span', { yPercent:115 });
-      g.to('.hero h1 .line>span', { yPercent:0, duration:1.1, ease:'expo.out', stagger:0.12, delay:0.15 });
+      if(innerHeight <= 600){
+        g.set('.hero h1 .line>span', { yPercent:0 });   // short/landscape: skip the mask so the headline can't crop
+      } else {
+        g.set('.hero h1 .line>span', { yPercent:115 });
+        g.to('.hero h1 .line>span', { yPercent:0, duration:1.1, ease:'expo.out', stagger:0.12, delay:0.15 });
+      }
       g.utils.toArray('[data-reveal]').forEach(function(el){
         g.set(el, { y:24 });
         g.to(el, { y:0, autoAlpha:1, duration:0.9, ease:'expo.out',
