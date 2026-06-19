@@ -51,6 +51,14 @@ em{font-style:italic}
 /* fixed WebGL backdrop + film grain — the living "operating surface" */
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none}
 #bg canvas{display:block;width:100%!important;height:100%!important}
+/* kinetic typography background — giant brand words drifting in playful marquees */
+#kt{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:4vh 0}
+.kt-row{white-space:nowrap;line-height:.9;font-family:'Fraunces',serif;font-weight:600;letter-spacing:-.02em;will-change:transform;color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--ink) 14%,transparent)}
+.kt-row.fill{color:color-mix(in srgb,var(--ink) 10%,transparent);-webkit-text-stroke:0}
+.kt-track{display:inline-block;will-change:transform;animation:kt-marq var(--d,32s) linear infinite}
+.kt-track.rev{animation-direction:reverse}
+@keyframes kt-marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.kt-track{animation:none}}
 .grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");}
 
@@ -124,7 +132,7 @@ section{position:relative}
 .dot{opacity:.5}
 
 /* generic content sections */
-.block{padding:88px 0;background:var(--paper);margin-top:72px}
+.block{padding:88px 0;background:color-mix(in srgb,var(--paper) 80%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.06);backdrop-filter:blur(18px) saturate(1.06);margin-top:72px}
 .grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:32px}
 .span4{grid-column:span 12}
 .span5{grid-column:span 12}
@@ -151,7 +159,7 @@ h2.big{font-size:clamp(28px,4.4vw,34px);line-height:1.04;margin-top:12px}
 .uline{text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px;text-underline-offset:4px}
 
 /* closing — the ink panel */
-.closewrap{padding:96px 0 40px;background:var(--paper);margin-top:72px}
+.closewrap{padding:96px 0 40px;background:color-mix(in srgb,var(--paper) 80%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.06);backdrop-filter:blur(18px) saturate(1.06);margin-top:72px}
 .panel{border:1px solid var(--border);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr}
 .panel .text{padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
 .panel .text h2{font-size:clamp(30px,5vw,42px);margin-top:12px}
@@ -167,7 +175,7 @@ h2.big{font-size:clamp(28px,4.4vw,34px);line-height:1.04;margin-top:12px}
 .panel .brandbox .tag{position:absolute;right:18px;bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.6}
 
 /* footer */
-footer{position:relative;z-index:1;border-top:1px solid var(--border);margin-top:72px;background:var(--paper)}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);margin-top:72px;background:color-mix(in srgb,var(--paper) 80%,transparent);-webkit-backdrop-filter:blur(18px) saturate(1.06);backdrop-filter:blur(18px) saturate(1.06)}
 footer .container{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;padding-top:44px;padding-bottom:48px}
 footer .col.lead-col{grid-column:span 2}
 footer p.about{margin-top:14px;font-size:13px;line-height:1.65;color:var(--muted);max-width:42ch}
@@ -767,6 +775,34 @@ body.no-webgl{background-image:
   });
 
   if(ST && document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ ST.refresh(); });
+
+  // ── kinetic typography background: giant brand words, marquee + scroll parallax ──
+  (function(){
+    var host=document.getElementById('bg');
+    if(!host||!host.parentNode) return;
+    var kt=document.createElement('div'); kt.id='kt'; kt.setAttribute('aria-hidden','true');
+    host.parentNode.insertBefore(kt, host.nextSibling);
+    var WORDS=['CULTURE','GROWTH','BRANDS','BODEGA','CREATIVE','CONTENT','STRATEGY','SOCIAL'];
+    var N=reduced?5:7, rk=[];
+    for(var i=0;i<N;i++){
+      var row=document.createElement('div'); row.className='kt-row'+(i%3===1?' fill':'');
+      row.style.fontSize=(i%2?7:9.5)+'vw';
+      var tr=document.createElement('div'); tr.className='kt-track'+(i%2?' rev':'');
+      tr.style.setProperty('--d',(24+(i%5)*8)+'s');
+      tr.textContent=(WORDS[i%WORDS.length]+'  ').repeat(10);
+      row.appendChild(tr); kt.appendChild(row);
+      rk.push({row:row, spd:(0.06+(i%4)*0.045)*((i%2)?1:-1)});
+    }
+    var ticking=false;
+    function onScroll(){
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(function(){
+        ticking=false; var sc=window.scrollY||0;
+        for(var i=0;i<rk.length;i++) rk[i].row.style.transform='translateX('+(sc*rk[i].spd)+'px)';
+      });
+    }
+    addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  })();
 })();
 </script>
 
@@ -840,10 +876,12 @@ function startScene(THREE){
   const { geo, mat } = buildField(THREE, COUNT, PIX);
   const points = new THREE.Points(geo, mat);
   points.frustumCulled = false; // positions morph on the GPU; skip CPU culling
+  points.visible = false;       // kinetic-typography background is used instead of particles
   scene.add(points);
 
   /* signature ember "thread" — strategy → approved content out. Draws in on scroll. */
   const thread = buildThread(THREE);
+  thread.mesh.visible = false;
   scene.add(thread.mesh);
 
   /* subtle pointer parallax for life (desktop, non-reduced only) */
