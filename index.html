@@ -123,7 +123,7 @@ section{position:relative}
 .hero h1{font-size:clamp(46px,11vw,92px);letter-spacing:-.035em;line-height:1.0;max-width:14ch}
 .hero h1 .line{display:block;overflow:hidden}
 .hero h1 .line>span{display:block}
-.rotw{display:inline-block;transition:transform .5s cubic-bezier(.5,0,.2,1),opacity .5s;will-change:transform,opacity}
+.rotw{display:inline-block;transition:opacity .42s ease,transform .42s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
 .hero p{margin-top:22px;max-width:42ch;font-size:15px;line-height:1.65;color:var(--muted)}
 .cta-row{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
 
@@ -871,18 +871,22 @@ body.no-webgl{background-image:
     })();
   })();
 
-  // ── kinetic hero headline — the closing word cycles on a slot-machine swap ──
+  // ── kinetic hero headline — the closing word cross-fades through a short list.
+  //    Fade + tiny rise (no clip mask) so it stays readable at every width, incl. mobile
+  //    where the line wraps; under reduced-motion it's an opacity-only fade (no movement). ──
   (function(){
-    var rotw = document.querySelector('.rotw'); if(!rotw || reduced) return;
-    var words = ['culture','trends','stories','demand'], i = 0;
+    var rotw = document.querySelector('.rotw'); if(!rotw) return;
+    var words = ['culture','trends','stories','demand'], i = 0, rise = reduced ? '0' : '-0.32em';
     setInterval(function(){
-      rotw.style.transform = 'translateY(-115%)'; rotw.style.opacity = '0';
+      rotw.style.opacity = '0'; rotw.style.transform = 'translateY(' + rise + ')';
       setTimeout(function(){
         i = (i + 1) % words.length; rotw.textContent = words[i];
-        rotw.style.transition = 'none'; rotw.style.transform = 'translateY(115%)';
-        void rotw.offsetWidth;                       // force reflow so the entrance transitions
-        rotw.style.transition = ''; rotw.style.transform = 'translateY(0)'; rotw.style.opacity = '1';
-      }, 480);
+        rotw.style.transition = 'none';
+        rotw.style.transform = reduced ? 'none' : 'translateY(0.32em)';
+        void rotw.offsetWidth;                       // reflow so the fade-in transitions
+        rotw.style.transition = '';
+        rotw.style.opacity = '1'; rotw.style.transform = 'translateY(0)';
+      }, 430);
     }, 2800);
   })();
 })();
