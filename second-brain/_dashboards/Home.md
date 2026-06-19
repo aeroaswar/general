@@ -33,6 +33,7 @@ SORT file.cday DESC
 - [[05-Research/_Research-MOC|Research MOC]]
 - [[02-Projects/_Projects-MOC|Projects MOC]]
 - [[03-Areas/_Areas-MOC|Areas MOC]]
+- [[07-Skills/_Skills-MOC|Skills MOC]]
 
 ## 🌱 Recently created
 ```dataview

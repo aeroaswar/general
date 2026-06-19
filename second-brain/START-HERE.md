@@ -50,9 +50,11 @@ streak. Email: aeroaswar@gmail.com.
 - Every note has a `type:` in frontmatter (`primer`/`about`/`area`/`project`/`permanent`/`literature`/`source`/`daily`/`meeting`/`moc`/`dashboard`).
 - Plugins required: **Dataview**, **Tasks**, **Templater** (see [[README]]).
 
-## ⚠️ Exclusions (do not add here)
-Anything **MMI / IJBA / PTMMI nickel** (incl. the nickel "billion-dollar-board"
-deal) is intentionally **kept out** of this personal vault.
+## My five operating entities
+ANI · **MMI** (nickel trading) · **IJBA** (jetski federation) · **GLU** (apparel) ·
+portfolio. See [[MMI — Mangkuluhur Mineral Indonesia]], [[IJBA — Jetski Federation]],
+[[ANI — Adhita Nikel Indonesia]], [[GLU]].
+> MMI material is **confidential** — handle accordingly, but it now lives in this vault.
 
 ## Areas (subject map)
 - [[Jetski Racing & Athletic Identity]]
@@ -61,3 +63,6 @@ deal) is intentionally **kept out** of this personal vault.
 - [[Design Practice & House Style]]
 - [[Ventures & Business]]
 - [[AI & Automation]]
+
+## Skills
+All my Claude skills (made + used) are cataloged in [[_Skills-MOC]] under `07-Skills/`.

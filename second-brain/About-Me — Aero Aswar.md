@@ -37,8 +37,13 @@ updated: 2026-06-19
 - Ship **aeroaswar.com** cinematic athlete site (dark "Born on Water" + light "Daylight Wake").
 - Maintain creative-coding portfolio and AI/automation tooling.
 
+## My five operating entities
+- **ANI** (nickel mine) · **MMI** (nickel-ore trading, confidential) · **IJBA**
+  (jetski federation — I sit on the 2025–2029 board) · **GLU** (eco-athletic apparel) ·
+  **portfolio** (equities). Tooling that spans them: [[usaha-id]].
+
 ## Pointers
 - Areas: [[Jetski Racing & Athletic Identity]] · [[GLU — Eco-Athletic Brand]] ·
   [[Creative Coding & Web]] · [[Design Practice & House Style]] ·
   [[Ventures & Business]] · [[AI & Automation]]
-- ⚠️ MMI / IJBA / nickel topics are deliberately excluded from this vault.
+- Skills catalog: [[_Skills-MOC]].

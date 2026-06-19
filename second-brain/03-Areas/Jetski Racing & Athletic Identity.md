@@ -26,6 +26,10 @@ WHERE area = this.file.name
 SORT status ASC
 ```
 
+## Sport governance
+- I sit on the **IJBA** jetski-federation board (Kepengurusan 2025–2029, KONI-recognized).
+  → [[IJBA — Jetski Federation]] (Master Plan 2026–2030, international competition).
+
 ## Notes
 - The light "Daylight Wake" rebuild (Jun 2026) dropped the countdown for a cinematic
   camera glide-in; turquoise daylight ocean shader, frosted content sheets.
