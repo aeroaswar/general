@@ -185,6 +185,37 @@ footer a:hover{text-decoration:underline}
 .rail button[aria-current="true"]{color:var(--ink)}
 .rail button[aria-current="true"] .tick{width:30px;background:var(--ember)}
 
+/* ── content sections ported from the live site: Services / About / Contact ── */
+.svc-grid,.prin-grid{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:26px}
+.svc-grid{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.prin-grid{grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+.svc{background:var(--card);padding:26px;display:flex;flex-direction:column;backdrop-filter:blur(6px)}
+.svc-head{display:flex;align-items:center;justify-content:space-between}
+.svc .n,.prin .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.svc h3{font-family:'Fraunces',serif;font-size:clamp(24px,3.2vw,30px);line-height:1.04;margin-top:12px;font-weight:500}
+.svc-sum{margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--muted);max-width:40ch}
+.svc-list{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--border)}
+.svc-list li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.svc-list .dotm{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);width:10px;flex:none}
+.engage{margin-top:26px;padding:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px}
+.engage-cta{display:flex;gap:12px;flex-wrap:wrap}
+.about-meta{margin-top:24px}
+.meta-v{font-family:'Fraunces',serif;font-size:20px;margin-top:4px}
+.prin{background:var(--card);padding:24px}
+.prin h4{font-family:'Fraunces',serif;font-size:20px;font-weight:500;margin-top:8px}
+.name-card{margin-top:24px;padding:32px;display:grid;gap:24px;align-items:center}
+.name-logo{display:grid;place-items:center}
+.name-logo .logo{height:60px;width:210px}
+.contact-grid{display:grid;gap:22px;margin-top:26px}
+.contact-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:26px}
+.contact-form label{display:flex;flex-direction:column;gap:6px}
+.contact-form .full{grid-column:1/-1}
+.contact-form input,.contact-form textarea{width:100%;padding:10px 12px;font:inherit;font-size:13px;border:1px solid var(--border);background:color-mix(in srgb,var(--paper) 55%,var(--card));color:inherit;border-radius:8px;outline:none;transition:border-color .2s}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--ink)}
+.contact-form textarea{resize:none}
+.form-foot{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.side-list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px;font-size:13px}
+
 /* responsive */
 @media(min-width:700px){
   .span4{grid-column:span 4}.span5{grid-column:span 5}.span7{grid-column:span 7}.span8{grid-column:span 8}
@@ -199,6 +230,10 @@ footer a:hover{text-decoration:underline}
   .rail{display:flex}
   .container{padding-left:40px;padding-right:40px}
   .hero{padding-top:120px}
+  .name-card{grid-template-columns:1.35fr .85fr}
+  .about-meta{display:flex;flex-direction:column;align-items:flex-end;text-align:right;border-left:1px solid var(--border);padding-left:32px;margin-top:0}
+  .contact-grid{grid-template-columns:1.5fr 1fr;align-items:start}
+  .contact-side{border-left:1px solid var(--border);padding-left:32px}
 }
 @media(min-width:700px) and (max-width:1000px){ .signin{display:none} }
 
@@ -258,9 +293,9 @@ html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
       <a href="#top" class="logo" aria-label="bodega — home"></a>
       <nav class="main" aria-label="Primary">
         <a href="#top">Home</a>
-        <a href="#what">Services</a>
-        <a href="#rule">About</a>
-        <a href="#close">Contact</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
       </nav>
       <div class="right">
         <button class="btn theme-toggle" id="themeBtn" type="button" aria-label="Toggle light or dark theme">
@@ -292,7 +327,7 @@ html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
           <a href="#close" class="btn ink lg">Sign up
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
           </a>
-          <a href="#what" class="btn lg">See services</a>
+          <a href="#services" class="btn lg">See services</a>
         </div>
       </div>
       <div class="stripe" data-reveal>
@@ -362,6 +397,137 @@ html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
       </div>
     </section>
 
+    <!-- ░░ SERVICES — four ways we work ░░ -->
+    <section class="block rule" id="services" style="border-bottom:1px solid var(--border)">
+      <div class="container">
+        <div class="kicker" data-reveal>Services</div>
+        <h2 class="display" data-reveal style="font-size:clamp(34px,6vw,56px);margin-top:8px">Four ways we work.</h2>
+        <p class="lead" data-reveal style="max-width:58ch">Bodega is sold as a workspace, but bought as a discipline. Most engagements start with client assessment and strategy setup, then graduate into operations.</p>
+        <div class="svc-grid">
+          <article class="svc" data-reveal>
+            <div class="svc-head"><span class="n">01</span><span class="kicker">Service</span></div>
+            <h3>Strategy Setup</h3>
+            <p class="svc-sum">We sit with you and your clients to design custom Phase &amp; Pillar frameworks.</p>
+            <ul class="svc-list">
+              <li><span class="dotm">·</span>Client assessment &amp; intake</li>
+              <li><span class="dotm">·</span>Industry-aware phase/pillar suggestions</li>
+              <li><span class="dotm">·</span>Audience segmentation map</li>
+              <li><span class="dotm">·</span>Channel &amp; cadence plan</li>
+              <li><span class="dotm">·</span>Editorial guardrails</li>
+            </ul>
+          </article>
+          <article class="svc" data-reveal>
+            <div class="svc-head"><span class="n">02</span><span class="kicker">Service</span></div>
+            <h3>Content Operations</h3>
+            <p class="svc-sum">We run the daily editorial loop — brief, draft, review, schedule, post.</p>
+            <ul class="svc-list">
+              <li><span class="dotm">·</span>Briefs and CTAs by channel</li>
+              <li><span class="dotm">·</span>Internal review pipeline</li>
+              <li><span class="dotm">·</span>Client approval workflow</li>
+              <li><span class="dotm">·</span>Production calendar &amp; cadence</li>
+              <li><span class="dotm">·</span>Asset library and provenance</li>
+            </ul>
+          </article>
+          <article class="svc" data-reveal>
+            <div class="svc-head"><span class="n">03</span><span class="kicker">Service</span></div>
+            <h3>Client Portal</h3>
+            <p class="svc-sum">A clean, role-aware portal your clients open without complaining.</p>
+            <ul class="svc-list">
+              <li><span class="dotm">·</span>Per-client workspace</li>
+              <li><span class="dotm">·</span>Approvals with comment thread</li>
+              <li><span class="dotm">·</span>Approval history log</li>
+              <li><span class="dotm">·</span>Calendar visibility</li>
+              <li><span class="dotm">·</span>Quarterly reporting</li>
+            </ul>
+          </article>
+          <article class="svc" data-reveal>
+            <div class="svc-head"><span class="n">04</span><span class="kicker">Service</span></div>
+            <h3>Reporting &amp; Review</h3>
+            <p class="svc-sum">Honest numbers: planned vs posted, approval lag, publishing consistency.</p>
+            <ul class="svc-list">
+              <li><span class="dotm">·</span>Planned vs posted</li>
+              <li><span class="dotm">·</span>Mix by phase &amp; pillar</li>
+              <li><span class="dotm">·</span>Approval turnaround time</li>
+              <li><span class="dotm">·</span>Per-client summary snapshot</li>
+              <li><span class="dotm">·</span>Quarterly review</li>
+            </ul>
+          </article>
+        </div>
+        <div class="engage sheet" data-reveal>
+          <div>
+            <div class="kicker">Engagement</div>
+            <h3 class="display" style="font-size:clamp(22px,3.4vw,28px);margin-top:8px">Studio retainers, setup sprints, or in-house enablement.</h3>
+            <p class="muted" style="margin-top:12px;font-size:13.5px;line-height:1.65;max-width:54ch">We work with agencies that want a content operating system, and in-house teams that need outside discipline. The workspace travels with you either way.</p>
+          </div>
+          <div class="engage-cta">
+            <a href="#contact" class="btn ink">Talk to us</a>
+            <a href="#close" class="btn">Open workspace</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ ABOUT — we make a small thing, well ░░ -->
+    <section class="block" id="about">
+      <div class="container grid12" style="align-items:end">
+        <div class="span7">
+          <div class="kicker" data-reveal>About</div>
+          <h2 class="display" data-reveal style="font-size:clamp(34px,6vw,56px);margin-top:8px;line-height:.95">We make a small thing, well.</h2>
+          <p class="lead" data-reveal style="max-width:48ch;font-size:14.5px">Bodega started as the internal operating system of a content studio. After three years of running it for our own clients, we made it the product. It carries the bias of people who actually ship content every week.</p>
+        </div>
+        <div class="span5 about-meta" data-reveal>
+          <div><div class="kicker">Founded</div><div class="meta-v">2024 · Jakarta / Singapore</div></div>
+          <div style="margin-top:18px"><div class="kicker">Headcount</div><div class="meta-v">Twelve. On purpose.</div></div>
+        </div>
+      </div>
+      <div class="container" style="padding-top:40px">
+        <div class="kicker" data-reveal style="display:block;margin-bottom:18px">Operating principles</div>
+        <div class="prin-grid">
+          <div class="prin" data-reveal><div class="n">01</div><h4>Calendar over vibes</h4><p class="muted" style="margin-top:8px;font-size:13px;line-height:1.6">We publish on time. That alone separates studios that scale from studios that drift.</p></div>
+          <div class="prin" data-reveal><div class="n">02</div><h4>Custom frameworks, never static</h4><p class="muted" style="margin-top:8px;font-size:13px;line-height:1.6">Every client gets their own phase and pillar taxonomy. Templates are a starting point, not a sentence.</p></div>
+          <div class="prin" data-reveal><div class="n">03</div><h4>Client time is expensive</h4><p class="muted" style="margin-top:8px;font-size:13px;line-height:1.6">The portal exists so a client can approve six items between meetings, on a phone, without complaint.</p></div>
+          <div class="prin" data-reveal><div class="n">04</div><h4>Numbers, plainly</h4><p class="muted" style="margin-top:8px;font-size:13px;line-height:1.6">Planned vs posted. Turnaround. Mix. Reporting is short and never embellished.</p></div>
+        </div>
+        <div class="name-card sheet" data-reveal>
+          <div>
+            <h3 class="display" style="font-size:clamp(24px,4vw,32px)">The name.</h3>
+            <p class="muted" style="margin-top:12px;font-size:14px;line-height:1.7;max-width:50ch">A <em class="serif">bodega</em> is a corner store. Quiet, well-stocked, run by people who recognize you. Open at six. Doesn't advertise. We thought that was the right metaphor for an operating system.</p>
+          </div>
+          <div class="name-logo"><span class="logo" aria-label="bodega"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ CONTACT — two emails, no forms team ░░ -->
+    <section class="block rule" id="contact" style="border-top:1px solid var(--border)">
+      <div class="container">
+        <div class="kicker" data-reveal>Contact</div>
+        <h2 class="display" data-reveal style="font-size:clamp(34px,6vw,56px);margin-top:8px">Two emails, no forms team.</h2>
+        <p class="lead" data-reveal style="max-width:52ch">Tell us briefly what you're trying to ship and we'll reply with a short, honest read on whether we're useful.</p>
+        <div class="contact-grid">
+          <form class="contact-form sheet" id="contactForm" data-reveal novalidate>
+            <label><span class="kicker">Name</span><input required name="name" autocomplete="name" /></label>
+            <label><span class="kicker">Company</span><input name="company" autocomplete="organization" /></label>
+            <label class="full"><span class="kicker">Email</span><input type="email" required name="email" autocomplete="email" /></label>
+            <label class="full"><span class="kicker">What are you trying to ship?</span><textarea rows="6" required name="message"></textarea></label>
+            <div class="form-foot full">
+              <span class="muted" style="font-size:11px">We reply within one working day.</span>
+              <button type="submit" class="btn ink" id="sendBtn">Send</button>
+            </div>
+          </form>
+          <aside class="contact-side" data-reveal>
+            <div class="kicker">Direct</div>
+            <p class="serif" style="font-size:20px;margin-top:6px">studio@bodega.studio</p>
+            <p class="muted" style="font-size:13px;margin-top:2px">Mon – Fri · 09–18 ICT/SGT</p>
+            <div class="kicker" style="display:block;margin-top:28px">Studios</div>
+            <ul class="side-list"><li>Jakarta · Setiabudi</li><li>Singapore · Tanjong Pagar</li></ul>
+            <div class="kicker" style="display:block;margin-top:28px">Press</div>
+            <p class="muted" style="font-size:13px;margin-top:6px">press@bodega.studio</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <!-- ░░ CLOSING — a workspace clients actually open ░░ -->
     <section class="closewrap" id="close">
       <div class="container">
@@ -417,8 +583,9 @@ html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
 <div class="cue" aria-hidden="true"><span>Scroll</span><span class="bar"></span></div>
 <nav class="rail" aria-label="Sections">
   <button data-go="#top" aria-current="true"><span>Hero</span><span class="tick"></span></button>
-  <button data-go="#what"><span>Loops</span><span class="tick"></span></button>
-  <button data-go="#rule"><span>Pillars</span><span class="tick"></span></button>
+  <button data-go="#services"><span>Services</span><span class="tick"></span></button>
+  <button data-go="#about"><span>Studio</span><span class="tick"></span></button>
+  <button data-go="#contact"><span>Contact</span><span class="tick"></span></button>
   <button data-go="#close"><span>Open</span><span class="tick"></span></button>
 </nav>
 
@@ -438,15 +605,17 @@ html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
   var yr = document.getElementById('yr'); if(yr) yr.textContent = new Date().getFullYear();
   var g = window.gsap, ST = window.ScrollTrigger;
 
-  // section rail + scroll cue — driven straight off page scroll (no 3D needed)
+  // section rail + scroll cue — active section detected from real positions, so it
+  // tracks whatever sections exist (no 3D needed)
   var railBtns = [].slice.call(document.querySelectorAll('.rail button'));
+  var railTargets = railBtns.map(function(b){ return document.querySelector(b.dataset.go); });
   var cue = document.querySelector('.cue');
   function maxScroll(){ return Math.max(1, document.documentElement.scrollHeight - innerHeight); }
   function updateChrome(){
-    var s = Math.max(0, Math.min(1, window.scrollY / maxScroll()));
-    var idx = s<0.25?0 : s<0.52?1 : s<0.8?2 : 3;
-    for(var i=0;i<railBtns.length;i++) railBtns[i].setAttribute('aria-current', i===idx?'true':'false');
-    if(cue) cue.style.opacity = s>0.04 ? '0' : '1';
+    var mark = innerHeight * 0.42, active = 0;
+    for(var i=0;i<railTargets.length;i++){ var el=railTargets[i]; if(el && el.getBoundingClientRect().top <= mark) active = i; }
+    for(var j=0;j<railBtns.length;j++) railBtns[j].setAttribute('aria-current', j===active?'true':'false');
+    if(cue) cue.style.opacity = window.scrollY > 40 ? '0' : '1';
   }
 
   // smooth scroll (Lenis) + ScrollTrigger sync — shared with the 3D module via window.__lenis
@@ -502,6 +671,15 @@ html.dark header.bar{background:color-mix(in srgb,var(--paper) 84%,transparent)}
     if(window.__bodegaApplyTheme) window.__bodegaApplyTheme(dark);
   });
 
+  // contact form — no backend; confirm inline (mirrors the original's toast behaviour)
+  var cf = document.getElementById('contactForm');
+  if(cf) cf.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!cf.checkValidity()){ if(cf.reportValidity) cf.reportValidity(); return; }
+    var b = document.getElementById('sendBtn');
+    if(b){ b.textContent = 'Sent · we’ll be in touch'; b.disabled = true; b.style.opacity = '.7'; }
+  });
+
   if(ST && document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ ST.refresh(); });
 })();
 </script>
@@ -538,6 +716,14 @@ const PHASES_DARK = [
   { cam:[0.0,7.6,10.4], tgt:[0,0.2,0], bg:'#080808', point:'#f3eee5', ember:'#ff7d36', emix:1.0 }
 ];
 let PH = document.documentElement.classList.contains('dark') ? PHASES_DARK : PHASES_LIGHT;
+
+/* Map page scroll 0..1 → scene phase 0..3. The body stays in the light phases;
+   the ink grade is reserved for the final ~14% so the added content sections
+   (Services / About / Contact) stay readable over the canvas. */
+function progToPhase(prog){
+  prog = Math.max(0, Math.min(1, prog));
+  return prog < 0.86 ? (prog/0.86)*2.25 : 2.25 + ((prog-0.86)/0.14)*0.75;
+}
 
 let api = { snap(){}, prog(){return 0} }; // becomes the window.__bodega handle
 /* Load three only if WebGL is available; a failed import just leaves the clean
@@ -661,15 +847,15 @@ function startScene(THREE){
   if (window.gsap && window.ScrollTrigger && capParam===null){
     window.ScrollTrigger.create({
       trigger:'#main', start:'top top', end:'bottom bottom', scrub: reduced?false:0.5,
-      onUpdate(self){ setProgress(self.progress*3, self.progress); },
-      onRefresh(self){ setProgress(self.progress*3, self.progress); }
+      onUpdate(self){ setProgress(progToPhase(self.progress), self.progress); },
+      onRefresh(self){ setProgress(progToPhase(self.progress), self.progress); }
     });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=> window.ScrollTrigger.refresh());
   }
 
   /* public debug handle (house-style snap interface) */
   api = {
-    snap(p){ const y=p*maxScroll(); doScrollTo(y); setProgress(p*3, p); },
+    snap(p){ const y=p*maxScroll(); doScrollTo(y); setProgress(progToPhase(p), p); },
     play, pause,
     prog(){ return curScroll; },
     setProgress, scene, camera, renderer
@@ -685,7 +871,7 @@ function startScene(THREE){
     let v = parseFloat(capParam);
     if (Number.isNaN(v)) v = map[capParam] ?? 0;
     v = Math.max(0, Math.min(1, v));
-    requestAnimationFrame(()=>{ doScrollTo(v*maxScroll()); setProgress(v*3, v); });
+    requestAnimationFrame(()=>{ doScrollTo(v*maxScroll()); setProgress(progToPhase(v), v); });
   }
 }
 
