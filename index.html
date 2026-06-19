@@ -25,7 +25,8 @@
   --paper:#F2E400;          /* live background — set by JS to the current brand colour */
   --ink:#0d0d0d;            /* live text colour — set by JS (black/white)            */
   --muted:color-mix(in srgb, var(--ink) 90%, transparent);
-  --border:color-mix(in srgb, var(--ink) 28%, transparent);
+  --border:color-mix(in srgb, var(--ink) 16%, transparent);
+  --line:color-mix(in srgb, var(--ink) 7%, transparent);  /* subtle grid dividers/fills */
   --card:var(--paper);  /* cards take the section colour — no darker tint */
   --ember:var(--ink);
   --radius:.85rem;
@@ -193,7 +194,7 @@ footer a:hover{text-decoration:underline}
 .rail button[aria-current="true"] .tick{width:30px;background:var(--ember)}
 
 /* ── content sections ported from the live site: Services / About / Contact ── */
-.svc-grid,.prin-grid{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:26px}
+.svc-grid,.prin-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:26px}
 .svc-grid{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
 .prin-grid{grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
 .svc{background:var(--card);padding:26px;display:flex;flex-direction:column;backdrop-filter:blur(6px)}
@@ -236,24 +237,24 @@ footer a:hover{text-decoration:underline}
 .work .sub{font-size:12px;color:var(--muted);margin-top:3px}
 .work .cat{font-size:10px;color:var(--muted);text-align:right;text-transform:uppercase;letter-spacing:.09em;line-height:1.5;flex:none;max-width:13ch}
 .work .desc{font-size:12.5px;color:var(--muted);line-height:1.55}
-.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:auto}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:auto}
 .metric{background:var(--card);padding:13px 15px}
 .metric .v{font-family:'Fraunces',serif;font-size:21px;line-height:1}
 .metric .v .up{color:var(--ember);font-size:12px;margin-left:3px}
 .metric .l{font-size:10px;color:var(--muted);margin-top:5px;text-transform:uppercase;letter-spacing:.07em}
 .more-clients{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
 .chip{border:1px solid var(--border);border-radius:999px;padding:5px 12px;font-size:12px;background:var(--card)}
-.team-grid{display:grid;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));margin-top:18px}
+.team-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));margin-top:18px}
 .member{background:var(--card);padding:16px 18px}
 .member .nm{font-family:'Fraunces',serif;font-size:18px;text-transform:capitalize}
 .member .rl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-top:4px}
 
 /* impact stats + compact work portfolio */
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:28px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:28px}
 .stat{background:var(--card);padding:28px 22px}
 .stat .sv{font-family:'Fraunces',serif;font-size:clamp(36px,6vw,56px);line-height:1;font-weight:500}
 .stat .sl{font-size:11.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:10px}
-.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
 .mini{background:var(--card);padding:20px;display:flex;flex-direction:column}
 .mini h4{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.1}
 .mini .sub{font-size:12px;color:var(--muted);margin-top:3px}
