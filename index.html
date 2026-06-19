@@ -348,15 +348,17 @@ body.no-webgl{background-image:
    hero would crop the headline reveal-mask, so relax the layout, shrink the headline
    so it fits, and never clip the lines here. */
 @media (max-height:600px){
-  .hero{min-height:auto;padding-top:80px;padding-bottom:40px;justify-content:center}
-  .hero h1{font-size:clamp(28px,5.4vw,50px);line-height:1.07;max-width:26ch}
+  .hero{min-height:auto;justify-content:flex-start;padding-top:26px;padding-bottom:30px}
+  .hero h1{font-size:clamp(30px,4.6vw,44px);line-height:1.08;max-width:24ch}
   .hero h1 .line{overflow:visible}
-  html.anim .hero h1 .line>span{transform:none}
-  .hero p{margin-top:14px;font-size:14px;line-height:1.55;max-width:54ch}
-  .cta-row{margin-top:18px}
-  .stripe{margin-top:26px}
+  .hero h1 .line>span{transform:none!important}    /* never offset the headline here — kills the landscape overlap regardless of JS state */
+  .hero p{margin-top:12px;font-size:13.5px;line-height:1.5;max-width:56ch}
+  .cta-row{margin-top:16px}
+  .stripe{margin-top:22px}
   .cue{display:none}
 }
+/* in short landscape the fixed section rail (shown ≥700px) would overlap the hero text */
+@media (max-height:600px) and (min-width:700px){ .hero>.container{padding-right:108px} }
 /* the scroll cue clutters small touch screens and can overlap the CTAs — hide it there */
 @media (max-width:700px){ .cue{display:none} }
 </style>
@@ -813,6 +815,17 @@ body.no-webgl{background-image:
       });
     }
   }catch(e){ try{ g.set('[data-reveal]',{autoAlpha:1,y:0}); g.set('.hero h1 .line>span',{yPercent:0}); }catch(_){} d.classList.remove('anim'); }
+
+  // failsafe: the masked headline reveal must never strand or offset the lines — a
+  // stalled tween (seen leaving line 1 hidden), or rotating into a short/landscape
+  // viewport, would otherwise leave them hidden or overlapping the paragraph. Force
+  // the resolved state shortly after load, and again whenever the viewport gets short.
+  if(g){
+    setTimeout(function(){ try{ g.set('.hero h1 .line>span', { yPercent:0 }); }catch(e){} }, 2000);
+    var settleHero = function(){ if(innerHeight <= 600){ try{ g.set('.hero h1 .line>span', { yPercent:0 }); }catch(e){} } };
+    addEventListener('orientationchange', settleHero);
+    addEventListener('resize', settleHero, { passive:true });
+  }
 
   // in-page anchor + rail navigation
   function go(hash){
