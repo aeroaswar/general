@@ -91,7 +91,7 @@ nav.main a:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:v
 .bar .right{margin-left:auto;display:flex;align-items:center;gap:8px}
 .btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;font-size:12.5px;
   border-radius:7px;border:1px solid var(--border);cursor:pointer;white-space:nowrap;
-  transition:transform .26s cubic-bezier(.32,.72,0,1),background-color .26s,border-color .26s,color .26s;background:transparent;color:inherit}
+  transition:transform .26s cubic-bezier(.32,.72,0,1),background-color .26s,border-color .26s,color .26s,translate .3s cubic-bezier(.32,.72,0,1);background:transparent;color:inherit}
 .btn:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
 .btn:active{transform:scale(.975)}
 .btn.ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -123,6 +123,7 @@ section{position:relative}
 .hero h1{font-size:clamp(46px,11vw,92px);letter-spacing:-.035em;line-height:1.0;max-width:14ch}
 .hero h1 .line{display:block;overflow:hidden}
 .hero h1 .line>span{display:block}
+.rotw{display:inline-block;transition:transform .5s cubic-bezier(.5,0,.2,1),opacity .5s;will-change:transform,opacity}
 .hero p{margin-top:22px;max-width:42ch;font-size:15px;line-height:1.65;color:var(--muted)}
 .cta-row{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
 
@@ -385,7 +386,7 @@ body.no-webgl{background-image:
         </div>
         <h1>
           <span class="line"><span>Brands don't just speak.</span></span>
-          <span class="line"><span>They shape <em class="serif" style="color:var(--ember)">culture.</em></span></span>
+          <span class="line"><span>They shape <em class="serif" style="color:var(--ember)" aria-label="culture"><span class="rotw" aria-hidden="true">culture</span>.</em></span></span>
         </h1>
         <p data-reveal>Bodega Creative is a studio for brand-first social media ecosystems — from content strategy to daily execution, designed to strengthen brand presence and drive measurable growth. We operate as an extension of your team.</p>
         <div class="cta-row" data-reveal>
@@ -835,7 +836,27 @@ body.no-webgl{background-image:
     var HIT = 'a,button,.work,.svc,.pcard,.mini,.step,.scard';
     document.addEventListener('pointerover', function(e){ if(e.target.closest && e.target.closest(HIT)) cur.classList.add('big'); });
     document.addEventListener('pointerout',  function(e){ if(e.target.closest && e.target.closest(HIT)) cur.classList.remove('big'); });
-    (function curLoop(){ requestAnimationFrame(curLoop); cx += (tx-cx)*0.22; cy += (ty-cy)*0.22; cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px)'; })();
+    // pointer parallax on the liquid blobs — uses the independent `translate` property
+    // so it composes with the blobs' own transform-based bloom/float animations
+    var blobsP = document.getElementById('blobs'), bxp = 0, byp = 0;
+    (function curLoop(){ requestAnimationFrame(curLoop);
+      cx += (tx-cx)*0.22; cy += (ty-cy)*0.22;
+      cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
+      if(blobsP){
+        bxp += ((tx/innerWidth  - 0.5)*28 - bxp)*0.06;
+        byp += ((ty/innerHeight - 0.5)*28 - byp)*0.06;
+        blobsP.style.translate = bxp.toFixed(2) + 'px ' + byp.toFixed(2) + 'px';
+      }
+    })();
+
+    // magnetic large CTAs — the button eases toward the pointer, springs back on leave
+    [].slice.call(document.querySelectorAll('.btn.lg')).forEach(function(b){
+      b.addEventListener('pointermove', function(e){
+        var r = b.getBoundingClientRect();
+        b.style.translate = ((e.clientX-(r.left+r.width/2))*0.28).toFixed(1) + 'px ' + ((e.clientY-(r.top+r.height/2))*0.45).toFixed(1) + 'px';
+      });
+      b.addEventListener('pointerleave', function(){ b.style.translate = '0 0'; });
+    });
   }
 
   // ── cinematic touch: scroll velocity softens the liquid blobs (extra blur on fast scroll) ──
@@ -848,6 +869,21 @@ body.no-webgl{background-image:
       var val = Math.round(sv*10)/10;
       if(val !== lastSet){ blobsEl.style.setProperty('--sv', val + 'px'); lastSet = val; }
     })();
+  })();
+
+  // ── kinetic hero headline — the closing word cycles on a slot-machine swap ──
+  (function(){
+    var rotw = document.querySelector('.rotw'); if(!rotw || reduced) return;
+    var words = ['culture','trends','stories','demand'], i = 0;
+    setInterval(function(){
+      rotw.style.transform = 'translateY(-115%)'; rotw.style.opacity = '0';
+      setTimeout(function(){
+        i = (i + 1) % words.length; rotw.textContent = words[i];
+        rotw.style.transition = 'none'; rotw.style.transform = 'translateY(115%)';
+        void rotw.offsetWidth;                       // force reflow so the entrance transitions
+        rotw.style.transition = ''; rotw.style.transform = 'translateY(0)'; rotw.style.opacity = '1';
+      }, 480);
+    }, 2800);
   })();
 })();
 </script>
@@ -953,6 +989,20 @@ function startScene(THREE){
   /* The single source of truth: set everything from p∈[0..3] + scroll s∈[0..1]. */
   const docEl = document.documentElement;
   let lastPaper = null;
+  /* the liquid blobs lean toward the active brand phase, so the background grades
+     with the scroll: the blob whose colour matches the current section brightens,
+     the others recede (anchors: yellow 0 · mint 1 · blue 2 · magenta 3 · orange 1.5) */
+  const _blobEls = ['b1','b2','b3','b4','b5'].map(c => document.querySelector('.' + c));
+  const _blobAnchor = [0, 1, 2, 3, 1.5];
+  let _lastBlobP = -1;
+  function gradeBlobs(p){
+    if (Math.abs(p - _lastBlobP) < 0.02) return; _lastBlobP = p;
+    for (let i=0; i<_blobEls.length; i++){ const el=_blobEls[i]; if(!el) continue;
+      const o = Math.max(0.4, Math.min(1, 0.45 + 0.62*(1 - Math.abs(p - _blobAnchor[i])/1.5)));
+      el.style.opacity = o.toFixed(3);
+    }
+  }
+
   function setProgress(p, s){
     p = Math.max(0, Math.min(3, p));
     curP = p; curScroll = s;
@@ -993,6 +1043,7 @@ function startScene(THREE){
       docEl.style.setProperty('--ink', inkHex);
       docEl.classList.toggle('on-dark', inkHex === '#ffffff');
     }
+    gradeBlobs(p);
   }
 
   /* render loop — single rAF; pauses when the tab is hidden */
