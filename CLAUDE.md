@@ -2,6 +2,14 @@
 
 Personal design + creative-coding workspace (iCloud-synced, not a git repo). A collection of standalone projects, reference libraries, and downloaded repos — each sub-project is independent.
 
+## This git repo (`aeroaswar/general`) — live experience + deploy
+
+> Memory from the Jun 2026 build session. The Drive-imported copy of this workspace lives in the git repo `aeroaswar/general`; that repo also ships a live site.
+
+- **`index.html` (repo root) is the live deliverable** — *"Composites — Architecture of New Possibilities"*, a scroll-driven WebGL homage to [composites.archi](https://www.composites.archi) (JEC). No-build single file: Three.js **r160** + GSAP ScrollTrigger + Lenis via CDN import map; one scrubbed master timeline drives camera waypoints + shader uniforms; procedural composite canopy + instanced louver façade; custom `MeshStandardMaterial` shader (assembly reveal / carbon weave / fresnel rim). Debug: `window.__composites` (`.snap(p)`, `.pause()`/`.play()`, `.three`, `.uniforms`), `?debug=1` (camera HUD + logs), `?cap=<id|0..1>`, `?model=<glb>` (GLTF+DRACO drop-in). Full docs + Phase-3 DevTools protocol in `COMPOSITES-EXPERIENCE.md`.
+- **Deploy = push to `main`.** Repo is git-connected to Vercel project **`general`** (account `aeroaswar-7255`, Hobby), **production branch `main`**, live at **https://general-chi-sandy.vercel.app**. `.vercelignore` is `/*` then `!/index.html` (ships only `index.html`). Pushing `main` auto-redeploys prod. A `404: NOT_FOUND` means `index.html` is absent from the *deployed* branch (don't deploy a branch that lacks it).
+- **Remote sandbox limits (important for future web sessions):** the network policy blocks most external hosts — `composites.archi`, `vercel.com` **and** `api.vercel.com` all return `403`. So: the **Vercel CLI cannot deploy from here** (`VERCEL_TOKEN`/`ORG_ID`/`PROJECT_ID` are stripped from most shells *and* the hosts are blocked) → **deploy only via `git push` to `main`** (git integration on Vercel's side). To verify the page in headless Chromium, CDN ESM imports fail CORS (the proxy strips `Access-Control-Allow-Origin`), so **vendor deps locally**: `npm i three@0.160.0 gsap@3.12.5 lenis@1`, rewrite the import map to `./node_modules/...`, serve same-origin, and launch Chromium with `--ignore-certificate-errors --use-gl=swiftshader --enable-unsafe-swiftshader`.
+
 ## Environment quirks (important)
 
 - **Preview server cannot read this iCloud folder** — `preview_start` gets PermissionError here and its ports are unreachable from the browser. Workflow: `rsync` the project to `/tmp`, serve from there; add `?v=N` cache-busters after edits; use plain `python3 -m http.server <port>` (Bash) when sharing a link.
