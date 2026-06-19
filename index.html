@@ -55,10 +55,10 @@ em{font-style:italic}
 
 /* page chrome sits above the canvas */
 .wrap{position:relative;z-index:1}
-/* text halo: a pocket of the live bg colour clears the particle field right around
-   each glyph, so copy stays readable while the background still shows through */
-main, footer{text-shadow:0 0 3px var(--paper),0 0 3px var(--paper),0 0 3px var(--paper),0 0 8px var(--paper)}
-.btn,.brandbox,.brandbox *{text-shadow:none}
+/* hero text sits on the live field, so it keeps a bg-colour halo for legibility;
+   the content panels below are opaque, so they stay crisp with no halo */
+.hero{text-shadow:0 0 3px var(--paper),0 0 3px var(--paper),0 0 7px var(--paper)}
+.hero .btn{text-shadow:none}
 .skip{position:fixed;left:12px;top:12px;z-index:70;background:var(--ink);color:var(--paper);
   padding:8px 12px;font-size:12px;border-radius:6px;transform:translateY(-150%);transition:transform .36s cubic-bezier(.32,.72,0,1)}
 .skip:focus{transform:none}
@@ -120,7 +120,7 @@ section{position:relative}
 .dot{opacity:.5}
 
 /* generic content sections */
-.block{padding:88px 0}
+.block{padding:88px 0;background:var(--paper);margin-top:72px}
 .grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:32px}
 .span4{grid-column:span 12}
 .span5{grid-column:span 12}
@@ -147,7 +147,7 @@ h2.big{font-size:clamp(28px,4.4vw,34px);line-height:1.04;margin-top:12px}
 .uline{text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px;text-underline-offset:4px}
 
 /* closing — the ink panel */
-.closewrap{padding:96px 0 40px}
+.closewrap{padding:96px 0 40px;background:var(--paper);margin-top:72px}
 .panel{border:1px solid var(--border);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr}
 .panel .text{padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
 .panel .text h2{font-size:clamp(30px,5vw,42px);margin-top:12px}
@@ -163,7 +163,7 @@ h2.big{font-size:clamp(28px,4.4vw,34px);line-height:1.04;margin-top:12px}
 .panel .brandbox .tag{position:absolute;right:18px;bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.6}
 
 /* footer */
-footer{position:relative;z-index:1;border-top:1px solid var(--border);margin-top:40px}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);margin-top:72px;background:var(--paper)}
 footer .container{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;padding-top:44px;padding-bottom:48px}
 footer .col.lead-col{grid-column:span 2}
 footer p.about{margin-top:14px;font-size:13px;line-height:1.65;color:var(--muted);max-width:42ch}
