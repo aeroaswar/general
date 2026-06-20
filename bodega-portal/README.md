@@ -1,10 +1,10 @@
-# Bodega — Aurora-Glass Portal Site
+# Bodega — Client Portal (aurora-glass)
 
-A scroll-activated **Three.js + GSAP** single-page experience for **Bodega Creative
-Studio**, and the marketing gateway to its client portal at `bodega.pplx.app`.
-Rebuilt in the **aurora-glass** design language: a deep-ink canvas, a live GLSL
-aurora that the scroll timeline re-tunes section by section, and frosted-glass
-content panels.
+A faithful rebuild of **bodega.pplx.app** — the Bodega client portal — re-skinned in
+the **aurora-glass** design language. Same usage and screens as the real app, built
+on the real stack and a client-side demo store (no backend required).
+
+> Operating flow: **Client → Project → Framework → Content → Approval → Schedule → Report**
 
 ## Run it
 
@@ -15,39 +15,50 @@ npm run build    # static production build → dist/
 npm run preview  # serve the production build
 ```
 
-The build is fully self-contained — **no runtime CDN**. Fonts (Bricolage
-Grotesque + Inter) are bundled via `@fontsource`, and icons are inlined SVG. It
-deploys as static files to Vercel, Netlify, GitHub Pages, or any host.
+Fully static — fonts bundled via `@fontsource`, no runtime CDN. Hash routing
+(`/#/app/...`) so it deploys to any host (Vercel/Netlify/Pages) with no rewrites.
 
-## What drives the scene
+## Demo login
 
-- **`src/aurora.js`** — a full-screen fragment-shader aurora (domain-warped fbm
-  curtains). The scroll timeline lerps its palette, intensity, and motion per
-  section; Lenis scroll **velocity stretches** the curtains, and the pointer adds
-  parallax. Falls back to a static field under `prefers-reduced-motion`.
-- **`src/main.js`** — Lenis smooth-scroll + GSAP ScrollTrigger. Builds every
-  section from data, runs the reveal stagger, the **pinned 7-step portal spine**
-  (`Client → Project → Framework → Content → Approval → Schedule → Report`) whose
-  progress sweeps the aurora hue, and the animated proof counters.
-- **`src/content.js`** — all copy, sourced from the Bodega 2026 credentials deck
-  and the client-portal architecture spec (services, process, proof, team, roles).
-- **`src/styles.css`** — the aurora-glass design system (tokens, glass surfaces,
-  gradient display type, all section layouts, full responsive + reduced-motion).
+The login screen lets you enter as any role (no password — in-memory demo):
 
-## Debug handle
+| Role | User | Sees |
+|---|---|---|
+| **Admin** | Aero Aswar | every client, project, approval, report |
+| **Team** | Rizky Ananda | assigned projects & content |
+| **Client** | Maya Putri | Maktour only — review & approve |
 
-`window.__bodega` exposes `{ aurora, lenis, setMood(name), moods, goTo(sel),
-snap(t) }` — e.g. `__bodega.setMood('portal')` or `__bodega.snap(1.4)` to render a
-deterministic aurora frame.
+Switch role any time from the top bar; switch the active client from the client picker.
 
-## Sections
+## Screens (core portal)
 
-Hero → Industry marquee → Selected Work → Services → **The Portal** (pinned spine
-+ roles) → Why Bodega → Proof → Process → Contact / Brief → Footer.
+- **Dashboard** — KPIs, content pipeline overview, reach, upcoming schedule, recent activity, project health.
+- **Projects** — project cards + a detail drawer with the full framework (phases, pillars, audience segments, goals).
+- **Content Board** — kanban across the real status state machine (Idea → … → Posted). Card drawer with role-aware actions: advance status, request client review, approve / request revision, comment.
+- **Approvals** — the client review queue (approve / request revision) + decision history; team can send reminders.
+- **Calendar** — month grid of scheduled/published content, status-coloured, with a day panel.
+- **Reports** — recharts: planned vs posted, approval turnaround, pillar mix, platform split, KPIs, PDF export log.
+
+## Stack
+
+React 18 · Vite · Tailwind · framer-motion · recharts · lucide-react · wouter · date-fns —
+matching the real app (`@radix`/shadcn → hand-rolled glass primitives in `src/lib/ui.jsx`).
+
+## Structure
+
+```
+src/
+  store.jsx        Auth + Data contexts (client-side, mirrors the real store API)
+  seed.js          demo data: clients, projects, frameworks, content, approvals, snapshots
+  lib/status.js    status state machine, palette, formatters
+  lib/ui.jsx       aurora-glass UI kit (Button, Card, Badge, Modal, Stat, …)
+  components/       AppShell (sidebar/topbar), AuroraBg
+  pages/           Login, Dashboard, Projects, ContentBoard, Approvals, Calendar, Reports
+```
 
 ## Provenance
 
-Recreated from the prior `bodega-scroll` seed and the Bodega Drive material
-(credentials deck + portal spec). Content is real (contact, Maktour results,
-team, Jakarta studio); work-card visuals are generated gradients — drop real
-imagery into `public/` and swap the `.work-media` block to use it.
+Rebuilt from the real app source in the Bodega Drive (`bodega_developer_source` —
+React + Vite + shadcn/ui + Drizzle) and its architecture spec. The data model
+(`ContentStatus`, roles, entities) mirrors `client/src/lib/types.ts`; the store
+mirrors `client/src/lib/store.tsx`. Visuals are re-imagined in aurora-glass.

@@ -1,12 +1,9 @@
 import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// Bodega portal — static single-page build, deployable to Vercel/Netlify/any host.
+// Bodega client portal — static SPA build, deployable to any host.
 export default defineConfig({
   base: "./",
-  build: {
-    target: "es2020",
-    outDir: "dist",
-    assetsInlineLimit: 4096,
-    chunkSizeWarningLimit: 1200,
-  },
+  plugins: [react()],
+  build: { target: "es2020", outDir: "dist", chunkSizeWarningLimit: 1400 },
 });
