@@ -112,8 +112,9 @@ nav.main a:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:v
 .btn.ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .btn.ink:hover{background:color-mix(in srgb,var(--ink) 88%,var(--ember))}
 .btn.lg{height:42px;padding:0 20px;font-size:13px;border-radius:8px}
-.wa-link{display:inline-flex;align-items:center;color:var(--ink);border-color:color-mix(in srgb,#25D366 45%,var(--border))}
-.wa-link svg{color:#1faa4e;flex:none;position:relative;top:3px}
+.wa-link{display:inline-flex!important;align-items:center;color:var(--ink);border-color:color-mix(in srgb,#25D366 45%,var(--border))}
+.wa-link::after{content:none!important}
+.wa-link svg{color:#1faa4e;flex:none}
 .wa-link:hover{background:color-mix(in srgb,#25D366 14%,transparent);border-color:#25D366}
 .signin{display:none}
 .theme-toggle{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center}
