@@ -273,6 +273,21 @@ footer a:hover{text-decoration:none}
 .step .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ember)}
 .step h4{font-family:'Fraunces',serif;font-size:17px;font-weight:500;margin-top:6px}
 .step p{margin-top:7px;font-size:12.5px;line-height:1.55;color:var(--muted)}
+/* FAQ accordion */
+.faq-list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .3s ease}
+.faq-item.open{border-color:color-mix(in srgb,var(--ink) 32%,transparent)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px 22px;background:none;border:0;cursor:pointer;text-align:left;font-family:'Fraunces',serif;font-weight:500;font-size:clamp(16px,1.9vw,19px);color:var(--ink);line-height:1.25}
+.faq-ic{position:relative;flex:none;width:17px;height:17px;margin-top:2px}
+.faq-ic::before,.faq-ic::after{content:"";position:absolute;background:var(--ink);border-radius:2px;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
+.faq-ic::before{top:7.5px;left:0;width:17px;height:2px}
+.faq-ic::after{top:0;left:7.5px;width:2px;height:17px}
+.faq-item.open .faq-ic::after{transform:scaleY(0);opacity:0}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .42s cubic-bezier(.2,.8,.2,1)}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a-inner{overflow:hidden}
+.faq-a p{padding:0 22px 22px;font-size:13.5px;line-height:1.7;color:var(--muted);max-width:62ch}
+@media (prefers-reduced-motion: reduce){.faq-a,.faq-ic::before,.faq-ic::after,.faq-item{transition:none}}
 .work-grid{display:grid;gap:16px;grid-template-columns:1fr;margin-top:26px}
 @media(min-width:600px){.work-grid,.diff-grid,.team-grid{grid-template-columns:1fr 1fr}}
 @media(min-width:1000px){.work-grid,.team-grid{grid-template-columns:repeat(3,1fr)}}
@@ -700,6 +715,46 @@ body.no-webgl{background-image:
       </div>
     </section>
 
+    <!-- ░░ FAQ — answer objections right before the ask ░░ -->
+    <section class="block rule" id="faq" style="border-top:1px solid var(--border)">
+      <div class="container grid12" style="align-items:start">
+        <div class="span5">
+          <div class="kicker" data-reveal>FAQ</div>
+          <h2 class="display" style="font-size:clamp(28px,5vw,40px);margin-top:12px" data-reveal>The questions worth <em class="serif ember">asking.</em></h2>
+          <p class="lead" data-reveal>Straight answers on how we start, what it costs, and what to expect — before you ever fill in a form.</p>
+          <a href="#contact" class="btn ink" data-reveal style="margin-top:22px">Still have a question? Talk to us</a>
+        </div>
+        <div class="span7">
+          <div class="faq-list">
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">How do we start working together?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>It starts with a conversation — tell us about your brand and what you're trying to grow, and we'll come back with a short, honest read on how we can help. From there it's a focused proposal, alignment on scope, then onboarding. Most brands go from first call to live work within two to three weeks.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">How is pricing structured?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>We work on monthly retainers, scaled to your brand's stage, goals, and budget — not a fixed package you have to squeeze into. You'll know exactly what's included and what it costs before anything begins. No surprise line items.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">What's included in a monthly engagement?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>A dedicated team and a complete social ecosystem: strategy and content direction, a planned content calendar, production across graphic, motion and 3D, community management, and clear monthly reporting tied to the metrics that matter to you.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">How quickly will we see results?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>You'll see polished content going live within the first few weeks. Real momentum — reach, community, and engagement — compounds over the first few months as we learn what resonates with your audience and sharpen the strategy around it.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">We already have an in-house team — does that work?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>Perfectly. We're built to operate as an extension of your team, not a replacement. We plug into your existing workflows, fill the gaps — strategy, production, consistency — and hand off cleanly. Many of our engagements run right alongside in-house marketers.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">Do you work with brands outside Jakarta?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>Yes. We're based in Jakarta, but our team is distributed and we run brand-first ecosystems for clients across industries and regions. Most of the collaboration happens remotely — with the same chemistry and consistency as if we were down the hall.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ░░ CONTACT — two emails, no forms team ░░ -->
     <section class="block rule" id="contact" style="border-top:1px solid var(--border)">
       <div class="container">
@@ -1035,6 +1090,23 @@ body.no-webgl{background-image:
     addEventListener('scroll', tick, {passive:true});
     addEventListener('resize', tick, {passive:true});
     tick(); setTimeout(tick, 500); setTimeout(tick, 1500);     // cover the window before the scene either loads or fails
+  })();
+
+  /* FAQ accordion — single-open, keyboard + AT friendly */
+  (function(){
+    var items = Array.prototype.slice.call(document.querySelectorAll('.faq-item'));
+    items.forEach(function(it){
+      var btn = it.querySelector('.faq-q');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        var willOpen = !it.classList.contains('open');
+        items.forEach(function(o){
+          o.classList.remove('open');
+          var b = o.querySelector('.faq-q'); if(b) b.setAttribute('aria-expanded','false');
+        });
+        if(willOpen){ it.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      });
+    });
   })();
 })();
 </script>
