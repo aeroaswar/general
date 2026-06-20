@@ -9,6 +9,28 @@ export const STATUSES = [
 // Columns shown on the content board (Archived hidden by default).
 export const BOARD_COLUMNS = STATUSES.filter((s) => s !== "Archived");
 
+// Statuses a Client is allowed to see (no internal setup / drafts / reviews).
+export const CLIENT_VISIBLE = ["Client Review", "Approved", "Scheduled", "Posted"];
+
+// Readiness gates for forward transitions (from the architecture spec's
+// "required before moving forward" rules). Returns { ok, missing[] }.
+export function checkMove(item, to, ctx = {}) {
+  const miss = [];
+  const need = (cond, label) => { if (!cond) miss.push(label); };
+  if (to === "Internal Review") {
+    need(item.hook, "hook"); need(item.brief, "brief"); need(item.cta, "CTA");
+    need(item.ownerId, "owner"); need(item.deadline, "deadline");
+  }
+  if (to === "Client Review") {
+    need(item.brief, "brief"); need(item.cta, "CTA"); need(item.ownerId, "owner");
+  }
+  if (to === "Scheduled") {
+    need(item.publishDate, "publish date"); need(item.platform, "platform");
+    need(item.ownerId, "owner"); need(ctx.hasAssets, "an asset");
+  }
+  return { ok: miss.length === 0, missing: miss };
+}
+
 // Palette tuned for legibility on the warm paper canvas.
 export const STATUS_META = {
   Idea: { c: "#6b7280", label: "Idea" },

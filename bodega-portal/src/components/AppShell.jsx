@@ -11,17 +11,17 @@ import { ROLE_META } from "../lib/status.js";
 import { Avatar, cx } from "../lib/ui.jsx";
 
 const NAV = [
-  { href: "/app", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/app/projects", label: "Projects", icon: FolderKanban },
-  { href: "/app/strategy", label: "Strategy", icon: Compass },
-  { href: "/app/content", label: "Content Board", icon: Columns3 },
-  { href: "/app/approvals", label: "Approvals", icon: ClipboardCheck },
-  { href: "/app/calendar", label: "Calendar", icon: CalendarDays },
-  { href: "/app/campaigns", label: "Campaigns", icon: Megaphone },
-  { href: "/app/assets", label: "Assets", icon: ImageIcon },
-  { href: "/app/reports", label: "Reports", icon: BarChart3 },
-  { href: "/app/assessment", label: "Assessment", icon: ClipboardList },
-  { href: "/app/settings", label: "Settings", icon: SettingsIcon },
+  { href: "/app", label: "Dashboard", icon: LayoutDashboard, roles: ["admin", "team", "client"] },
+  { href: "/app/projects", label: "Projects", icon: FolderKanban, roles: ["admin", "team"] },
+  { href: "/app/strategy", label: "Strategy", icon: Compass, roles: ["admin", "team"] },
+  { href: "/app/content", label: "Content Board", icon: Columns3, roles: ["admin", "team"] },
+  { href: "/app/approvals", label: "Approvals", icon: ClipboardCheck, roles: ["admin", "team", "client"] },
+  { href: "/app/calendar", label: "Calendar", icon: CalendarDays, roles: ["admin", "team", "client"] },
+  { href: "/app/campaigns", label: "Campaigns", icon: Megaphone, roles: ["admin", "team"] },
+  { href: "/app/assets", label: "Assets", icon: ImageIcon, roles: ["admin", "team", "client"] },
+  { href: "/app/reports", label: "Reports", icon: BarChart3, roles: ["admin", "team", "client"] },
+  { href: "/app/assessment", label: "Assessment", icon: ClipboardList, roles: ["admin", "team"] },
+  { href: "/app/settings", label: "Settings", icon: SettingsIcon, roles: ["admin", "team", "client"] },
 ];
 
 function Brand() {
@@ -36,9 +36,11 @@ function Brand() {
 
 function NavLinks({ onNavigate }) {
   const [loc] = useLocation();
+  const me = useCurrentUser();
+  const items = NAV.filter((n) => n.roles.includes(me.role));
   return (
     <nav className="flex flex-col gap-1">
-      {NAV.map(({ href, label, icon: Icon }) => {
+      {items.map(({ href, label, icon: Icon }) => {
         const active = href === "/app" ? loc === "/app" : loc.startsWith(href);
         return (
           <Link

@@ -1,6 +1,6 @@
 import { Router, Route, Switch, Redirect, useLocation } from "wouter";
 import { useHashLocation } from "wouter/use-hash-location";
-import { ThemeProvider, AuthProvider, DataProvider, useAuth } from "./store.jsx";
+import { ThemeProvider, AuthProvider, DataProvider, useAuth, useCurrentUser } from "./store.jsx";
 import AuroraBg from "./components/AuroraBg.jsx";
 import AppShell from "./components/AppShell.jsx";
 import Login from "./pages/Login.jsx";
@@ -22,11 +22,15 @@ const Portal = (Page) => () => (
   </AppShell>
 );
 
+const CLIENT_BLOCKED = ["/app/projects", "/app/strategy", "/app/content", "/app/campaigns", "/app/assessment"];
+
 function Routes() {
   const { authed } = useAuth();
+  const me = useCurrentUser();
   const [loc] = useLocation();
   if (!authed && loc !== "/login") return <Redirect to="/login" />;
   if (authed && (loc === "/login" || loc === "/")) return <Redirect to="/app" />;
+  if (authed && me.role === "client" && CLIENT_BLOCKED.some((p) => loc.startsWith(p))) return <Redirect to="/app" />;
 
   return (
     <Switch>

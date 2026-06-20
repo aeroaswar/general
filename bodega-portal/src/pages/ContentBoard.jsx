@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Plus, ChevronRight, MessageSquare, Send, Check, RotateCcw, CalendarClock } from "lucide-react";
+import { Plus, ChevronRight, MessageSquare, Send, Check, RotateCcw, CalendarClock, CalendarPlus, History } from "lucide-react";
 import { useData, useVisibleProjects, useVisibleContent, useCurrentUser, userById } from "../store.jsx";
-import { BOARD_COLUMNS, STATUS_META, NEXT_STATUS, fmtDate, fromNow } from "../lib/status.js";
+import { BOARD_COLUMNS, STATUS_META, NEXT_STATUS, checkMove, fmtDate, fromNow } from "../lib/status.js";
 import { Button, Card, StatusBadge, PlatformTag, Avatar, Modal, PageTitle, cx } from "../lib/ui.jsx";
 
 export default function ContentBoard() {
@@ -93,15 +93,23 @@ function FilterChip({ active, children, ...rest }) {
 }
 
 function ContentModal({ item, onClose }) {
-  const { comments, addComment, addApproval, updateContentStatus, requestClientReview } = useData();
+  const { comments, addComment, addApproval, updateContentStatus, requestClientReview, scheduleContent, assets, approvals, audit } = useData();
   const me = useCurrentUser();
   const [note, setNote] = useState("");
+  const [schedDate, setSchedDate] = useState("");
   if (!item) return null;
 
   const thread = comments.filter((c) => c.contentItemId === item.id);
   const nexts = NEXT_STATUS[item.status] || [];
+  const hasAssets = assets.some((a) => a.projectId === item.projectId);
+  const isStaff = me.role === "admin" || me.role === "team";
   const canReview = me.role === "client" && item.status === "Client Review";
-  const canRequestReview = (me.role === "admin" || me.role === "team") && ["Draft", "Internal Review"].includes(item.status);
+  const canRequestReview = isStaff && ["Draft", "Internal Review"].includes(item.status);
+  const showSchedule = isStaff && ["Approved", "Scheduled"].includes(item.status);
+  const timeline = [
+    ...approvals.filter((a) => a.contentItemId === item.id).map((a) => ({ id: a.id, ts: a.timestamp, who: userById(a.actorId)?.name, text: a.action === "approved" ? "approved" : a.action === "revision_requested" ? "requested changes" : "commented", note: a.note })),
+    ...audit.filter((a) => a.entityId === item.id && (a.action === "status" || a.action === "schedule")).map((a) => ({ id: a.id, ts: a.ts, who: userById(a.actorId)?.name, text: a.action === "schedule" ? `scheduled for ${fmtDate(a.to)}` : `moved ${a.from} → ${a.to}`, note: a.reason })),
+  ].sort((x, y) => y.ts.localeCompare(x.ts)).slice(0, 8);
 
   return (
     <Modal open={!!item} onClose={onClose} title={item.title} width={620}>
@@ -142,15 +150,52 @@ function ContentModal({ item, onClose }) {
           </>
         ) : (
           <>
-            {canRequestReview && <Button onClick={() => { requestClientReview(item.id, me.id, { message: note }); onClose(); }}><Send size={16} /> Request client review</Button>}
-            {nexts.map((s) => (
-              <Button key={s} variant="ghost" onClick={() => { updateContentStatus(item.id, s); onClose(); }}>
-                Move to {STATUS_META[s].label} <ChevronRight size={15} />
-              </Button>
-            ))}
+            {canRequestReview && (() => {
+              const g = checkMove(item, "Client Review", { hasAssets });
+              return <Button disabled={!g.ok} title={g.ok ? "" : `Needs: ${g.missing.join(", ")}`} onClick={() => { requestClientReview(item.id, me.id, { message: note }); onClose(); }}><Send size={16} /> Request client review</Button>;
+            })()}
+            {nexts.filter((s) => s !== "Scheduled").map((s) => {
+              const g = checkMove(item, s, { hasAssets });
+              return (
+                <Button key={s} variant="ghost" disabled={!g.ok} title={g.ok ? "" : `Needs: ${g.missing.join(", ")}`} onClick={() => { updateContentStatus(item.id, s); onClose(); }}>
+                  Move to {STATUS_META[s].label} <ChevronRight size={15} />
+                </Button>
+              );
+            })}
           </>
         )}
       </div>
+
+      {/* schedule gate */}
+      {showSchedule && (() => {
+        const date = schedDate || item.publishDate || "";
+        const g = checkMove({ ...item, publishDate: date }, "Scheduled", { hasAssets });
+        return (
+          <div className="glass-2 hairline border rounded-xl p-3 mb-4">
+            <p className="text-sm font-semibold mb-2 flex items-center gap-2"><CalendarPlus size={15} className="text-accent" /> {item.status === "Scheduled" ? "Reschedule" : "Schedule"}</p>
+            {!g.ok && <p className="text-xs mb-2" style={{ color: "#c97a0a" }}>Needs: {g.missing.join(", ")}.</p>}
+            <div className="flex gap-2">
+              <input type="date" className="input-glass" value={date} onChange={(e) => setSchedDate(e.target.value)} />
+              <Button disabled={!g.ok} onClick={() => { scheduleContent(item.id, date); onClose(); }}>{item.status === "Scheduled" ? "Update" : "Schedule"}</Button>
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* activity / audit */}
+      {timeline.length > 0 && (
+        <div className="border-t hairline pt-4 mb-4">
+          <p className="text-sm font-semibold mb-3 flex items-center gap-2"><History size={15} /> Activity</p>
+          <div className="flex flex-col gap-2.5">
+            {timeline.map((t) => (
+              <div key={t.id} className="text-sm flex gap-2">
+                <span className="text-faint text-xs whitespace-nowrap mt-0.5 w-20 shrink-0">{fromNow(t.ts)}</span>
+                <span><b>{t.who}</b> <span className="text-muted">{t.text}</span>{t.note ? <span className="text-muted"> — “{t.note}”</span> : null}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* comments */}
       <div className="border-t hairline pt-4">

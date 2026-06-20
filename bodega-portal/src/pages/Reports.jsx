@@ -4,10 +4,10 @@ import {
   ResponsiveContainer, AreaChart, Area, LineChart, Line, BarChart, Bar,
   PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip,
 } from "recharts";
-import { Download, Check, Send, Activity, Gauge, Clock } from "lucide-react";
+import { Download, Check, Send, Activity, Gauge, Clock, FileText, Link2 } from "lucide-react";
 import { useData, useVisibleProjects, useVisibleContent, useCurrentUser } from "../store.jsx";
 import { PLATFORM_META, fmtDate } from "../lib/status.js";
-import { Card, Button, Stat, PageTitle, cx } from "../lib/ui.jsx";
+import { Card, Button, Stat, Modal, PageTitle, cx } from "../lib/ui.jsx";
 
 const PIE_COLORS = ["#2562e7", "#01dcb4", "#6d4fe0", "#fa1e88", "#c97a0a"];
 
@@ -26,10 +26,12 @@ function ChartTip({ active, payload, label }) {
 export default function Reports() {
   const projects = useVisibleProjects();
   const content = useVisibleContent();
-  const { reportSnapshots, addReportExport, pillars } = useData();
+  const { reportSnapshots, addReportExport, generateSnapshot, pillars } = useData();
   const me = useCurrentUser();
   const [projectId, setProjectId] = useState(projects[0]?.id || "");
   const [exported, setExported] = useState(false);
+  const [report, setReport] = useState(null);
+  const [copied, setCopied] = useState(false);
 
   const project = projects.find((p) => p.id === projectId) || projects[0];
   const snaps = useMemo(() => reportSnapshots.filter((s) => s.projectId === project?.id), [reportSnapshots, project]);
@@ -61,7 +63,7 @@ export default function Reports() {
   const axis = { stroke: "var(--faint)", fontSize: 11, tickLine: false, axisLine: false };
 
   const exportPdf = () => {
-    addReportExport({ scopeLabel: project?.name || "Report", exportedBy: me.id, fileName: `${(project?.name || "report").toLowerCase().replace(/\s+/g, "-")}.pdf`, format: "PDF" });
+    addReportExport({ scopeLabel: project?.name || "Report", exportedBy: me.id, snapshotId: report?.id, fileName: `${(project?.name || "report").toLowerCase().replace(/\s+/g, "-")}.pdf`, format: "PDF" });
     setExported(true);
     setTimeout(() => setExported(false), 2500);
   };
@@ -75,7 +77,7 @@ export default function Reports() {
           <select className="input-glass !w-auto !py-1.5" value={projectId} onChange={(e) => setProjectId(e.target.value)}>
             {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
-          <Button onClick={exportPdf}>{exported ? <><Check size={16} /> Exported</> : <><Download size={16} /> Export PDF</>}</Button>
+          <Button onClick={() => { setExported(false); setCopied(false); setReport(generateSnapshot(project.id, `${project.name} — ${fmtDate(new Date(), "MMM d, yyyy")}`)); }}><FileText size={16} /> Generate report</Button>
         </div>
       </PageTitle>
 
@@ -152,6 +154,24 @@ export default function Reports() {
       </div>
 
       <p className="text-xs text-faint mt-4">Report scope: {project.name} · {fmtDate(project.startDate)} – {fmtDate(project.endDate)} · snapshots are frozen per cycle.</p>
+
+      <Modal open={!!report} onClose={() => setReport(null)} title="Report snapshot" width={520}>
+        {report && (
+          <div>
+            <p className="text-sm text-muted mb-4">Frozen {fmtDate(report.date, "MMM d, yyyy")} · {project.name}</p>
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              {[["Planned", report.planned], ["Posted", report.posted], ["Consistency", Math.round((report.posted / Math.max(1, report.planned)) * 100) + "%"], ["Approval", report.approvalAvgHours + "h"]].map(([k, v]) => (
+                <div key={k} className="glass-2 hairline border rounded-xl p-3 text-center"><div className="display text-2xl font-extrabold grad-text">{v}</div><div className="text-xs text-faint mt-1">{k}</div></div>
+              ))}
+            </div>
+            <p className="text-xs text-faint mb-4">This snapshot is frozen — it won't shift as new content moves. Share it or export a PDF.</p>
+            <div className="flex gap-2">
+              <Button className="flex-1" onClick={exportPdf}>{exported ? <><Check size={16} /> Exported</> : <><Download size={16} /> Export PDF</>}</Button>
+              <Button variant="ghost" className="flex-1" onClick={() => { navigator.clipboard?.writeText(`${location.origin}${location.pathname}#/app/reports?snap=${report.id}`); setCopied(true); }}>{copied ? <><Check size={16} /> Copied</> : <><Link2 size={16} /> Copy link</>}</Button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </motion.div>
   );
 }

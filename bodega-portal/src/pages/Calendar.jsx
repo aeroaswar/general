@@ -2,17 +2,21 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   startOfMonth, endOfMonth, startOfWeek, endOfWeek, eachDayOfInterval,
-  addMonths, format, isSameMonth, isSameDay, parseISO,
+  addMonths, format, isSameMonth, isSameDay,
 } from "date-fns";
-import { ChevronLeft, ChevronRight, CalendarDays } from "lucide-react";
-import { useVisibleContent } from "../store.jsx";
-import { STATUS_META, BOARD_COLUMNS, fmtDate } from "../lib/status.js";
-import { Card, Button, StatusBadge, PlatformTag, PageTitle, EmptyState, cx } from "../lib/ui.jsx";
+import { ChevronLeft, ChevronRight, CalendarDays, CalendarPlus, X, Move } from "lucide-react";
+import { useVisibleContent, useData, useCurrentUser } from "../store.jsx";
+import { STATUS_META, fmtDate } from "../lib/status.js";
+import { Card, Button, StatusBadge, PlatformTag, PageTitle, cx } from "../lib/ui.jsx";
 
 export default function Calendar() {
   const content = useVisibleContent();
+  const { scheduleContent } = useData();
+  const me = useCurrentUser();
+  const canSchedule = me.role !== "client";
   const [cursor, setCursor] = useState(new Date());
   const [selected, setSelected] = useState(new Date());
+  const [placing, setPlacing] = useState(null); // content id being (re)scheduled
 
   const byDay = useMemo(() => {
     const m = {};
@@ -26,8 +30,16 @@ export default function Calendar() {
     return eachDayOfInterval({ start, end });
   }, [cursor]);
 
+  const ready = useMemo(() => content.filter((c) => c.status === "Approved"), [content]);
+  const placingItem = content.find((c) => c.id === placing);
   const selKey = format(selected, "yyyy-MM-dd");
   const selItems = byDay[selKey] || [];
+
+  const onDay = (d) => {
+    const key = format(d, "yyyy-MM-dd");
+    if (canSchedule && placing) { scheduleContent(placing, key); setPlacing(null); setSelected(d); return; }
+    setSelected(d);
+  };
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -41,6 +53,14 @@ export default function Calendar() {
           </div>
         </div>
       </PageTitle>
+
+      {placing && (
+        <div className="glass mb-4 p-3 flex items-center gap-3" style={{ borderColor: "#2562e788" }}>
+          <CalendarPlus size={18} className="text-accent" />
+          <p className="text-sm flex-1">Click a day to place <b>{placingItem?.title}</b>.</p>
+          <button onClick={() => setPlacing(null)} className="p-1 rounded-lg text-muted hover:bg-[color:var(--card-2)]"><X size={16} /></button>
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-[1fr_320px] gap-4">
         <Card className="!p-3">
@@ -59,8 +79,8 @@ export default function Calendar() {
               return (
                 <button
                   key={key}
-                  onClick={() => setSelected(d)}
-                  className={cx("min-h-[84px] rounded-xl p-1.5 text-left border transition-colors flex flex-col gap-1", isSel ? "border-[color:var(--line-2)]" : "border-transparent hover:border-[color:var(--line)]")}
+                  onClick={() => onDay(d)}
+                  className={cx("min-h-[84px] rounded-xl p-1.5 text-left border transition-colors flex flex-col gap-1", placing ? "hover:border-[color:#2562e7] cursor-copy" : "", isSel ? "border-[color:var(--line-2)]" : "border-transparent hover:border-[color:var(--line)]")}
                   style={{ background: isSel ? "var(--card)" : inMonth ? "var(--card-2)" : "transparent", opacity: inMonth ? 1 : 0.4 }}
                 >
                   <span className={cx("text-xs font-semibold w-6 h-6 grid place-items-center rounded-full", isToday && "text-white")} style={isToday ? { background: "linear-gradient(135deg,#2562e7,#01dcb4)" } : undefined}>{format(d, "d")}</span>
@@ -74,7 +94,6 @@ export default function Calendar() {
               );
             })}
           </div>
-          {/* legend */}
           <div className="flex flex-wrap gap-3 mt-3 pt-3 border-t hairline">
             {["Scheduled", "Client Review", "Approved", "Posted", "Draft"].map((s) => (
               <span key={s} className="inline-flex items-center gap-1.5 text-xs text-muted"><i className="w-2 h-2 rounded-full" style={{ background: STATUS_META[s].c }} />{s}</span>
@@ -82,28 +101,53 @@ export default function Calendar() {
           </div>
         </Card>
 
-        {/* day panel */}
-        <Card>
-          <div className="flex items-center gap-2 mb-4">
-            <CalendarDays size={18} className="text-accent" />
-            <h3 className="display font-bold">{format(selected, "EEEE, MMM d")}</h3>
-          </div>
-          {selItems.length === 0 ? (
-            <p className="text-sm text-muted">Nothing scheduled this day.</p>
-          ) : (
-            <div className="flex flex-col gap-3">
-              {selItems.map((c) => (
-                <div key={c.id} className="glass-2 hairline border rounded-xl p-3">
-                  <p className="font-medium text-sm leading-snug">{c.title}</p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <StatusBadge status={c.status} />
-                    <PlatformTag platform={c.platform} />
-                  </div>
+        <div className="flex flex-col gap-4">
+          {/* ready to schedule (staff) */}
+          {canSchedule && (
+            <Card>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="display font-bold flex items-center gap-2"><CalendarPlus size={17} className="text-accent" /> Ready to schedule</h3>
+                <span className="chip" style={{ color: "var(--muted)" }}>{ready.length}</span>
+              </div>
+              {ready.length === 0 ? <p className="text-sm text-muted">Nothing approved is waiting.</p> : (
+                <div className="flex flex-col gap-2">
+                  {ready.map((c) => (
+                    <button key={c.id} onClick={() => setPlacing(c.id)} className={cx("glass-2 hairline border rounded-xl p-3 text-left transition-colors hover:border-[color:var(--line-2)]", placing === c.id && "!border-[color:#2562e7]")}>
+                      <p className="text-sm font-medium leading-snug">{c.title}</p>
+                      <p className="text-xs text-muted mt-0.5">{c.platform} · pick a day →</p>
+                    </button>
+                  ))}
                 </div>
-              ))}
-            </div>
+              )}
+            </Card>
           )}
-        </Card>
+
+          {/* day panel */}
+          <Card>
+            <div className="flex items-center gap-2 mb-4">
+              <CalendarDays size={18} className="text-accent" />
+              <h3 className="display font-bold">{format(selected, "EEEE, MMM d")}</h3>
+            </div>
+            {selItems.length === 0 ? (
+              <p className="text-sm text-muted">Nothing scheduled this day.</p>
+            ) : (
+              <div className="flex flex-col gap-3">
+                {selItems.map((c) => (
+                  <div key={c.id} className="glass-2 hairline border rounded-xl p-3">
+                    <p className="font-medium text-sm leading-snug">{c.title}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <StatusBadge status={c.status} />
+                      <PlatformTag platform={c.platform} />
+                      {canSchedule && ["Scheduled", "Approved"].includes(c.status) && (
+                        <button onClick={() => setPlacing(c.id)} className="ml-auto text-xs text-muted hover:text-accent inline-flex items-center gap-1"><Move size={13} /> Move</button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
+        </div>
       </div>
     </motion.div>
   );

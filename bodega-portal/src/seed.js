@@ -7,7 +7,7 @@ const isot = (n) => { const d = new Date(today); d.setDate(d.getDate() + n); ret
 
 export const USERS = [
   { id: "u1", name: "Aero Aswar", email: "aero@bodega.studio", role: "admin", avatarInitials: "AA" },
-  { id: "u2", name: "Rizky Ananda", email: "rizky@bodega.studio", role: "team", avatarInitials: "RA" },
+  { id: "u2", name: "Rizky Ananda", email: "rizky@bodega.studio", role: "team", clientIds: ["c1", "c2"], avatarInitials: "RA" },
   { id: "u3", name: "Maya Putri", email: "maya@maktour.id", role: "client", clientIds: ["c1"], avatarInitials: "MP" },
 ];
 
