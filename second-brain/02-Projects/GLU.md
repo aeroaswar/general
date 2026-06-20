@@ -1,21 +1,25 @@
 ---
 type: project
 status: active
-area: GLU — Eco-Athletic Brand
+area: GLU — Brand
 start: 2026-05-07
 due: 
 tags: [project, glu, business, apparel]
 ---
 # GLU
 
-**Status:** active · **Area:** [[GLU — Eco-Athletic Brand]]
+**Status:** active · **Area:** [[GLU — Brand]]
 
-## 🎯 Outcome
+> **Canonical positioning = premium minimalist innerwear** (per [[glu (skill)]] / [[GLU — Brand]]).
+> The Hormozi "eco-athletic movement" strategy below is an **earlier exploration (May 2026)**,
+> kept for history — not the current brand direction.
+
+## 🎯 Outcome (earlier eco-athletic exploration)
 Reposition GLU from "affordable eco athletic wear" → **a movement for female
 athletes who refuse to compromise**, and stand up a pricing ladder that lifts LTV
 from ~$50 to $1,000+.
 
-## Strategy (Hormozi offer engineering)
+## Strategy (Hormozi offer engineering — historical)
 - **Value Equation audit:** current ~4.2/10; weakest link is *perceived likelihood*
   (no social proof) — fix with testimonials + guarantees.
 - **Grand Slam Offer:** "The Eco-Athlete Essentials™" + 100% satisfaction & 100-workout

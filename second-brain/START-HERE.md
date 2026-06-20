@@ -16,8 +16,8 @@ creative technologist / founder**. Identity is bold, sporty, water-born
 streak. Email: aeroaswar@gmail.com.
 
 ## What I'm working on (snapshot)
-- **GLU** — women's eco-athletic apparel brand (+ GLU Noir, shop-glu). Repositioning
-  from "product" to "movement" using Hormozi offer engineering. → [[GLU — Eco-Athletic Brand]]
+- **GLU** — D2C **premium minimalist innerwear** brand (shop-glu.com; sub-brands Sleep/Men/
+  Move/Maternity; Indonesia → Singapore). Quiet luxury. → [[GLU — Brand]]
 - **aeroaswar.com** — personal athlete site, multiple cinematic Three.js builds. → [[aeroaswar.com — Personal Site]]
 - **Creative-coding portfolio** — ~12 no-build Three.js + GSAP scroll experiences. → [[Creative-Coding Scroll Experiences]]
 - **Business Strategy Wiki** — an LLM-maintained competitive-intelligence KB. → [[Business Strategy Wiki]]
@@ -58,7 +58,7 @@ portfolio. See [[MMI — Mangkuluhur Mineral Indonesia]], [[IJBA — Jetski Fede
 
 ## Areas (subject map)
 - [[Jetski Racing & Athletic Identity]]
-- [[GLU — Eco-Athletic Brand]]
+- [[GLU — Brand]]
 - [[Creative Coding & Web]]
 - [[Design Practice & House Style]]
 - [[Ventures & Business]]

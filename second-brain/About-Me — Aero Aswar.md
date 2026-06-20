@@ -18,7 +18,7 @@ updated: 2026-06-19
 - **Athlete** — jetski racing; palmarès, race photography, velocity narrative.
 - **Designer & creative coder** — cinematic web (Three.js + GSAP scroll experiences),
   premium product/marketing sites, dashboards. Strong, opinionated visual house style.
-- **Founder / operator** — building brands and ventures (GLU eco-athletic apparel
+- **Founder / operator** — building brands and ventures (GLU premium minimalist innerwear
   the flagship), running structured strategy/knowledge systems with AI.
 - **Scholar / public-sector** — doctoral research in constitutional & electoral law
   (parliamentary-threshold reconstruction); govtech (citizen-satisfaction surveys);
@@ -36,17 +36,17 @@ updated: 2026-06-19
   red wake accents; expo-out motion, low-bounce springs, reduced-motion safe.
 
 ## Current focus (2026)
-- Grow **GLU** via movement positioning + pricing-ladder (Entry→Core→Premium→Elite).
+- Grow **GLU** as premium minimalist innerwear (sub-brand architecture, Singapore runbook).
 - Ship **aeroaswar.com** cinematic athlete site (dark "Born on Water" + light "Daylight Wake").
 - Maintain creative-coding portfolio and AI/automation tooling.
 
 ## My five operating entities
 - **ANI** (nickel mine) · **MMI** (nickel-ore trading, confidential) · **IJBA**
-  (jetski federation — I sit on the 2025–2029 board) · **GLU** (eco-athletic apparel) ·
+  (jetski federation — I sit on the 2025–2029 board) · **GLU** (premium minimalist innerwear) ·
   **portfolio** (equities). Tooling that spans them: [[usaha-id]].
 
 ## Pointers
-- Areas: [[Jetski Racing & Athletic Identity]] · [[GLU — Eco-Athletic Brand]] ·
+- Areas: [[Jetski Racing & Athletic Identity]] · [[GLU — Brand]] ·
   [[Creative Coding & Web]] · [[Design Practice & House Style]] ·
   [[Ventures & Business]] · [[AI & Automation]] · [[Academia, Law & Public Sector]]
 - Skills catalog: [[_Skills-MOC]].

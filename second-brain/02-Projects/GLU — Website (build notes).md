@@ -1,19 +1,19 @@
 ---
 type: project
 status: active
-area: GLU — Eco-Athletic Brand
+area: GLU — Brand
 tags: [project, glu, web, marketing, positioning]
 ---
 # GLU — Website (build notes)
 
-> Source: `GLU-Website.html` (Drive, ~67KB). Parent: [[GLU]] · area [[GLU — Eco-Athletic Brand]].
+> Source: `GLU-Website.html` (Drive, ~67KB). Parent: [[GLU]] · area [[GLU — Brand]].
 
 The GLU strategy site — the Hormozi offer-engineering deck rendered as a single-page site.
 **Title:** "GLU — Elevated Eco-Loungewear for Women" · **Hero:** *"Comfort Without Compromise."*
 
-> **Canonical positioning (decided):** GLU is an **eco-athletic masterbrand**; this
-> comfort-led site is the **loungewear entry/wedge line** ("GLU Lounge Essentials™") —
-> the low-friction front door into the athletic movement. See [[GLU — Eco-Athletic Brand]].
+> **Positioning note:** this site (eco-loungewear) is a **superseded earlier framing**.
+> Canonical brand positioning is now **premium minimalist innerwear** — see [[GLU — Brand]].
+> Kept here as a record of the comfort-led experiment.
 
 ## Page structure (nav → sections)
 1. **The Opportunity** — *"Right product. Right customer. Wrong story."* ("The Perfect Moment to Own Eco-Lounge"; "Where GLU Stands & Where to Go").

@@ -11,7 +11,7 @@ _Brands, products, and tools I'm building or operating (excludes MMI/IJBA/nickel
 - **MMI** — nickel-ore trading & logistics (confidential) → [[MMI — Mangkuluhur Mineral Indonesia]]
 - **ANI** — nickel mine (IUP-OP), MMI's ore supplier → [[ANI — Adhita Nikel Indonesia]]
 - **IJBA** — jetski federation (sport governance) → [[IJBA — Jetski Federation]]
-- **GLU** — flagship eco-athletic brand → [[GLU — Eco-Athletic Brand]]
+- **GLU** — flagship D2C premium minimalist innerwear brand → [[GLU — Brand]]
 - **portfolio** — equities (managed via `portfolio` skill)
 
 ## Other ventures / tools

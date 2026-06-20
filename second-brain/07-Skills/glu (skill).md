@@ -6,9 +6,9 @@ tags: [skill, glu, brand, d2c]
 ---
 # glu (skill)
 
-> Full source of the **glu** context skill. Catalog: [[_Skills-MOC]] · Brand: [[GLU — Eco-Athletic Brand]].
+> Full source of the **glu** context skill. Catalog: [[_Skills-MOC]] · Brand: [[GLU — Brand]].
 > ⚠️ **Positioning note:** this skill (authoritative loaded context) calls Glu **premium
-> minimalist innerwear / intimate apparel** — see [[GLU — Positioning (canonical)]].
+> minimalist innerwear / intimate apparel** — canonical, see [[GLU — Brand]].
 
 **description:** Load full context for Glu (shop-glu.com), Aero's D2C premium minimalist
 innerwear brand. Use whenever the conversation involves Glu, intimate apparel, Shopify ops,
