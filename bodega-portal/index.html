@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bodega Creative Studio — We turn brands into culture.</title>
+    <meta
+      name="description"
+      content="Bodega is a creative studio building brand-first social ecosystems — strategy, content, and activation, executed daily. Log in to the client portal at bodega.pplx.app."
+    />
+    <meta name="theme-color" content="#05070d" />
+    <meta property="og:title" content="Bodega Creative Studio" />
+    <meta property="og:description" content="We turn brands into culture. Strategy, content, and activation — executed daily." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <!-- aurora-glass background stack -->
+    <canvas id="aurora" aria-hidden="true"></canvas>
+    <div id="grain" aria-hidden="true"></div>
+    <div id="scrollrail" aria-hidden="true"><i id="scrollrail-fill"></i></div>
+
+    <!-- ───────────── NAV ───────────── -->
+    <header id="nav">
+      <a class="brand" href="#top" aria-label="Bodega home">
+        <span class="brand-dot"></span>bodega
+      </a>
+      <nav class="nav-links" id="navlinks">
+        <a href="#work">Work</a>
+        <a href="#services">Services</a>
+        <a href="#portal">Portal</a>
+        <a href="#why">Studio</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="btn btn-ghost portal-link" href="#portal">
+          <i data-icon="lock"></i> Client Portal
+        </a>
+        <a class="btn btn-accent" href="#contact">Brief Us <i data-icon="arrow-right"></i></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+          <i data-icon="menu"></i>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ───────────── HERO ───────────── -->
+      <section class="hero" id="hero" data-mood="hero">
+        <div class="hero-inner">
+          <p class="eyebrow reveal"><span class="dot"></span>Creative Studio · Jakarta</p>
+          <h1 class="hero-title">
+            <span class="line"><span class="w">We</span> <span class="w">turn</span> <span class="w">brands</span></span>
+            <span class="line"><span class="w">into</span> <span class="w accent">culture.</span></span>
+          </h1>
+          <p class="hero-sub reveal">
+            Bodega is a creative studio building brand-first social ecosystems —
+            strategy, content, and activation, executed daily.
+          </p>
+          <div class="hero-cta reveal">
+            <a class="btn btn-accent btn-lg" href="#contact">Brief Us <i data-icon="arrow-right"></i></a>
+            <a class="btn btn-ghost btn-lg" href="#portal">Enter the Portal <i data-icon="arrow-up-right"></i></a>
+          </div>
+          <div class="hero-badges reveal">
+            <span><b>2.9M+</b> accounts reached</span>
+            <span><b>+227.7%</b> profile visits</span>
+            <span><b>14+</b> industries</span>
+          </div>
+        </div>
+        <div class="scroll-hint reveal" aria-hidden="true"><span>Scroll</span><span class="scroll-line"></span></div>
+      </section>
+
+      <!-- ───────────── MARQUEE ───────────── -->
+      <section class="marquee-sec" data-mood="marquee" aria-label="Industries">
+        <p class="marquee-label">Trusted across 14+ industries</p>
+        <div class="marquee"><div class="marquee-track" id="mqA"></div></div>
+        <div class="marquee"><div class="marquee-track" id="mqB"></div></div>
+      </section>
+
+      <!-- ───────────── SELECTED WORK ───────────── -->
+      <section class="section work" id="work" data-mood="work">
+        <div class="sec-head">
+          <div>
+            <p class="kicker reveal">Selected Work</p>
+            <h2 class="sec-title reveal">Brands we turned into <em>culture.</em></h2>
+          </div>
+          <a class="link-arrow reveal" href="#contact">Start a project <i data-icon="arrow-up-right"></i></a>
+        </div>
+        <div class="work-grid" id="workGrid"></div>
+      </section>
+
+      <!-- ───────────── SERVICES ───────────── -->
+      <section class="section services" id="services" data-mood="services">
+        <div class="sec-head">
+          <div>
+            <p class="kicker reveal">What We Do</p>
+            <h2 class="sec-title reveal">Full-stack creative, <em>one studio.</em></h2>
+          </div>
+        </div>
+        <div class="accordion" id="accordion"></div>
+      </section>
+
+      <!-- ───────────── THE PORTAL ───────────── -->
+      <section class="section portal" id="portal" data-mood="portal">
+        <div class="portal-inner">
+          <div class="sec-head center">
+            <div>
+              <p class="kicker reveal">The Client Portal · bodega.pplx.app</p>
+              <h2 class="sec-title reveal">One workflow, <em>end to end.</em></h2>
+              <p class="sec-lead reveal">Every engagement moves through a single living pipeline you can watch in real time.</p>
+            </div>
+          </div>
+          <div class="portal-spine" id="portalSpine"></div>
+        </div>
+        <div class="portal-after">
+          <div class="roles-row" id="rolesRow"></div>
+          <div class="portal-cta reveal">
+            <a class="btn btn-accent btn-lg" href="#contact">Request portal access <i data-icon="arrow-right"></i></a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ───────────── WHY ───────────── -->
+      <section class="section why" id="why" data-mood="why">
+        <div class="sec-head">
+          <div>
+            <p class="kicker reveal">Why Bodega</p>
+            <h2 class="sec-title reveal">Built to move <em>with you.</em></h2>
+          </div>
+        </div>
+        <div class="why-grid" id="whyGrid"></div>
+      </section>
+
+      <!-- ───────────── PROOF ───────────── -->
+      <section class="section proof" id="proof" data-mood="proof">
+        <div class="sec-head">
+          <div>
+            <p class="kicker reveal">Proof</p>
+            <h2 class="sec-title reveal">Numbers that <em>compounded.</em></h2>
+          </div>
+        </div>
+        <div class="proof-grid" id="proofGrid"></div>
+        <p class="proof-note reveal">Maktour · 6 months · ongoing since July 2025</p>
+      </section>
+
+      <!-- ───────────── PROCESS ───────────── -->
+      <section class="section process" id="process" data-mood="process">
+        <div class="sec-head">
+          <div>
+            <p class="kicker reveal">Our Process</p>
+            <h2 class="sec-title reveal">Five steps, <em>zero guesswork.</em></h2>
+          </div>
+        </div>
+        <div class="steps" id="steps"></div>
+      </section>
+
+      <!-- ───────────── CONTACT ───────────── -->
+      <section class="section contact" id="contact" data-mood="contact">
+        <div class="contact-grid">
+          <div class="contact-left">
+            <h2 class="contact-title reveal">Let’s have a <em>conversation.</em></h2>
+            <p class="contact-sub reveal">Tell us about your brand, your goals, and how we can help.</p>
+
+            <ul class="contact-list">
+              <li class="reveal">
+                <span class="ci"><i data-icon="whatsapp"></i></span>
+                <span><span class="ci-label">WhatsApp</span>
+                  <a href="https://wa.me/6281702476666">+62 817-024-7666 (Rizkyanda)</a></span>
+              </li>
+              <li class="reveal">
+                <span class="ci"><i data-icon="mail"></i></span>
+                <span><span class="ci-label">Email</span>
+                  <a href="mailto:creativestudiolabodega@gmail.com">creativestudiolabodega@gmail.com</a></span>
+              </li>
+              <li class="reveal">
+                <span class="ci"><i data-icon="pin"></i></span>
+                <span><span class="ci-label">Studio</span>
+                  <span class="ci-text">Jl. Otista Raya No.80, RT.2/RW.5<br />Jakarta Timur 13330</span></span>
+              </li>
+            </ul>
+
+            <div class="team-block reveal">
+              <p class="team-label">The studio</p>
+              <div class="team-row" id="teamRow"></div>
+            </div>
+          </div>
+
+          <form class="contact-form glass reveal" id="briefForm" novalidate>
+            <div class="field">
+              <label for="f-name">Name</label>
+              <input id="f-name" name="name" type="text" placeholder="Your name" required />
+            </div>
+            <div class="field">
+              <label for="f-brand">Brand / Company</label>
+              <input id="f-brand" name="brand" type="text" placeholder="Brand or company" required />
+            </div>
+            <div class="field">
+              <label for="f-type">Project Type</label>
+              <select id="f-type" name="type">
+                <option>Branding &amp; Identity</option>
+                <option>Social Media &amp; Content</option>
+                <option>Marketing Strategy</option>
+                <option>Brand Activation</option>
+                <option>Web &amp; App Development</option>
+                <option>Roblox In-Game Development</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="f-brief">Brief</label>
+              <textarea id="f-brief" name="brief" rows="4" placeholder="What are you building?"></textarea>
+            </div>
+            <button class="btn btn-accent btn-block" type="submit">Submit Brief <i data-icon="arrow-right"></i></button>
+            <p class="form-note" id="formNote" hidden>Thanks — your brief is in. We’ll reply within one working day.</p>
+          </form>
+        </div>
+      </section>
+
+      <!-- ───────────── FOOTER ───────────── -->
+      <footer class="footer">
+        <div class="footer-top">
+          <a class="brand brand-lg" href="#top"><span class="brand-dot"></span>bodega</a>
+          <p class="footer-belief">Great brands don’t just speak. They shape culture and become new lifestyles.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram"><i data-icon="instagram"></i></a>
+            <a href="#" aria-label="LinkedIn"><i data-icon="linkedin"></i></a>
+            <a href="#" aria-label="X"><i data-icon="x"></i></a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 Bodega Creative Studio</span>
+          <a href="#top" class="to-top">Back to top <i data-icon="arrow-up"></i></a>
+        </div>
+      </footer>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
