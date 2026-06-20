@@ -9,6 +9,7 @@ tags: [dashboard]
 
 ## 🔥 Today
 - [[01-Daily/{{date:YYYY-MM-DD}}|Open today's daily note]]
+- [[Now|🎯 Now]] · [[Weekly Review|🔄 Weekly Review]] · [[Goals 2026]] · [[Decision Log]]
 - [[_dashboards/Tasks-Dashboard|✅ Tasks dashboard]]
 - [[_dashboards/Research-Dashboard|🔬 Research dashboard]]
 

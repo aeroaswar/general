@@ -65,6 +65,9 @@ portfolio. See [[MMI — Mangkuluhur Mineral Indonesia]], [[IJBA — Jetski Fede
 - [[AI & Automation]]
 - [[Academia, Law & Public Sector]]
 
+## Operating layer (run my week on this)
+- [[Now]] — current focus · [[Goals 2026]] · [[Decision Log]] · [[Weekly Review]] · [[08-People/_People-MOC|People]]
+
 ## Skills
 All my Claude skills (made + used) are cataloged in [[_Skills-MOC]] under `07-Skills/`.
 

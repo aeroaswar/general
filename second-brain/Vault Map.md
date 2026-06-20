@@ -10,6 +10,9 @@ updated: 2026-06-20
 > raw project folders sitting in the vault root. Start here to navigate everything.
 > See also [[START-HERE]] · [[_dashboards/Home|Home]].
 
+## 🧭 Operating layer
+- [[Now]] · [[Goals 2026]] · [[Decision Log]] · [[Weekly Review]] · [[08-People/_People-MOC|People]] · [[Glossary]]
+
 ## 🌊 Athlete & Federation
 - Hub: [[Jetski Racing & Athletic Identity]] · [[aeroaswar.com — Personal Site]] · [[IJBA — Jetski Federation]] · [[IJBA Master Plan 2026-2030]]
 - Folders: `aeroaswar-site` · `aeroaswar-light` · `aeroaswar-3d` · `IJBA & Federation`

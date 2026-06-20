@@ -27,5 +27,13 @@ intelligence, and market analysis. I curate sources; the LLM integrates.
 - Same philosophy as this second brain (compounding, machine-parseable). This vault
   is *personal/cross-domain*; the Business Wiki is *competitive-intelligence focused*.
 
+## Current content (as of 2026-04-23, 1 ingest)
+Early-stage, **nickel-focused**:
+- **Markets (1):** `market-nickel-mining` (Indonesia laterite, HPM profitability).
+- **Concepts (4):** HPM formula · mineral monetization · progressive royalty · moisture-content impact.
+- **Sources (1):** nickel-profitability-parameter calculator. **Companies / Analyses:** 0 (next-step gaps).
+- Ties directly into [[MMI — Mangkuluhur Mineral Indonesia]] / [[mmi pack (full)]].
+
 ## 📦 Log
 - 2026-06-19 — project note created from business-wiki schema.
+- 2026-06-20 — captured current wiki state (nickel market + 4 concepts).
