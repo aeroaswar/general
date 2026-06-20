@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm --prefix bodega-portal install",
+  "buildCommand": "npm --prefix bodega-portal run build",
+  "outputDirectory": "bodega-portal/dist",
+  "cleanUrls": true
+}
