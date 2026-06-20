@@ -67,3 +67,6 @@ portfolio. See [[MMI — Mangkuluhur Mineral Indonesia]], [[IJBA — Jetski Fede
 
 ## Skills
 All my Claude skills (made + used) are cataloged in [[_Skills-MOC]] under `07-Skills/`.
+
+## Whole-vault index
+[[Vault Map]] — every top-level folder in the AI workspace, grouped by domain.
