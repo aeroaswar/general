@@ -7,9 +7,16 @@ tags: [area, glu, brand, business, apparel]
 
 _Women's eco-friendly athletic apparel brand — my flagship venture._
 
-> **Canonical positioning:** **eco-athletic masterbrand** (movement: "female athletes who
-> refuse to compromise"). **Loungewear** = the comfort-led **entry/wedge line** ("GLU Lounge
-> Essentials™"), not the masterbrand. → [[GLU — Website (build notes)]]
+> ⚠️ **Positioning needs your call — sources diverge:**
+> - **`glu` skill (authoritative, latest):** **D2C premium minimalist innerwear / intimate
+>   apparel** (shop-glu.com); quiet luxury; sub-brands **Glu Sleep / Men / Move / Maternity**;
+>   Indonesia → Singapore. → [[glu (skill)]]
+> - **Business deck (May):** women's **eco-athletic** apparel, Hormozi movement.
+> - **Website:** **eco-loungewear** ("Comfort Without Compromise"). → [[GLU — Website (build notes)]]
+>
+> **My read:** the `glu` skill is the most current canonical context → treat GLU as
+> **premium minimalist innerwear**, with the eco-athletic/loungewear decks as earlier
+> positioning experiments. *Confirm and I'll rename this area + realign the notes.*
 
 ## Standards
 - Position as a **movement**, not a product: "for female athletes who refuse to
