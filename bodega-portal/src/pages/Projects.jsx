@@ -14,7 +14,7 @@ export default function Projects() {
   return (
     <motion.div {...fadeUp}>
       <PageTitle kicker={client?.name} title="Projects">
-        <Badge color="#34e0c4">{projects.length} active</Badge>
+        <Badge color="#2562e7">{projects.length} active</Badge>
       </PageTitle>
 
       {projects.length === 0 ? (
@@ -84,7 +84,7 @@ function ProjectModal({ project, onClose }) {
         <div className="flex flex-col gap-2">
           {data.phases.map((ph) => (
             <div key={ph.id} className="flex gap-3 items-start">
-              <span className="display font-bold text-mint w-6">{ph.order}</span>
+              <span className="display font-bold text-accent w-6">{ph.order}</span>
               <div><p className="font-medium text-sm">{ph.name}</p><p className="text-xs text-muted">{ph.objective}</p></div>
             </div>
           ))}
@@ -96,7 +96,7 @@ function ProjectModal({ project, onClose }) {
           {data.pillars.map((pl) => (
             <div key={pl.id}>
               <div className="flex justify-between text-sm"><span className="font-medium">{pl.name}</span><span className="text-muted">{pl.weight}%</span></div>
-              <Progress value={pl.weight} color="linear-gradient(90deg,#8a76ff,#37b9ff)" />
+              <Progress value={pl.weight} color="linear-gradient(90deg,#6d4fe0,#2562e7)" />
               <p className="text-xs text-muted mt-1">{pl.description}</p>
             </div>
           ))}
@@ -126,7 +126,7 @@ function ProjectModal({ project, onClose }) {
 function Section({ icon: Icon, title, children }) {
   return (
     <div className="mb-5">
-      <p className="flex items-center gap-2 text-sm font-semibold mb-2"><Icon size={15} className="text-mint" /> {title}</p>
+      <p className="flex items-center gap-2 text-sm font-semibold mb-2"><Icon size={15} className="text-accent" /> {title}</p>
       {children}
     </div>
   );

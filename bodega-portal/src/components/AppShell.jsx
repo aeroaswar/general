@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   LayoutDashboard, FolderKanban, Columns3, ClipboardCheck, CalendarDays,
   BarChart3, ChevronDown, Sun, Moon, Menu, X, LogOut, Check,
+  Compass, Megaphone, Image as ImageIcon, ClipboardList, Settings as SettingsIcon,
 } from "lucide-react";
 import { useAuth, useCurrentUser, useData, useSelectedClient, useVisibleClients, useTheme } from "../store.jsx";
 import { ROLE_META } from "../lib/status.js";
@@ -12,16 +13,21 @@ import { Avatar, cx } from "../lib/ui.jsx";
 const NAV = [
   { href: "/app", label: "Dashboard", icon: LayoutDashboard },
   { href: "/app/projects", label: "Projects", icon: FolderKanban },
+  { href: "/app/strategy", label: "Strategy", icon: Compass },
   { href: "/app/content", label: "Content Board", icon: Columns3 },
   { href: "/app/approvals", label: "Approvals", icon: ClipboardCheck },
   { href: "/app/calendar", label: "Calendar", icon: CalendarDays },
+  { href: "/app/campaigns", label: "Campaigns", icon: Megaphone },
+  { href: "/app/assets", label: "Assets", icon: ImageIcon },
   { href: "/app/reports", label: "Reports", icon: BarChart3 },
+  { href: "/app/assessment", label: "Assessment", icon: ClipboardList },
+  { href: "/app/settings", label: "Settings", icon: SettingsIcon },
 ];
 
 function Brand() {
   return (
     <Link href="/app" className="flex items-center gap-2 px-2">
-      <span className="w-2.5 h-2.5 rounded-full" style={{ background: "linear-gradient(135deg,#45e6c6,#37b9ff)", boxShadow: "0 0 14px 2px rgba(52,224,196,.7)" }} />
+      <span className="w-2.5 h-2.5 rounded-full" style={{ background: "linear-gradient(135deg,#2562e7,#01dcb4)", boxShadow: "0 0 14px 2px rgba(37,98,231,.7)" }} />
       <span className="display text-xl font-extrabold">bodega</span>
       <span className="chip ml-1 !py-0.5 !px-2 text-[10px]" style={{ color: "var(--muted)" }}>portal</span>
     </Link>
@@ -41,11 +47,11 @@ function NavLinks({ onNavigate }) {
             onClick={onNavigate}
             className={cx(
               "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
-              active ? "text-[color:var(--text)]" : "text-muted hover:text-[color:var(--text)] hover:bg-[color:var(--glass-2)]"
+              active ? "text-[color:var(--text)]" : "text-muted hover:text-[color:var(--text)] hover:bg-[color:var(--card-2)]"
             )}
-            style={active ? { background: "var(--glass)", border: "1px solid var(--line)" } : undefined}
+            style={active ? { background: "var(--card)", border: "1px solid var(--line)" } : undefined}
           >
-            <Icon size={18} style={active ? { color: "#34e0c4" } : undefined} />
+            <Icon size={18} style={active ? { color: "#2562e7" } : undefined} />
             {label}
           </Link>
         );
@@ -80,11 +86,11 @@ function ClientSwitcher() {
                 <button
                   key={c.id}
                   onClick={() => { setSelectedClientId(c.id); setOpen(false); }}
-                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm hover:bg-[color:var(--glass-2)] text-left"
+                  className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm hover:bg-[color:var(--card-2)] text-left"
                 >
                   <Avatar name={c.name} size={22} />
                   <span className="flex-1 truncate">{c.name}</span>
-                  {c.id === selected.id && <Check size={15} className="text-mint" />}
+                  {c.id === selected.id && <Check size={15} className="text-accent" />}
                 </button>
               ))}
             </motion.div>
@@ -103,7 +109,7 @@ function RoleSwitcher() {
         <button
           key={key}
           onClick={() => setRole(key)}
-          className={cx("px-2.5 py-1 rounded-full text-xs font-semibold transition-colors", role === key ? "text-[#04201b]" : "text-muted hover:text-[color:var(--text)]")}
+          className={cx("px-2.5 py-1 rounded-full text-xs font-semibold transition-colors", role === key ? "text-white" : "text-muted hover:text-[color:var(--text)]")}
           style={role === key ? { background: m.c } : undefined}
           title={m.desc}
         >
@@ -130,7 +136,7 @@ export default function AppShell({ children }) {
           <p className="text-sm font-semibold truncate">{user.name}</p>
           <p className="text-xs text-muted capitalize">{ROLE_META[user.role]?.label}</p>
         </div>
-        <button onClick={logout} className="p-1.5 rounded-lg text-muted hover:text-[color:var(--text)] hover:bg-[color:var(--glass-2)]" title="Sign out"><LogOut size={16} /></button>
+        <button onClick={logout} className="p-1.5 rounded-lg text-muted hover:text-[color:var(--text)] hover:bg-[color:var(--card-2)]" title="Sign out"><LogOut size={16} /></button>
       </div>
     </div>
   );
@@ -159,7 +165,7 @@ export default function AppShell({ children }) {
 
       {/* main */}
       <div className="flex-1 min-w-0 flex flex-col">
-        <header className="sticky top-0 z-30 flex items-center gap-3 px-4 md:px-6 py-3 border-b hairline backdrop-blur-xl" style={{ background: "color-mix(in srgb, var(--ink) 55%, transparent)" }}>
+        <header className="sticky top-0 z-30 flex items-center gap-3 px-4 md:px-6 py-3 border-b hairline backdrop-blur-xl" style={{ background: "color-mix(in srgb, var(--bg) 80%, transparent)" }}>
           <button className="lg:hidden p-2 -ml-2 text-muted" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
           <ClientSwitcher />
           <div className="ml-auto flex items-center gap-2">

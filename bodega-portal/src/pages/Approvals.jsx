@@ -28,7 +28,7 @@ export default function Approvals() {
   return (
     <motion.div {...fadeUp}>
       <PageTitle kicker="Client review" title="Approvals">
-        <Badge color="#f5b14a">{queue.length} awaiting</Badge>
+        <Badge color="#c97a0a">{queue.length} awaiting</Badge>
       </PageTitle>
 
       {queue.length === 0 ? (
@@ -47,7 +47,7 @@ export default function Approvals() {
           {history.length === 0 && <p className="text-sm text-muted p-5">No decisions yet.</p>}
           {history.map((h) => (
             <div key={h.id} className="flex items-center gap-3 p-4">
-              <span className="w-8 h-8 grid place-items-center rounded-lg shrink-0" style={{ background: h.action === "approved" ? "#34e0c422" : "#f2708b22", color: h.action === "approved" ? "#34e0c4" : "#f2708b" }}>
+              <span className="w-8 h-8 grid place-items-center rounded-lg shrink-0" style={{ background: h.action === "approved" ? "#2562e722" : "#d6336c22", color: h.action === "approved" ? "#2562e7" : "#d6336c" }}>
                 {h.action === "approved" ? <Check size={16} /> : <RotateCcw size={16} />}
               </span>
               <div className="min-w-0 flex-1">
@@ -73,7 +73,7 @@ function ApprovalCard({ item, project, me, onApprove, onRemind }) {
     <Card className="flex flex-col">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <p className="text-xs text-mint font-semibold">{project}</p>
+          <p className="text-xs text-accent font-semibold">{project}</p>
           <h4 className="display font-bold leading-snug">{item.title}</h4>
         </div>
         <StatusBadge status="Client Review" />
@@ -83,7 +83,7 @@ function ApprovalCard({ item, project, me, onApprove, onRemind }) {
       <div className="flex flex-wrap items-center gap-2 mt-3">
         <PlatformTag platform={item.platform} />
         <span className="chip" style={{ color: "var(--muted)" }}>{item.format}</span>
-        <span className="chip" style={{ color: overdue ? "#f2708b" : "var(--muted)" }}><Clock size={13} /> due {fmtDate(item.clientReviewDue, "MMM d")}{overdue ? " · overdue" : ""}</span>
+        <span className="chip" style={{ color: overdue ? "#d6336c" : "var(--muted)" }}><Clock size={13} /> due {fmtDate(item.clientReviewDue, "MMM d")}{overdue ? " · overdue" : ""}</span>
       </div>
       {item.clientReviewMessage && (
         <div className="glass-2 hairline border rounded-xl p-3 mt-3 text-sm">

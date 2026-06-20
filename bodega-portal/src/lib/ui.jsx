@@ -9,10 +9,11 @@ export function Button({ variant = "accent", size = "md", className, children, .
   const base = "inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-all active:scale-[.98] disabled:opacity-50 disabled:pointer-events-none";
   const sizes = { sm: "text-xs px-3 py-1.5", md: "text-sm px-4 py-2", lg: "text-[15px] px-5 py-2.5" };
   const variants = {
-    accent: "text-[#04201b] bg-gradient-to-r from-[#45e6c6] to-[#37b9ff] hover:shadow-[0_14px_34px_-14px_rgba(55,185,255,.7)] hover:-translate-y-0.5",
+    accent: "text-[color:var(--bg)] bg-[color:var(--text)] border-transparent hover:-translate-y-0.5 hover:shadow-[var(--shadow-lg)]",
+    blue: "text-white bg-[#2562e7] border-transparent hover:-translate-y-0.5",
     ghost: "glass-2 hairline border text-[color:var(--text)] hover:border-[color:var(--line-2)]",
-    subtle: "text-[color:var(--muted)] hover:text-[color:var(--text)] hover:bg-[color:var(--glass-2)]",
-    danger: "text-white bg-gradient-to-r from-[#f2708b] to-[#e06bd0] hover:-translate-y-0.5",
+    subtle: "text-[color:var(--muted)] hover:text-[color:var(--text)] hover:bg-[color:var(--card-2)]",
+    danger: "text-white bg-[#fa1e88] border-transparent hover:-translate-y-0.5",
   };
   return (
     <button className={cx(base, sizes[size], variants[variant], className)} {...rest}>
@@ -53,10 +54,10 @@ export function PlatformTag({ platform }) {
   return <span className="chip" style={{ color: c }}><i className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: c }} />{platform}</span>;
 }
 
-export function Avatar({ name = "", size = 32, color = "linear-gradient(135deg,#45e6c6,#37b9ff)" }) {
+export function Avatar({ name = "", size = 32, color = "linear-gradient(135deg,#2562e7,#01dcb4)" }) {
   return (
     <span
-      className="inline-grid place-items-center rounded-full font-display font-bold text-[#04201b] shrink-0"
+      className="inline-grid place-items-center rounded-full font-display font-bold text-white shrink-0"
       style={{ width: size, height: size, fontSize: size * 0.4, background: color }}
       title={name}
     >
@@ -65,7 +66,7 @@ export function Avatar({ name = "", size = 32, color = "linear-gradient(135deg,#
   );
 }
 
-export function Progress({ value = 0, color = "linear-gradient(90deg,#45e6c6,#37b9ff)" }) {
+export function Progress({ value = 0, color = "linear-gradient(90deg,#2562e7,#01dcb4)" }) {
   return (
     <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "var(--line)" }}>
       <div className="h-full rounded-full" style={{ width: `${Math.max(0, Math.min(100, value))}%`, background: color }} />
@@ -73,7 +74,7 @@ export function Progress({ value = 0, color = "linear-gradient(90deg,#45e6c6,#37
   );
 }
 
-export function Stat({ label, value, sub, icon: Icon, accent = "#34e0c4" }) {
+export function Stat({ label, value, sub, icon: Icon, accent = "#2562e7" }) {
   return (
     <Card className="flex flex-col gap-3">
       <div className="flex items-center justify-between">

@@ -9,7 +9,7 @@ import { useData, useVisibleProjects, useVisibleContent, useCurrentUser } from "
 import { PLATFORM_META, fmtDate } from "../lib/status.js";
 import { Card, Button, Stat, PageTitle, cx } from "../lib/ui.jsx";
 
-const PIE_COLORS = ["#34e0c4", "#37b9ff", "#8a76ff", "#e06bd0", "#f5b14a"];
+const PIE_COLORS = ["#2562e7", "#01dcb4", "#6d4fe0", "#fa1e88", "#c97a0a"];
 
 function ChartTip({ active, payload, label }) {
   if (!active || !payload?.length) return null;
@@ -81,9 +81,9 @@ export default function Reports() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Stat label="Posted" value={kpis.posted} sub="published items" icon={Send} />
-        <Stat label="Avg engagement" value={`${kpis.avgEng}%`} sub="on posted content" icon={Activity} accent="#8a76ff" />
-        <Stat label="Consistency" value={`${kpis.consistency}%`} sub="posted vs planned" icon={Gauge} accent="#37b9ff" />
-        <Stat label="Approval time" value={`${kpis.turnaround}h`} sub="latest cycle" icon={Clock} accent="#f5b14a" />
+        <Stat label="Avg engagement" value={`${kpis.avgEng}%`} sub="on posted content" icon={Activity} accent="#6d4fe0" />
+        <Stat label="Consistency" value={`${kpis.consistency}%`} sub="posted vs planned" icon={Gauge} accent="#2562e7" />
+        <Stat label="Approval time" value={`${kpis.turnaround}h`} sub="latest cycle" icon={Clock} accent="#c97a0a" />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-4 mt-4">
@@ -92,15 +92,15 @@ export default function Reports() {
           <ResponsiveContainer width="100%" height={240}>
             <AreaChart data={snaps} margin={{ left: -18, right: 8, top: 4 }}>
               <defs>
-                <linearGradient id="gP" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#37b9ff" stopOpacity={0.5} /><stop offset="100%" stopColor="#37b9ff" stopOpacity={0} /></linearGradient>
-                <linearGradient id="gO" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#34e0c4" stopOpacity={0.5} /><stop offset="100%" stopColor="#34e0c4" stopOpacity={0} /></linearGradient>
+                <linearGradient id="gP" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#2562e7" stopOpacity={0.5} /><stop offset="100%" stopColor="#2562e7" stopOpacity={0} /></linearGradient>
+                <linearGradient id="gO" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#01dcb4" stopOpacity={0.5} /><stop offset="100%" stopColor="#01dcb4" stopOpacity={0} /></linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" vertical={false} />
               <XAxis dataKey="label" {...axis} />
               <YAxis {...axis} width={28} />
               <Tooltip content={<ChartTip />} />
-              <Area type="monotone" dataKey="planned" name="Planned" stroke="#37b9ff" fill="url(#gP)" strokeWidth={2} />
-              <Area type="monotone" dataKey="posted" name="Posted" stroke="#34e0c4" fill="url(#gO)" strokeWidth={2} />
+              <Area type="monotone" dataKey="planned" name="Planned" stroke="#2562e7" fill="url(#gP)" strokeWidth={2} />
+              <Area type="monotone" dataKey="posted" name="Posted" stroke="#01dcb4" fill="url(#gO)" strokeWidth={2} />
             </AreaChart>
           </ResponsiveContainer>
         </Card>
@@ -113,7 +113,7 @@ export default function Reports() {
               <XAxis dataKey="label" {...axis} />
               <YAxis {...axis} width={28} />
               <Tooltip content={<ChartTip />} />
-              <Line type="monotone" dataKey="approvalAvgHours" name="Avg hours" stroke="#8a76ff" strokeWidth={2.5} dot={{ r: 3, fill: "#8a76ff" }} />
+              <Line type="monotone" dataKey="approvalAvgHours" name="Avg hours" stroke="#6d4fe0" strokeWidth={2.5} dot={{ r: 3, fill: "#6d4fe0" }} />
             </LineChart>
           </ResponsiveContainer>
         </Card>
@@ -142,9 +142,9 @@ export default function Reports() {
               <CartesianGrid strokeDasharray="3 3" stroke="var(--line)" vertical={false} />
               <XAxis dataKey="name" {...axis} />
               <YAxis {...axis} width={28} allowDecimals={false} />
-              <Tooltip content={<ChartTip />} cursor={{ fill: "var(--glass-2)" }} />
+              <Tooltip content={<ChartTip />} cursor={{ fill: "var(--card-2)" }} />
               <Bar dataKey="value" name="Items" radius={[6, 6, 0, 0]}>
-                {platformMix.map((p, i) => <Cell key={i} fill={PLATFORM_META[p.name] || "#34e0c4"} />)}
+                {platformMix.map((p, i) => <Cell key={i} fill={PLATFORM_META[p.name] || "#2562e7"} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>

@@ -52,14 +52,14 @@ export default function Dashboard() {
   return (
     <motion.div {...fadeUp}>
       <PageTitle kicker={client?.name} title={`Welcome back, ${me.name.split(" ")[0]}`}>
-        <Link href="/app/content"><Badge color="#34e0c4">{content.length} content items</Badge></Link>
+        <Link href="/app/content"><Badge color="#2562e7">{content.length} content items</Badge></Link>
       </PageTitle>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Stat label="Active projects" value={projects.filter((p) => p.status === "Active").length || projects.length} sub={`${projects.length} total`} icon={FolderKanban} />
-        <Stat label="Awaiting approval" value={stats.awaiting} sub="in Client Review" icon={ClipboardCheck} accent="#f5b14a" />
-        <Stat label="Scheduled / posted" value={`${stats.scheduled} / ${stats.posted}`} sub="this cycle" icon={Send} accent="#8a76ff" />
-        <Stat label="Avg approval time" value={`${stats.turnaround}h`} sub="turnaround" icon={Clock} accent="#37b9ff" />
+        <Stat label="Awaiting approval" value={stats.awaiting} sub="in Client Review" icon={ClipboardCheck} accent="#c97a0a" />
+        <Stat label="Scheduled / posted" value={`${stats.scheduled} / ${stats.posted}`} sub="this cycle" icon={Send} accent="#6d4fe0" />
+        <Stat label="Avg approval time" value={`${stats.turnaround}h`} sub="turnaround" icon={Clock} accent="#2562e7" />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-4 mt-4">
@@ -67,7 +67,7 @@ export default function Dashboard() {
         <Card className="lg:col-span-2">
           <div className="flex items-center justify-between mb-4">
             <h3 className="display font-bold">Content pipeline</h3>
-            <Link href="/app/content" className="text-sm text-muted hover:text-mint inline-flex items-center gap-1">Open board <ArrowUpRight size={15} /></Link>
+            <Link href="/app/content" className="text-sm text-muted hover:text-accent inline-flex items-center gap-1">Open board <ArrowUpRight size={15} /></Link>
           </div>
           <div className="flex flex-col gap-2.5">
             {BOARD_COLUMNS.map((s) => {
@@ -90,7 +90,7 @@ export default function Dashboard() {
         <Card className="flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <h3 className="display font-bold">Reach</h3>
-            <TrendingUp size={18} className="text-mint" />
+            <TrendingUp size={18} className="text-accent" />
           </div>
           <div>
             <div className="display text-5xl font-extrabold grad-text">{fmtReach(stats.reach)}</div>
@@ -107,7 +107,7 @@ export default function Dashboard() {
         <Card className="lg:col-span-2">
           <div className="flex items-center justify-between mb-4">
             <h3 className="display font-bold">Upcoming schedule</h3>
-            <Link href="/app/calendar" className="text-sm text-muted hover:text-mint inline-flex items-center gap-1">Calendar <ArrowUpRight size={15} /></Link>
+            <Link href="/app/calendar" className="text-sm text-muted hover:text-accent inline-flex items-center gap-1">Calendar <ArrowUpRight size={15} /></Link>
           </div>
           <div className="flex flex-col divide-y" style={{ borderColor: "var(--line)" }}>
             {upcoming.length === 0 && <p className="text-sm text-muted py-2">Nothing scheduled yet.</p>}
@@ -134,7 +134,7 @@ export default function Dashboard() {
             {activity.length === 0 && <p className="text-sm text-muted">No activity yet.</p>}
             {activity.map((a) => (
               <div key={a.id} className="flex gap-3">
-                <Avatar name={a.who} size={28} color="linear-gradient(135deg,#8a76ff,#37b9ff)" />
+                <Avatar name={a.who} size={28} color="linear-gradient(135deg,#2562e7,#01dcb4)" />
                 <div className="min-w-0">
                   <p className="text-sm leading-snug"><b>{a.who}</b> <span className="text-muted">{a.verb}</span> {a.item}</p>
                   {a.note && <p className="text-xs text-muted truncate">“{a.note}”</p>}

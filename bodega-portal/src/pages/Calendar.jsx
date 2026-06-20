@@ -61,9 +61,9 @@ export default function Calendar() {
                   key={key}
                   onClick={() => setSelected(d)}
                   className={cx("min-h-[84px] rounded-xl p-1.5 text-left border transition-colors flex flex-col gap-1", isSel ? "border-[color:var(--line-2)]" : "border-transparent hover:border-[color:var(--line)]")}
-                  style={{ background: isSel ? "var(--glass)" : inMonth ? "var(--glass-2)" : "transparent", opacity: inMonth ? 1 : 0.4 }}
+                  style={{ background: isSel ? "var(--card)" : inMonth ? "var(--card-2)" : "transparent", opacity: inMonth ? 1 : 0.4 }}
                 >
-                  <span className={cx("text-xs font-semibold w-6 h-6 grid place-items-center rounded-full", isToday && "text-[#04201b]")} style={isToday ? { background: "linear-gradient(135deg,#45e6c6,#37b9ff)" } : undefined}>{format(d, "d")}</span>
+                  <span className={cx("text-xs font-semibold w-6 h-6 grid place-items-center rounded-full", isToday && "text-white")} style={isToday ? { background: "linear-gradient(135deg,#2562e7,#01dcb4)" } : undefined}>{format(d, "d")}</span>
                   <div className="flex flex-col gap-1">
                     {items.slice(0, 2).map((c) => (
                       <span key={c.id} className="text-[10px] leading-tight truncate pl-1.5 border-l-2" style={{ borderColor: STATUS_META[c.status]?.c }}>{c.title}</span>
@@ -85,7 +85,7 @@ export default function Calendar() {
         {/* day panel */}
         <Card>
           <div className="flex items-center gap-2 mb-4">
-            <CalendarDays size={18} className="text-mint" />
+            <CalendarDays size={18} className="text-accent" />
             <h3 className="display font-bold">{format(selected, "EEEE, MMM d")}</h3>
           </div>
           {selItems.length === 0 ? (

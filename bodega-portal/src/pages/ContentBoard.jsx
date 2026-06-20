@@ -66,7 +66,7 @@ export default function ContentBoard() {
                       <div className="flex items-center gap-2 mt-3">
                         <PlatformTag platform={c.platform} />
                         <span className="ml-auto flex items-center gap-1.5 text-xs text-faint"><CalendarClock size={13} />{fmtDate(c.publishDate)}</span>
-                        <Avatar name={userById(c.ownerId)?.name || ""} size={20} color="linear-gradient(135deg,#8a76ff,#37b9ff)" />
+                        <Avatar name={userById(c.ownerId)?.name || ""} size={20} color="linear-gradient(135deg,#2562e7,#01dcb4)" />
                       </div>
                     </Card>
                   </button>
@@ -86,7 +86,7 @@ export default function ContentBoard() {
 
 function FilterChip({ active, children, ...rest }) {
   return (
-    <button {...rest} className={cx("chip", active && "!border-transparent")} style={active ? { background: "#34e0c41f", color: "#34e0c4", borderColor: "#34e0c488" } : { color: "var(--muted)" }}>
+    <button {...rest} className={cx("chip", active && "!border-transparent")} style={active ? { background: "#2562e71f", color: "#2562e7", borderColor: "#2562e788" } : { color: "var(--muted)" }}>
       {children}
     </button>
   );
@@ -120,7 +120,7 @@ function ContentModal({ item, onClose }) {
         <Field label="Deadline">{fmtDate(item.deadline, "MMM d")}</Field>
       </div>
       {item.clientReviewMessage && item.status === "Client Review" && (
-        <div className="glass-2 hairline border rounded-xl p-3 my-2 text-sm"><b className="text-mint">Review note:</b> {item.clientReviewMessage}</div>
+        <div className="glass-2 hairline border rounded-xl p-3 my-2 text-sm"><b className="text-accent">Review note:</b> {item.clientReviewMessage}</div>
       )}
       {item.performance && (
         <div className="grid grid-cols-3 gap-2 my-3">

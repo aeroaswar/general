@@ -25,7 +25,7 @@ export default function Login() {
       {/* left brand panel */}
       <div className="relative hidden lg:flex flex-col justify-between p-12 overflow-hidden">
         <div className="flex items-center gap-2">
-          <span className="w-3 h-3 rounded-full" style={{ background: "linear-gradient(135deg,#45e6c6,#37b9ff)", boxShadow: "0 0 16px 2px rgba(52,224,196,.7)" }} />
+          <span className="w-3 h-3 rounded-full" style={{ background: "linear-gradient(135deg,#2562e7,#01dcb4)", boxShadow: "0 0 16px 2px rgba(37,98,231,.7)" }} />
           <span className="display text-2xl font-extrabold">bodega</span>
         </div>
         <div>
@@ -48,7 +48,7 @@ export default function Login() {
       <div className="flex items-center justify-center p-6">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="glass w-full max-w-md p-7">
           <div className="lg:hidden flex items-center gap-2 mb-6">
-            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "linear-gradient(135deg,#45e6c6,#37b9ff)" }} />
+            <span className="w-2.5 h-2.5 rounded-full" style={{ background: "linear-gradient(135deg,#2562e7,#01dcb4)" }} />
             <span className="display text-xl font-extrabold">bodega</span>
           </div>
           <h2 className="display text-2xl font-bold">Sign in</h2>
@@ -63,7 +63,7 @@ export default function Login() {
                   key={key}
                   onClick={() => setRole(key)}
                   className={cx("flex items-center gap-3 p-3 rounded-2xl border text-left transition-all", active ? "border-transparent" : "hairline hover:border-[color:var(--line-2)]")}
-                  style={active ? { background: m.c + "1f", borderColor: m.c + "88" } : { background: "var(--glass-2)" }}
+                  style={active ? { background: m.c + "1f", borderColor: m.c + "88" } : { background: "var(--card-2)" }}
                 >
                   <span className="w-10 h-10 grid place-items-center rounded-xl shrink-0" style={{ background: m.c + "22", color: m.c }}><Icon size={18} /></span>
                   <span className="flex-1 min-w-0">
