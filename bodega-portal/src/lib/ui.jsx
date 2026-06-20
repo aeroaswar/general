@@ -117,7 +117,7 @@ export function Modal({ open, onClose, title, children, width = 560 }) {
           className="fixed inset-0 z-50 grid place-items-center p-4"
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
         >
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+          <div className="absolute inset-0 bg-black/50" onClick={onClose} />
           <motion.div
             className="glass relative w-full max-h-[88vh] overflow-auto no-scrollbar"
             style={{ maxWidth: width }}

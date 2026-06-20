@@ -154,7 +154,7 @@ export default function AppShell({ children }) {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div className="fixed inset-0 z-50 lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+            <div className="absolute inset-0 bg-black/50" onClick={() => setMobileOpen(false)} />
             <motion.aside
               initial={{ x: -300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ type: "spring", stiffness: 320, damping: 32 }}
               className="absolute left-0 top-0 h-full w-[260px] glass rounded-r-2xl"
@@ -167,7 +167,7 @@ export default function AppShell({ children }) {
 
       {/* main */}
       <div className="flex-1 min-w-0 flex flex-col">
-        <header className="sticky top-0 z-30 flex items-center gap-3 px-4 md:px-6 py-3 border-b hairline backdrop-blur-xl" style={{ background: "color-mix(in srgb, var(--bg) 80%, transparent)" }}>
+        <header className="sticky top-0 z-30 flex items-center gap-3 px-4 md:px-6 py-3 border-b hairline" style={{ background: "var(--bg)" }}>
           <button className="lg:hidden p-2 -ml-2 text-muted" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
           <ClientSwitcher />
           <div className="ml-auto flex items-center gap-2">

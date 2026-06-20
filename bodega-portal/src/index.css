@@ -8,8 +8,8 @@
   --text: #181718;        /* ink */
   --muted: rgba(24, 23, 24, 0.66);
   --faint: rgba(24, 23, 24, 0.46);
-  --card: rgba(255, 255, 255, 0.72);
-  --card-2: rgba(255, 255, 255, 0.5);
+  --card: #ffffff;
+  --card-2: #f3f1ef;
   --line: rgba(24, 23, 24, 0.12);
   --line-2: rgba(24, 23, 24, 0.22);
   --blue: #2562e7;
@@ -26,8 +26,8 @@
   --text: #faf9f9;
   --muted: rgba(250, 249, 249, 0.66);
   --faint: rgba(250, 249, 249, 0.44);
-  --card: rgba(255, 255, 255, 0.05);
-  --card-2: rgba(255, 255, 255, 0.08);
+  --card: #1c1b1d;
+  --card-2: #242324;
   --line: rgba(255, 255, 255, 0.12);
   --line-2: rgba(255, 255, 255, 0.22);
   --shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.6);
@@ -65,8 +65,6 @@ em { font-style: normal; color: var(--blue); }
     background: var(--card);
     border: 1px solid var(--line);
     border-radius: 18px;
-    backdrop-filter: blur(10px) saturate(130%);
-    -webkit-backdrop-filter: blur(10px) saturate(130%);
     box-shadow: var(--shadow);
   }
   .glass-2 { background: var(--card-2); }
