@@ -4,6 +4,7 @@ import { FileSignature, Pencil, Send, Printer, Trash2, Plus, ShieldCheck, Buildi
 import { useData, useSelectedClient, useCurrentUser } from "../store.jsx";
 import { Card, Button, Badge, PageTitle, EmptyState, Modal, PlatformTag, fadeUp, cx } from "../lib/ui.jsx";
 import { Field, Input, Textarea, Select } from "../lib/forms.jsx";
+import { FrameworkForm, frameworkTitle } from "../lib/frameworkForms.jsx";
 import SignaturePad from "../components/SignaturePad.jsx";
 import { fmtDate } from "../lib/status.js";
 
@@ -14,11 +15,13 @@ export default function Contract() {
   const client = useSelectedClient();
   const me = useCurrentUser();
   const canEdit = me.role !== "client";
-  const { contracts, projects, phases, pillars, audienceSegments, createContract, updateContract, deleteContract, signContract } = useData();
+  const d = useData();
+  const { contracts, projects, phases, pillars, audienceSegments, createContract, updateContract, deleteContract, signContract } = d;
   const contract = contracts.find((c) => c.clientId === client?.id);
   const clientProjects = projects.filter((p) => p.clientId === client?.id);
   const [editing, setEditing] = useState(false);
   const [signParty, setSignParty] = useState(null); // "client" | "studio" | null
+  const [fwEditor, setFwEditor] = useState(null);    // { kind, data } — inline framework editor
 
   // the project this engagement covers → its framework is folded into the contract
   const project = contract ? (projects.find((p) => p.id === contract.projectId) || clientProjects[0]) : null;
@@ -27,6 +30,8 @@ export default function Contract() {
     pillars: pillars.filter((x) => x.projectId === project.id),
     segments: audienceSegments.filter((x) => x.projectId === project.id),
   } : null;
+  // context for the inline framework forms (edits flow to the linked project)
+  const fwCtx = { project, addPhase: d.addPhase, updatePhase: d.updatePhase, addPillar: d.addPillar, updatePillar: d.updatePillar, addSegment: d.addSegment, updateSegment: d.updateSegment };
 
   if (!client) return <EmptyState icon={Building2} title="No client selected" sub="Pick a client to view their contract." />;
 
@@ -147,35 +152,49 @@ export default function Contract() {
                 </div>
               )}
 
-              {framework.phases.length > 0 && (
+              {(framework.phases.length > 0 || canEdit) && (
                 <div>
-                  <p className="eyebrow mb-2 flex items-center gap-1.5"><Layers size={13} className="text-accent" /> Engagement phases</p>
+                  <FwHead icon={Layers} label="Engagement phases" canEdit={canEdit} onAdd={() => setFwEditor({ kind: "phase", data: null })} />
                   <ol className="flex flex-col gap-2">
                     {framework.phases.map((ph, i) => (
-                      <li key={ph.id} className="text-sm flex gap-2"><span className="font-semibold shrink-0">{i + 1}.</span><span><span className="font-medium">{ph.name}</span>{ph.objective ? ` — ${ph.objective}` : ""}</span></li>
+                      <li key={ph.id} className="text-sm flex gap-2 items-start group">
+                        <span className="font-semibold shrink-0">{i + 1}.</span>
+                        <span className="flex-1"><span className="font-medium">{ph.name}</span>{ph.objective ? ` — ${ph.objective}` : ""}</span>
+                        {canEdit && <FwRowActions onEdit={() => setFwEditor({ kind: "phase", data: ph })} onDelete={() => d.deletePhase(ph.id)} />}
+                      </li>
                     ))}
+                    {framework.phases.length === 0 && <li className="text-sm text-muted">No phases yet — add one.</li>}
                   </ol>
                 </div>
               )}
 
-              {framework.pillars.length > 0 && (
+              {(framework.pillars.length > 0 || canEdit) && (
                 <div>
-                  <p className="eyebrow mb-2 flex items-center gap-1.5"><Megaphone size={13} className="text-accent" /> Content pillars</p>
+                  <FwHead icon={Megaphone} label="Content pillars" canEdit={canEdit} onAdd={() => setFwEditor({ kind: "pillar", data: null })} />
                   <div className="flex flex-col gap-1.5">
                     {framework.pillars.map((pl) => (
-                      <div key={pl.id} className="text-sm flex justify-between gap-3"><span><span className="font-medium">{pl.name}</span>{pl.description ? ` — ${pl.description}` : ""}</span><span className="text-muted shrink-0 tabular-nums">{pl.weight}%</span></div>
+                      <div key={pl.id} className="text-sm flex items-center justify-between gap-3 group">
+                        <span className="flex-1"><span className="font-medium">{pl.name}</span>{pl.description ? ` — ${pl.description}` : ""}</span>
+                        <span className="text-muted shrink-0 tabular-nums">{pl.weight}%</span>
+                        {canEdit && <FwRowActions onEdit={() => setFwEditor({ kind: "pillar", data: pl })} onDelete={() => d.deletePillar(pl.id)} />}
+                      </div>
                     ))}
+                    {framework.pillars.length === 0 && <p className="text-sm text-muted">No pillars yet — add one.</p>}
                   </div>
                 </div>
               )}
 
-              {framework.segments.length > 0 && (
+              {(framework.segments.length > 0 || canEdit) && (
                 <div>
-                  <p className="eyebrow mb-2 flex items-center gap-1.5"><Users size={13} className="text-accent" /> Audience segments</p>
+                  <FwHead icon={Users} label="Audience segments" canEdit={canEdit} onAdd={() => setFwEditor({ kind: "segment", data: null })} />
                   <div className="flex flex-col gap-1.5">
                     {framework.segments.map((s) => (
-                      <div key={s.id} className="text-sm"><span className="font-medium">{s.name}</span>{s.description ? ` — ${s.description}` : ""}</div>
+                      <div key={s.id} className="text-sm flex items-start justify-between gap-2 group">
+                        <span className="flex-1"><span className="font-medium">{s.name}</span>{s.description ? ` — ${s.description}` : ""}</span>
+                        {canEdit && <FwRowActions onEdit={() => setFwEditor({ kind: "segment", data: s })} onDelete={() => d.deleteSegment(s.id)} />}
+                      </div>
                     ))}
+                    {framework.segments.length === 0 && <p className="text-sm text-muted">No segments yet — add one.</p>}
                   </div>
                 </div>
               )}
@@ -217,6 +236,9 @@ export default function Contract() {
       <SignModal party={signParty} contract={contract} me={me} onClose={() => setSignParty(null)}
         onSign={(sig) => { signContract(contract.id, signParty, sig); setSignParty(null); }} />
       <ContractEditor open={editing} contract={contract} projects={clientProjects} onClose={() => setEditing(false)} onSave={(patch, id) => { updateContract(id, patch); setEditing(false); }} />
+      <Modal open={!!fwEditor} onClose={() => setFwEditor(null)} title={fwEditor ? frameworkTitle(fwEditor.kind, fwEditor.data) : ""} width={500}>
+        {fwEditor && <FrameworkForm kind={fwEditor.kind} data={fwEditor.data} ctx={fwCtx} close={() => setFwEditor(null)} />}
+      </Modal>
     </motion.div>
   );
 }
@@ -235,6 +257,24 @@ function Party({ label, info, fallbackName }) {
 
 function Term({ label, value }) {
   return <div><p className="text-[10px] uppercase tracking-[0.16em] text-faint mb-1">{label}</p><p className="text-sm font-medium">{value}</p></div>;
+}
+
+function FwHead({ icon: Icon, label, canEdit, onAdd }) {
+  return (
+    <div className="flex items-center justify-between mb-2">
+      <p className="eyebrow flex items-center gap-1.5"><Icon size={13} className="text-accent" /> {label}</p>
+      {canEdit && <button onClick={onAdd} className="no-print text-xs text-muted hover:text-accent inline-flex items-center gap-1 font-medium"><Plus size={13} /> Add</button>}
+    </div>
+  );
+}
+
+function FwRowActions({ onEdit, onDelete }) {
+  return (
+    <span className="no-print flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity">
+      <button onClick={onEdit} className="p-1 rounded text-muted hover:text-[color:var(--text)]" title="Edit"><Pencil size={12} /></button>
+      <button onClick={onDelete} className="p-1 rounded text-muted hover:text-[#d6336c]" title="Delete"><Trash2 size={12} /></button>
+    </span>
+  );
 }
 
 function SignBlock({ label, sig, party, fallbackName, canSign, onSign }) {

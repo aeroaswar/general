@@ -5,7 +5,8 @@ import { Layers, Users, Megaphone, FolderKanban, ArrowUpRight, Compass, Plus, Pe
 import { useData, useVisibleProjects, useActiveProject, useProjectContent, useSelectedClient, useCurrentUser } from "../store.jsx";
 import { PROJECT_STATUS_C, BOARD_COLUMNS, STATUS_META, fmtDate } from "../lib/status.js";
 import { Card, Badge, Button, Progress, PageTitle, PlatformTag, EmptyState, Modal, fadeUp, cx } from "../lib/ui.jsx";
-import { Field, Input, Textarea, Select, toList, fromList } from "../lib/forms.jsx";
+import { Field, Input, Select, toList, fromList } from "../lib/forms.jsx";
+import { Foot, PhaseForm, PillarForm, SegmentForm } from "../lib/frameworkForms.jsx";
 
 const PROJECT_STATUSES = ["Planning", "Active", "Paused", "Closed"];
 
@@ -263,51 +264,3 @@ function ProjectForm({ data, ctx, close }) {
   );
 }
 
-function PhaseForm({ data, ctx, close }) {
-  const [f, setF] = useState({ name: data?.name || "", objective: data?.objective || "" });
-  const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
-  const save = () => { if (!f.name.trim()) return; const patch = { name: f.name.trim(), objective: f.objective.trim() }; if (data) ctx.updatePhase(data.id, patch); else ctx.addPhase(ctx.project.id, patch); close(); };
-  return (
-    <div className="grid gap-4">
-      <Field label="Phase name"><Input value={f.name} onChange={set("name")} placeholder="e.g. Foundation" /></Field>
-      <Field label="Objective"><Textarea value={f.objective} onChange={set("objective")} placeholder="What this phase achieves" /></Field>
-      <Foot close={close} save={save} disabled={!f.name.trim()} label={data ? "Save phase" : "Add phase"} />
-    </div>
-  );
-}
-
-function PillarForm({ data, ctx, close }) {
-  const [f, setF] = useState({ name: data?.name || "", description: data?.description || "", weight: data?.weight ?? 25 });
-  const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
-  const save = () => { if (!f.name.trim()) return; const patch = { name: f.name.trim(), description: f.description.trim(), weight: Number(f.weight) || 0 }; if (data) ctx.updatePillar(data.id, patch); else ctx.addPillar(ctx.project.id, patch); close(); };
-  return (
-    <div className="grid gap-4">
-      <Field label="Pillar name"><Input value={f.name} onChange={set("name")} placeholder="e.g. Education" /></Field>
-      <Field label="Description"><Textarea value={f.description} onChange={set("description")} placeholder="What this pillar covers" /></Field>
-      <Field label="Target weight (%)"><Input type="number" min="0" max="100" value={f.weight} onChange={set("weight")} /></Field>
-      <Foot close={close} save={save} disabled={!f.name.trim()} label={data ? "Save pillar" : "Add pillar"} />
-    </div>
-  );
-}
-
-function SegmentForm({ data, ctx, close }) {
-  const [f, setF] = useState({ name: data?.name || "", description: data?.description || "" });
-  const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
-  const save = () => { if (!f.name.trim()) return; const patch = { name: f.name.trim(), description: f.description.trim() }; if (data) ctx.updateSegment(data.id, patch); else ctx.addSegment(ctx.project.id, patch); close(); };
-  return (
-    <div className="grid gap-4">
-      <Field label="Segment name"><Input value={f.name} onChange={set("name")} placeholder="e.g. First-time pilgrims" /></Field>
-      <Field label="Description"><Textarea value={f.description} onChange={set("description")} placeholder="Who they are" /></Field>
-      <Foot close={close} save={save} disabled={!f.name.trim()} label={data ? "Save segment" : "Add segment"} />
-    </div>
-  );
-}
-
-function Foot({ close, save, disabled, label }) {
-  return (
-    <div className="flex justify-end gap-2 mt-2 sm:col-span-2">
-      <Button variant="ghost" onClick={close}>Cancel</Button>
-      <Button onClick={save} disabled={disabled}>{label}</Button>
-    </div>
-  );
-}
