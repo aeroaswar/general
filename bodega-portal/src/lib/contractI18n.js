@@ -81,7 +81,50 @@ export const T = {
   },
 };
 
+// Indonesian legal-format labels & boilerplate
+T.id.nomor = "Nomor";
+T.id.pasal = "PASAL";
+T.id.pihakPertama = "PIHAK PERTAMA";
+T.id.pihakKedua = "PIHAK KEDUA";
+T.id.penutupHeading = "PENUTUP";
+T.id.meterai = "Meterai";
+T.id.appendix = "Lampiran — Rincian Pekerjaan";
+
 export const tr = (lang) => T[lang === "id" ? "id" : "en"];
+
+const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
+
+// Indonesian day name, e.g. "Senin"
+export function hariName(iso) {
+  if (!iso) return "";
+  const dt = typeof iso === "string" ? parseISO(iso) : iso;
+  return isValid(dt) ? format(dt, "EEEE", { locale: idLocale }) : "";
+}
+
+// A default Indonesian contract number, e.g. "001/BCS/VI/2026"
+export function defaultContractNumber(iso) {
+  const dt = iso ? parseISO(iso) : new Date();
+  const ok = isValid(dt);
+  const m = ok ? dt.getMonth() : new Date().getMonth();
+  const y = ok ? dt.getFullYear() : new Date().getFullYear();
+  return `001/BCS/${ROMAN[m]}/${y}`;
+}
+
+// Opening line: "Pada hari ini, Senin, tanggal 12 Januari 2026, yang bertanda tangan di bawah ini:"
+export const openingID = (hari, tgl) => `Pada hari ini, ${hari}, tanggal ${tgl}, yang bertanda tangan di bawah ini:`;
+
+// One party identification sentence
+export function partySentenceID({ name, address, rep, role, label }) {
+  let s = name;
+  if (address) s += `, beralamat di ${address}`;
+  if (rep) s += `, dalam hal ini diwakili oleh ${rep}${role ? ` selaku ${role}` : ""} dan oleh karenanya sah bertindak untuk dan atas nama ${name}`;
+  s += `, untuk selanjutnya disebut sebagai ${label}.`;
+  return s;
+}
+
+export const preambleID = "PIHAK PERTAMA dan PIHAK KEDUA secara bersama-sama disebut “Para Pihak” dan masing-masing disebut “Pihak”. Para Pihak terlebih dahulu menerangkan dan dengan ini sepakat untuk mengadakan Perjanjian Kerja Sama dengan syarat dan ketentuan sebagaimana diatur dalam pasal-pasal berikut:";
+
+export const penutupID = "Demikian Perjanjian ini dibuat dan ditandatangani oleh Para Pihak dalam keadaan sadar, sehat jasmani dan rohani, serta tanpa adanya paksaan dari pihak manapun. Perjanjian ini dibuat dalam rangkap 2 (dua), masing-masing bermaterai cukup dan mempunyai kekuatan hukum yang sama.";
 
 // Recital ("This Agreement is entered into …")
 export function recital(lang, { title, date, studio, client }) {

@@ -7,7 +7,7 @@ import { Field, Input, Textarea, Select } from "../lib/forms.jsx";
 import { FrameworkForm, frameworkTitle } from "../lib/frameworkForms.jsx";
 import { WORDMARK } from "../lib/brand.js";
 import SignaturePad from "../components/SignaturePad.jsx";
-import { tr, recital, sowIntro, fmtDateL, LANGS, defaultClauses, clausesMatchDefault } from "../lib/contractI18n.js";
+import { tr, recital, sowIntro, fmtDateL, LANGS, defaultClauses, clausesMatchDefault, hariName, openingID, partySentenceID, preambleID, penutupID } from "../lib/contractI18n.js";
 
 const STATUS_C = { Draft: "#8a8f98", Sent: "#c97a0a", Signed: "#0f9d58" };
 const addMonths = (iso, n) => { if (!iso) return ""; const d = new Date(iso); d.setMonth(d.getMonth() + Number(n || 0)); return d.toISOString().slice(0, 10); };
@@ -123,24 +123,30 @@ export default function Contract() {
           </tfoot>
           <tbody><tr><td>
         <div className="p-5 sm:p-7 md:p-10 doc-body flex flex-col gap-7">
-          <header className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b hairline avoid-break">
-            <div>
-              <p className="eyebrow mb-1.5">{t.agreement}</p>
-              <h2 className="display text-2xl md:text-3xl font-semibold">{contract.title}</h2>
-              <p className="text-sm text-muted mt-1">{t.between} <strong>{contract.studio.name}</strong> {t.and} <strong>{contract.client.company || client.name}</strong></p>
-            </div>
-            <span className="brand-logo shrink-0 no-print" style={{ height: 22, width: 84 }} />
-          </header>
+          {lang === "id" ? (
+            <IndoOpening contract={contract} client={client} t={t} />
+          ) : (
+            <>
+              <header className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b hairline avoid-break">
+                <div>
+                  <p className="eyebrow mb-1.5">{t.agreement}</p>
+                  <h2 className="display text-2xl md:text-3xl font-semibold">{contract.title}</h2>
+                  <p className="text-sm text-muted mt-1">{t.between} <strong>{contract.studio.name}</strong> {t.and} <strong>{contract.client.company || client.name}</strong></p>
+                </div>
+                <span className="brand-logo shrink-0 no-print" style={{ height: 22, width: 84 }} />
+              </header>
 
-          <p className="text-sm leading-relaxed avoid-break">
-            {recital(lang, { title: contract.title, date: fmtDateL(contract.effectiveDate, lang), studio: contract.studio.name, client: contract.client.company || client.name })}
-          </p>
+              <p className="text-sm leading-relaxed avoid-break">
+                {recital(lang, { title: contract.title, date: fmtDateL(contract.effectiveDate, lang), studio: contract.studio.name, client: contract.client.company || client.name })}
+              </p>
 
-          {/* parties */}
-          <div className="grid sm:grid-cols-2 gap-5 avoid-break">
-            <Party label={t.preparedBy} info={contract.studio} fallbackName={contract.studio.name} />
-            <Party label={t.clientLabel} info={contract.client} fallbackName={contract.client.company || client.name} />
-          </div>
+              {/* parties */}
+              <div className="grid sm:grid-cols-2 gap-5 avoid-break">
+                <Party label={t.preparedBy} info={contract.studio} fallbackName={contract.studio.name} />
+                <Party label={t.clientLabel} info={contract.client} fallbackName={contract.client.company || client.name} />
+              </div>
+            </>
+          )}
 
           {/* key terms */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 rounded-xl glass-2 hairline border avoid-break">
@@ -176,7 +182,7 @@ export default function Contract() {
           {project && (
             <section className="flex flex-col gap-6 pt-5 border-t hairline">
               <div>
-                <h3 className="eyebrow mb-1">{t.statementOfWork}</h3>
+                <h3 className="eyebrow mb-1">{lang === "id" ? t.appendix : t.statementOfWork}</h3>
                 <p className="text-sm">{sowIntro(lang, `${project.name}${project.industry ? ` · ${project.industry}` : ""}`)}</p>
               </div>
 
@@ -252,8 +258,18 @@ export default function Contract() {
             </section>
           )}
 
-          {/* clauses */}
-          {contract.clauses?.length > 0 && (
+          {/* clauses — PASAL format for Indonesian, numbered list for English */}
+          {contract.clauses?.length > 0 && (lang === "id" ? (
+            <section className="flex flex-col gap-5 pt-5 border-t hairline">
+              {contract.clauses.map((cl, i) => (
+                <div key={cl.id} className="avoid-break">
+                  <p className="font-bold text-sm text-center">{t.pasal} {i + 1}</p>
+                  <p className="font-semibold text-sm text-center uppercase tracking-wide mt-0.5 mb-2">{cl.heading.replace(/^\s*\d+\.\s*/, "")}</p>
+                  <p className="text-sm leading-relaxed" style={{ textAlign: "justify" }}>{cl.body}</p>
+                </div>
+              ))}
+            </section>
+          ) : (
             <section className="flex flex-col gap-4 pt-5 border-t hairline">
               <h3 className="eyebrow">{t.termsConditions}</h3>
               {contract.clauses.map((cl) => (
@@ -263,16 +279,35 @@ export default function Contract() {
                 </div>
               ))}
             </section>
+          ))}
+
+          {/* penutup — Indonesian closing */}
+          {lang === "id" && (
+            <section className="avoid-break pt-5 border-t hairline">
+              <p className="font-bold text-sm text-center mb-2">{t.penutupHeading}</p>
+              <p className="text-sm leading-relaxed" style={{ textAlign: "justify" }}>{penutupID}</p>
+            </section>
           )}
 
           {/* signatures */}
           <section className="pt-5 border-t hairline avoid-break sig-section">
             <h3 className="eyebrow mb-4">{t.signatures}</h3>
             <div className="grid sm:grid-cols-2 gap-6">
-              <SignBlock t={t} lang={lang} label={t.forClient} sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
-                canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")} />
-              <SignBlock t={t} lang={lang} label={t.forBodega} sig={contract.studioSignature} party={contract.studio} fallbackName={contract.studio.name}
-                canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")} />
+              {lang === "id" ? (
+                <>
+                  <SignBlock t={t} lang={lang} meterai label={t.pihakPertama} sig={contract.studioSignature} party={contract.studio} fallbackName={contract.studio.name}
+                    canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")} />
+                  <SignBlock t={t} lang={lang} meterai label={t.pihakKedua} sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
+                    canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")} />
+                </>
+              ) : (
+                <>
+                  <SignBlock t={t} lang={lang} label={t.forClient} sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
+                    canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")} />
+                  <SignBlock t={t} lang={lang} label={t.forBodega} sig={contract.studioSignature} party={contract.studio} fallbackName={contract.studio.name}
+                    canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")} />
+                </>
+              )}
             </div>
           </section>
         </div>
@@ -330,11 +365,43 @@ function FwRowActions({ onEdit, onDelete }) {
   );
 }
 
-function SignBlock({ t, lang, label, sig, party, fallbackName, canSign, onSign }) {
+function IndoOpening({ contract, client, t }) {
+  const s = contract.studio, c = contract.client;
+  const clientName = c.company || client.name;
+  return (
+    <div className="flex flex-col gap-5 avoid-break">
+      <div className="text-center pb-4 border-b hairline">
+        <span className="brand-logo inline-block no-print mb-3" style={{ height: 22, width: 84 }} />
+        <h2 className="display text-xl md:text-2xl font-bold uppercase tracking-wide">{contract.title}</h2>
+        {contract.number && <p className="text-sm text-muted mt-1">{t.nomor}: {contract.number}</p>}
+      </div>
+      <p className="text-sm leading-relaxed">{openingID(hariName(contract.effectiveDate), fmtDateL(contract.effectiveDate, "id"))}</p>
+      <div className="flex flex-col gap-3">
+        <PartyBlockID no="1" text={partySentenceID({ name: s.name, address: s.address, rep: s.signatory, role: s.title, label: t.pihakPertama })} />
+        <PartyBlockID no="2" text={partySentenceID({ name: clientName, address: c.address, rep: c.signatory, role: c.title, label: t.pihakKedua })} />
+      </div>
+      <p className="text-sm leading-relaxed" style={{ textAlign: "justify" }}>{preambleID}</p>
+    </div>
+  );
+}
+
+function PartyBlockID({ no, text }) {
+  return (
+    <div className="text-sm leading-relaxed flex gap-2" style={{ textAlign: "justify" }}>
+      <span className="font-semibold shrink-0">{no}.</span>
+      <p className="flex-1">{text}</p>
+    </div>
+  );
+}
+
+function SignBlock({ t, lang, label, sig, party, fallbackName, canSign, onSign, meterai }) {
   return (
     <div>
       <p className="eyebrow mb-2">{label}</p>
-      <div className="rounded-lg px-3 pt-3 pb-1.5 flex items-end justify-center" style={{ background: "#faf8f5", minHeight: 84, borderBottom: "2px solid rgba(0,0,0,.22)" }}>
+      <div className="relative rounded-lg px-3 pt-3 pb-1.5 flex items-end justify-center" style={{ background: "#faf8f5", minHeight: meterai ? 96 : 84, borderBottom: "2px solid rgba(0,0,0,.22)" }}>
+        {meterai && !sig && (
+          <span className="absolute top-2 left-2 grid place-items-center text-center leading-tight" style={{ width: 56, height: 32, border: "1px dashed #b9b2a6", borderRadius: 4, color: "#9b948c", fontSize: 8 }}>{t.meterai}<br />Rp10.000</span>
+        )}
         {sig ? (
           sig.drawnDataUrl
             ? <img src={sig.drawnDataUrl} alt="signature" style={{ maxHeight: 70, maxWidth: "100%" }} />
@@ -424,7 +491,7 @@ function SignModal({ party, contract, me, t, onClose, onSign }) {
 
 /* ── Contract editor (studio) ─────────────────────────────────────────── */
 const seedForm = (c) => ({
-  title: c?.title || "", projectId: c?.projectId || "", effectiveDate: c?.effectiveDate || "", termMonths: c?.termMonths ?? 6,
+  title: c?.title || "", number: c?.number || "", projectId: c?.projectId || "", effectiveDate: c?.effectiveDate || "", termMonths: c?.termMonths ?? 6,
   fee: c?.fee || "", paymentTerms: c?.paymentTerms || "", cadence: c?.cadence || "", scope: c?.scope || "",
   deliverables: (c?.deliverables || []).join("\n"),
   studioSignatory: c?.studio?.signatory || "", studioTitle: c?.studio?.title || "",
@@ -444,7 +511,7 @@ function ContractEditor({ open, contract, projects = [], onClose, onSave }) {
   const save = () => {
     if (!contract) return;
     onSave({
-      title: f.title.trim() || "Agreement", projectId: f.projectId || null, effectiveDate: f.effectiveDate, termMonths: Number(f.termMonths) || 0,
+      title: f.title.trim() || "Agreement", number: f.number.trim(), projectId: f.projectId || null, effectiveDate: f.effectiveDate, termMonths: Number(f.termMonths) || 0,
       fee: f.fee.trim(), paymentTerms: f.paymentTerms.trim(), cadence: f.cadence.trim(), scope: f.scope.trim(),
       deliverables: f.deliverables.split("\n").map((s) => s.trim()).filter(Boolean),
       studio: { ...contract.studio, signatory: f.studioSignatory.trim(), title: f.studioTitle.trim() },
@@ -456,7 +523,8 @@ function ContractEditor({ open, contract, projects = [], onClose, onSave }) {
   return (
     <Modal open={open} onClose={onClose} title="Edit contract" width={680}>
       <div className="grid sm:grid-cols-2 gap-4">
-        <Field label="Title" className="sm:col-span-2"><Input value={f.title} onChange={set("title")} placeholder="Creative Services Agreement" /></Field>
+        <Field label="Title"><Input value={f.title} onChange={set("title")} placeholder="Creative Services Agreement" /></Field>
+        <Field label="Number (Nomor)"><Input value={f.number} onChange={set("number")} placeholder="001/BCS/VI/2026" /></Field>
         <Field label="Covers project" hint="Its phases, pillars & audience fold into this contract" className="sm:col-span-2">
           <Select value={f.projectId} onChange={set("projectId")}>
             <option value="">— none —</option>

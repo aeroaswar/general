@@ -5,7 +5,7 @@ import {
   INDUSTRY_TEMPLATES, ASSET_REQUESTS, REMINDER_LOGS, CONTRACTS,
 } from "./seed.js";
 import { CLIENT_VISIBLE } from "./lib/status.js";
-import { defaultClauses } from "./lib/contractI18n.js";
+import { defaultClauses, defaultContractNumber } from "./lib/contractI18n.js";
 
 const now = () => new Date().toISOString();
 const today0 = () => new Date().toISOString().slice(0, 10);
@@ -276,7 +276,8 @@ export function DataProvider({ children }) {
     const lang = input.lang || "en";
     const contract = {
       id, clientId, projectId: input.projectId ?? firstProject?.id ?? null, lang,
-      title: input.title || "Creative Services Agreement", status: "Draft",
+      title: input.title || "Creative Services Agreement", number: input.number || defaultContractNumber(input.effectiveDate),
+      status: "Draft",
       effectiveDate: input.effectiveDate || today0(), termMonths: input.termMonths ?? 6,
       studio: { name: "Bodega Creative Studio", signatory: "", title: "", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330", ...input.studio },
       client: { company: client?.name || "", signatory: "", title: "", email: "", address: "", ...input.client },
