@@ -46,6 +46,7 @@ const CADENCES = [
   { id: "quarterly", label: "Quarterly", per: 4 },
   { id: "semiannual", label: "Semi-annual", per: 2 },
   { id: "annual", label: "Annual", per: 1 },
+  { id: "custom", label: "Custom — N / year", per: 0 },
   { id: "perk", label: "Perk (info only)", per: 0 },
 ];
 const CADENCE_PER = { monthly: 12, quarterly: 4, semiannual: 2, annual: 1, perk: 0 };
@@ -54,6 +55,7 @@ const CADENCE_LABEL = {
   quarterly: "Quarterly",
   semiannual: "Semi-annual",
   annual: "Annual",
+  custom: "Custom",
   perk: "Perk",
 };
 
@@ -136,7 +138,7 @@ const CARD_TEMPLATES = [
     annualFee: 1000000,
     resetType: "anniversary",
     benefits: [
-      { name: "Airport Lounge Access", value: 1500000, cadence: "semiannual", note: "2 visits / year via Priority Pass" },
+      { name: "Airport Lounge Access", value: 1500000, cadence: "custom", count: 2, note: "2 visits / year via Priority Pass" },
       { name: "Travel Insurance", value: 0, cadence: "perk", note: "Coverage up to IDR 25B" },
       { name: "Flexible Miles Transfer", value: 0, cadence: "perk", note: "KrisFlyer / GarudaMiles / Asia Miles / AirAsia" },
     ],
@@ -159,7 +161,18 @@ function genCode() {
 }
 
 function clampCadence(c) {
-  return CADENCE_PER[c] !== undefined ? c : "perk";
+  return c === "custom" || CADENCE_PER[c] !== undefined ? c : "perk";
+}
+
+function clampCount(n) {
+  const v = Math.round(Number(n) || 0);
+  return Math.max(1, Math.min(60, v || 1));
+}
+
+// uses-per-year for a benefit (custom benefits carry an explicit count)
+function benefitPer(b) {
+  if (b.cadence === "custom") return clampCount(b.count);
+  return CADENCE_PER[b.cadence] || 0;
 }
 
 function fmtMoney(amount, currency) {
@@ -294,6 +307,7 @@ function cardFromTemplate(t) {
       name: b.name || "Benefit",
       value: Number(b.value) || 0,
       cadence: clampCadence(b.cadence),
+      count: clampCount(b.count),
       note: b.note || "",
     })),
   };
@@ -322,6 +336,7 @@ function getAnnualCycle(card, now) {
 }
 
 // All check-off periods for a benefit in its CURRENT cycle, plus the current one.
+// Each cell carries `now: true` when it is claimable right now.
 function periodsFor(card, benefit, now) {
   const y = now.getFullYear();
   const cad = benefit.cadence;
@@ -330,7 +345,7 @@ function periodsFor(card, benefit, now) {
     return {
       per: 12,
       current: { key: `${y}-M${m + 1}`, label: MONTHS[m] },
-      all: range(12).map((i) => ({ key: `${y}-M${i + 1}`, label: MONTHS[i], current: i === m })),
+      all: range(12).map((i) => ({ key: `${y}-M${i + 1}`, label: MONTHS[i], current: i === m, now: i === m })),
     };
   }
   if (cad === "quarterly") {
@@ -338,7 +353,7 @@ function periodsFor(card, benefit, now) {
     return {
       per: 4,
       current: { key: `${y}-Q${q + 1}`, label: `Q${q + 1}` },
-      all: range(4).map((i) => ({ key: `${y}-Q${i + 1}`, label: `Q${i + 1}`, current: i === q })),
+      all: range(4).map((i) => ({ key: `${y}-Q${i + 1}`, label: `Q${i + 1}`, current: i === q, now: i === q })),
     };
   }
   if (cad === "semiannual") {
@@ -346,15 +361,47 @@ function periodsFor(card, benefit, now) {
     return {
       per: 2,
       current: { key: `${y}-H${h + 1}`, label: h === 0 ? "H1" : "H2" },
-      all: range(2).map((i) => ({ key: `${y}-H${i + 1}`, label: i === 0 ? "Jan–Jun" : "Jul–Dec", current: i === h })),
+      all: range(2).map((i) => ({ key: `${y}-H${i + 1}`, label: i === 0 ? "Jan–Jun" : "Jul–Dec", current: i === h, now: i === h })),
     };
   }
   if (cad === "annual") {
     const c = getAnnualCycle(card, now);
-    const cell = { key: c.key, label: "Annual", current: true, renews: c.renews, hasDate: c.hasDate };
+    const cell = { key: c.key, label: "Annual", current: true, now: true, renews: c.renews, hasDate: c.hasDate };
     return { per: 1, current: { ...cell, label: "This cycle" }, all: [cell] };
   }
+  if (cad === "custom") {
+    // N independent uses across the annual cycle — all claimable now.
+    const c = getAnnualCycle(card, now);
+    const n = benefitPer(benefit);
+    const all = range(n).map((i) => ({ key: `${c.key}-U${i + 1}`, label: `#${i + 1}`, current: false, now: true, renews: c.renews, hasDate: c.hasDate }));
+    return { per: n, current: { key: c.key, label: "This cycle", renews: c.renews, hasDate: c.hasDate }, all, custom: true };
+  }
   return { per: 0, current: null, all: [] }; // perk
+}
+
+// When the current claim window closes (used for "expiring soon").
+function periodEnd(card, benefit, now) {
+  const cad = benefit.cadence;
+  const y = now.getFullYear();
+  if (cad === "monthly") return new Date(y, now.getMonth() + 1, 0, 23, 59, 59);
+  if (cad === "quarterly") {
+    const q = Math.floor(now.getMonth() / 3);
+    return new Date(y, q * 3 + 3, 0, 23, 59, 59);
+  }
+  if (cad === "semiannual") {
+    const h = now.getMonth() < 6 ? 0 : 1;
+    return new Date(y, h * 6 + 6, 0, 23, 59, 59);
+  }
+  if (cad === "annual" || cad === "custom") {
+    const c = getAnnualCycle(card, now);
+    return new Date(c.renews.getTime() - 1000);
+  }
+  return null;
+}
+
+function daysUntil(end, now) {
+  if (!end) return null;
+  return Math.max(0, Math.ceil((end.getTime() - now.getTime()) / 86400000));
 }
 
 function instanceKey(cardId, benefitId, periodKey) {
@@ -367,7 +414,7 @@ function isChecked(checks, key) {
 }
 
 function perPeriodValue(benefit) {
-  const per = CADENCE_PER[benefit.cadence] || 0;
+  const per = benefitPer(benefit);
   return per > 0 ? (Number(benefit.value) || 0) / per : 0;
 }
 
@@ -393,24 +440,63 @@ function buildTodo(cards, checks, now) {
   for (const card of cards) {
     for (const b of card.benefits) {
       if (b.cadence === "perk") continue;
-      const p = periodsFor(card, b, now).current;
-      if (!p) continue;
-      const key = instanceKey(card.id, b.id, p.key);
-      const row = { card, benefit: b, period: p, key };
-      if (isChecked(checks, key)) done.push({ ...row, entry: checks[key] });
-      else active.push(row);
+      const p = periodsFor(card, b, now);
+      const nowCells = p.all.filter((c) => c.now);
+      if (nowCells.length === 0) continue;
+      const unclaimed = nowCells.filter((c) => !isChecked(checks, instanceKey(card.id, b.id, c.key)));
+      const claimedN = nowCells.length - unclaimed.length;
+      const multi = !!p.custom && nowCells.length > 1;
+      const dleft = daysUntil(periodEnd(card, b, now), now);
+
+      if (unclaimed.length > 0) {
+        active.push({
+          card,
+          benefit: b,
+          key: instanceKey(card.id, b.id, unclaimed[0].key),
+          label: multi ? `${claimedN}/${nowCells.length} used` : p.current?.label || nowCells[0].label,
+          daysLeft: dleft,
+          multi,
+          total: nowCells.length,
+        });
+      } else {
+        // every "now" use claimed -> done; attribute to the most recent
+        let last = null;
+        let lastKey = null;
+        for (const c of nowCells) {
+          const k = instanceKey(card.id, b.id, c.key);
+          const e = checks[k];
+          if (e && (!last || (e.at || 0) > (last.at || 0))) {
+            last = e;
+            lastKey = k;
+          }
+        }
+        done.push({
+          card,
+          benefit: b,
+          key: lastKey,
+          label: multi ? `${nowCells.length}/${nowCells.length} used` : p.current?.label || nowCells[0].label,
+          multi,
+          total: nowCells.length,
+          entry: last,
+        });
+      }
     }
   }
-  const byValue = (x) => perPeriodValue(x.benefit);
-  active.sort((a, b) => byValue(b) - byValue(a));
-  done.sort((a, b) => (b.entry?.at || 0) - (a.entry?.at || 0));
+  active.sort((x, z) => {
+    const dx = x.daysLeft == null ? 9999 : x.daysLeft;
+    const dz = z.daysLeft == null ? 9999 : z.daysLeft;
+    if (dx !== dz) return dx - dz;
+    return perPeriodValue(z.benefit) - perPeriodValue(x.benefit);
+  });
+  done.sort((x, z) => (z.entry?.at || 0) - (x.entry?.at || 0));
   return { active, done };
 }
 
 function buildStats(cards, checks, now) {
   // grouped by currency
   const map = {};
-  const ensure = (cur) => (map[cur] = map[cur] || { currency: cur, available: 0, captured: 0, potential: 0, fees: 0 });
+  const ensure = (cur) =>
+    (map[cur] = map[cur] || { currency: cur, available: 0, captured: 0, potential: 0, fees: 0, atRisk: 0 });
   for (const card of cards) {
     const cur = card.currency || "USD";
     const g = ensure(cur);
@@ -420,13 +506,14 @@ function buildStats(cards, checks, now) {
       g.potential += Number(b.value) || 0;
       const ppv = perPeriodValue(b);
       const p = periodsFor(card, b, now);
-      // available now: current period, unchecked
-      if (p.current && !isChecked(checks, instanceKey(card.id, b.id, p.current.key))) {
-        g.available += ppv;
-      }
-      // captured this cycle: any checked period in the current cycle set
+      const dleft = daysUntil(periodEnd(card, b, now), now);
       for (const cell of p.all) {
-        if (isChecked(checks, instanceKey(card.id, b.id, cell.key))) g.captured += ppv;
+        const checked = isChecked(checks, instanceKey(card.id, b.id, cell.key));
+        if (checked) g.captured += ppv; // captured this cycle
+        if (cell.now && !checked) {
+          g.available += ppv; // claimable right now
+          if (dleft != null && dleft <= 30) g.atRisk += ppv; // closing within 30 days
+        }
       }
     }
   }
@@ -434,6 +521,27 @@ function buildStats(cards, checks, now) {
   for (const g of groups) g.net = g.captured - g.fees;
   groups.sort((a, b) => b.potential - a.potential || b.fees - a.fees);
   return groups;
+}
+
+function cardEconomics(card, checks, now) {
+  let captured = 0;
+  let potential = 0;
+  for (const b of card.benefits) {
+    if (b.cadence === "perk") continue;
+    potential += Number(b.value) || 0;
+    const ppv = perPeriodValue(b);
+    for (const cell of periodsFor(card, b, now).all) {
+      if (isChecked(checks, instanceKey(card.id, b.id, cell.key))) captured += ppv;
+    }
+  }
+  const fee = Number(card.annualFee) || 0;
+  const net = captured - fee;
+  let verdict;
+  if (fee <= 0) verdict = { label: "No fee", color: "#15803d", bg: "#dcfce7" };
+  else if (captured >= fee) verdict = { label: "Worth it", color: "#15803d", bg: "#dcfce7" };
+  else if (potential >= fee) verdict = { label: "On track", color: "#b45309", bg: "#fef3c7" };
+  else verdict = { label: "Below fee", color: "#b91c1c", bg: "#fee2e2" };
+  return { captured, potential, fee, net, verdict };
 }
 
 /* ===================================== UI bits ===================================== */
@@ -667,6 +775,15 @@ function Hero({ stats }) {
           </div>
         )}
 
+        {primary.atRisk > 0 && (
+          <div
+            className="inline-flex items-center gap-1 rounded-full"
+            style={{ marginTop: 12, background: "rgba(245,158,11,0.18)", color: "#fcd34d", padding: "5px 11px", fontSize: 12, fontWeight: 600 }}
+          >
+            <AlertCircle size={13} /> {fmtMoney(primary.atRisk, primary.currency)} expires within 30 days
+          </div>
+        )}
+
         {/* progress */}
         <div style={{ marginTop: 16 }}>
           <div className="flex items-center justify-between" style={{ marginBottom: 6 }}>
@@ -788,8 +905,14 @@ function TodoView({ cards, todo, onToggle }) {
 }
 
 function TodoRow({ row, onToggle, done, last }) {
-  const { card, benefit, period, entry } = row;
+  const { card, benefit, entry, label, daysLeft } = row;
   const checked = !!done;
+  const showDays = !checked && daysLeft != null && daysLeft <= 45;
+  const urgent = daysLeft != null && daysLeft <= 7;
+  const soon = daysLeft != null && daysLeft <= 30;
+  const dColor = urgent ? "#b91c1c" : soon ? "#92400e" : "#6b7280";
+  const dBg = urgent ? "#fee2e2" : soon ? "#fef3c7" : "#f3f4f6";
+  const daysText = daysLeft === 0 ? "ends today" : daysLeft === 1 ? "1 day left" : `${daysLeft} days left`;
   return (
     <div
       className="flex items-center"
@@ -799,12 +922,17 @@ function TodoRow({ row, onToggle, done, last }) {
       <div className="flex-1 min-w-0" style={{ marginLeft: 2 }}>
         <div className="flex items-center gap-2 min-w-0">
           <span
-            className="font-semibold text-gray-900 truncate"
+            className="font-semibold truncate"
             style={{ fontSize: 15, textDecoration: checked ? "line-through" : "none", color: checked ? "#9ca3af" : "#111827" }}
           >
             {benefit.name}
           </span>
           {card.verifyAI && <VerifyBadge />}
+          {showDays && (
+            <span className="inline-flex items-center rounded-full shrink-0" style={{ color: dColor, background: dBg, fontSize: 11, fontWeight: 600, padding: "1px 8px" }}>
+              {daysText}
+            </span>
+          )}
         </div>
         <div className="flex items-center gap-2 min-w-0" style={{ marginTop: 2 }}>
           <span className="inline-flex items-center gap-1 min-w-0">
@@ -812,7 +940,7 @@ function TodoRow({ row, onToggle, done, last }) {
             <span className="text-gray-500 truncate" style={{ fontSize: 12 }}>{card.name}</span>
           </span>
           <span className="text-gray-300" style={{ fontSize: 12 }}>·</span>
-          <span className="text-gray-500" style={{ fontSize: 12 }}>{period.label}</span>
+          <span className="text-gray-500" style={{ fontSize: 12 }}>{label}</span>
           {checked && entry?.by && (
             <>
               <span className="text-gray-300" style={{ fontSize: 12 }}>·</span>
@@ -864,19 +992,20 @@ function CardsView({ cards, checks, now, expanded, onToggleExpand, onToggleCheck
 }
 
 function CardRow({ card, checks, now, open, onToggleOpen, onToggleCheck, onEdit }) {
-  const annualBenefit = card.benefits.find((b) => b.cadence === "annual");
-  const cycle = annualBenefit ? getAnnualCycle(card, now) : null;
+  const cycleBenefit = card.benefits.find((b) => b.cadence === "annual" || b.cadence === "custom");
+  const cycle = cycleBenefit ? getAnnualCycle(card, now) : null;
   const needsDate = card.resetType === "anniversary" && !card.resetDate;
+  const econ = cardEconomics(card, checks, now);
 
   // current-period claimable summary
   let openCount = 0;
   let total = 0;
   for (const b of card.benefits) {
     if (b.cadence === "perk") continue;
-    const p = periodsFor(card, b, now).current;
-    if (!p) continue;
+    const nowCells = periodsFor(card, b, now).all.filter((c) => c.now);
+    if (nowCells.length === 0) continue;
     total += 1;
-    if (!isChecked(checks, instanceKey(card.id, b.id, p.key))) openCount += 1;
+    if (nowCells.some((c) => !isChecked(checks, instanceKey(card.id, b.id, c.key)))) openCount += 1;
   }
 
   return (
@@ -905,13 +1034,16 @@ function CardRow({ card, checks, now, open, onToggleOpen, onToggleCheck, onEdit 
                 {card.network ? `${card.network} · ` : ""}Fee {fmtMoney(card.annualFee, card.currency)}
               </span>
             </span>
+            <span className="flex flex-wrap items-center gap-2" style={{ marginTop: 6 }}>
+              <Badge color={econ.verdict.color} bg={econ.verdict.bg}>{econ.verdict.label}</Badge>
+              {total > 0 && (
+                <Badge color={openCount === 0 ? "#15803d" : "#374151"} bg={openCount === 0 ? "#dcfce7" : "#f3f4f6"}>
+                  {openCount === 0 ? "all claimed" : `${openCount} open`}
+                </Badge>
+              )}
+            </span>
           </span>
-          <span className="shrink-0 flex items-center gap-2">
-            {total > 0 && (
-              <Badge color={openCount === 0 ? "#15803d" : "#374151"} bg={openCount === 0 ? "#dcfce7" : "#f3f4f6"}>
-                {openCount === 0 ? "done" : `${openCount} open`}
-              </Badge>
-            )}
+          <span className="shrink-0 flex items-center">
             {open ? <ChevronDown size={18} color="#9ca3af" /> : <ChevronRight size={18} color="#9ca3af" />}
           </span>
         </button>
@@ -919,6 +1051,22 @@ function CardRow({ card, checks, now, open, onToggleOpen, onToggleCheck, onEdit 
 
       {open && (
         <div style={{ padding: "0 14px 14px" }}>
+          {/* worth-it summary */}
+          <div className="rounded-xl flex items-center justify-between" style={{ background: "#f8f9fb", padding: "10px 12px", marginBottom: 12 }}>
+            <div className="min-w-0">
+              <div className="text-gray-500" style={{ fontSize: 11 }}>This card so far</div>
+              <div className="font-semibold text-gray-900" style={{ fontSize: 13, marginTop: 2 }}>
+                Captured {fmtMoney(econ.captured, card.currency)} · Fee {fmtMoney(econ.fee, card.currency)}
+              </div>
+            </div>
+            <div className="text-right shrink-0" style={{ marginLeft: 10 }}>
+              <Badge color={econ.verdict.color} bg={econ.verdict.bg}>{econ.verdict.label}</Badge>
+              <div className="font-bold" style={{ fontSize: 13, marginTop: 4, color: econ.net >= 0 ? "#15803d" : "#b91c1c" }}>
+                {econ.net >= 0 ? "+" : "−"} {fmtMoney(Math.abs(econ.net), card.currency)} net
+              </div>
+            </div>
+          </div>
+
           {/* reset / renews summary */}
           <div className="flex flex-wrap items-center gap-2" style={{ marginBottom: 12 }}>
             <span className="inline-flex items-center gap-1 rounded-full" style={{ background: "#f3f4f6", padding: "4px 10px", fontSize: 12, color: "#4b5563" }}>
@@ -971,7 +1119,7 @@ function BenefitPunchCard({ card, benefit, checks, now, onToggleCheck }) {
         <div className="min-w-0">
           <div className="flex items-center gap-2 min-w-0">
             <span className="font-semibold text-gray-900 truncate" style={{ fontSize: 14 }}>{benefit.name}</span>
-            <Badge>{CADENCE_LABEL[benefit.cadence]}</Badge>
+            <Badge>{benefit.cadence === "custom" ? `${benefitPer(benefit)}× / yr` : CADENCE_LABEL[benefit.cadence]}</Badge>
           </div>
           {benefit.note && <div className="text-gray-500" style={{ fontSize: 12, marginTop: 3 }}>{benefit.note}</div>}
         </div>
@@ -1049,7 +1197,7 @@ function EmptyState({ text }) {
 /* ============================ Add / Edit Card form ================================= */
 
 function emptyBenefit() {
-  return { id: uid(), name: "", value: "", cadence: "monthly", note: "" };
+  return { id: uid(), name: "", value: "", cadence: "monthly", count: "", note: "" };
 }
 
 function CardForm({ open, onClose, initial, onSave, onDelete, defaultCurrency }) {
@@ -1313,6 +1461,16 @@ function CardForm({ open, onClose, initial, onSave, onDelete, defaultCurrency })
                 style={b.cadence === "perk" ? { opacity: 0.5 } : undefined}
               />
             </div>
+            {b.cadence === "custom" && (
+              <TextInput
+                type="number"
+                inputMode="numeric"
+                value={b.count}
+                onChange={(e) => updateBenefit(b.id, { count: e.target.value })}
+                placeholder="Times per year (e.g. 4 lounge visits)"
+                style={{ marginTop: 8 }}
+              />
+            )}
             <TextInput value={b.note} onChange={(e) => updateBenefit(b.id, { note: e.target.value })} placeholder="Note (optional)" style={{ marginTop: 8 }} />
           </div>
         ))}
@@ -1369,6 +1527,7 @@ function initToForm(src, defaultCurrency, fromTemplate) {
       name: b.name || "",
       value: b.value != null && b.value !== 0 ? String(b.value) : b.value === 0 ? "0" : "",
       cadence: clampCadence(b.cadence),
+      count: b.count != null ? String(b.count) : "",
       note: b.note || "",
     })),
   };
@@ -1393,6 +1552,7 @@ function formToCard(form) {
         name: b.name.trim(),
         value: Number(b.value) || 0,
         cadence: clampCadence(b.cadence),
+        count: clampCount(b.count),
         note: (b.note || "").trim(),
       })),
   };
@@ -1841,7 +2001,7 @@ export default function CreditCardBenefitsTracker() {
       </div>
 
       <div className="mx-auto" style={{ maxWidth: 680, padding: "16px 16px 120px" }}>
-        <Hero stats={stats.length ? stats : [{ currency: defaultCurrency, available: 0, captured: 0, potential: 0, fees: 0, net: 0 }]} />
+        <Hero stats={stats.length ? stats : [{ currency: defaultCurrency, available: 0, captured: 0, potential: 0, fees: 0, net: 0, atRisk: 0 }]} />
 
         <div style={{ marginTop: 16, marginBottom: 16 }}>
           <Segmented

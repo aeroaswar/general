@@ -15,10 +15,16 @@ preview it locally.
   the same card = 3 independent checklists). Add from a built-in template, set a quantity to
   create several at once, or build a fully custom card. Cards are editable and deletable.
 - **Benefits with real reset cadences.** Each benefit has a name, annual value, a note and a
-  cadence — monthly, quarterly, semi-annual, annual, or "perk" (info-only, no checkbox). The
-  checklist renders the right number of boxes per cadence (a $20/mo credit → 12 monthly
-  boxes; a semi-annual credit → 2 boxes) and highlights the period that's live right now,
-  with a "used X/N" counter.
+  cadence — monthly, quarterly, semi-annual, annual, a **custom "N times per year"** count
+  (e.g. 2 lounge visits), or "perk" (info-only, no checkbox). The checklist renders the right
+  number of boxes per cadence (a $20/mo credit → 12 monthly boxes; a semi-annual credit → 2
+  boxes; a custom count → N boxes) and highlights the period that's live right now, with a
+  "used X/N" counter.
+- **Expiring-soon awareness.** The hero shows how much value **expires within 30 days**, and
+  To-Do rows carry a days-left badge (red ≤ 7 days, amber ≤ 30) and are sorted by what's
+  closing soonest — so you act before a credit lapses.
+- **Per-card "worth it?" verdict.** Each card shows net (captured − its fee) with a
+  green/amber/red **Worth it / On track / Below fee** badge, making renewal decisions obvious.
 - **Two views (segmented control).**
   - **To-Do** (default): one clean, iOS-Reminders-style list of everything claimable *right
     now*, pulled across every card. Tap a circle to check it; checked items move to a
