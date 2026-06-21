@@ -112,7 +112,9 @@ em { font-style: italic; }
 
 /* The contract document is wrapped in a table so the letterhead (thead) and
    footer (tfoot) repeat on every printed page. On screen those rows are hidden. */
-.doc-table { width: 100%; border-collapse: collapse; }
+/* table-layout:fixed keeps the document exactly page-width in print (no overflow
+   from content's intrinsic min-width, which would clip the right edge) */
+.doc-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
 .doc-table > thead > tr > td, .doc-table > tbody > tr > td, .doc-table > tfoot > tr > td { padding: 0; }
 .print-head, .print-foot { display: none; }
 
@@ -150,8 +152,13 @@ em { font-style: italic; }
     padding-bottom: 5mm; margin-bottom: 7mm; border-bottom: 1.5px solid #15120f;
   }
   /* the Bodega wordmark as a real <img> so it always prints (black on white) */
-  .print-letterhead .ll-logo { height: 9mm; width: auto; display: block; }
-  .print-letterhead .ll-meta { font-size: 8pt; line-height: 1.45; text-align: right; color: #6b655c !important; }
+  .print-letterhead { flex-wrap: wrap; }
+  .print-letterhead .ll-logo { height: 9mm; width: auto; display: block; flex: none; }
+  .print-letterhead .ll-meta { font-size: 8pt; line-height: 1.45; text-align: right; color: #6b655c !important; max-width: 70mm; overflow-wrap: anywhere; }
+
+  /* belt-and-braces: nothing in the document may exceed the page width */
+  .print-area, .print-area .doc-body, .doc-table > tbody > tr > td { max-width: 100% !important; }
+  .print-area .doc-body > * { min-width: 0; }
 
   .print-footer {
     padding-top: 4mm; margin-top: 7mm; border-top: 1px solid #d8d2c6;
