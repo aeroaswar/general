@@ -142,7 +142,16 @@ em { font-style: italic; }
     --card: #ffffff; --card-2: #f7f4ef; --line: rgba(0,0,0,0.14); --line-2: rgba(0,0,0,0.22); --accent: #b4540f;
     box-shadow: none !important; border: 0 !important; background: #fff !important; max-width: none !important; margin: 0 !important; border-radius: 0 !important;
   }
-  .print-area .doc-body { padding: 0 !important; gap: 15px !important; }
+  /* Flex containers paginate unreliably in Chrome (break-inside:avoid is ignored
+     on flex items), which splits clauses across pages. Block-flow the document
+     column and its sections in print, and space children with margins instead
+     of flex gap, so every clause/block stays whole. */
+  .print-area .doc-body { padding: 0 !important; display: block !important; }
+  .print-area .doc-body > * { margin: 0 0 16px 0 !important; }
+  .print-area .doc-body > *:last-child { margin-bottom: 0 !important; }
+  .print-area .doc-body > section { display: block !important; }
+  .print-area .doc-body > section > * { margin: 0 0 11px 0 !important; }
+  .print-area .doc-body > section > *:last-child { margin-bottom: 0 !important; }
   .print-area, .print-area * { color: #15120f !important; }
   .print-area .text-muted, .print-area [class*="text-muted"] { color: #534d45 !important; }
   .print-area .text-faint, .print-area .eyebrow, .print-area [class*="text-faint"] { color: #6b655c !important; }
