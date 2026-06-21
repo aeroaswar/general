@@ -7,7 +7,17 @@ import {
 import { CLIENT_VISIBLE } from "./lib/status.js";
 
 const now = () => new Date().toISOString();
+const today0 = () => new Date().toISOString().slice(0, 10);
 const uid = (p) => `${p}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+
+/* ── Persistence — the whole editable dataset is saved to this browser so
+      changes survive a refresh (single-device, no backend). ───────────── */
+const STORE_KEY = "bodega-store-v2";
+const loadSnapshot = () => {
+  try { return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; } catch { return {}; }
+};
+const SNAP = loadSnapshot();
+const seeded = (key, fallback) => (SNAP[key] !== undefined ? SNAP[key] : fallback);
 
 /* ── Theme ─────────────────────────────────────────────── */
 const ThemeContext = createContext(null);
@@ -47,24 +57,36 @@ export const useCurrentUser = () => {
 const DataContext = createContext(null);
 export function DataProvider({ children }) {
   const user = useCurrentUser();
-  const [projects, setProjects] = useState(PROJECTS);
-  const [contentItems, setContentItems] = useState(CONTENT_ITEMS);
-  const [approvals, setApprovals] = useState(APPROVALS);
-  const [comments, setComments] = useState(COMMENTS);
-  const [assets, setAssets] = useState(ASSETS);
-  const [assetRequests, setAssetRequests] = useState(ASSET_REQUESTS);
-  const [reminders, setReminders] = useState(REMINDER_LOGS);
-  const [reportSnapshots, setReportSnapshots] = useState(REPORT_SNAPSHOTS);
+  // Backbone entities — now editable + persisted (hydrate from localStorage, else seed).
+  const [clients, setClients] = useState(() => seeded("clients", CLIENTS));
+  const [projects, setProjects] = useState(() => seeded("projects", PROJECTS));
+  const [phases, setPhases] = useState(() => seeded("phases", PHASES));
+  const [pillars, setPillars] = useState(() => seeded("pillars", PILLARS));
+  const [audienceSegments, setAudienceSegments] = useState(() => seeded("audienceSegments", AUDIENCE_SEGMENTS));
+  const [campaigns, setCampaigns] = useState(() => seeded("campaigns", CAMPAIGNS));
+  const [contentItems, setContentItems] = useState(() => seeded("contentItems", CONTENT_ITEMS));
+  const [approvals, setApprovals] = useState(() => seeded("approvals", APPROVALS));
+  const [comments, setComments] = useState(() => seeded("comments", COMMENTS));
+  const [assets, setAssets] = useState(() => seeded("assets", ASSETS));
+  const [assetRequests, setAssetRequests] = useState(() => seeded("assetRequests", ASSET_REQUESTS));
+  const [reminders, setReminders] = useState(() => seeded("reminders", REMINDER_LOGS));
+  const [reportSnapshots, setReportSnapshots] = useState(() => seeded("reportSnapshots", REPORT_SNAPSHOTS));
   const [reportExports, setReportExports] = useState([]);
   const [audit, setAudit] = useState([]);
   const [selectedClientId, setSelectedClientIdState] = useState("c1");
   const [selectedProjectId, setSelectedProjectIdState] = useState(() => localStorage.getItem("bodega-pid") || "p1");
 
+  // Save the whole editable dataset whenever any of it changes.
+  useEffect(() => {
+    const data = { clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots };
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch { /* quota — ignore */ }
+  }, [clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots]);
+
   // admin → all clients; team/client → only assigned (clientIds)
   const permittedClients = useMemo(() => {
-    if (user.clientIds) return CLIENTS.filter((c) => user.clientIds.includes(c.id));
-    return CLIENTS;
-  }, [user]);
+    if (user.clientIds) return clients.filter((c) => user.clientIds.includes(c.id));
+    return clients;
+  }, [user, clients]);
 
   useEffect(() => {
     if (!permittedClients.some((c) => c.id === selectedClientId)) {
@@ -164,15 +186,101 @@ export function DataProvider({ children }) {
     return item;
   };
 
+  /* ── Backbone CRUD — clients, projects, phases, pillars, audience ─────── */
+  // Clients
+  const addClient = (input) => {
+    const c = { id: uid("c"), projectIds: [], brandPersonality: [], competitors: [], stakeholders: [], industry: "", description: "", market: "", positioning: "", toneOfVoice: "", ...input };
+    setClients((a) => [...a, c]);
+    logAudit("create", c.id, { to: "client" });
+    return c;
+  };
+  const updateClient = (id, patch) => { setClients((a) => a.map((c) => (c.id === id ? { ...c, ...patch } : c))); logAudit("update", id, { to: "client" }); };
+  const deleteClient = (id) => {
+    const projIds = projects.filter((p) => p.clientId === id).map((p) => p.id);
+    const inProj = (x) => projIds.includes(x.projectId);
+    setProjects((a) => a.filter((p) => p.clientId !== id));
+    setPhases((a) => a.filter((x) => !inProj(x)));
+    setPillars((a) => a.filter((x) => !inProj(x)));
+    setAudienceSegments((a) => a.filter((x) => !inProj(x)));
+    setCampaigns((a) => a.filter((x) => !inProj(x)));
+    setContentItems((a) => a.filter((x) => !inProj(x)));
+    setClients((a) => a.filter((c) => c.id !== id));
+    logAudit("delete", id, { to: "client" });
+  };
+
+  // Projects (a new project gets three starter phases so the framework isn't blank)
+  const addProject = (clientId, input = {}) => {
+    const id = uid("p");
+    const proj = {
+      id, clientId, name: input.name || "New project", industry: input.industry || "",
+      status: input.status || "Planning", health: input.health ?? 60,
+      platforms: input.platforms || [], cadence: input.cadence || "",
+      startDate: input.startDate || today0(), endDate: input.endDate || "", budget: input.budget || "",
+      goalBusiness: "", goalMarketing: "", goalCampaign: "", successMetrics: [], painPoints: [],
+      audienceSegmentIds: [], phaseIds: [], pillarIds: [], ...input,
+    };
+    setProjects((a) => [...a, proj]);
+    const defPhases = ["Foundation", "Growth", "Authority"].map((n, i) => ({ id: uid("ph"), projectId: id, name: n, order: i + 1, objective: "" }));
+    setPhases((a) => [...a, ...defPhases]);
+    setClients((a) => a.map((c) => (c.id === clientId ? { ...c, projectIds: [...(c.projectIds || []), id] } : c)));
+    logAudit("create", id, { to: "project" });
+    return proj;
+  };
+  const updateProject = (id, patch) => { setProjects((a) => a.map((p) => (p.id === id ? { ...p, ...patch } : p))); logAudit("update", id, { to: "project" }); };
+  const deleteProject = (id) => {
+    setProjects((a) => a.filter((p) => p.id !== id));
+    setPhases((a) => a.filter((x) => x.projectId !== id));
+    setPillars((a) => a.filter((x) => x.projectId !== id));
+    setAudienceSegments((a) => a.filter((x) => x.projectId !== id));
+    setCampaigns((a) => a.filter((x) => x.projectId !== id));
+    setContentItems((a) => a.filter((x) => x.projectId !== id));
+    setClients((a) => a.map((c) => ({ ...c, projectIds: (c.projectIds || []).filter((pid) => pid !== id) })));
+    logAudit("delete", id, { to: "project" });
+  };
+
+  // Phases
+  const addPhase = (projectId, input = {}) => {
+    const order = phases.filter((x) => x.projectId === projectId).length + 1;
+    const ph = { id: uid("ph"), projectId, name: input.name || "New phase", objective: input.objective || "", order };
+    setPhases((a) => [...a, ph]);
+    return ph;
+  };
+  const updatePhase = (id, patch) => setPhases((a) => a.map((x) => (x.id === id ? { ...x, ...patch } : x)));
+  const deletePhase = (id) => setPhases((a) => a.filter((x) => x.id !== id));
+
+  // Pillars
+  const addPillar = (projectId, input = {}) => {
+    const pl = { id: uid("pil"), projectId, name: input.name || "New pillar", description: input.description || "", weight: Number(input.weight) || 0 };
+    setPillars((a) => [...a, pl]);
+    return pl;
+  };
+  const updatePillar = (id, patch) => setPillars((a) => a.map((x) => (x.id === id ? { ...x, ...patch, weight: patch.weight !== undefined ? Number(patch.weight) || 0 : x.weight } : x)));
+  const deletePillar = (id) => setPillars((a) => a.filter((x) => x.id !== id));
+
+  // Audience segments
+  const addSegment = (projectId, input = {}) => {
+    const s = { id: uid("as"), projectId, name: input.name || "New segment", description: input.description || "" };
+    setAudienceSegments((a) => [...a, s]);
+    return s;
+  };
+  const updateSegment = (id, patch) => setAudienceSegments((a) => a.map((x) => (x.id === id ? { ...x, ...patch } : x)));
+  const deleteSegment = (id) => setAudienceSegments((a) => a.filter((x) => x.id !== id));
+
   const value = {
-    users: USERS, clients: CLIENTS, selectedClientId, setSelectedClientId, selectedProjectId, setSelectedProjectId,
-    projects, audienceSegments: AUDIENCE_SEGMENTS, phases: PHASES, pillars: PILLARS,
-    campaigns: CAMPAIGNS, contentItems, setContentItems, approvals, setApprovals,
+    users: USERS, clients, selectedClientId, setSelectedClientId, selectedProjectId, setSelectedProjectId,
+    projects, audienceSegments, phases, pillars,
+    campaigns, contentItems, setContentItems, approvals, setApprovals,
     comments, setComments, assets, setAssets, reportSnapshots, reportExports, audit,
     industryTemplates: INDUSTRY_TEMPLATES, assetRequests, setAssetRequests, reminders,
     updateContentStatus, updateContentItem, scheduleContent, addComment, addApproval,
     requestClientReview, addAssetRequest, updateAssetRequest, uploadAsset, sendReminder,
     addReportExport, generateSnapshot, addContentItem, logAudit,
+    // backbone CRUD
+    addClient, updateClient, deleteClient,
+    addProject, updateProject, deleteProject,
+    addPhase, updatePhase, deletePhase,
+    addPillar, updatePillar, deletePillar,
+    addSegment, updateSegment, deleteSegment,
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }

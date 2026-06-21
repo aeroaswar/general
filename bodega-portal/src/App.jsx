@@ -5,6 +5,7 @@ import AuroraBg from "./components/AuroraBg.jsx";
 import AppShell from "./components/AppShell.jsx";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import Clients from "./pages/Clients.jsx";
 import Projects from "./pages/Projects.jsx";
 import ContentBoard from "./pages/ContentBoard.jsx";
 import Approvals from "./pages/Approvals.jsx";
@@ -22,7 +23,7 @@ const Portal = (Page) => () => (
   </AppShell>
 );
 
-const CLIENT_BLOCKED = ["/app/projects", "/app/queue", "/app/content", "/app/campaigns", "/app/assessment"];
+const CLIENT_BLOCKED = ["/app/clients", "/app/projects", "/app/queue", "/app/content", "/app/campaigns", "/app/assessment"];
 
 function Routes() {
   const { authed } = useAuth();
@@ -36,6 +37,7 @@ function Routes() {
     <Switch>
       <Route path="/login" component={Login} />
       <Route path="/app" component={Portal(Dashboard)} />
+      <Route path="/app/clients" component={Portal(Clients)} />
       <Route path="/app/projects" component={Portal(Projects)} />
       <Route path="/app/queue" component={Portal(MyQueue)} />
       <Route path="/app/content" component={Portal(ContentBoard)} />
