@@ -10,7 +10,7 @@ import ContentBoard from "./pages/ContentBoard.jsx";
 import Approvals from "./pages/Approvals.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import Reports from "./pages/Reports.jsx";
-import Strategy from "./pages/Strategy.jsx";
+import MyQueue from "./pages/MyQueue.jsx";
 import Campaigns from "./pages/Campaigns.jsx";
 import Assets from "./pages/Assets.jsx";
 import Assessment from "./pages/Assessment.jsx";
@@ -22,7 +22,7 @@ const Portal = (Page) => () => (
   </AppShell>
 );
 
-const CLIENT_BLOCKED = ["/app/projects", "/app/strategy", "/app/content", "/app/campaigns", "/app/assessment"];
+const CLIENT_BLOCKED = ["/app/projects", "/app/queue", "/app/content", "/app/campaigns", "/app/assessment"];
 
 function Routes() {
   const { authed } = useAuth();
@@ -37,7 +37,7 @@ function Routes() {
       <Route path="/login" component={Login} />
       <Route path="/app" component={Portal(Dashboard)} />
       <Route path="/app/projects" component={Portal(Projects)} />
-      <Route path="/app/strategy" component={Portal(Strategy)} />
+      <Route path="/app/queue" component={Portal(MyQueue)} />
       <Route path="/app/content" component={Portal(ContentBoard)} />
       <Route path="/app/approvals" component={Portal(Approvals)} />
       <Route path="/app/calendar" component={Portal(Calendar)} />

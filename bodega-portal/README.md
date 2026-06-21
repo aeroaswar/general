@@ -30,19 +30,27 @@ Pick a role (no password — in-memory demo):
 | **Team** | Rizky Ananda | assigned projects & content |
 | **Client** | Maya Putri | Maktour only — review & approve |
 
-Switch role any time from the top bar; switch the active client from the picker.
+The top bar carries the **Client → Project** context: switch client, then switch the
+active project — every working screen scopes to it. (Role switcher is a demo aid.)
+
+## Navigation (pipeline-grouped, role-aware)
+
+**Overview** Dashboard · My Queue — **Plan** Project · Campaigns · Assessment —
+**Produce** Content · Assets — **Review** Approvals — **Publish** Calendar —
+**Measure** Reports — **Account** Settings. Clients only see Dashboard, Assets,
+Approvals, Calendar, Reports, Settings.
 
 ## Screens
 
-- **Dashboard** — KPIs, pipeline overview, reach, upcoming schedule, activity, project health.
-- **Projects** — cards + framework drawer (phases, pillars, audience, goals).
-- **Strategy** — the project framework with target-vs-actual pillar mix.
-- **Content Board** — kanban across the real status state machine; card drawer with role-aware actions (advance, request review, approve / revise, comment).
+- **Dashboard** — role-aware: staff get pipeline + "ready to schedule" + activity; clients get "needs your review / coming up / live".
+- **My Queue** (staff) — your owned items grouped by next action, with one-click advance.
+- **Project** (hub) — overview + framework (phases, pillars target-vs-actual, audience) + content summary. Switch project here too.
+- **Content Board** — kanban across the real status machine; **editable** card drawer with readiness-gated actions, scheduling, comments, and an audit/activity trail.
 - **Approvals** — client review queue + decision history; reminders.
-- **Calendar** — month grid of scheduled/published content, status-coloured.
-- **Campaigns** — time-bound objectives with progress and linked content.
+- **Calendar** — schedule/reschedule by pick-and-place (staff); read-only for clients.
+- **Campaigns** — time-bound objectives with progress; links into the board.
 - **Assets** — library + request queue with (demo) upload and fulfilment.
-- **Reports** — recharts (planned vs posted, approval turnaround, pillar mix, platform split) + PDF export log.
+- **Reports** — recharts + "Generate report" → frozen snapshot with share link + PDF export.
 - **Assessment** — project readiness checklist with a score ring.
 - **Settings** — profile, appearance (light/dark), notifications, members, demo reset.
 

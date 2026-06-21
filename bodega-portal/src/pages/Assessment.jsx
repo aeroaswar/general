@@ -1,14 +1,12 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Check, X, ClipboardList } from "lucide-react";
-import { useData, useVisibleProjects } from "../store.jsx";
+import { useData, useActiveProject } from "../store.jsx";
 import { Card, PageTitle, EmptyState, fadeUp } from "../lib/ui.jsx";
 
 export default function Assessment() {
-  const projects = useVisibleProjects();
+  const project = useActiveProject();
   const { phases, pillars, audienceSegments, contentItems, assets, approvals } = useData();
-  const [projectId, setProjectId] = useState(projects[0]?.id || "");
-  const project = projects.find((p) => p.id === projectId) || projects[0];
 
   const checks = useMemo(() => {
     if (!project) return [];
@@ -35,11 +33,7 @@ export default function Assessment() {
 
   return (
     <motion.div {...fadeUp}>
-      <PageTitle kicker="Readiness" title="Assessment">
-        <select className="input-glass !w-auto !py-1.5" value={projectId} onChange={(e) => setProjectId(e.target.value)}>
-          {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-        </select>
-      </PageTitle>
+      <PageTitle kicker={project?.name || "Readiness"} title="Assessment" />
 
       <div className="grid lg:grid-cols-[300px_1fr] gap-4">
         <Card className="flex flex-col items-center justify-center text-center">

@@ -5,7 +5,7 @@ import {
   PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip,
 } from "recharts";
 import { Download, Check, Send, Activity, Gauge, Clock, FileText, Link2 } from "lucide-react";
-import { useData, useVisibleProjects, useVisibleContent, useCurrentUser } from "../store.jsx";
+import { useData, useActiveProject, useProjectContent, useCurrentUser } from "../store.jsx";
 import { PLATFORM_META, fmtDate } from "../lib/status.js";
 import { Card, Button, Stat, Modal, PageTitle, cx } from "../lib/ui.jsx";
 
@@ -24,18 +24,15 @@ function ChartTip({ active, payload, label }) {
 }
 
 export default function Reports() {
-  const projects = useVisibleProjects();
-  const content = useVisibleContent();
+  const project = useActiveProject();
+  const projContent = useProjectContent();
   const { reportSnapshots, addReportExport, generateSnapshot, pillars } = useData();
   const me = useCurrentUser();
-  const [projectId, setProjectId] = useState(projects[0]?.id || "");
   const [exported, setExported] = useState(false);
   const [report, setReport] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  const project = projects.find((p) => p.id === projectId) || projects[0];
   const snaps = useMemo(() => reportSnapshots.filter((s) => s.projectId === project?.id), [reportSnapshots, project]);
-  const projContent = useMemo(() => content.filter((c) => c.projectId === project?.id), [content, project]);
 
   const kpis = useMemo(() => {
     const posted = projContent.filter((c) => c.status === "Posted");
@@ -72,13 +69,8 @@ export default function Reports() {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <PageTitle kicker="Performance" title="Reports">
-        <div className="flex items-center gap-2">
-          <select className="input-glass !w-auto !py-1.5" value={projectId} onChange={(e) => setProjectId(e.target.value)}>
-            {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
-          </select>
-          <Button onClick={() => { setExported(false); setCopied(false); setReport(generateSnapshot(project.id, `${project.name} — ${fmtDate(new Date(), "MMM d, yyyy")}`)); }}><FileText size={16} /> Generate report</Button>
-        </div>
+      <PageTitle kicker={project?.name || "Performance"} title="Reports">
+        <Button onClick={() => { setExported(false); setCopied(false); setReport(generateSnapshot(project.id, `${project.name} — ${fmtDate(new Date(), "MMM d, yyyy")}`)); }}><FileText size={16} /> Generate report</Button>
       </PageTitle>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

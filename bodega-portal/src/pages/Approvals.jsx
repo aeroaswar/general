@@ -1,12 +1,13 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Check, RotateCcw, Bell, ClipboardCheck, Clock } from "lucide-react";
-import { useData, useVisibleContent, useVisibleProjects, useCurrentUser, userById } from "../store.jsx";
+import { useData, useProjectContent, useActiveProject, useVisibleProjects, useCurrentUser, userById } from "../store.jsx";
 import { fmtDate, fromNow } from "../lib/status.js";
 import { Card, Button, StatusBadge, PlatformTag, Avatar, PageTitle, EmptyState, Badge, fadeUp } from "../lib/ui.jsx";
 
 export default function Approvals() {
-  const content = useVisibleContent();
+  const content = useProjectContent();
+  const project = useActiveProject();
   const projects = useVisibleProjects();
   const { approvals, addApproval, sendReminder } = useData();
   const me = useCurrentUser();
@@ -27,7 +28,7 @@ export default function Approvals() {
 
   return (
     <motion.div {...fadeUp}>
-      <PageTitle kicker="Client review" title="Approvals">
+      <PageTitle kicker={project?.name || "Client review"} title="Approvals">
         <Badge color="#c97a0a">{queue.length} awaiting</Badge>
       </PageTitle>
 

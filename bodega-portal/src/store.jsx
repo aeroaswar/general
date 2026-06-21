@@ -58,6 +58,7 @@ export function DataProvider({ children }) {
   const [reportExports, setReportExports] = useState([]);
   const [audit, setAudit] = useState([]);
   const [selectedClientId, setSelectedClientIdState] = useState("c1");
+  const [selectedProjectId, setSelectedProjectIdState] = useState(() => localStorage.getItem("bodega-pid") || "p1");
 
   // admin → all clients; team/client → only assigned (clientIds)
   const permittedClients = useMemo(() => {
@@ -72,6 +73,16 @@ export function DataProvider({ children }) {
   }, [permittedClients, selectedClientId]);
 
   const setSelectedClientId = (id) => { if (permittedClients.some((c) => c.id === id)) setSelectedClientIdState(id); };
+
+  // keep the active project valid for the current client
+  const clientProjects = useMemo(() => projects.filter((p) => p.clientId === selectedClientId), [projects, selectedClientId]);
+  useEffect(() => {
+    localStorage.setItem("bodega-pid", selectedProjectId);
+    if (clientProjects.length && !clientProjects.some((p) => p.id === selectedProjectId)) {
+      setSelectedProjectIdState(clientProjects[0].id);
+    }
+  }, [clientProjects, selectedProjectId]);
+  const setSelectedProjectId = (id) => setSelectedProjectIdState(id);
 
   const logAudit = (action, entityId, extra = {}) =>
     setAudit((arr) => [{ id: uid("au"), action, entityId, actorId: user.id, ts: now(), ...extra }, ...arr]);
@@ -154,7 +165,7 @@ export function DataProvider({ children }) {
   };
 
   const value = {
-    users: USERS, clients: CLIENTS, selectedClientId, setSelectedClientId,
+    users: USERS, clients: CLIENTS, selectedClientId, setSelectedClientId, selectedProjectId, setSelectedProjectId,
     projects, audienceSegments: AUDIENCE_SEGMENTS, phases: PHASES, pillars: PILLARS,
     campaigns: CAMPAIGNS, contentItems, setContentItems, approvals, setApprovals,
     comments, setComments, assets, setAssets, reportSnapshots, reportExports, audit,
@@ -188,6 +199,21 @@ export function useVisibleClients() {
 export function useSelectedClient() {
   const { clients, selectedClientId } = useData();
   return clients.find((c) => c.id === selectedClientId) || clients[0];
+}
+// the active project (sticky context, scoped to the active client)
+export function useActiveProject() {
+  const visible = useVisibleProjects();
+  const { selectedProjectId } = useData();
+  return visible.find((p) => p.id === selectedProjectId) || visible[0] || null;
+}
+// content for the ACTIVE project (clients still only see public-facing statuses)
+export function useProjectContent() {
+  const { contentItems } = useData();
+  const active = useActiveProject();
+  const user = useCurrentUser();
+  let list = contentItems.filter((c) => active && c.projectId === active.id);
+  if (user.role === "client") list = list.filter((c) => CLIENT_VISIBLE.includes(c.status));
+  return list;
 }
 // content for the active client's projects — clients only see public-facing statuses
 export function useVisibleContent() {

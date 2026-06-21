@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Image, Video, FileText, Music, Upload, Plus, Check, Clock } from "lucide-react";
-import { useData, useVisibleProjects, useCurrentUser, userById } from "../store.jsx";
+import { useData, useActiveProject, useCurrentUser, userById } from "../store.jsx";
 import { fmtDate, fromNow } from "../lib/status.js";
 import { Card, Button, Badge, Modal, PageTitle, EmptyState, cx, fadeUp } from "../lib/ui.jsx";
 
@@ -9,20 +9,20 @@ const TYPE_ICON = { image: Image, video: Video, doc: FileText, audio: Music };
 const REQ_C = { Requested: "#c97a0a", "In Progress": "#2562e7", Uploaded: "#0f9d58", Cancelled: "#8a8f98" };
 
 export default function Assets() {
-  const { assets, assetRequests, uploadAsset, addAssetRequest, projects } = useData();
-  const visible = useVisibleProjects();
+  const { assets, assetRequests, uploadAsset, addAssetRequest } = useData();
+  const project = useActiveProject();
+  const visible = project ? [project] : [];
   const me = useCurrentUser();
-  const projIds = new Set(visible.map((p) => p.id));
   const [tab, setTab] = useState("library");
   const [uploadFor, setUploadFor] = useState(null); // request being fulfilled, or {} for free upload
   const [requesting, setRequesting] = useState(false);
 
-  const library = useMemo(() => assets.filter((a) => projIds.has(a.projectId)), [assets, visible]);
-  const requests = useMemo(() => assetRequests.filter((r) => projIds.has(r.projectId)), [assetRequests, visible]);
+  const library = useMemo(() => assets.filter((a) => a.projectId === project?.id), [assets, project]);
+  const requests = useMemo(() => assetRequests.filter((r) => r.projectId === project?.id), [assetRequests, project]);
 
   return (
     <motion.div {...fadeUp}>
-      <PageTitle kicker="Files" title="Assets">
+      <PageTitle kicker={project?.name || "Files"} title="Assets">
         <div className="flex items-center gap-2">
           {(me.role === "admin" || me.role === "team") && <Button variant="ghost" onClick={() => setRequesting(true)}><Plus size={16} /> Request</Button>}
           <Button onClick={() => setUploadFor({})}><Upload size={16} /> Upload</Button>
@@ -63,7 +63,7 @@ export default function Assets() {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2"><p className="font-medium">{r.title}</p><Badge color={REQ_C[r.status]}>{r.status}</Badge></div>
                   {r.description && <p className="text-sm text-muted mt-0.5">{r.description}</p>}
-                  <p className="text-[11px] text-faint mt-1">{projects.find((p) => p.id === r.projectId)?.name} · due {fmtDate(r.dueDate)}</p>
+                  <p className="text-[11px] text-faint mt-1">{project?.name} · due {fmtDate(r.dueDate)}</p>
                 </div>
                 {["Requested", "In Progress"].includes(r.status) && (
                   <Button variant="ghost" size="sm" onClick={() => setUploadFor(r)}><Upload size={15} /> Fulfill</Button>

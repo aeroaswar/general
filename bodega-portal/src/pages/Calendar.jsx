@@ -5,12 +5,13 @@ import {
   addMonths, format, isSameMonth, isSameDay,
 } from "date-fns";
 import { ChevronLeft, ChevronRight, CalendarDays, CalendarPlus, X, Move } from "lucide-react";
-import { useVisibleContent, useData, useCurrentUser } from "../store.jsx";
+import { useProjectContent, useActiveProject, useData, useCurrentUser } from "../store.jsx";
 import { STATUS_META, fmtDate } from "../lib/status.js";
 import { Card, Button, StatusBadge, PlatformTag, PageTitle, cx } from "../lib/ui.jsx";
 
 export default function Calendar() {
-  const content = useVisibleContent();
+  const content = useProjectContent();
+  const project = useActiveProject();
   const { scheduleContent } = useData();
   const me = useCurrentUser();
   const canSchedule = me.role !== "client";
@@ -43,7 +44,7 @@ export default function Calendar() {
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <PageTitle kicker="Schedule" title="Calendar">
+      <PageTitle kicker={project?.name || "Schedule"} title="Calendar">
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => { setCursor(new Date()); setSelected(new Date()); }}>Today</Button>
           <div className="flex items-center gap-1 glass-2 hairline border rounded-full">
