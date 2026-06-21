@@ -1,9 +1,9 @@
 import { useMemo } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { FolderKanban, ClipboardCheck, Send, Clock, ArrowUpRight, TrendingUp, CalendarPlus, CheckCircle2 } from "lucide-react";
 import { useData, useVisibleProjects, useVisibleContent, useSelectedClient, useCurrentUser, userById } from "../store.jsx";
-import { BOARD_COLUMNS, STATUS_META, fmtDate, fromNow } from "../lib/status.js";
+import { BOARD_COLUMNS, STATUS_META, PROJECT_STATUS_C, fmtDate, fromNow } from "../lib/status.js";
 import { Card, Stat, StatusBadge, PlatformTag, Avatar, Progress, PageTitle, Badge, Button, fadeUp } from "../lib/ui.jsx";
 
 const fmtReach = (n) => (n >= 1e6 ? (n / 1e6).toFixed(1) + "M" : n >= 1e3 ? Math.round(n / 1e3) + "K" : n);
@@ -11,9 +11,10 @@ const fmtReach = (n) => (n >= 1e6 ? (n / 1e6).toFixed(1) + "M" : n >= 1e3 ? Math
 export default function Dashboard() {
   const projects = useVisibleProjects();
   const content = useVisibleContent();
-  const { approvals, comments, reportSnapshots } = useData();
+  const { approvals, comments, reportSnapshots, setSelectedProjectId } = useData();
   const client = useSelectedClient();
   const me = useCurrentUser();
+  const [, navigate] = useLocation();
 
   const counts = useMemo(() => {
     const awaiting = content.filter((c) => c.status === "Client Review").length;
@@ -150,11 +151,11 @@ export default function Dashboard() {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
         {projects.map((p) => (
-          <Link key={p.id} href="/app/projects">
+          <button key={p.id} className="text-left" onClick={() => { setSelectedProjectId(p.id); navigate("/app/projects"); }}>
             <Card hover className="h-full">
               <div className="flex items-start justify-between gap-2">
                 <h4 className="font-display font-bold">{p.name}</h4>
-                <Badge color={p.status === "Active" ? "#0e9f8e" : p.status === "Planning" ? "#c97a0a" : "#8a8f98"}>{p.status}</Badge>
+                <Badge color={PROJECT_STATUS_C[p.status]}>{p.status}</Badge>
               </div>
               <p className="text-xs text-muted mt-1">{p.cadence} · {p.platforms.join(", ")}</p>
               <div className="mt-4 flex items-center gap-3">
@@ -163,7 +164,7 @@ export default function Dashboard() {
                 <span className="text-sm font-semibold tabular-nums">{p.health}</span>
               </div>
             </Card>
-          </Link>
+          </button>
         ))}
       </div>
     </motion.div>

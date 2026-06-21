@@ -17,7 +17,7 @@ export const CLIENTS = [
     market: "Indonesia · Muslim families", positioning: "Trusted, modern pilgrimage journeys.",
     brandPersonality: ["Warm", "Trustworthy", "Spiritual"], competitors: ["NRA", "Cheria", "Alhijaz"],
     toneOfVoice: "Reassuring, respectful, aspirational.", stakeholders: ["Head of Marketing", "Founder"],
-    projectIds: ["p1"],
+    projectIds: ["p1", "p4"],
   },
   {
     id: "c2", name: "Kopi Nusa", industry: "F&B / Lifestyle", description: "Specialty archipelago coffee brand.",
@@ -43,7 +43,7 @@ const pillarsFor = (pid, names) => names.map((n, i) => ({
 }));
 const audFor = (pid, segs) => segs.map((s, i) => ({ id: `${pid}-as${i + 1}`, projectId: pid, name: s.n, description: s.d }));
 
-export const PHASES = [...phasesFor("p1"), ...phasesFor("p2"), ...phasesFor("p3")];
+export const PHASES = [...phasesFor("p1"), ...phasesFor("p2"), ...phasesFor("p3"), ...phasesFor("p4")];
 
 export const PILLARS = [
   ...pillarsFor("p1", [
@@ -62,12 +62,18 @@ export const PILLARS = [
     { name: "Proof", d: "Range, savings, case studies.", w: 35 },
     { name: "Vision", d: "Cleaner coasts narrative.", w: 25 },
   ]),
+  ...pillarsFor("p4", [
+    { name: "Urgency", d: "Deadlines, seats left, early-bird.", w: 40 },
+    { name: "Reassurance", d: "Guidance, what's included.", w: 35 },
+    { name: "Emotion", d: "The pull of the journey.", w: 25 },
+  ]),
 ];
 
 export const AUDIENCE_SEGMENTS = [
   ...audFor("p1", [{ n: "First-time pilgrims", d: "Families planning their first Umrah." }, { n: "Repeat travelers", d: "Returning, premium-package buyers." }]),
   ...audFor("p2", [{ n: "Coffee explorers", d: "Gen-Z discovering single-origin." }]),
   ...audFor("p3", [{ n: "Fleet operators", d: "Tour & transport operators." }]),
+  ...audFor("p4", [{ n: "Ramadan planners", d: "Families targeting March departures." }]),
 ];
 
 export const PROJECTS = [
@@ -103,12 +109,24 @@ export const PROJECTS = [
     audienceSegmentIds: ["p3-as1"], phaseIds: ["p3-ph1", "p3-ph2", "p3-ph3"],
     pillarIds: ["p3-pil1", "p3-pil2", "p3-pil3"], health: 64, status: "Planning",
   },
+  {
+    id: "p4", clientId: "c1", name: "Maktour Ramadan Push", industry: "Other",
+    goalBusiness: "Capture Ramadan & early-bird Umrah demand.",
+    goalMarketing: "A focused 8-week content sprint.",
+    goalCampaign: "Fill the March departures.",
+    platforms: ["Instagram", "TikTok"], cadence: "6×/week",
+    startDate: iso(-20), endDate: iso(40), budget: "Project",
+    successMetrics: ["Reach", "Leads", "Bookings"], painPoints: ["Tight timeline"],
+    audienceSegmentIds: ["p4-as1"], phaseIds: ["p4-ph1", "p4-ph2", "p4-ph3"],
+    pillarIds: ["p4-pil1", "p4-pil2", "p4-pil3"], health: 78, status: "Active",
+  },
 ];
 
 export const CAMPAIGNS = [
   { id: "cam1", projectId: "p1", name: "Ramadan Readiness", objective: "Capture early-bird Umrah demand.", startDate: iso(-30), endDate: iso(30), phaseId: "p1-ph2", pillarIds: ["p1-pil1", "p1-pil4"], status: "Active" },
   { id: "cam2", projectId: "p1", name: "Real Journeys", objective: "Emotional proof series.", startDate: iso(-10), endDate: iso(50), phaseId: "p1-ph3", pillarIds: ["p1-pil2", "p1-pil3"], status: "Active" },
   { id: "cam3", projectId: "p2", name: "First Roast", objective: "Launch week.", startDate: iso(-7), endDate: iso(14), phaseId: "p2-ph1", status: "Active" },
+  { id: "cam4", projectId: "p4", name: "Ramadan Sprint", objective: "Fill March departures.", startDate: iso(-20), endDate: iso(40), phaseId: "p4-ph2", pillarIds: ["p4-pil1"], status: "Active" },
 ];
 
 const perf = (reach, eng, clicks, saves) => ({ reach, engagement: eng, clicks, saves, completionRate: 40 + Math.round(eng) });
@@ -147,6 +165,12 @@ export const CONTENT_ITEMS = [
   ci("ci22", "p2", "Café culture series ep.1", "Where the city slows down.", "Instagram", "Reel", "Scheduled", "p2-ph2", "p2-pil2", "u2", 6, null, "cam3"),
   ci("ci30", "p3", "How electric water-mobility works", "Quiet, clean, capable.", "LinkedIn", "Carousel", "Internal Review", "p3-ph1", "p3-pil1", "u2", 9, null),
   ci("ci31", "p3", "Range & savings, by the numbers", "The math operators ask for.", "LinkedIn", "Single", "Draft", "p3-ph2", "p3-pil2", "u2", 12, null),
+
+  // Maktour Ramadan Push (p4)
+  ci("ci40", "p4", "Seats left for March", "Don't wait for the last 10.", "Instagram", "Reel", "Posted", "p4-ph2", "p4-pil1", "u2", -8, perf(78000, 9.1, 1200, 3100), "cam4"),
+  ci("ci41", "p4", "What's included in Ramadan packages", "Everything, line by line.", "Instagram", "Carousel", "Scheduled", "p4-ph2", "p4-pil2", "u2", 4, null, "cam4"),
+  ciReview("ci42", "p4", "A mother's Ramadan dua", "She waited 12 years.", "TikTok", "Reel", "p4-ph3", "p4-pil3", "u2", 6, "u1", "Confirm the on-screen text.", 1),
+  ci("ci43", "p4", "Early-bird ends Friday", "Last call for the best price.", "Instagram", "Story", "Draft", "p4-ph1", "p4-pil1", "u1", 9, null, "cam4"),
 ];
 
 function ci(id, projectId, title, hook, platform, format, status, phaseId, pillarId, ownerId, pubOffset, performance, campaignId) {
@@ -206,6 +230,7 @@ export const REPORT_SNAPSHOTS = [
   ]),
   ...snaps("p2", [{ l: "Wk 1", o: -28, pl: 8, po: 6, h: 30 }, { l: "Wk 2", o: -14, pl: 10, po: 9, h: 22 }, { l: "Wk 3", o: 0, pl: 12, po: 10, h: 18 }]),
   ...snaps("p3", [{ l: "Wk 1", o: -14, pl: 6, po: 3, h: 40 }, { l: "Wk 2", o: 0, pl: 8, po: 5, h: 32 }]),
+  ...snaps("p4", [{ l: "Wk 1", o: -14, pl: 8, po: 6, h: 20 }, { l: "Wk 2", o: -7, pl: 10, po: 9, h: 16 }, { l: "Wk 3", o: 0, pl: 12, po: 10, h: 12 }]),
 ];
 
 export const INDUSTRY_TEMPLATES = [

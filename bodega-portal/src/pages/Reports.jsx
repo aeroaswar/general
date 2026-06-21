@@ -70,7 +70,9 @@ export default function Reports() {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <PageTitle kicker={project?.name || "Performance"} title="Reports">
-        <Button onClick={() => { setExported(false); setCopied(false); setReport(generateSnapshot(project.id, `${project.name} — ${fmtDate(new Date(), "MMM d, yyyy")}`)); }}><FileText size={16} /> Generate report</Button>
+        {me.role === "client"
+          ? <Button onClick={exportPdf}>{exported ? <><Check size={16} /> Exported</> : <><Download size={16} /> Export PDF</>}</Button>
+          : <Button onClick={() => { setExported(false); setCopied(false); setReport(generateSnapshot(project.id, `${project.name} — ${fmtDate(new Date(), "MMM d, yyyy")}`)); }}><FileText size={16} /> Generate report</Button>}
       </PageTitle>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

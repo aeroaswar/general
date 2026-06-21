@@ -59,29 +59,31 @@ export default function Settings() {
           </div>
         </Card>
 
-        {/* members */}
-        <Card>
-          <h3 className="display font-bold mb-4">Workspace members</h3>
-          <div className="flex flex-col gap-3">
-            {users.map((u) => (
-              <div key={u.id} className="flex items-center gap-3">
-                <Avatar name={u.name} size={34} />
-                <div className="min-w-0 flex-1"><p className="text-sm font-medium truncate">{u.name}</p><p className="text-xs text-muted truncate">{u.email}</p></div>
-                <Badge color={ROLE_META[u.role]?.c}>{ROLE_META[u.role]?.label}</Badge>
-              </div>
-            ))}
-          </div>
-        </Card>
+        {/* members (studio only) */}
+        {me.role !== "client" && (
+          <Card>
+            <h3 className="display font-bold mb-4">Workspace members</h3>
+            <div className="flex flex-col gap-3">
+              {users.map((u) => (
+                <div key={u.id} className="flex items-center gap-3">
+                  <Avatar name={u.name} size={34} />
+                  <div className="min-w-0 flex-1"><p className="text-sm font-medium truncate">{u.name}</p><p className="text-xs text-muted truncate">{u.email}</p></div>
+                  <Badge color={ROLE_META[u.role]?.c}>{ROLE_META[u.role]?.label}</Badge>
+                </div>
+              ))}
+            </div>
+          </Card>
+        )}
       </div>
 
-      {/* danger / session */}
+      {/* session */}
       <Card className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="font-semibold">Session & demo data</p>
-          <p className="text-sm text-muted">Reset clears local changes and returns to a fresh demo.</p>
+          <p className="font-semibold">Session</p>
+          <p className="text-sm text-muted">{me.role === "client" ? "Sign out of the portal." : "Reset clears local changes and returns to a fresh demo."}</p>
         </div>
         <div className="flex gap-2">
-          <Button variant="ghost" onClick={resetDemo}><RotateCcw size={16} /> Reset demo</Button>
+          {me.role !== "client" && <Button variant="ghost" onClick={resetDemo}><RotateCcw size={16} /> Reset demo</Button>}
           <Button variant="danger" onClick={logout}><LogOut size={16} /> Sign out</Button>
         </div>
       </Card>

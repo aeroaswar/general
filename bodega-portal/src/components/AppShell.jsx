@@ -100,21 +100,6 @@ function Switcher({ label, items, activeId, onPick, render }) {
   );
 }
 
-function RoleSwitcher() {
-  const { role, setRole } = useAuth();
-  return (
-    <div className="hidden md:flex items-center gap-1 glass-2 hairline border rounded-full p-1" title="Demo: view the portal as a different role">
-      {Object.entries(ROLE_META).map(([key, m]) => (
-        <button key={key} onClick={() => setRole(key)}
-          className={cx("px-2.5 py-1 rounded-full text-xs font-semibold transition-colors", role === key ? "text-white" : "text-muted hover:text-[color:var(--text)]")}
-          style={role === key ? { background: m.c } : undefined} title={m.desc}>
-          {m.label}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 export default function AppShell({ children }) {
   const { theme, toggle } = useTheme();
   const { logout } = useAuth();
@@ -161,15 +146,20 @@ export default function AppShell({ children }) {
       <div className="flex-1 min-w-0 flex flex-col">
         <header className="sticky top-0 z-30 flex items-center gap-2 px-4 md:px-6 py-3 border-b hairline" style={{ background: "var(--bg)" }}>
           <button className="lg:hidden p-2 -ml-2 text-muted" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          <Switcher label="Switch client" items={clients} activeId={selectedClient?.id} onPick={setSelectedClientId}
-            render={(c) => (<span className="flex items-center gap-2"><Avatar name={c.name} size={20} /><span className="max-w-[110px] truncate">{c.name}</span></span>)} />
-          <ChevronDown size={14} className="text-faint -rotate-90 hidden sm:block" />
-          {projects.length > 0 && (
+          {clients.length > 1 ? (
+            <Switcher label="Switch client" items={clients} activeId={selectedClient?.id} onPick={setSelectedClientId}
+              render={(c) => (<span className="flex items-center gap-2"><Avatar name={c.name} size={20} /><span className="max-w-[110px] truncate">{c.name}</span></span>)} />
+          ) : selectedClient ? (
+            <span className="chip" style={{ color: "var(--muted)" }}><Avatar name={selectedClient.name} size={18} /> {selectedClient.name}</span>
+          ) : null}
+          {activeProject && <ChevronDown size={14} className="text-faint -rotate-90 hidden sm:block" />}
+          {projects.length > 1 ? (
             <Switcher label="Switch project" items={projects} activeId={activeProject?.id} onPick={setSelectedProjectId}
               render={(p) => (<span className="flex items-center gap-2"><i className="w-2 h-2 rounded-full" style={{ background: PROJECT_STATUS_C[p.status] }} /><span className="max-w-[130px] truncate">{p.name}</span></span>)} />
-          )}
+          ) : activeProject ? (
+            <span className="chip" style={{ color: "var(--muted)" }}><i className="w-2 h-2 rounded-full" style={{ background: PROJECT_STATUS_C[activeProject.status] }} /> {activeProject.name}</span>
+          ) : null}
           <div className="ml-auto flex items-center gap-2">
-            <RoleSwitcher />
             <button onClick={toggle} className="p-2 rounded-full glass-2 hairline border text-muted hover:text-[color:var(--text)]" title="Toggle theme">
               {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
             </button>
