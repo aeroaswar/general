@@ -109,3 +109,16 @@ em { font-style: italic; }
 }
 /* black wordmark → white on the dark canvas */
 .dark .brand-logo { filter: invert(1); }
+
+/* Print — produce a clean contract document (hide app chrome, force light ink). */
+@media print {
+  aside, header.sticky, .no-print { display: none !important; }
+  main { padding: 0 !important; max-width: none !important; }
+  .brand-bg, .brand-grain { display: none !important; }
+  body { background: #fff !important; }
+  .print-area { box-shadow: none !important; border: 1px solid #e3ddd3 !important; background: #fff !important; max-width: none !important; }
+  .print-area, .print-area * { color: #15120f !important; }
+  .print-area .glass-2 { background: #faf8f5 !important; }
+  /* the printed wordmark must be the black original even in dark mode */
+  .print-area .brand-logo { filter: none !important; }
+}

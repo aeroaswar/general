@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
   USERS, CLIENTS, PROJECTS, AUDIENCE_SEGMENTS, PHASES, PILLARS, CAMPAIGNS,
   CONTENT_ITEMS, APPROVALS, ASSETS, COMMENTS, REPORT_SNAPSHOTS,
-  INDUSTRY_TEMPLATES, ASSET_REQUESTS, REMINDER_LOGS,
+  INDUSTRY_TEMPLATES, ASSET_REQUESTS, REMINDER_LOGS, CONTRACTS, DEFAULT_CLAUSES,
 } from "./seed.js";
 import { CLIENT_VISIBLE } from "./lib/status.js";
 
@@ -71,6 +71,7 @@ export function DataProvider({ children }) {
   const [assetRequests, setAssetRequests] = useState(() => seeded("assetRequests", ASSET_REQUESTS));
   const [reminders, setReminders] = useState(() => seeded("reminders", REMINDER_LOGS));
   const [reportSnapshots, setReportSnapshots] = useState(() => seeded("reportSnapshots", REPORT_SNAPSHOTS));
+  const [contracts, setContracts] = useState(() => seeded("contracts", CONTRACTS));
   const [reportExports, setReportExports] = useState([]);
   const [audit, setAudit] = useState([]);
   const [selectedClientId, setSelectedClientIdState] = useState("c1");
@@ -78,9 +79,9 @@ export function DataProvider({ children }) {
 
   // Save the whole editable dataset whenever any of it changes.
   useEffect(() => {
-    const data = { clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots };
+    const data = { clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots, contracts };
     try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch { /* quota — ignore */ }
-  }, [clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots]);
+  }, [clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots, contracts]);
 
   // admin → all clients; team/client → only assigned (clientIds)
   const permittedClients = useMemo(() => {
@@ -266,6 +267,46 @@ export function DataProvider({ children }) {
   const updateSegment = (id, patch) => setAudienceSegments((a) => a.map((x) => (x.id === id ? { ...x, ...patch } : x)));
   const deleteSegment = (id) => setAudienceSegments((a) => a.filter((x) => x.id !== id));
 
+  /* ── Contracts — one editable, e-signable agreement per client ────────── */
+  const createContract = (clientId, input = {}) => {
+    const client = clients.find((c) => c.id === clientId);
+    const id = uid("ct");
+    const contract = {
+      id, clientId, title: input.title || "Creative Services Agreement", status: "Draft",
+      effectiveDate: input.effectiveDate || today0(), termMonths: input.termMonths ?? 6,
+      studio: { name: "Bodega Creative Studio", signatory: "", title: "", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330", ...input.studio },
+      client: { company: client?.name || "", signatory: "", title: "", email: "", address: "", ...input.client },
+      fee: input.fee || "", paymentTerms: input.paymentTerms || "Net 14 days from invoice date",
+      cadence: input.cadence || "", scope: input.scope || (client ? `Brand-first social media strategy and daily execution for ${client.name}.` : ""),
+      deliverables: input.deliverables || ["Monthly content calendar", "Content production", "Community management", "Monthly performance report"],
+      clauses: (input.clauses || DEFAULT_CLAUSES).map((c, i) => ({ id: `${id}-cl${i + 1}`, heading: c.heading, body: c.body })),
+      clientSignature: null, studioSignature: null, createdAt: now(),
+    };
+    setContracts((a) => [...a, contract]);
+    logAudit("create", id, { to: "contract" });
+    return contract;
+  };
+  const updateContract = (id, patch) => { setContracts((a) => a.map((c) => (c.id === id ? { ...c, ...patch } : c))); logAudit("update", id, { to: "contract" }); };
+  const deleteContract = (id) => { setContracts((a) => a.filter((c) => c.id !== id)); logAudit("delete", id, { to: "contract" }); };
+  // party: "client" | "studio"; signature: { name, title, typed, drawnDataUrl }
+  const signContract = (id, party, signature) => {
+    setContracts((a) => a.map((c) => {
+      if (c.id !== id) return c;
+      const sig = { ...signature, date: now() };
+      const next = { ...c };
+      if (party === "client") {
+        next.clientSignature = sig;
+        next.client = { ...c.client, signatory: signature.name || c.client.signatory, title: signature.title || c.client.title };
+        next.status = "Signed";
+      } else {
+        next.studioSignature = sig;
+        next.studio = { ...c.studio, signatory: signature.name || c.studio.signatory, title: signature.title || c.studio.title };
+      }
+      return next;
+    }));
+    logAudit("sign", id, { to: party });
+  };
+
   const value = {
     users: USERS, clients, selectedClientId, setSelectedClientId, selectedProjectId, setSelectedProjectId,
     projects, audienceSegments, phases, pillars,
@@ -281,6 +322,8 @@ export function DataProvider({ children }) {
     addPhase, updatePhase, deletePhase,
     addPillar, updatePillar, deletePillar,
     addSegment, updateSegment, deleteSegment,
+    // contracts
+    contracts, createContract, updateContract, deleteContract, signContract,
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }

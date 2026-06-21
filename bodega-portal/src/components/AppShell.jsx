@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   LayoutDashboard, LayoutList, FolderKanban, Columns3, ClipboardCheck, CalendarDays,
   BarChart3, Megaphone, ClipboardList, Image as ImageIcon, Settings as SettingsIcon,
-  ChevronDown, Sun, Moon, Menu, LogOut, Check, Bell, ArrowUpRight, Building2,
+  ChevronDown, Sun, Moon, Menu, LogOut, Check, Bell, ArrowUpRight, Building2, FileSignature,
 } from "lucide-react";
 import {
   useAuth, useCurrentUser, useData, useSelectedClient, useVisibleClients,
@@ -20,6 +20,7 @@ const NAV_GROUPS = [
   ] },
   { title: "Set up", items: [
     { href: "/app/clients", label: "Clients", icon: Building2, roles: ["admin", "team"] },
+    { href: "/app/contract", label: "Contract", icon: FileSignature, roles: ["admin", "team", "client"] },
     { href: "/app/assessment", label: "Assessment", icon: ClipboardList, roles: ["admin", "team"] },
   ] },
   { title: "Plan", items: [

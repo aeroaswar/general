@@ -6,6 +6,7 @@ import AppShell from "./components/AppShell.jsx";
 import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Clients from "./pages/Clients.jsx";
+import Contract from "./pages/Contract.jsx";
 import Projects from "./pages/Projects.jsx";
 import ContentBoard from "./pages/ContentBoard.jsx";
 import Approvals from "./pages/Approvals.jsx";
@@ -38,6 +39,7 @@ function Routes() {
       <Route path="/login" component={Login} />
       <Route path="/app" component={Portal(Dashboard)} />
       <Route path="/app/clients" component={Portal(Clients)} />
+      <Route path="/app/contract" component={Portal(Contract)} />
       <Route path="/app/projects" component={Portal(Projects)} />
       <Route path="/app/queue" component={Portal(MyQueue)} />
       <Route path="/app/content" component={Portal(ContentBoard)} />
