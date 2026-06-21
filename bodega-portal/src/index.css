@@ -110,15 +110,45 @@ em { font-style: italic; }
 /* black wordmark → white on the dark canvas */
 .dark .brand-logo { filter: invert(1); }
 
-/* Print — produce a clean contract document (hide app chrome, force light ink). */
+/* hidden on screen — only rendered when printing (running letterhead/footer) */
+.print-only { display: none; }
+
+/* Print — render the contract as a real document: a Bodega letterhead on every
+   page, clean page breaks, and light ink on white. */
 @media print {
+  @page { size: A4; margin: 32mm 16mm 22mm; }
+
   aside, header.sticky, .no-print { display: none !important; }
-  main { padding: 0 !important; max-width: none !important; }
+  main { padding: 0 !important; max-width: none !important; margin: 0 !important; }
   .brand-bg, .brand-grain { display: none !important; }
   body { background: #fff !important; }
-  .print-area { box-shadow: none !important; border: 1px solid #e3ddd3 !important; background: #fff !important; max-width: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* the document fills the page; the @page margins do the spacing */
+  .print-area { box-shadow: none !important; border: 0 !important; background: #fff !important; max-width: none !important; margin: 0 !important; border-radius: 0 !important; }
+  .print-area .doc-body { padding: 0 !important; gap: 16px !important; }
   .print-area, .print-area * { color: #15120f !important; }
-  .print-area .glass-2 { background: #faf8f5 !important; }
-  /* the printed wordmark must be the black original even in dark mode */
-  .print-area .brand-logo { filter: none !important; }
+  .print-area .text-muted, .print-area [class*="text-muted"] { color: #534d45 !important; }
+  .print-area .text-faint, .print-area .eyebrow { color: #6b655c !important; }
+  .print-area .glass-2 { background: #f7f4ef !important; }
+
+  /* running letterhead — repeats at the top of every printed page */
+  .print-letterhead {
+    display: flex !important; align-items: flex-end; justify-content: space-between; gap: 16px;
+    position: fixed; top: 8mm; left: 16mm; right: 16mm;
+    padding-bottom: 4mm; border-bottom: 1.5px solid #15120f;
+  }
+  .print-letterhead .brand-logo { filter: none !important; }
+  .print-letterhead .ll-meta { font-size: 8pt; line-height: 1.4; text-align: right; color: #6b655c !important; }
+
+  /* running footer — repeats at the bottom of every page */
+  .print-footer {
+    display: block !important; position: fixed; bottom: 8mm; left: 16mm; right: 16mm;
+    padding-top: 3mm; border-top: 1px solid #d8d2c6;
+    font-size: 7.5pt; text-align: center; color: #8a8478 !important; letter-spacing: 0.04em;
+  }
+
+  /* page-break discipline — never split these across pages */
+  .avoid-break, .sig-section { break-inside: avoid; page-break-inside: avoid; }
+  .print-area h2, .print-area h3, .print-area .eyebrow { break-after: avoid; }
 }

@@ -57,14 +57,14 @@ export default function Contract() {
   const canSignClient = me.role === "client" || canEdit; // client signs; studio may sign on a client's behalf in-room
   return (
     <motion.div {...fadeUp}>
-      <PageTitle kicker={`${client.name} · agreement`} title="Contract">
-        <div className="flex flex-wrap items-center gap-2 no-print">
+      <div className="no-print"><PageTitle kicker={`${client.name} · agreement`} title="Contract">
+        <div className="flex flex-wrap items-center gap-2">
           <Badge color={STATUS_C[contract.status]}>{contract.status}</Badge>
           {canEdit && contract.status === "Draft" && <Button size="sm" onClick={() => updateContract(contract.id, { status: "Sent" })}><Send size={14} /> Send to client</Button>}
           {canEdit && <Button variant="ghost" size="sm" onClick={() => setEditing(true)}><Pencil size={14} /> Edit</Button>}
           <Button variant="ghost" size="sm" onClick={() => window.print()}><Printer size={14} /> Print</Button>
         </div>
-      </PageTitle>
+      </PageTitle></div>
 
       {me.role === "client" && contract.status !== "Signed" && (
         <div className="glass p-4 mb-4 flex items-start gap-3 no-print" style={{ borderLeft: "3px solid var(--accent)" }}>
@@ -75,24 +75,37 @@ export default function Contract() {
 
       {/* ── the document ── */}
       <Card className="print-area max-w-[860px] mx-auto !p-0">
-        <div className="p-5 sm:p-7 md:p-10 flex flex-col gap-7">
-          <header className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b hairline">
+        {/* print-only running letterhead + footer — repeat on every printed page */}
+        <div className="print-letterhead print-only" aria-hidden="true">
+          <span className="brand-logo" style={{ height: 26, width: 100 }} />
+          <span className="ll-meta">{contract.studio.name} · {contract.studio.email}<br />{contract.studio.address}</span>
+        </div>
+        <div className="print-footer print-only" aria-hidden="true">
+          Confidential — {contract.title} · {contract.studio.name} &amp; {contract.client.company || client.name}
+        </div>
+
+        <div className="p-5 sm:p-7 md:p-10 doc-body flex flex-col gap-7">
+          <header className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b hairline avoid-break">
             <div>
               <p className="eyebrow mb-1.5">Agreement</p>
               <h2 className="display text-2xl md:text-3xl font-semibold">{contract.title}</h2>
               <p className="text-sm text-muted mt-1">Between <strong>{contract.studio.name}</strong> and <strong>{contract.client.company || client.name}</strong></p>
             </div>
-            <span className="brand-logo shrink-0" style={{ height: 22, width: 84 }} />
+            <span className="brand-logo shrink-0 no-print" style={{ height: 22, width: 84 }} />
           </header>
 
+          <p className="text-sm leading-relaxed avoid-break">
+            This {contract.title} (the &ldquo;Agreement&rdquo;) is entered into on <strong>{fmtDate(contract.effectiveDate, "MMMM d, yyyy")}</strong> between <strong>{contract.studio.name}</strong> (&ldquo;Bodega&rdquo;) and <strong>{contract.client.company || client.name}</strong> (the &ldquo;Client&rdquo;), together the &ldquo;Parties.&rdquo;
+          </p>
+
           {/* parties */}
-          <div className="grid sm:grid-cols-2 gap-5">
+          <div className="grid sm:grid-cols-2 gap-5 avoid-break">
             <Party label="Prepared by" info={contract.studio} fallbackName={contract.studio.name} />
             <Party label="Client" info={contract.client} fallbackName={contract.client.company || client.name} />
           </div>
 
           {/* key terms */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 rounded-xl glass-2 hairline border">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4 rounded-xl glass-2 hairline border avoid-break">
             <Term label="Effective date" value={fmtDate(contract.effectiveDate, "MMM d, yyyy")} />
             <Term label="Term" value={`${contract.termMonths} months`} />
             <Term label="Renews until" value={fmtDate(addMonths(contract.effectiveDate, contract.termMonths), "MMM d, yyyy")} />
@@ -103,7 +116,7 @@ export default function Contract() {
 
           {/* scope */}
           {contract.scope && (
-            <section>
+            <section className="avoid-break">
               <h3 className="eyebrow mb-2">Scope</h3>
               <p className="text-sm leading-relaxed">{contract.scope}</p>
             </section>
@@ -111,7 +124,7 @@ export default function Contract() {
 
           {/* deliverables */}
           {contract.deliverables?.length > 0 && (
-            <section>
+            <section className="avoid-break">
               <h3 className="eyebrow mb-2">Deliverables</h3>
               <ul className="grid sm:grid-cols-2 gap-2">
                 {contract.deliverables.map((d, i) => (
@@ -129,7 +142,7 @@ export default function Contract() {
                 <p className="text-sm">This agreement covers the engagement <strong>{project.name}</strong>{project.industry ? ` · ${project.industry}` : ""}. The strategy below is maintained in the portal and forms part of this agreement.</p>
               </div>
 
-              <div className="grid sm:grid-cols-2 gap-5">
+              <div className="grid sm:grid-cols-2 gap-5 avoid-break">
                 <div>
                   <p className="eyebrow mb-2 flex items-center gap-1.5"><Radio size={13} className="text-accent" /> Channels</p>
                   {project.platforms?.length ? <div className="flex flex-wrap gap-1.5">{project.platforms.map((p) => <PlatformTag key={p} platform={p} />)}</div> : <p className="text-sm text-muted">—</p>}
@@ -141,7 +154,7 @@ export default function Contract() {
               </div>
 
               {(project.goalBusiness || project.goalMarketing || project.goalCampaign || project.successMetrics?.length > 0) && (
-                <div>
+                <div className="avoid-break">
                   <p className="eyebrow mb-2 flex items-center gap-1.5"><Target size={13} className="text-accent" /> Goals &amp; KPIs</p>
                   <ul className="text-sm flex flex-col gap-1.5">
                     {project.goalBusiness && <li><span className="text-faint">Business — </span>{project.goalBusiness}</li>}
@@ -153,7 +166,7 @@ export default function Contract() {
               )}
 
               {(framework.phases.length > 0 || canEdit) && (
-                <div>
+                <div className="avoid-break">
                   <FwHead icon={Layers} label="Engagement phases" canEdit={canEdit} onAdd={() => setFwEditor({ kind: "phase", data: null })} />
                   <ol className="flex flex-col gap-2">
                     {framework.phases.map((ph, i) => (
@@ -169,7 +182,7 @@ export default function Contract() {
               )}
 
               {(framework.pillars.length > 0 || canEdit) && (
-                <div>
+                <div className="avoid-break">
                   <FwHead icon={Megaphone} label="Content pillars" canEdit={canEdit} onAdd={() => setFwEditor({ kind: "pillar", data: null })} />
                   <div className="flex flex-col gap-1.5">
                     {framework.pillars.map((pl) => (
@@ -185,7 +198,7 @@ export default function Contract() {
               )}
 
               {(framework.segments.length > 0 || canEdit) && (
-                <div>
+                <div className="avoid-break">
                   <FwHead icon={Users} label="Audience segments" canEdit={canEdit} onAdd={() => setFwEditor({ kind: "segment", data: null })} />
                   <div className="flex flex-col gap-1.5">
                     {framework.segments.map((s) => (
@@ -206,7 +219,7 @@ export default function Contract() {
             <section className="flex flex-col gap-4 pt-5 border-t hairline">
               <h3 className="eyebrow">Terms &amp; conditions</h3>
               {contract.clauses.map((cl) => (
-                <div key={cl.id}>
+                <div key={cl.id} className="avoid-break">
                   <p className="font-semibold text-sm">{cl.heading}</p>
                   <p className="text-sm text-muted leading-relaxed mt-1">{cl.body}</p>
                 </div>
@@ -215,7 +228,7 @@ export default function Contract() {
           )}
 
           {/* signatures */}
-          <section className="pt-5 border-t hairline">
+          <section className="pt-5 border-t hairline avoid-break sig-section">
             <h3 className="eyebrow mb-4">Signatures</h3>
             <div className="grid sm:grid-cols-2 gap-6">
               <SignBlock label="For the Client" sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
