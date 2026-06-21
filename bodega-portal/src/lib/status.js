@@ -9,6 +9,17 @@ export const STATUSES = [
 // Columns shown on the content board (Archived hidden by default).
 export const BOARD_COLUMNS = STATUSES.filter((s) => s !== "Archived");
 
+// The board's columns = the flow's content-bearing stages. Each stage groups
+// the granular statuses, so the board reads like the FLOW bar (Brief → Content
+// → Approval → Schedule → Live) while cards keep their exact sub-status.
+export const STAGES = [
+  { key: "Brief", label: "Brief", statuses: ["Idea", "Briefing"], c: "#8ab4d8" },
+  { key: "Content", label: "Content", statuses: ["Draft", "Internal Review"], c: "#2562e7" },
+  { key: "Approval", label: "Approval", statuses: ["Client Review", "Revision Requested"], c: "#c97a0a" },
+  { key: "Schedule", label: "Schedule", statuses: ["Approved", "Scheduled"], c: "#6d4fe0" },
+  { key: "Live", label: "Live", statuses: ["Posted"], c: "#0f9d58" },
+];
+
 // Statuses a Client is allowed to see (no internal setup / drafts / reviews).
 export const CLIENT_VISIBLE = ["Client Review", "Approved", "Scheduled", "Posted"];
 

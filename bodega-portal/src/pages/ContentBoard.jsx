@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Plus, ChevronRight, MessageSquare, Send, Check, RotateCcw, CalendarClock, CalendarPlus, History, PenLine, X } from "lucide-react";
 import { useData, useActiveProject, useProjectContent, useCurrentUser, userById } from "../store.jsx";
-import { BOARD_COLUMNS, STATUS_META, NEXT_STATUS, checkMove, fmtDate, fromNow } from "../lib/status.js";
+import { STAGES, STATUSES, STATUS_META, NEXT_STATUS, checkMove, fmtDate, fromNow } from "../lib/status.js";
 import { Button, Card, StatusBadge, PlatformTag, Avatar, Modal, PageTitle, cx } from "../lib/ui.jsx";
 
 const PLATFORMS = ["Instagram", "TikTok", "LinkedIn", "YouTube", "X", "Newsletter", "Web"];
@@ -17,9 +17,10 @@ export default function ContentBoard() {
   const [openId, setOpenId] = useState(null);
   const [adding, setAdding] = useState(false);
 
-  const byCol = useMemo(() => {
-    const m = Object.fromEntries(BOARD_COLUMNS.map((s) => [s, []]));
-    content.forEach((c) => { if (m[c.status]) m[c.status].push(c); });
+  const byStage = useMemo(() => {
+    const m = Object.fromEntries(STAGES.map((s) => [s.key, []]));
+    content.forEach((c) => { const st = STAGES.find((s) => s.statuses.includes(c.status)); if (st) m[st.key].push(c); });
+    Object.values(m).forEach((arr) => arr.sort((a, b) => STATUSES.indexOf(a.status) - STATUSES.indexOf(b.status)));
     return m;
   }, [content]);
 
@@ -31,21 +32,22 @@ export default function ContentBoard() {
         {isStaff && project && <Button onClick={() => setAdding(true)}><Plus size={17} /> New content</Button>}
       </PageTitle>
 
-      <div className="flex gap-4 overflow-x-auto pb-4 -mx-1 px-1">
-        {BOARD_COLUMNS.map((s) => {
-          const m = STATUS_META[s];
-          const items = byCol[s];
+      <div className="grid grid-flow-col auto-cols-[minmax(240px,1fr)] gap-4 overflow-x-auto pb-4 -mx-1 px-1">
+        {STAGES.map((stage, i) => {
+          const items = byStage[stage.key];
           return (
-            <div key={s} className="w-[280px] shrink-0">
+            <div key={stage.key} className="min-w-0">
               <div className="flex items-center gap-2 mb-3 px-1">
-                <span className="w-2.5 h-2.5 rounded-full" style={{ background: m.c }} />
-                <span className="font-semibold text-sm">{m.label}</span>
+                <span className="mono text-[11px] text-faint">{String(i + 1).padStart(2, "0")}</span>
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: stage.c }} />
+                <span className="font-semibold text-sm">{stage.label}</span>
                 <span className="ml-auto text-xs text-faint tabular-nums">{items.length}</span>
               </div>
               <div className="flex flex-col gap-2.5">
                 {items.map((c) => (
                   <button key={c.id} onClick={() => setOpenId(c.id)} className="text-left">
-                    <Card className="!p-3.5 hover:-translate-y-0.5 transition-transform">
+                    <Card className="!p-3.5 hover:border-[color:var(--line-2)] transition-colors">
+                      <div className="mb-1.5"><StatusBadge status={c.status} /></div>
                       <p className="font-medium text-sm leading-snug">{c.title}</p>
                       <p className="text-xs text-muted mt-1 line-clamp-2">{c.hook}</p>
                       <div className="flex items-center gap-2 mt-3">
