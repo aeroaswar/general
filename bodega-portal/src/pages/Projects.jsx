@@ -61,7 +61,7 @@ export default function Projects() {
   return (
     <motion.div {...fadeUp}>
       <PageTitle kicker="Project" title={project.name}>
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Badge color={PROJECT_STATUS_C[project.status]}>{project.status}</Badge>
           {canEdit && <>
             <Button variant="ghost" size="sm" onClick={() => setEditor({ kind: "project", data: project })}><Pencil size={14} /> Edit</Button>

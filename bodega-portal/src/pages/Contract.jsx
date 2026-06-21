@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { FileSignature, Pencil, Send, Printer, Trash2, Plus, ShieldCheck, Building2, X } from "lucide-react";
+import { FileSignature, Pencil, Send, Printer, Trash2, Plus, ShieldCheck, Building2, X, Layers, Megaphone, Users, Target, Radio } from "lucide-react";
 import { useData, useSelectedClient, useCurrentUser } from "../store.jsx";
-import { Card, Button, Badge, PageTitle, EmptyState, Modal, fadeUp, cx } from "../lib/ui.jsx";
-import { Field, Input, Textarea } from "../lib/forms.jsx";
+import { Card, Button, Badge, PageTitle, EmptyState, Modal, PlatformTag, fadeUp, cx } from "../lib/ui.jsx";
+import { Field, Input, Textarea, Select } from "../lib/forms.jsx";
 import SignaturePad from "../components/SignaturePad.jsx";
 import { fmtDate } from "../lib/status.js";
 
@@ -14,10 +14,19 @@ export default function Contract() {
   const client = useSelectedClient();
   const me = useCurrentUser();
   const canEdit = me.role !== "client";
-  const { contracts, createContract, updateContract, deleteContract, signContract } = useData();
+  const { contracts, projects, phases, pillars, audienceSegments, createContract, updateContract, deleteContract, signContract } = useData();
   const contract = contracts.find((c) => c.clientId === client?.id);
+  const clientProjects = projects.filter((p) => p.clientId === client?.id);
   const [editing, setEditing] = useState(false);
   const [signParty, setSignParty] = useState(null); // "client" | "studio" | null
+
+  // the project this engagement covers → its framework is folded into the contract
+  const project = contract ? (projects.find((p) => p.id === contract.projectId) || clientProjects[0]) : null;
+  const framework = project ? {
+    phases: phases.filter((x) => x.projectId === project.id).sort((a, b) => a.order - b.order),
+    pillars: pillars.filter((x) => x.projectId === project.id),
+    segments: audienceSegments.filter((x) => x.projectId === project.id),
+  } : null;
 
   if (!client) return <EmptyState icon={Building2} title="No client selected" sub="Pick a client to view their contract." />;
 
@@ -35,7 +44,7 @@ export default function Contract() {
             <Button onClick={() => { createContract(client.id); setEditing(true); }}><Plus size={16} /> Create contract</Button>
           </div>
         )}
-        <ContractEditor open={editing} contract={contracts.find((c) => c.clientId === client.id)} onClose={() => setEditing(false)} onSave={(patch, id) => { updateContract(id, patch); setEditing(false); }} />
+        <ContractEditor open={editing} contract={contracts.find((c) => c.clientId === client.id)} projects={clientProjects} onClose={() => setEditing(false)} onSave={(patch, id) => { updateContract(id, patch); setEditing(false); }} />
       </motion.div>
     );
   }
@@ -44,7 +53,7 @@ export default function Contract() {
   return (
     <motion.div {...fadeUp}>
       <PageTitle kicker={`${client.name} · agreement`} title="Contract">
-        <div className="flex items-center gap-2 no-print">
+        <div className="flex flex-wrap items-center gap-2 no-print">
           <Badge color={STATUS_C[contract.status]}>{contract.status}</Badge>
           {canEdit && contract.status === "Draft" && <Button size="sm" onClick={() => updateContract(contract.id, { status: "Sent" })}><Send size={14} /> Send to client</Button>}
           {canEdit && <Button variant="ghost" size="sm" onClick={() => setEditing(true)}><Pencil size={14} /> Edit</Button>}
@@ -61,7 +70,7 @@ export default function Contract() {
 
       {/* ── the document ── */}
       <Card className="print-area max-w-[860px] mx-auto !p-0">
-        <div className="p-7 md:p-10 flex flex-col gap-7">
+        <div className="p-5 sm:p-7 md:p-10 flex flex-col gap-7">
           <header className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b hairline">
             <div>
               <p className="eyebrow mb-1.5">Agreement</p>
@@ -107,9 +116,75 @@ export default function Contract() {
             </section>
           )}
 
+          {/* statement of work — folded in from the linked project's framework */}
+          {project && (
+            <section className="flex flex-col gap-6 pt-5 border-t hairline">
+              <div>
+                <h3 className="eyebrow mb-1">Statement of work</h3>
+                <p className="text-sm">This agreement covers the engagement <strong>{project.name}</strong>{project.industry ? ` · ${project.industry}` : ""}. The strategy below is maintained in the portal and forms part of this agreement.</p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-5">
+                <div>
+                  <p className="eyebrow mb-2 flex items-center gap-1.5"><Radio size={13} className="text-accent" /> Channels</p>
+                  {project.platforms?.length ? <div className="flex flex-wrap gap-1.5">{project.platforms.map((p) => <PlatformTag key={p} platform={p} />)}</div> : <p className="text-sm text-muted">—</p>}
+                </div>
+                <div>
+                  <p className="eyebrow mb-2">Cadence</p>
+                  <p className="text-sm">{project.cadence || contract.cadence || "—"}</p>
+                </div>
+              </div>
+
+              {(project.goalBusiness || project.goalMarketing || project.goalCampaign || project.successMetrics?.length > 0) && (
+                <div>
+                  <p className="eyebrow mb-2 flex items-center gap-1.5"><Target size={13} className="text-accent" /> Goals &amp; KPIs</p>
+                  <ul className="text-sm flex flex-col gap-1.5">
+                    {project.goalBusiness && <li><span className="text-faint">Business — </span>{project.goalBusiness}</li>}
+                    {project.goalMarketing && <li><span className="text-faint">Marketing — </span>{project.goalMarketing}</li>}
+                    {project.goalCampaign && <li><span className="text-faint">Campaign — </span>{project.goalCampaign}</li>}
+                  </ul>
+                  {project.successMetrics?.length > 0 && <div className="flex flex-wrap gap-1.5 mt-2">{project.successMetrics.map((m) => <span key={m} className="chip" style={{ color: "var(--muted)" }}>{m}</span>)}</div>}
+                </div>
+              )}
+
+              {framework.phases.length > 0 && (
+                <div>
+                  <p className="eyebrow mb-2 flex items-center gap-1.5"><Layers size={13} className="text-accent" /> Engagement phases</p>
+                  <ol className="flex flex-col gap-2">
+                    {framework.phases.map((ph, i) => (
+                      <li key={ph.id} className="text-sm flex gap-2"><span className="font-semibold shrink-0">{i + 1}.</span><span><span className="font-medium">{ph.name}</span>{ph.objective ? ` — ${ph.objective}` : ""}</span></li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              {framework.pillars.length > 0 && (
+                <div>
+                  <p className="eyebrow mb-2 flex items-center gap-1.5"><Megaphone size={13} className="text-accent" /> Content pillars</p>
+                  <div className="flex flex-col gap-1.5">
+                    {framework.pillars.map((pl) => (
+                      <div key={pl.id} className="text-sm flex justify-between gap-3"><span><span className="font-medium">{pl.name}</span>{pl.description ? ` — ${pl.description}` : ""}</span><span className="text-muted shrink-0 tabular-nums">{pl.weight}%</span></div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {framework.segments.length > 0 && (
+                <div>
+                  <p className="eyebrow mb-2 flex items-center gap-1.5"><Users size={13} className="text-accent" /> Audience segments</p>
+                  <div className="flex flex-col gap-1.5">
+                    {framework.segments.map((s) => (
+                      <div key={s.id} className="text-sm"><span className="font-medium">{s.name}</span>{s.description ? ` — ${s.description}` : ""}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+
           {/* clauses */}
           {contract.clauses?.length > 0 && (
-            <section className="flex flex-col gap-4">
+            <section className="flex flex-col gap-4 pt-5 border-t hairline">
               <h3 className="eyebrow">Terms &amp; conditions</h3>
               {contract.clauses.map((cl) => (
                 <div key={cl.id}>
@@ -141,7 +216,7 @@ export default function Contract() {
 
       <SignModal party={signParty} contract={contract} me={me} onClose={() => setSignParty(null)}
         onSign={(sig) => { signContract(contract.id, signParty, sig); setSignParty(null); }} />
-      <ContractEditor open={editing} contract={contract} onClose={() => setEditing(false)} onSave={(patch, id) => { updateContract(id, patch); setEditing(false); }} />
+      <ContractEditor open={editing} contract={contract} projects={clientProjects} onClose={() => setEditing(false)} onSave={(patch, id) => { updateContract(id, patch); setEditing(false); }} />
     </motion.div>
   );
 }
@@ -256,7 +331,7 @@ function SignModal({ party, contract, me, onClose, onSign }) {
 
 /* ── Contract editor (studio) ─────────────────────────────────────────── */
 const seedForm = (c) => ({
-  title: c?.title || "", effectiveDate: c?.effectiveDate || "", termMonths: c?.termMonths ?? 6,
+  title: c?.title || "", projectId: c?.projectId || "", effectiveDate: c?.effectiveDate || "", termMonths: c?.termMonths ?? 6,
   fee: c?.fee || "", paymentTerms: c?.paymentTerms || "", cadence: c?.cadence || "", scope: c?.scope || "",
   deliverables: (c?.deliverables || []).join("\n"),
   studioSignatory: c?.studio?.signatory || "", studioTitle: c?.studio?.title || "",
@@ -264,7 +339,7 @@ const seedForm = (c) => ({
   clauses: (c?.clauses || []).map((x) => ({ ...x })),
 });
 
-function ContractEditor({ open, contract, onClose, onSave }) {
+function ContractEditor({ open, contract, projects = [], onClose, onSave }) {
   const [f, setF] = useState(() => seedForm(contract));
   useEffect(() => { if (open) setF(seedForm(contract)); }, [open, contract?.id]); // eslint-disable-line
   const set = (k) => (e) => setF((p) => ({ ...p, [k]: e.target.value }));
@@ -276,7 +351,7 @@ function ContractEditor({ open, contract, onClose, onSave }) {
   const save = () => {
     if (!contract) return;
     onSave({
-      title: f.title.trim() || "Agreement", effectiveDate: f.effectiveDate, termMonths: Number(f.termMonths) || 0,
+      title: f.title.trim() || "Agreement", projectId: f.projectId || null, effectiveDate: f.effectiveDate, termMonths: Number(f.termMonths) || 0,
       fee: f.fee.trim(), paymentTerms: f.paymentTerms.trim(), cadence: f.cadence.trim(), scope: f.scope.trim(),
       deliverables: f.deliverables.split("\n").map((s) => s.trim()).filter(Boolean),
       studio: { ...contract.studio, signatory: f.studioSignatory.trim(), title: f.studioTitle.trim() },
@@ -289,6 +364,12 @@ function ContractEditor({ open, contract, onClose, onSave }) {
     <Modal open={open} onClose={onClose} title="Edit contract" width={680}>
       <div className="grid sm:grid-cols-2 gap-4">
         <Field label="Title" className="sm:col-span-2"><Input value={f.title} onChange={set("title")} placeholder="Creative Services Agreement" /></Field>
+        <Field label="Covers project" hint="Its phases, pillars & audience fold into this contract" className="sm:col-span-2">
+          <Select value={f.projectId} onChange={set("projectId")}>
+            <option value="">— none —</option>
+            {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+          </Select>
+        </Field>
         <Field label="Effective date"><Input type="date" value={f.effectiveDate} onChange={set("effectiveDate")} /></Field>
         <Field label="Term (months)"><Input type="number" min="0" value={f.termMonths} onChange={set("termMonths")} /></Field>
         <Field label="Fee"><Input value={f.fee} onChange={set("fee")} placeholder="Rp 25,000,000 / month" /></Field>

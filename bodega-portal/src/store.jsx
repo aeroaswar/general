@@ -270,9 +270,11 @@ export function DataProvider({ children }) {
   /* ── Contracts — one editable, e-signable agreement per client ────────── */
   const createContract = (clientId, input = {}) => {
     const client = clients.find((c) => c.id === clientId);
+    const firstProject = projects.find((p) => p.clientId === clientId);
     const id = uid("ct");
     const contract = {
-      id, clientId, title: input.title || "Creative Services Agreement", status: "Draft",
+      id, clientId, projectId: input.projectId ?? firstProject?.id ?? null,
+      title: input.title || "Creative Services Agreement", status: "Draft",
       effectiveDate: input.effectiveDate || today0(), termMonths: input.termMonths ?? 6,
       studio: { name: "Bodega Creative Studio", signatory: "", title: "", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330", ...input.studio },
       client: { company: client?.name || "", signatory: "", title: "", email: "", address: "", ...input.client },

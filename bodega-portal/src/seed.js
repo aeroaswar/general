@@ -398,7 +398,7 @@ export const DEFAULT_CLAUSES = [
 // One example agreement (Maktour) — every other client starts with no contract.
 export const CONTRACTS = [
   {
-    id: "ct1", clientId: "c1", title: "Creative Services Agreement", status: "Sent",
+    id: "ct1", clientId: "c1", projectId: "p1", title: "Creative Services Agreement", status: "Sent",
     effectiveDate: iso(-150), termMonths: 6,
     studio: { name: "Bodega Creative Studio", signatory: "Reno", title: "CEO", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330" },
     client: { company: "Maktour", signatory: "", title: "", email: "maya@maktour.id", address: "" },
