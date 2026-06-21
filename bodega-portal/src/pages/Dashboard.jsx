@@ -66,6 +66,16 @@ export default function Dashboard() {
   };
   const needDecision = actions.approvals + actions.overdue + actions.missingAssets + actions.comments + actions.dueWeek;
 
+  // map content statuses → flow stages, and figure out where the program actually is
+  const stageCount = {
+    Brief: content.filter((c) => ["Idea", "Briefing"].includes(c.status)).length,
+    Content: content.filter((c) => ["Draft", "Internal Review"].includes(c.status)).length,
+    Approval: content.filter((c) => ["Client Review", "Revision Requested"].includes(c.status)).length,
+    Schedule: content.filter((c) => ["Approved", "Scheduled"].includes(c.status)).length,
+    Report: content.filter((c) => c.status === "Posted").length,
+  };
+  const focus = ["Approval", "Content", "Brief", "Schedule", "Report"].find((k) => stageCount[k] > 0) || "Client";
+
   const upcoming = content.filter((c) => ["Scheduled", "Approved"].includes(c.status)).sort((a, b) => a.publishDate.localeCompare(b.publishDate)).slice(0, 5);
   const activity = (() => {
     const cById = Object.fromEntries(content.map((c) => [c.id, c]));
@@ -79,16 +89,20 @@ export default function Dashboard() {
       <h1 className="display text-4xl md:text-5xl font-semibold tracking-[-0.02em]">{client?.name}</h1>
       <p className="text-muted mt-2">{client?.industry} · {projects.length} active project{projects.length === 1 ? "" : "s"} scoped to this client.</p>
 
-      {/* FLOW stepper */}
+      {/* FLOW stepper — live counts + where the program is now */}
       <div className="flex flex-wrap items-center gap-2 mt-6">
         <span className="eyebrow mr-1">Flow</span>
-        {FLOW.map((s, i) => (
-          <Link key={s.n} href={s.href}
-            className={cxPill(i === 0)}>
-            <span className="mono text-[11px] opacity-70">{s.n}</span>
-            <s.icon size={14} /> {s.label}
-          </Link>
-        ))}
+        {FLOW.map((s) => {
+          const cnt = stageCount[s.label] || 0;
+          const active = s.label === focus;
+          return (
+            <Link key={s.n} href={s.href} className={cxPill(active)} style={active ? { background: "var(--text)", color: "var(--bg)" } : undefined}>
+              <span className="mono text-[11px] opacity-70">{s.n}</span>
+              <s.icon size={14} /> {s.label}
+              {cnt > 0 && <span className="mono text-[10px] px-1.5 rounded" style={{ background: active ? "rgba(0,0,0,.18)" : "var(--card-2)" }}>{cnt}</span>}
+            </Link>
+          );
+        })}
       </div>
 
       {/* OPERATING PATH */}

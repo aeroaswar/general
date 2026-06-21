@@ -86,7 +86,7 @@ function ContentModal({ item, onClose }) {
   const nexts = NEXT_STATUS[item.status] || [];
   const hasAssets = assets.some((a) => a.projectId === item.projectId);
   const canReview = me.role === "client" && item.status === "Client Review";
-  const canRequestReview = isStaff && ["Draft", "Internal Review"].includes(item.status);
+  const canRequestReview = isStaff && item.status === "Internal Review";
   const showSchedule = isStaff && ["Approved", "Scheduled"].includes(item.status);
   const projPillars = pillars.filter((p) => p.projectId === item.projectId);
   const projCampaigns = campaigns.filter((c) => c.projectId === item.projectId);
@@ -172,7 +172,7 @@ function ContentModal({ item, onClose }) {
                   const g = checkMove(item, "Client Review", { hasAssets });
                   return <Button disabled={!g.ok} title={g.ok ? "" : `Needs: ${g.missing.join(", ")}`} onClick={() => { requestClientReview(item.id, me.id, { message: note }); onClose(); }}><Send size={16} /> Request client review</Button>;
                 })()}
-                {nexts.filter((s) => s !== "Scheduled").map((s) => {
+                {nexts.filter((s) => s !== "Scheduled" && s !== "Client Review").map((s) => {
                   const g = checkMove(item, s, { hasAssets });
                   return (
                     <Button key={s} variant="ghost" disabled={!g.ok} title={g.ok ? "" : `Needs: ${g.missing.join(", ")}`} onClick={() => { updateContentStatus(item.id, s); onClose(); }}>
