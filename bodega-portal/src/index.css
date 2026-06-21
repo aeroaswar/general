@@ -121,7 +121,14 @@ em { font-style: italic; }
 /* Print — render the contract as a real document: a Bodega letterhead on every
    page, clean page breaks, and light ink on white. */
 @media print {
-  @page { size: A4; margin: 14mm 15mm; }
+  /* zero side page-margin — the document supplies its own symmetric side padding
+     below, so margins stay correct whatever the print dialog's margin setting is */
+  @page { size: A4; margin: 12mm 0; }
+
+  /* guaranteed, symmetric side margins on every page (header, body, footer) */
+  .doc-table > thead > tr > td,
+  .doc-table > tbody > tr > td,
+  .doc-table > tfoot > tr > td { padding-left: 16mm !important; padding-right: 16mm !important; }
 
   aside, header.sticky, .no-print { display: none !important; }
   main { padding: 0 !important; max-width: none !important; margin: 0 !important; }
