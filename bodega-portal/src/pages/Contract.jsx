@@ -31,7 +31,7 @@ export default function Contract() {
   const me = useCurrentUser();
   const canEdit = me.role !== "client";
   const d = useData();
-  const { contracts, projects, phases, pillars, audienceSegments, createContract, updateContract, deleteContract, signContract } = d;
+  const { contracts, projects, phases, pillars, audienceSegments, createContract, updateContract, deleteContract, signContract, clearSignature } = d;
   const contract = contracts.find((c) => c.clientId === client?.id);
   const clientProjects = projects.filter((p) => p.clientId === client?.id);
   const [editing, setEditing] = useState(false);
@@ -289,16 +289,20 @@ export default function Contract() {
               {lang === "id" ? (
                 <>
                   <SignBlock t={t} lang={lang} meterai label={t.pihakPertama} sig={contract.studioSignature} party={contract.studio} fallbackName={contract.studio.name}
-                    canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")} />
+                    canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")}
+                    canReset={canEdit} onReset={() => clearSignature(contract.id, "studio")} />
                   <SignBlock t={t} lang={lang} meterai label={t.pihakKedua} sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
-                    canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")} />
+                    canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")}
+                    canReset={canSignClient} onReset={() => clearSignature(contract.id, "client")} />
                 </>
               ) : (
                 <>
                   <SignBlock t={t} lang={lang} label={t.forClient} sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
-                    canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")} />
+                    canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")}
+                    canReset={canSignClient} onReset={() => clearSignature(contract.id, "client")} />
                   <SignBlock t={t} lang={lang} label={t.forBodega} sig={contract.studioSignature} party={contract.studio} fallbackName={contract.studio.name}
-                    canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")} />
+                    canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")}
+                    canReset={canEdit} onReset={() => clearSignature(contract.id, "studio")} />
                 </>
               )}
             </div>
@@ -387,7 +391,7 @@ function PartyBlockID({ no, text }) {
   );
 }
 
-function SignBlock({ t, lang, label, sig, party, fallbackName, canSign, onSign, meterai }) {
+function SignBlock({ t, lang, label, sig, party, fallbackName, canSign, onSign, meterai, canReset, onReset }) {
   return (
     <div>
       <p className="eyebrow mb-2">{label}</p>
@@ -408,6 +412,9 @@ function SignBlock({ t, lang, label, sig, party, fallbackName, canSign, onSign, 
       <p className="font-semibold text-sm mt-2">{sig?.name || party.signatory || fallbackName}</p>
       <p className="text-xs text-muted">{sig?.title || party.title || ""}</p>
       {sig && <p className="text-xs text-faint mt-1 inline-flex items-center gap-1"><ShieldCheck size={12} style={{ color: "#0f9d58" }} /> {t.signedElectronically} · {fmtDateL(sig.date, lang)}</p>}
+      {sig && canReset && (
+        <button onClick={onReset} className="no-print block text-xs text-muted hover:text-[#d6336c] mt-1.5 inline-flex items-center gap-1"><X size={11} /> {t.resetSignature}</button>
+      )}
     </div>
   );
 }

@@ -44,7 +44,7 @@ export const T = {
     fullName: "Full name", title: "Title", type: "Type", draw: "Draw", clear: "Clear",
     typeSignature: "Type your signature", yourSignature: "Your signature", drawHint: "Draw your signature here",
     consent: "I have read and agree to the terms of this agreement, and consent to signing electronically.",
-    signAgreement: "Sign agreement", cancel: "Cancel",
+    signAgreement: "Sign agreement", cancel: "Cancel", resetSignature: "Reset signature",
   },
   id: {
     pageTitle: "Kontrak",
@@ -77,7 +77,7 @@ export const T = {
     fullName: "Nama lengkap", title: "Jabatan", type: "Ketik", draw: "Gambar", clear: "Hapus",
     typeSignature: "Ketik tanda tangan Anda", yourSignature: "Tanda tangan Anda", drawHint: "Gambar tanda tangan Anda di sini",
     consent: "Saya telah membaca dan menyetujui ketentuan perjanjian ini, serta setuju untuk menandatangani secara elektronik.",
-    signAgreement: "Tandatangani perjanjian", cancel: "Batal",
+    signAgreement: "Tandatangani perjanjian", cancel: "Batal", resetSignature: "Atur ulang tanda tangan",
   },
 };
 

@@ -311,6 +311,17 @@ export function DataProvider({ children }) {
     }));
     logAudit("sign", id, { to: party });
   };
+  // clear an applied signature (re-sign); clearing the client's reverts status to "Sent"
+  const clearSignature = (id, party) => {
+    setContracts((a) => a.map((c) => {
+      if (c.id !== id) return c;
+      const next = { ...c };
+      if (party === "client") { next.clientSignature = null; if (c.status === "Signed") next.status = "Sent"; }
+      else next.studioSignature = null;
+      return next;
+    }));
+    logAudit("unsign", id, { to: party });
+  };
 
   const value = {
     users: USERS, clients, selectedClientId, setSelectedClientId, selectedProjectId, setSelectedProjectId,
@@ -328,7 +339,7 @@ export function DataProvider({ children }) {
     addPillar, updatePillar, deletePillar,
     addSegment, updateSegment, deleteSegment,
     // contracts
-    contracts, createContract, updateContract, deleteContract, signContract,
+    contracts, createContract, updateContract, deleteContract, signContract, clearSignature,
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }
