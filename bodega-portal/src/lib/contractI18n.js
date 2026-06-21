@@ -45,6 +45,10 @@ export const T = {
     typeSignature: "Type your signature", yourSignature: "Your signature", drawHint: "Draw your signature here",
     consent: "I have read and agree to the terms of this agreement, and consent to signing electronically.",
     signAgreement: "Sign agreement", cancel: "Cancel", resetSignature: "Reset signature",
+    affixMeterai: "Affix e-Meterai", removeMeterai: "Remove e-Meterai", meteraiModalTitle: "Affix e-Meterai",
+    meteraiUploadHint: "Upload the official e-Meterai you obtained from PERURI or an authorized distributor (PNG/JPG), then record its serial number.",
+    chooseImage: "Choose e-Meterai image", meteraiSerial: "Serial number (Nomor Seri)", meteraiSeriShort: "Serial", affix: "Affix",
+    meteraiNote: "A legally valid e-Meterai must be issued by PERURI / an authorized distributor. This attaches its image to the document for the record.",
   },
   id: {
     pageTitle: "Kontrak",
@@ -78,6 +82,10 @@ export const T = {
     typeSignature: "Ketik tanda tangan Anda", yourSignature: "Tanda tangan Anda", drawHint: "Gambar tanda tangan Anda di sini",
     consent: "Saya telah membaca dan menyetujui ketentuan perjanjian ini, serta setuju untuk menandatangani secara elektronik.",
     signAgreement: "Tandatangani perjanjian", cancel: "Batal", resetSignature: "Atur ulang tanda tangan",
+    affixMeterai: "Tempel e-Meterai", removeMeterai: "Hapus e-Meterai", meteraiModalTitle: "Tempel e-Meterai",
+    meteraiUploadHint: "Unggah e-Meterai resmi yang Anda peroleh dari PERURI atau distributor resmi (PNG/JPG), lalu catat nomor serinya.",
+    chooseImage: "Pilih gambar e-Meterai", meteraiSerial: "Nomor Seri Meterai", meteraiSeriShort: "No. Seri", affix: "Tempel",
+    meteraiNote: "e-Meterai yang sah secara hukum harus diterbitkan oleh PERURI / distributor resmi. Fitur ini melampirkan gambarnya ke dokumen untuk pencatatan.",
   },
 };
 

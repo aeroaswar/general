@@ -322,6 +322,14 @@ export function DataProvider({ children }) {
     }));
     logAudit("unsign", id, { to: party });
   };
+  // attach / remove an official e-Meterai (image + serial) on a party's block
+  const setMeterai = (id, party, data) => {
+    setContracts((a) => a.map((c) => (c.id !== id ? c : { ...c, [party === "client" ? "clientMeterai" : "studioMeterai"]: data })));
+    logAudit("meterai", id, { to: party });
+  };
+  const clearMeterai = (id, party) => {
+    setContracts((a) => a.map((c) => (c.id !== id ? c : { ...c, [party === "client" ? "clientMeterai" : "studioMeterai"]: null })));
+  };
 
   const value = {
     users: USERS, clients, selectedClientId, setSelectedClientId, selectedProjectId, setSelectedProjectId,
@@ -339,7 +347,7 @@ export function DataProvider({ children }) {
     addPillar, updatePillar, deletePillar,
     addSegment, updateSegment, deleteSegment,
     // contracts
-    contracts, createContract, updateContract, deleteContract, signContract, clearSignature,
+    contracts, createContract, updateContract, deleteContract, signContract, clearSignature, setMeterai, clearMeterai,
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { FileSignature, Pencil, Send, Printer, Trash2, Plus, ShieldCheck, Building2, X, Layers, Megaphone, Users, Target, Radio } from "lucide-react";
+import { FileSignature, Pencil, Send, Printer, Trash2, Plus, ShieldCheck, Building2, X, Layers, Megaphone, Users, Target, Radio, Stamp } from "lucide-react";
 import { useData, useSelectedClient, useCurrentUser } from "../store.jsx";
 import { Card, Button, Badge, PageTitle, EmptyState, Modal, PlatformTag, fadeUp, cx } from "../lib/ui.jsx";
 import { Field, Input, Textarea, Select } from "../lib/forms.jsx";
@@ -31,11 +31,12 @@ export default function Contract() {
   const me = useCurrentUser();
   const canEdit = me.role !== "client";
   const d = useData();
-  const { contracts, projects, phases, pillars, audienceSegments, createContract, updateContract, deleteContract, signContract, clearSignature } = d;
+  const { contracts, projects, phases, pillars, audienceSegments, createContract, updateContract, deleteContract, signContract, clearSignature, setMeterai, clearMeterai } = d;
   const contract = contracts.find((c) => c.clientId === client?.id);
   const clientProjects = projects.filter((p) => p.clientId === client?.id);
   const [editing, setEditing] = useState(false);
   const [signParty, setSignParty] = useState(null); // "client" | "studio" | null
+  const [meteraiParty, setMeteraiParty] = useState(null); // "client" | "studio" | null
   const [fwEditor, setFwEditor] = useState(null);    // { kind, data } — inline framework editor
 
   const lang = contract?.lang || "en";
@@ -290,19 +291,23 @@ export default function Contract() {
                 <>
                   <SignBlock t={t} lang={lang} meterai label={t.pihakPertama} sig={contract.studioSignature} party={contract.studio} fallbackName={contract.studio.name}
                     canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")}
-                    canReset={canEdit} onReset={() => clearSignature(contract.id, "studio")} />
+                    canReset={canEdit} onReset={() => clearSignature(contract.id, "studio")}
+                    meteraiData={contract.studioMeterai} canAffix={canEdit} onAffix={() => setMeteraiParty("studio")} onClearMeterai={() => clearMeterai(contract.id, "studio")} />
                   <SignBlock t={t} lang={lang} meterai label={t.pihakKedua} sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
                     canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")}
-                    canReset={canSignClient} onReset={() => clearSignature(contract.id, "client")} />
+                    canReset={canSignClient} onReset={() => clearSignature(contract.id, "client")}
+                    meteraiData={contract.clientMeterai} canAffix={canSignClient} onAffix={() => setMeteraiParty("client")} onClearMeterai={() => clearMeterai(contract.id, "client")} />
                 </>
               ) : (
                 <>
-                  <SignBlock t={t} lang={lang} label={t.forClient} sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
+                  <SignBlock t={t} lang={lang} meterai label={t.forClient} sig={contract.clientSignature} party={contract.client} fallbackName={contract.client.company || client.name}
                     canSign={!contract.clientSignature && canSignClient} onSign={() => setSignParty("client")}
-                    canReset={canSignClient} onReset={() => clearSignature(contract.id, "client")} />
-                  <SignBlock t={t} lang={lang} label={t.forBodega} sig={contract.studioSignature} party={contract.studio} fallbackName={contract.studio.name}
+                    canReset={canSignClient} onReset={() => clearSignature(contract.id, "client")}
+                    meteraiData={contract.clientMeterai} canAffix={canSignClient} onAffix={() => setMeteraiParty("client")} onClearMeterai={() => clearMeterai(contract.id, "client")} />
+                  <SignBlock t={t} lang={lang} meterai label={t.forBodega} sig={contract.studioSignature} party={contract.studio} fallbackName={contract.studio.name}
                     canSign={!contract.studioSignature && canEdit} onSign={() => setSignParty("studio")}
-                    canReset={canEdit} onReset={() => clearSignature(contract.id, "studio")} />
+                    canReset={canEdit} onReset={() => clearSignature(contract.id, "studio")}
+                    meteraiData={contract.studioMeterai} canAffix={canEdit} onAffix={() => setMeteraiParty("studio")} onClearMeterai={() => clearMeterai(contract.id, "studio")} />
                 </>
               )}
             </div>
@@ -320,6 +325,8 @@ export default function Contract() {
 
       <SignModal party={signParty} contract={contract} me={me} t={t} onClose={() => setSignParty(null)}
         onSign={(sig) => { signContract(contract.id, signParty, sig); setSignParty(null); }} />
+      <MeteraiModal party={meteraiParty} t={t} onClose={() => setMeteraiParty(null)}
+        onAffix={(data) => { setMeterai(contract.id, meteraiParty, data); setMeteraiParty(null); }} />
       <ContractEditor open={editing} contract={contract} projects={clientProjects} onClose={() => setEditing(false)} onSave={(patch, id) => { updateContract(id, patch); setEditing(false); }} />
       <Modal open={!!fwEditor} onClose={() => setFwEditor(null)} title={fwEditor ? frameworkTitle(fwEditor.kind, fwEditor.data) : ""} width={500}>
         {fwEditor && <FrameworkForm kind={fwEditor.kind} data={fwEditor.data} ctx={fwCtx} close={() => setFwEditor(null)} />}
@@ -391,13 +398,14 @@ function PartyBlockID({ no, text }) {
   );
 }
 
-function SignBlock({ t, lang, label, sig, party, fallbackName, canSign, onSign, meterai, canReset, onReset }) {
+function SignBlock({ t, lang, label, sig, party, fallbackName, canSign, onSign, meterai, canReset, onReset, meteraiData, canAffix, onAffix, onClearMeterai }) {
   return (
     <div>
       <p className="eyebrow mb-2">{label}</p>
       <div className="relative rounded-lg px-3 pt-3 pb-1.5 flex items-end justify-center" style={{ background: "#faf8f5", minHeight: meterai ? 96 : 84, borderBottom: "2px solid rgba(0,0,0,.22)" }}>
-        {meterai && !sig && (
-          <span className="absolute top-2 left-2 grid place-items-center text-center leading-tight" style={{ width: 56, height: 32, border: "1px dashed #b9b2a6", borderRadius: 4, color: "#9b948c", fontSize: 8 }}>{t.meterai}<br />Rp10.000</span>
+        {meterai && (meteraiData?.image
+          ? <img src={meteraiData.image} alt="e-Meterai" className="absolute top-1.5 left-2" style={{ height: 46, width: "auto", maxWidth: 96 }} />
+          : <span className="absolute top-2 left-2 grid place-items-center text-center leading-tight" style={{ width: 56, height: 32, border: "1px dashed #b9b2a6", borderRadius: 4, color: "#9b948c", fontSize: 8 }}>{t.meterai}<br />Rp10.000</span>
         )}
         {sig ? (
           sig.drawnDataUrl
@@ -412,10 +420,52 @@ function SignBlock({ t, lang, label, sig, party, fallbackName, canSign, onSign, 
       <p className="font-semibold text-sm mt-2">{sig?.name || party.signatory || fallbackName}</p>
       <p className="text-xs text-muted">{sig?.title || party.title || ""}</p>
       {sig && <p className="text-xs text-faint mt-1 inline-flex items-center gap-1"><ShieldCheck size={12} style={{ color: "#0f9d58" }} /> {t.signedElectronically} · {fmtDateL(sig.date, lang)}</p>}
-      {sig && canReset && (
-        <button onClick={onReset} className="no-print block text-xs text-muted hover:text-[#d6336c] mt-1.5 inline-flex items-center gap-1"><X size={11} /> {t.resetSignature}</button>
-      )}
+      {meterai && meteraiData?.serial && <p className="text-[10px] text-faint mt-0.5">{t.meteraiSeriShort}: {meteraiData.serial}</p>}
+      <div className="no-print flex flex-wrap items-center gap-x-3 gap-y-1 mt-1.5">
+        {sig && canReset && (
+          <button onClick={onReset} className="text-xs text-muted hover:text-[#d6336c] inline-flex items-center gap-1"><X size={11} /> {t.resetSignature}</button>
+        )}
+        {meterai && canAffix && (meteraiData?.image
+          ? <button onClick={onClearMeterai} className="text-xs text-muted hover:text-[#d6336c] inline-flex items-center gap-1"><X size={11} /> {t.removeMeterai}</button>
+          : <button onClick={onAffix} className="text-xs text-muted hover:text-accent inline-flex items-center gap-1"><Stamp size={12} /> {t.affixMeterai}</button>
+        )}
+      </div>
     </div>
+  );
+}
+
+/* ── e-Meterai modal — upload the official stamp image + record its serial ── */
+function MeteraiModal({ party, t, onClose, onAffix }) {
+  const [image, setImage] = useState(null);
+  const [serial, setSerial] = useState("");
+  const fileRef = useRef(null);
+
+  useEffect(() => { if (party) { setImage(null); setSerial(""); } }, [party]);
+
+  const onFile = (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => setImage(r.result);
+    r.readAsDataURL(f);
+  };
+
+  return (
+    <Modal open={!!party} onClose={onClose} title={t.meteraiModalTitle} width={460}>
+      <p className="text-sm text-muted">{t.meteraiUploadHint}</p>
+      <button type="button" onClick={() => fileRef.current?.click()} className="w-full mt-3 rounded-xl border hairline grid place-items-center text-center p-4 hover:border-[color:var(--line-2)]" style={{ background: "#faf8f5", minHeight: 120 }}>
+        {image ? <img src={image} alt="e-Meterai" style={{ maxHeight: 96, maxWidth: "100%" }} /> : <span className="text-sm text-muted inline-flex items-center gap-2"><Stamp size={16} /> {t.chooseImage}</span>}
+      </button>
+      <input ref={fileRef} type="file" accept="image/png,image/jpeg,image/webp" hidden onChange={onFile} />
+      <div className="mt-4">
+        <Field label={t.meteraiSerial}><Input value={serial} onChange={(e) => setSerial(e.target.value)} placeholder="0301xxxxxxxxxxxx" /></Field>
+      </div>
+      <p className="text-xs text-faint mt-3">{t.meteraiNote}</p>
+      <div className="flex justify-end gap-2 mt-5">
+        <Button variant="ghost" onClick={onClose}>{t.cancel}</Button>
+        <Button onClick={() => onAffix({ image, serial: serial.trim() })} disabled={!image}><Stamp size={15} /> {t.affix}</Button>
+      </div>
+    </Modal>
   );
 }
 
