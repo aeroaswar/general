@@ -5,6 +5,7 @@ import { useData, useSelectedClient, useCurrentUser } from "../store.jsx";
 import { Card, Button, Badge, PageTitle, EmptyState, Modal, PlatformTag, fadeUp, cx } from "../lib/ui.jsx";
 import { Field, Input, Textarea, Select } from "../lib/forms.jsx";
 import { FrameworkForm, frameworkTitle } from "../lib/frameworkForms.jsx";
+import { WORDMARK } from "../lib/brand.js";
 import SignaturePad from "../components/SignaturePad.jsx";
 import { fmtDate } from "../lib/status.js";
 
@@ -75,15 +76,24 @@ export default function Contract() {
 
       {/* ── the document ── */}
       <Card className="print-area max-w-[860px] mx-auto !p-0">
-        {/* print-only running letterhead + footer — repeat on every printed page */}
-        <div className="print-letterhead print-only" aria-hidden="true">
-          <span className="brand-logo" style={{ height: 26, width: 100 }} />
-          <span className="ll-meta">{contract.studio.name} · {contract.studio.email}<br />{contract.studio.address}</span>
-        </div>
-        <div className="print-footer print-only" aria-hidden="true">
-          Confidential — {contract.title} · {contract.studio.name} &amp; {contract.client.company || client.name}
-        </div>
-
+        <table className="doc-table">
+          {/* letterhead repeats at the top of every printed page (table-header-group) */}
+          <thead className="print-head">
+            <tr><td>
+              <div className="print-letterhead" aria-hidden="true">
+                <img src={WORDMARK} alt="Bodega" className="ll-logo" />
+                <span className="ll-meta">{contract.studio.name}<br />{contract.studio.email} · {contract.studio.address}</span>
+              </div>
+            </td></tr>
+          </thead>
+          <tfoot className="print-foot">
+            <tr><td>
+              <div className="print-footer" aria-hidden="true">
+                Confidential — {contract.title} · {contract.studio.name} &amp; {contract.client.company || client.name}
+              </div>
+            </td></tr>
+          </tfoot>
+          <tbody><tr><td>
         <div className="p-5 sm:p-7 md:p-10 doc-body flex flex-col gap-7">
           <header className="flex flex-wrap items-start justify-between gap-4 pb-5 border-b hairline avoid-break">
             <div>
@@ -238,6 +248,8 @@ export default function Contract() {
             </div>
           </section>
         </div>
+          </td></tr></tbody>
+        </table>
       </Card>
 
       {canEdit && (
