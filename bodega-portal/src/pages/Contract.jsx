@@ -114,13 +114,6 @@ export default function Contract() {
               </div>
             </td></tr>
           </thead>
-          <tfoot className="print-foot">
-            <tr><td>
-              <div className="print-footer" aria-hidden="true">
-                {t.confidential} — {contract.title} · {contract.studio.name} &amp; {contract.client.company || client.name}
-              </div>
-            </td></tr>
-          </tfoot>
           <tbody><tr><td>
         <div className="p-5 sm:p-7 md:p-10 doc-body flex flex-col gap-7">
           {lang === "id" ? (
