@@ -384,21 +384,13 @@ export const INDUSTRY_TEMPLATES = [
   },
 ];
 
-// Standard clauses used as the starting point for a new contract (editable per client).
-export const DEFAULT_CLAUSES = [
-  { heading: "1. Scope of Work", body: "Bodega Creative Studio (“Bodega”) will act as an extension of the Client's marketing team, delivering the strategy and deliverables described in this agreement. Any work beyond the stated scope will be quoted separately and agreed in writing before it begins." },
-  { heading: "2. Term & Termination", body: "This agreement begins on the effective date and runs for the term stated above, renewing for successive one-month periods thereafter unless either party gives 30 days' written notice. Fees for work already delivered remain payable on termination." },
-  { heading: "3. Fees & Payment", body: "Fees are billed monthly in advance unless stated otherwise. Invoices are due within the payment terms stated above. Late payment may pause active work until the account is settled." },
-  { heading: "4. Approvals & Responsibilities", body: "The Client will provide timely feedback, brand assets, and approvals through this portal. Content moves forward once approved by the Client's named signatory or their delegate." },
-  { heading: "5. Intellectual Property", body: "On full payment, ownership of the approved and delivered content transfers to the Client. Bodega retains the right to feature delivered work in its portfolio and credentials unless agreed otherwise in writing." },
-  { heading: "6. Confidentiality", body: "Both parties will keep each other's non-public information confidential during the engagement and after it ends." },
-  { heading: "7. Electronic Signature", body: "The parties agree that signing electronically through this portal is valid, binding, and has the same legal effect as a handwritten signature." },
-];
+// Standard clauses (English / Bahasa Indonesia) live in lib/contractI18n.js.
+import { DEFAULT_CLAUSES_EN } from "./lib/contractI18n.js";
 
 // One example agreement (Maktour) — every other client starts with no contract.
 export const CONTRACTS = [
   {
-    id: "ct1", clientId: "c1", projectId: "p1", title: "Creative Services Agreement", status: "Sent",
+    id: "ct1", clientId: "c1", projectId: "p1", lang: "en", title: "Creative Services Agreement", status: "Sent",
     effectiveDate: iso(-150), termMonths: 6,
     studio: { name: "Bodega Creative Studio", signatory: "Reno", title: "CEO", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330" },
     client: { company: "Maktour", signatory: "", title: "", email: "maya@maktour.id", address: "" },
@@ -406,7 +398,7 @@ export const CONTRACTS = [
     cadence: "5× / week across Instagram, TikTok & Newsletter",
     scope: "Brand-first social media strategy and daily execution — research-led content pillars, a monthly content calendar, production, community management, and monthly performance reporting — designed to grow qualified package inquiries for Maktour.",
     deliverables: ["Monthly content calendar", "20+ content pieces / month", "Community management (Mon–Fri)", "Monthly performance report"],
-    clauses: DEFAULT_CLAUSES.map((c, i) => ({ id: `ct1-cl${i + 1}`, ...c })),
+    clauses: DEFAULT_CLAUSES_EN.map((c, i) => ({ id: `ct1-cl${i + 1}`, ...c })),
     clientSignature: null, studioSignature: null, createdAt: isot(-150),
   },
 ];

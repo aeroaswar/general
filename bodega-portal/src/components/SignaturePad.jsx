@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 
 // Lightweight canvas signature pad — pointer-based, DPR-aware.
-const SignaturePad = forwardRef(function SignaturePad({ height = 150 }, ref) {
+const SignaturePad = forwardRef(function SignaturePad({ height = 150, placeholder = "Draw your signature here" }, ref) {
   const canvasRef = useRef(null);
   const drawing = useRef(false);
   const [empty, setEmpty] = useState(true);
@@ -69,7 +69,7 @@ const SignaturePad = forwardRef(function SignaturePad({ height = 150 }, ref) {
         className="rounded-xl border hairline cursor-crosshair"
       />
       {empty && (
-        <span className="absolute inset-0 grid place-items-center text-sm pointer-events-none" style={{ color: "#9b948c" }}>Draw your signature here</span>
+        <span className="absolute inset-0 grid place-items-center text-sm pointer-events-none" style={{ color: "#9b948c" }}>{placeholder}</span>
       )}
     </div>
   );

@@ -2,9 +2,10 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
   USERS, CLIENTS, PROJECTS, AUDIENCE_SEGMENTS, PHASES, PILLARS, CAMPAIGNS,
   CONTENT_ITEMS, APPROVALS, ASSETS, COMMENTS, REPORT_SNAPSHOTS,
-  INDUSTRY_TEMPLATES, ASSET_REQUESTS, REMINDER_LOGS, CONTRACTS, DEFAULT_CLAUSES,
+  INDUSTRY_TEMPLATES, ASSET_REQUESTS, REMINDER_LOGS, CONTRACTS,
 } from "./seed.js";
 import { CLIENT_VISIBLE } from "./lib/status.js";
+import { defaultClauses } from "./lib/contractI18n.js";
 
 const now = () => new Date().toISOString();
 const today0 = () => new Date().toISOString().slice(0, 10);
@@ -272,8 +273,9 @@ export function DataProvider({ children }) {
     const client = clients.find((c) => c.id === clientId);
     const firstProject = projects.find((p) => p.clientId === clientId);
     const id = uid("ct");
+    const lang = input.lang || "en";
     const contract = {
-      id, clientId, projectId: input.projectId ?? firstProject?.id ?? null,
+      id, clientId, projectId: input.projectId ?? firstProject?.id ?? null, lang,
       title: input.title || "Creative Services Agreement", status: "Draft",
       effectiveDate: input.effectiveDate || today0(), termMonths: input.termMonths ?? 6,
       studio: { name: "Bodega Creative Studio", signatory: "", title: "", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330", ...input.studio },
@@ -281,7 +283,7 @@ export function DataProvider({ children }) {
       fee: input.fee || "", paymentTerms: input.paymentTerms || "Net 14 days from invoice date",
       cadence: input.cadence || "", scope: input.scope || (client ? `Brand-first social media strategy and daily execution for ${client.name}.` : ""),
       deliverables: input.deliverables || ["Monthly content calendar", "Content production", "Community management", "Monthly performance report"],
-      clauses: (input.clauses || DEFAULT_CLAUSES).map((c, i) => ({ id: `${id}-cl${i + 1}`, heading: c.heading, body: c.body })),
+      clauses: (input.clauses || defaultClauses(lang)).map((c, i) => ({ id: `${id}-cl${i + 1}`, heading: c.heading, body: c.body })),
       clientSignature: null, studioSignature: null, createdAt: now(),
     };
     setContracts((a) => [...a, contract]);
