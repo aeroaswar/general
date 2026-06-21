@@ -1,4 +1,4 @@
-import "@fontsource-variable/inter";
+import "@fontsource-variable/instrument-sans";
 import "@fontsource-variable/fraunces";
 import "@fontsource-variable/fraunces/standard-italic.css";
 import "@fontsource-variable/jetbrains-mono";

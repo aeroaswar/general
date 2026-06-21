@@ -41,9 +41,8 @@ const NAV_GROUPS = [
 
 function Brand() {
   return (
-    <Link href="/app" className="flex items-baseline gap-0.5 px-2">
-      <span className="display italic text-2xl font-semibold tracking-tight">bodega</span>
-      <span className="text-[10px] text-faint">®</span>
+    <Link href="/app" className="flex items-center px-2" aria-label="bodega — dashboard">
+      <span className="brand-logo" style={{ height: 20, width: 76 }} />
     </Link>
   );
 }
