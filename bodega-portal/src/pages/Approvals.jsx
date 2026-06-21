@@ -48,7 +48,7 @@ export default function Approvals() {
           {history.length === 0 && <p className="text-sm text-muted p-5">No decisions yet.</p>}
           {history.map((h) => (
             <div key={h.id} className="flex items-center gap-3 p-4">
-              <span className="w-8 h-8 grid place-items-center rounded-lg shrink-0" style={{ background: h.action === "approved" ? "#2562e722" : "#d6336c22", color: h.action === "approved" ? "#2562e7" : "#d6336c" }}>
+              <span className="w-8 h-8 grid place-items-center rounded-lg shrink-0" style={{ background: h.action === "approved" ? "#e8743b22" : "#d6336c22", color: h.action === "approved" ? "#e8743b" : "#d6336c" }}>
                 {h.action === "approved" ? <Check size={16} /> : <RotateCcw size={16} />}
               </span>
               <div className="min-w-0 flex-1">

@@ -6,7 +6,7 @@ import { useData, useActiveProject, useProjectContent } from "../store.jsx";
 import { fmtDate } from "../lib/status.js";
 import { Card, Badge, Progress, PageTitle, EmptyState, fadeUp } from "../lib/ui.jsx";
 
-const CAMP_C = { Planning: "#c97a0a", Active: "#0e9f8e", Complete: "#2562e7" };
+const CAMP_C = { Planning: "#c97a0a", Active: "#0e9f8e", Complete: "#e8743b" };
 
 export default function Campaigns() {
   const { campaigns, pillars } = useData();
@@ -28,7 +28,7 @@ export default function Campaigns() {
   return (
     <motion.div {...fadeUp}>
       <PageTitle kicker={project?.name || "Time-bound"} title="Campaigns">
-        <Badge color="#2562e7">{list.length} running</Badge>
+        <Badge color="#e8743b">{list.length} running</Badge>
       </PageTitle>
 
       {list.length === 0 ? (

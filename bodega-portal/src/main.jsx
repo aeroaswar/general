@@ -1,5 +1,7 @@
 import "@fontsource-variable/inter";
-import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/fraunces";
+import "@fontsource-variable/fraunces/standard-italic.css";
+import "@fontsource-variable/jetbrains-mono";
 import "./index.css";
 
 import React from "react";

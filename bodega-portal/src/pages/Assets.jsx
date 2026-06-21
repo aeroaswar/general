@@ -6,7 +6,7 @@ import { fmtDate, fromNow } from "../lib/status.js";
 import { Card, Button, Badge, Modal, PageTitle, EmptyState, cx, fadeUp } from "../lib/ui.jsx";
 
 const TYPE_ICON = { image: Image, video: Video, doc: FileText, audio: Music };
-const REQ_C = { Requested: "#c97a0a", "In Progress": "#2562e7", Uploaded: "#0f9d58", Cancelled: "#8a8f98" };
+const REQ_C = { Requested: "#c97a0a", "In Progress": "#e8743b", Uploaded: "#0f9d58", Cancelled: "#8a8f98" };
 
 export default function Assets() {
   const { assets, assetRequests, uploadAsset, addAssetRequest } = useData();
@@ -31,7 +31,7 @@ export default function Assets() {
 
       <div className="flex gap-2 mb-5">
         {["library", "requests"].map((t) => (
-          <button key={t} onClick={() => setTab(t)} className={cx("chip capitalize", tab === t && "!border-transparent")} style={tab === t ? { background: "#2562e71a", color: "#2562e7", borderColor: "#2562e788" } : { color: "var(--muted)" }}>
+          <button key={t} onClick={() => setTab(t)} className={cx("chip capitalize", tab === t && "!border-transparent")} style={tab === t ? { background: "#e8743b1a", color: "#e8743b", borderColor: "#e8743b88" } : { color: "var(--muted)" }}>
             {t} · {t === "library" ? library.length : requests.length}
           </button>
         ))}
@@ -44,7 +44,7 @@ export default function Assets() {
               const Icon = TYPE_ICON[a.type] || FileText;
               return (
                 <Card key={a.id} hover className="flex items-center gap-4">
-                  <span className="w-12 h-12 grid place-items-center rounded-xl shrink-0" style={{ background: "#2562e714", color: "#2562e7" }}><Icon size={20} /></span>
+                  <span className="w-12 h-12 grid place-items-center rounded-xl shrink-0" style={{ background: "#e8743b14", color: "#e8743b" }}><Icon size={20} /></span>
                   <div className="min-w-0">
                     <p className="font-medium text-sm truncate">{a.name}</p>
                     <p className="text-xs text-muted">{a.size} · {a.type}</p>

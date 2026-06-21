@@ -12,7 +12,7 @@ const uid = (p) => `${p}_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 /* ── Theme ─────────────────────────────────────────────── */
 const ThemeContext = createContext(null);
 export function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => localStorage.getItem("bodega-theme") || "light");
+  const [theme, setTheme] = useState(() => localStorage.getItem("bodega-theme") || "dark");
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
     localStorage.setItem("bodega-theme", theme);

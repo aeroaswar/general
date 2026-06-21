@@ -56,7 +56,7 @@ export default function Calendar() {
       </PageTitle>
 
       {placing && (
-        <div className="glass mb-4 p-3 flex items-center gap-3" style={{ borderColor: "#2562e788" }}>
+        <div className="glass mb-4 p-3 flex items-center gap-3" style={{ borderColor: "#e8743b88" }}>
           <CalendarPlus size={18} className="text-accent" />
           <p className="text-sm flex-1">Click a day to place <b>{placingItem?.title}</b>.</p>
           <button onClick={() => setPlacing(null)} className="p-1 rounded-lg text-muted hover:bg-[color:var(--card-2)]"><X size={16} /></button>
@@ -81,10 +81,10 @@ export default function Calendar() {
                 <button
                   key={key}
                   onClick={() => onDay(d)}
-                  className={cx("min-h-[84px] rounded-xl p-1.5 text-left border transition-colors flex flex-col gap-1", placing ? "hover:border-[color:#2562e7] cursor-copy" : "", isSel ? "border-[color:var(--line-2)]" : "border-transparent hover:border-[color:var(--line)]")}
+                  className={cx("min-h-[84px] rounded-xl p-1.5 text-left border transition-colors flex flex-col gap-1", placing ? "hover:border-[color:#e8743b] cursor-copy" : "", isSel ? "border-[color:var(--line-2)]" : "border-transparent hover:border-[color:var(--line)]")}
                   style={{ background: isSel ? "var(--card)" : inMonth ? "var(--card-2)" : "transparent", opacity: inMonth ? 1 : 0.4 }}
                 >
-                  <span className={cx("text-xs font-semibold w-6 h-6 grid place-items-center rounded-full", isToday && "text-white")} style={isToday ? { background: "linear-gradient(135deg,#2562e7,#01dcb4)" } : undefined}>{format(d, "d")}</span>
+                  <span className={cx("text-xs font-semibold w-6 h-6 grid place-items-center rounded-full", isToday && "text-white")} style={isToday ? { background: "#e8743b" } : undefined}>{format(d, "d")}</span>
                   <div className="flex flex-col gap-1">
                     {items.slice(0, 2).map((c) => (
                       <span key={c.id} className="text-[10px] leading-tight truncate pl-1.5 border-l-2" style={{ borderColor: STATUS_META[c.status]?.c }}>{c.title}</span>
@@ -113,7 +113,7 @@ export default function Calendar() {
               {ready.length === 0 ? <p className="text-sm text-muted">Nothing approved is waiting.</p> : (
                 <div className="flex flex-col gap-2">
                   {ready.map((c) => (
-                    <button key={c.id} onClick={() => setPlacing(c.id)} className={cx("glass-2 hairline border rounded-xl p-3 text-left transition-colors hover:border-[color:var(--line-2)]", placing === c.id && "!border-[color:#2562e7]")}>
+                    <button key={c.id} onClick={() => setPlacing(c.id)} className={cx("glass-2 hairline border rounded-xl p-3 text-left transition-colors hover:border-[color:var(--line-2)]", placing === c.id && "!border-[color:#e8743b]")}>
                       <p className="text-sm font-medium leading-snug">{c.title}</p>
                       <p className="text-xs text-muted mt-0.5">{c.platform} · pick a day →</p>
                     </button>

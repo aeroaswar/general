@@ -35,7 +35,7 @@ export default function MyQueue() {
   return (
     <motion.div {...fadeUp}>
       <PageTitle kicker="Your work" title="My Queue">
-        <Badge color="#2562e7">{totalOpen} open</Badge>
+        <Badge color="#e8743b">{totalOpen} open</Badge>
       </PageTitle>
 
       {totalOpen === 0 ? (

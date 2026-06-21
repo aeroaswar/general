@@ -39,7 +39,7 @@ export default function Projects() {
           {projects.map((p) => (
             <button key={p.id} onClick={() => setSelectedProjectId(p.id)}
               className={cx("chip", p.id === selectedProjectId && "!border-transparent")}
-              style={p.id === selectedProjectId ? { background: "#2562e71a", color: "#2562e7", borderColor: "#2562e788" } : { color: "var(--muted)" }}>
+              style={p.id === selectedProjectId ? { background: "#e8743b1a", color: "#e8743b", borderColor: "#e8743b88" } : { color: "var(--muted)" }}>
               <i className="w-1.5 h-1.5 rounded-full" style={{ background: PROJECT_STATUS_C[p.status] }} />{p.name}
             </button>
           ))}
@@ -74,7 +74,7 @@ export default function Projects() {
             <div className="flex flex-col gap-5">
               {data.phases.map((ph) => (
                 <div key={ph.id} className="relative">
-                  <span className="absolute -left-[22px] top-1 w-3.5 h-3.5 rounded-full border-2" style={{ background: "var(--card)", borderColor: "#2562e7" }} />
+                  <span className="absolute -left-[22px] top-1 w-3.5 h-3.5 rounded-full border-2" style={{ background: "var(--card)", borderColor: "#e8743b" }} />
                   <p className="font-semibold">{ph.name}</p>
                   <p className="text-sm text-muted">{ph.objective}</p>
                 </div>
@@ -91,7 +91,7 @@ export default function Projects() {
               <div key={pl.id}>
                 <div className="flex justify-between text-sm mb-1"><span className="font-medium">{pl.name}</span><span className="text-muted">target {pl.weight}% · actual {pl.actual}%</span></div>
                 <div className="relative">
-                  <Progress value={pl.actual} color="linear-gradient(90deg,#2562e7,#01dcb4)" />
+                  <Progress value={pl.actual} color="linear-gradient(90deg,#e8743b,#f0a35e)" />
                   <span className="absolute top-1/2 -translate-y-1/2 w-0.5 h-3 bg-[color:var(--text)]" style={{ left: `${pl.weight}%` }} title={`target ${pl.weight}%`} />
                 </div>
               </div>

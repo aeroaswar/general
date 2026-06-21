@@ -1,9 +1,10 @@
 # Bodega — Client Portal
 
 A faithful rebuild of **bodega.pplx.app** — the Bodega client portal — in the
-**Bodega brand design** (warm paper `#faf9f9`, ink `#181718`, blue `#2562e7`
-accent with mint/pink/yellow, Bricolage Grotesque + Inter). Same usage and
-screens as the real app, on the real stack, with a client-side demo store.
+**Studio-OS look**: warm near-black canvas, **Fraunces** serif display, **JetBrains
+Mono** labels/numbers, an **orange** accent, white primary buttons, and bordered
+cards. Dark by default (light variant available). Same usage and screens as the
+real app, on the real stack, with a client-side demo store.
 
 > Operating flow: **Client → Project → Framework → Content → Approval → Schedule → Report**
 
@@ -31,7 +32,8 @@ Pick a role (no password — in-memory demo):
 | **Client** | Maya Putri | Maktour only — review & approve |
 
 The top bar carries the **Client → Project** context: switch client, then switch the
-active project — every working screen scopes to it. (Role switcher is a demo aid.)
+active project — every working screen scopes to it. To change role, **Sign out** →
+pick a role on the login screen.
 
 ## Navigation (pipeline-grouped, role-aware)
 

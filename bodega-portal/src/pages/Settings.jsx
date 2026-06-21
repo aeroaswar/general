@@ -37,8 +37,8 @@ export default function Settings() {
           <h3 className="display font-bold mb-4">Appearance</h3>
           <div className="grid grid-cols-2 gap-3">
             {[{ k: "light", icon: Sun, label: "Light" }, { k: "dark", icon: Moon, label: "Dark" }].map(({ k, icon: Icon, label }) => (
-              <button key={k} onClick={() => set(k)} className={cx("flex items-center gap-3 p-4 rounded-2xl border transition-all", theme === k ? "border-transparent" : "hairline hover:border-[color:var(--line-2)]")} style={theme === k ? { background: "#2562e71a", borderColor: "#2562e788" } : { background: "var(--card-2)" }}>
-                <Icon size={20} style={theme === k ? { color: "#2562e7" } : undefined} />
+              <button key={k} onClick={() => set(k)} className={cx("flex items-center gap-3 p-4 rounded-2xl border transition-all", theme === k ? "border-transparent" : "hairline hover:border-[color:var(--line-2)]")} style={theme === k ? { background: "#e8743b1a", borderColor: "#e8743b88" } : { background: "var(--card-2)" }}>
+                <Icon size={20} style={theme === k ? { color: "#e8743b" } : undefined} />
                 <span className="font-semibold">{label}</span>
               </button>
             ))}
@@ -93,7 +93,7 @@ export default function Settings() {
 
 function Toggle({ on, onClick }) {
   return (
-    <button type="button" onClick={onClick} className="w-11 h-6 rounded-full p-0.5 transition-colors shrink-0" style={{ background: on ? "#2562e7" : "var(--line-2)" }}>
+    <button type="button" onClick={onClick} className="w-11 h-6 rounded-full p-0.5 transition-colors shrink-0" style={{ background: on ? "#e8743b" : "var(--line-2)" }}>
       <span className="block w-5 h-5 rounded-full bg-white transition-transform" style={{ transform: on ? "translateX(20px)" : "none" }} />
     </button>
   );
