@@ -1,0 +1,1326 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Aevor — Peptide Education</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..400&family=Manrope:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"><style>
+/* ════════════════════════════════════════════════
+   AEVOR · Clinical Editorial design system
+   Evidence-forward, flat, hairline, ruthlessly legible.
+   Reference point: a peer-reviewed compendium that
+   happens to be beautifully typeset. Dark default,
+   true-paper light. No neumorphism.
+   ════════════════════════════════════════════════ */
+:root{
+  --fs-xs:clamp(.72rem,.69rem + .15vw,.78rem);
+  --fs-sm:clamp(.84rem,.8rem + .2vw,.92rem);
+  --fs-base:clamp(1rem,.97rem + .18vw,1.08rem);
+  --fs-lg:clamp(1.18rem,1.05rem + .6vw,1.4rem);
+  --fs-xl:clamp(1.7rem,1.3rem + 1.6vw,2.5rem);
+  --fs-2xl:clamp(2.3rem,1.5rem + 3.4vw,4.2rem);
+
+  --sp-1:.25rem;--sp-2:.5rem;--sp-3:.75rem;--sp-4:1rem;--sp-5:1.25rem;
+  --sp-6:1.5rem;--sp-8:2rem;--sp-10:2.5rem;--sp-12:3rem;--sp-16:4rem;--sp-20:5rem;--sp-24:6rem;
+
+  --r-sm:6px;--r-md:9px;--r-lg:13px;--r-xl:18px;--r-full:999px;
+  --ease:340ms cubic-bezier(.2,.7,.3,1);
+  --wide:1180px;--default:880px;--read:640px;
+
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'Manrope','Helvetica Neue',sans-serif;
+  --font-mono:'Space Mono','Courier New',monospace;
+
+  --c-metabolic:#5a8cae;
+  --c-recovery:#3ea98d;
+  --c-longevity:#94a24a;
+  --c-antiaging:#c08a52;
+  --c-hormone:#9385b5;
+  --c-neuro:#b56b8a;
+  --c-immune:#5aa9a0;
+}
+
+/* DARK — ink (default) */
+:root,[data-theme="dark"]{
+  --bg:#0a0e17;
+  --surface:#111722;
+  --surface-2:#171f2d;
+  --border:#232d3d;
+  --border-strong:#37445b;
+  --text:#ecf0f6;
+  --text-muted:#9aa6b8;
+  --text-faint:#5f6a7d;
+  --primary:#5a96e0;
+  --primary-strong:#82b4f0;
+  --primary-dim:rgba(90,150,224,.14);
+  --gold:#d4b87c;
+  --ev-strong:#5a96e0;
+  --ev-moderate:#45b1a6;
+  --ev-emerging:#d9aa55;
+  --ev-caution:#d4715f;
+  --danger:#d4715f;--warn:#d9aa55;--success:#46b88a;
+  --shadow:0 20px 52px rgba(0,0,0,.55);
+}
+/* LIGHT — warm paper */
+[data-theme="light"]{
+  --bg:#edf1f7;
+  --surface:#fcfdff;
+  --surface-2:#e4e9f1;
+  --border:#d6dde8;
+  --border-strong:#bfc8d6;
+  --text:#131a26;
+  --text-muted:#555f70;
+  --text-faint:#8e97a6;
+  --primary:#1f5fae;
+  --primary-strong:#184c8c;
+  --primary-dim:rgba(31,95,174,.10);
+  --gold:#9a7a2f;
+  --ev-strong:#1f5fae;
+  --ev-moderate:#1f8a86;
+  --ev-emerging:#a9760f;
+  --ev-caution:#b8402f;
+  --danger:#b8402f;--warn:#a9760f;--success:#1c7a55;
+  --shadow:0 16px 46px rgba(20,30,60,.12);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:88px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{min-height:100dvh;font-family:var(--font-body);font-size:var(--fs-base);color:var(--text);
+  background:var(--bg);line-height:1.7;transition:background var(--ease),color var(--ease);overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;border:none;font:inherit;color:inherit;background:none}
+::selection{background:var(--primary-dim);color:var(--text)}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:var(--r-sm)}
+main{animation:fade .5s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.eyebrow{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.section{max-width:var(--wide);margin:0 auto;padding:var(--sp-20) var(--sp-6)}
+.section-head{max-width:var(--default);margin-bottom:var(--sp-12)}
+.section-head h2{font-family:var(--font-display);font-size:var(--fs-xl);font-weight:400;letter-spacing:-.015em;
+  margin:var(--sp-4) 0 var(--sp-4);line-height:1.1}
+.section-head h2 em{font-style:italic;color:var(--primary)}
+.section-head p{color:var(--text-muted);max-width:58ch;font-size:var(--fs-base)}
+
+/* ── NAV ── */
+.nav{position:fixed;inset:0 0 auto 0;z-index:100;display:flex;align-items:center;justify-content:space-between;
+  gap:var(--sp-4);padding:var(--sp-4) var(--sp-6);
+  background:color-mix(in oklab,var(--bg) 80%,transparent);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:var(--sp-3)}
+.nav-mark{width:36px;height:36px;display:grid;place-items:center;border-radius:var(--r-md);
+  border:1px solid var(--border-strong);color:var(--primary)}
+.nav-logo-name{font-family:var(--font-display);font-size:1.3rem;font-weight:500;letter-spacing:-.01em}
+.nav-links{display:flex;align-items:center;gap:var(--sp-8);list-style:none}
+.nav-links a{font-size:var(--fs-sm);color:var(--text-muted);font-weight:600;position:relative;padding:6px 0}
+.nav-links a:hover{color:var(--text)}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:0;height:2px;background:var(--primary);transition:right var(--ease)}
+.nav-links a:hover::after{right:0}
+.nav-actions{display:flex;align-items:center;gap:var(--sp-3)}
+.icon-btn{width:40px;height:40px;display:grid;place-items:center;border-radius:var(--r-md);
+  border:1px solid var(--border);color:var(--text-muted);transition:border-color var(--ease),color var(--ease)}
+.icon-btn:hover{color:var(--text);border-color:var(--border-strong)}
+.lang-toggle{display:flex;align-items:center;border-radius:var(--r-full);border:1px solid var(--border);padding:3px}
+.lang-toggle button{padding:.32rem .68rem;border-radius:var(--r-full);color:var(--text-faint);font-weight:700;
+  font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.06em;transition:color var(--ease),background var(--ease)}
+.lang-toggle button.active{background:var(--primary);color:#08120d}
+[data-theme="light"] .lang-toggle button.active{color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--sp-2);padding:.74rem 1.4rem;
+  border-radius:var(--r-full);font-size:var(--fs-sm);font-weight:700;border:1px solid var(--border-strong);
+  transition:transform var(--ease),border-color var(--ease),background var(--ease),color var(--ease)}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{color:var(--text)}
+.btn-primary:hover{border-color:var(--primary);color:var(--primary)}
+.btn-accent{background:var(--primary);border-color:var(--primary);color:#0a1422}
+[data-theme="light"] .btn-accent{color:#fff}
+.btn-accent:hover{background:var(--primary-strong);border-color:var(--primary-strong)}
+
+body[data-page="home"] [data-nav="home"],
+body[data-page="library"] [data-nav="library"],
+body[data-page="assessment"] [data-nav="assessment"],
+body[data-page="science"] [data-nav="science"]{color:var(--text)}
+body[data-page="library"] [data-nav="library"]::after,
+body[data-page="assessment"] [data-nav="assessment"]::after,
+body[data-page="science"] [data-nav="science"]::after{right:0}
+
+/* ── HERO ── */
+.hero{max-width:var(--wide);margin:0 auto;padding:calc(88px + var(--sp-16)) var(--sp-6) var(--sp-16);
+  display:grid;grid-template-columns:1.1fr .9fr;gap:var(--sp-16);align-items:center}
+.hero::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 48% 42% at 80% 24%,var(--primary-dim) 0%,transparent 60%),radial-gradient(ellipse 55% 50% at 10% 90%,rgba(212,184,124,.07) 0%,transparent 60%)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-6);
+  padding:.4rem .85rem;border-radius:var(--r-full);border:1px solid var(--border)}
+.hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--primary);box-shadow:0 0 8px var(--primary);animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.hero h1{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:340;line-height:1.02;
+  letter-spacing:-.022em;margin-bottom:var(--sp-6)}
+.hero h1 em{font-style:italic;color:var(--primary)}
+.hero-desc{color:var(--text-muted);max-width:48ch;margin-bottom:var(--sp-8);font-size:var(--fs-lg);line-height:1.55}
+.hero-actions{display:flex;gap:var(--sp-3);flex-wrap:wrap}
+.hero-trust{margin-top:var(--sp-10);display:flex;gap:var(--sp-6);flex-wrap:wrap;padding-top:var(--sp-6);border-top:1px solid var(--border)}
+.trust{display:flex;align-items:center;gap:var(--sp-2);font-family:var(--font-mono);font-size:var(--fs-xs);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)}
+.trust .ico{color:var(--primary)}
+
+/* evidence panel */
+.ev-panel{position:relative;display:flex;flex-direction:column;padding:var(--sp-6);border-radius:var(--r-xl);
+  background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow)}
+.ev-panel-head{display:flex;flex-direction:column;gap:5px;margin-bottom:var(--sp-6);
+  padding-bottom:var(--sp-5);border-bottom:1px solid var(--border)}
+.ev-panel-sub{font-size:var(--fs-sm);color:var(--text-muted)}
+.ev-bars{display:flex;align-items:stretch;gap:var(--sp-4);height:190px}
+.ev-bar{flex:1;display:flex;flex-direction:column;gap:var(--sp-3);cursor:pointer}
+.ev-bar-track{flex:1;display:flex;align-items:flex-end;border-radius:var(--r-sm);background:var(--surface-2);
+  border:1px solid var(--border);padding:5px;min-height:0}
+.ev-bar-fill{width:100%;height:0;border-radius:var(--r-sm);background:var(--cat);transition:height .9s var(--ease),opacity var(--ease);opacity:.92}
+.ev-bar:hover .ev-bar-fill{opacity:1}
+.ev-bar-cap{display:flex;flex-direction:column;align-items:center;gap:2px}
+.ev-bar-val{font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:700;color:var(--text)}
+.ev-bar-name{font-size:9px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);text-align:center;line-height:1.2}
+.ev-panel-note{margin-top:var(--sp-5);padding-top:var(--sp-4);border-top:1px solid var(--border);font-size:var(--fs-xs);color:var(--text-faint)}
+
+/* ── STEPS / HOW ── */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-6)}
+.step{padding:var(--sp-8) var(--sp-6);border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border);
+  transition:border-color var(--ease),transform var(--ease)}
+a.step:hover{border-color:var(--border-strong);transform:translateY(-3px)}
+.step-num{font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:700;color:var(--primary);
+  letter-spacing:.1em;margin-bottom:var(--sp-5);display:block}
+.step h3{font-size:var(--fs-lg);font-family:var(--font-display);font-weight:500;margin-bottom:var(--sp-2)}
+.step p{color:var(--text-muted);font-size:var(--fs-sm)}
+
+/* ── ASSESSMENT ── */
+.assess-wrap{max-width:var(--default);margin:0 auto;padding:var(--sp-10);border-radius:var(--r-xl);
+  background:var(--surface);border:1px solid var(--border)}
+.progress{display:flex;align-items:center;gap:var(--sp-4);margin-bottom:var(--sp-8)}
+.progress-track{flex:1;height:4px;border-radius:var(--r-full);background:var(--surface-2);border:1px solid var(--border);overflow:hidden}
+.progress-fill{height:100%;border-radius:var(--r-full);background:var(--primary);width:20%;transition:width var(--ease)}
+.progress-label{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-muted);white-space:nowrap;letter-spacing:.08em}
+.qstep{display:none}
+.qstep.active{display:block;animation:fade .4s var(--ease)}
+.qstep-q{font-family:var(--font-display);font-size:var(--fs-lg);font-weight:500;margin-bottom:var(--sp-2);line-height:1.25}
+.qstep-hint{color:var(--text-muted);font-size:var(--fs-sm);margin-bottom:var(--sp-6)}
+.opts{display:grid;gap:var(--sp-3)}
+.opts.grid2{grid-template-columns:1fr 1fr}
+.opt{display:flex;align-items:center;gap:var(--sp-4);text-align:left;padding:var(--sp-4) var(--sp-5);border-radius:var(--r-md);
+  background:var(--surface-2);border:1px solid var(--border);transition:border-color var(--ease),color var(--ease)}
+.opt:hover{border-color:var(--border-strong)}
+.opt.selected{border-color:var(--primary);color:var(--primary)}
+.opt-ico{width:38px;height:38px;border-radius:var(--r-sm);display:grid;place-items:center;flex-shrink:0;
+  color:var(--cat,var(--primary));border:1px solid var(--border)}
+.opt.selected .opt-ico{border-color:currentColor}
+.opt-txt b{display:block;font-weight:700;font-size:var(--fs-sm)}
+.opt-txt small{color:var(--text-muted);font-size:var(--fs-xs)}
+.qnav{display:flex;justify-content:space-between;gap:var(--sp-3);margin-top:var(--sp-8)}
+.qnav .spacer{flex:1}
+
+.result{display:none}
+.result.show{display:block;animation:fade .4s var(--ease)}
+.result-badge{display:inline-flex;align-items:center;gap:var(--sp-2);font-family:var(--font-mono);font-size:var(--fs-xs);
+  letter-spacing:.12em;text-transform:uppercase;color:var(--primary);margin-bottom:var(--sp-4)}
+.result h3{font-family:var(--font-display);font-size:var(--fs-xl);font-weight:400;margin-bottom:var(--sp-3)}
+.result-lead{color:var(--text-muted);margin-bottom:var(--sp-6);max-width:62ch}
+.safety-flag{display:none;align-items:flex-start;gap:var(--sp-3);padding:var(--sp-5);border-radius:var(--r-md);
+  background:color-mix(in oklab,var(--danger) 8%,var(--surface));border:1px solid var(--danger);margin-bottom:var(--sp-6)}
+.safety-flag.show{display:flex}
+.safety-flag .ico{color:var(--danger);flex-shrink:0;margin-top:2px}
+.safety-flag b{color:var(--danger)}
+.safety-flag p{font-size:var(--fs-sm);color:var(--text-muted)}
+.result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:var(--sp-4);margin-bottom:var(--sp-8)}
+.result-cta{display:flex;gap:var(--sp-3);flex-wrap:wrap;align-items:center}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10px;letter-spacing:.07em;
+  text-transform:uppercase;padding:.28rem .58rem;border-radius:var(--r-sm);border:1px solid var(--border);color:var(--text-muted)}
+.badge .d{width:7px;height:7px;border-radius:50%}
+.ev-strong .d{background:var(--ev-strong)}
+.ev-moderate .d{background:var(--ev-moderate)}
+.ev-emerging .d{background:var(--ev-emerging)}
+.ev-caution .d{background:var(--ev-caution)}
+
+/* ── LIBRARY ── */
+.filters{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-bottom:var(--sp-8)}
+.chip{padding:.5rem 1rem;border-radius:var(--r-full);font-size:var(--fs-sm);font-weight:600;border:1px solid var(--border);
+  color:var(--text-muted);transition:border-color var(--ease),color var(--ease),background var(--ease)}
+.chip:hover{color:var(--text)}
+.chip.active{border-color:var(--primary);color:var(--primary);background:var(--primary-dim)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:var(--sp-4)}
+.card{padding:var(--sp-6);border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border);
+  cursor:pointer;transition:transform var(--ease),border-color var(--ease);display:flex;flex-direction:column;gap:var(--sp-3);
+  border-top:3px solid var(--cat)}
+.card:hover{transform:translateY(-3px);border-color:var(--border-strong)}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-3)}
+.card-cat{width:38px;height:38px;border-radius:var(--r-sm);display:grid;place-items:center;border:1px solid var(--border)}
+.card-cat i{width:14px;height:14px;border-radius:4px;background:var(--cat)}
+.card h3{font-family:var(--font-display);font-size:1.18rem;font-weight:500;line-height:1.2}
+.card-sub{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-faint);text-transform:uppercase;letter-spacing:.07em}
+.card-desc{color:var(--text-muted);font-size:var(--fs-sm);flex:1}
+.card-badges{display:flex;flex-wrap:wrap;gap:6px;padding-top:var(--sp-3);border-top:1px solid var(--border)}
+
+/* ── SCIENCE ── */
+.sci{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-6)}
+.sci-card{padding:var(--sp-8);border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border)}
+.sci-card h3{font-family:var(--font-display);font-size:var(--fs-lg);font-weight:500;margin-bottom:var(--sp-4)}
+.sci-card p{color:var(--text-muted);font-size:var(--fs-sm)}
+.legend{display:grid;gap:var(--sp-3)}
+.legend-row{display:flex;align-items:flex-start;gap:var(--sp-3);font-size:var(--fs-sm)}
+.legend-row .badge{flex-shrink:0;margin-top:1px}
+.legend-row span{color:var(--text-muted)}
+
+/* ── CTA / CONSULT ── */
+.cta-card{max-width:var(--default);margin:0 auto;padding:var(--sp-12) var(--sp-8);border-radius:var(--r-xl);
+  background:var(--surface);border:1px solid var(--border);text-align:center}
+.cta-card h2{font-family:var(--font-display);font-weight:400;font-size:var(--fs-xl);margin:var(--sp-4) 0 var(--sp-4)}
+.cta-card p{color:var(--text-muted);max-width:54ch;margin:0 auto var(--sp-6)}
+
+/* ── DISCLAIMER ── */
+.disclaimer{max-width:var(--wide);margin:0 auto var(--sp-16);padding:var(--sp-6);border-radius:var(--r-lg);
+  background:var(--surface-2);border:1px solid var(--border)}
+.disclaimer p{font-size:var(--fs-sm);color:var(--text-muted);max-width:94ch;margin:0 auto;text-align:center}
+.disclaimer b{color:var(--text)}
+
+/* ── FOOTER ── */
+footer{max-width:var(--wide);margin:0 auto;padding:var(--sp-12) var(--sp-6) var(--sp-16);border-top:1px solid var(--border)}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:var(--sp-8);padding-bottom:var(--sp-10)}
+.foot-brand p{color:var(--text-muted);font-size:var(--fs-sm);max-width:36ch;margin-top:var(--sp-3)}
+.foot-col h4{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--text-faint);margin-bottom:var(--sp-4)}
+.foot-col ul{list-style:none;display:grid;gap:var(--sp-2)}
+.foot-col a{color:var(--text-muted);font-size:var(--fs-sm)}
+.foot-col a:hover{color:var(--text)}
+.foot-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-3);padding-top:var(--sp-6);
+  border-top:1px solid var(--border);font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--text-faint)}
+
+/* ── PAGE HEADER ── */
+.page-head{max-width:var(--wide);margin:0 auto;padding:calc(88px + var(--sp-12)) var(--sp-6) var(--sp-8);
+  border-bottom:1px solid var(--border)}
+.page-head h1{font-family:var(--font-display);font-size:var(--fs-2xl);font-weight:340;letter-spacing:-.02em;
+  margin:var(--sp-4) 0 var(--sp-4);line-height:1.02}
+.page-head h1 em{font-style:italic;color:var(--primary)}
+.page-head p{color:var(--text-muted);max-width:62ch;font-size:var(--fs-lg);line-height:1.5}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);
+  display:none;align-items:center;justify-content:center;padding:var(--sp-4)}
+.modal-overlay.show{display:flex;animation:fade .25s ease}
+.modal{width:100%;max-width:560px;max-height:88vh;overflow-y:auto;padding:var(--sp-8);border-radius:var(--r-xl);
+  background:var(--surface);border:1px solid var(--border-strong);box-shadow:var(--shadow);position:relative}
+.modal-close{position:absolute;top:var(--sp-5);right:var(--sp-5);width:38px;height:38px;border-radius:var(--r-sm);
+  border:1px solid var(--border);display:grid;place-items:center;color:var(--text-muted)}
+.modal-close:hover{color:var(--text);border-color:var(--border-strong)}
+.modal h3{font-family:var(--font-display);font-size:var(--fs-xl);font-weight:400;margin:var(--sp-2) 0;padding-right:var(--sp-8)}
+.modal-sub{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint)}
+.modal-badges{display:flex;flex-wrap:wrap;gap:8px;margin:var(--sp-4) 0 var(--sp-5);padding-bottom:var(--sp-5);border-bottom:1px solid var(--border)}
+.modal-block{margin-bottom:var(--sp-5)}
+.modal-block h4{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:var(--sp-2)}
+.modal-block p{font-size:var(--fs-sm);color:var(--text-muted)}
+.modal-warn{display:flex;gap:var(--sp-3);padding:var(--sp-4);border-radius:var(--r-md);
+  background:color-mix(in oklab,var(--warn) 9%,var(--surface));border:1px solid var(--warn);margin-bottom:var(--sp-5)}
+.modal-warn .ico{color:var(--warn);flex-shrink:0;margin-top:2px}
+.modal-warn p{font-size:var(--fs-sm);color:var(--text-muted)}
+.modal-foot{display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-top:var(--sp-6);padding-top:var(--sp-5);border-top:1px solid var(--border)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:880px){
+  .hero{grid-template-columns:1fr;gap:var(--sp-10)}
+  .hero .ev-panel{order:-1}
+  .steps,.sci{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr;gap:var(--sp-6)}
+  .nav-links{display:none}
+  .opts.grid2{grid-template-columns:1fr}
+}
+@media(max-width:560px){.nav{padding:var(--sp-3) var(--sp-4)}.assess-wrap{padding:var(--sp-6)}}
+
+/* ── consultation brief ── */
+.brief{margin-bottom:var(--sp-8);padding:var(--sp-6);border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface-2)}
+.brief-head{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);margin-bottom:var(--sp-4)}
+.brief-head h4{font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.12em;color:var(--primary)}
+.brief-copy{font-family:var(--font-mono);font-size:var(--fs-xs);padding:.35rem .8rem;border-radius:var(--r-full);border:1px solid var(--border-strong);color:var(--text-muted);transition:color .15s,border-color .15s}
+.brief-copy:hover{color:var(--text);border-color:var(--primary)}
+.brief-row{display:flex;justify-content:space-between;gap:var(--sp-4);padding:var(--sp-2) 0;border-bottom:1px solid var(--border);font-size:var(--fs-sm)}
+.brief-row:last-of-type{border-bottom:none}
+.brief-k{color:var(--text-muted)}
+.brief-v{color:var(--text);font-weight:600;text-align:right}
+.brief-note{margin-top:var(--sp-3);font-size:var(--fs-xs);color:var(--text-faint);line-height:1.5}
+
+/* Safari prefixes */
+.nav{-webkit-backdrop-filter:blur(16px)}
+.modal-overlay{-webkit-backdrop-filter:blur(5px)}
+
+/* ── expected-timeframe field ── */
+.card-tf{display:flex;gap:.45rem;align-items:flex-start;margin:0 0 var(--sp-3);font-size:var(--fs-xs);color:var(--text-muted);line-height:1.45}
+.card-tf svg{flex:0 0 auto;margin-top:2px;opacity:.65;color:var(--primary)}
+.modal-tf-tail{margin-top:var(--sp-2)!important;font-size:var(--fs-xs)!important;color:var(--text-faint)!important;font-style:italic}
+
+/* ── library search + sort ── */
+.empty-note{color:var(--text-faint);font-size:var(--fs-sm);padding:var(--sp-8) 0}
+.lib-controls{display:flex;gap:var(--sp-3);flex-wrap:wrap;align-items:center;margin-bottom:var(--sp-5)}
+.search-box{flex:1 1 220px;display:flex;align-items:center;gap:.5rem;padding:.6rem .9rem;border:1px solid var(--border);border-radius:var(--r-full);background:var(--surface-2)}
+.search-box svg{flex:0 0 auto;opacity:.55;color:var(--text-muted)}
+.search-box input{flex:1;background:none;border:none;color:var(--text);font:inherit;font-size:var(--fs-sm);outline:none}
+.sort-sel{display:flex;align-items:center;gap:.5rem;font-size:var(--fs-xs);color:var(--text-muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em}
+.sort-sel select{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-full);color:var(--text);font-family:var(--font-body);font-size:var(--fs-sm);padding:.45rem .8rem}
+
+/* ── modal citation ── */
+.modal-cite{margin-top:var(--sp-2)}
+.modal-cite a{color:var(--primary);font-size:var(--fs-xs);font-family:var(--font-mono);text-decoration:none;border-bottom:1px solid transparent}
+.modal-cite a:hover{border-bottom-color:var(--primary)}
+.cite-note{margin-top:var(--sp-2);font-size:var(--fs-xs);color:var(--text-faint);font-style:italic}
+
+/* ── FAQ ── */
+.faq-list{display:flex;flex-direction:column;gap:var(--sp-3);max-width:780px}
+.faq-item{border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);overflow:hidden}
+.faq-item summary{cursor:pointer;padding:var(--sp-5);font-family:var(--font-display);font-size:var(--fs-lg);color:var(--text);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:var(--sp-4)}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';color:var(--primary);font-size:1.4em;font-weight:300;line-height:1}
+.faq-item[open] summary::after{content:'\2212'}
+.faq-a{padding:0 var(--sp-5) var(--sp-5);color:var(--text-muted);line-height:1.65;font-size:var(--fs-sm)}
+
+/* ── glossary ── */
+.glo-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--sp-4)}
+.glo-item{border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--sp-5);background:var(--surface)}
+.glo-item h4{font-family:var(--font-display);font-size:var(--fs-lg);margin-bottom:var(--sp-2);color:var(--text)}
+.glo-item p{color:var(--text-muted);font-size:var(--fs-sm);line-height:1.6}
+
+/* ── compare ── */
+.cmp-pick{display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-bottom:var(--sp-6)}
+.cmp-pick select{flex:1 1 200px;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);color:var(--text);font:inherit;font-size:var(--fs-sm);padding:.6rem .8rem}
+.cmp-wrap{overflow-x:auto}
+.cmp-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);min-width:520px}
+.cmp-table th,.cmp-table td{text-align:left;padding:var(--sp-3) var(--sp-4);border-bottom:1px solid var(--border);vertical-align:top}
+.cmp-table thead th{font-family:var(--font-display);font-size:var(--fs-lg);color:var(--text)}
+.cmp-row-label{color:var(--text-muted)!important;font-family:var(--font-mono);font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.cmp-empty{color:var(--text-faint);font-size:var(--fs-sm);padding:var(--sp-6) 0}
+
+/* ── nav active: new pages ── */
+body[data-page="compare"] [data-nav="compare"],body[data-page="faq"] [data-nav="faq"]{color:var(--text)}
+body[data-page="compare"] [data-nav="compare"]::after,body[data-page="faq"] [data-nav="faq"]::after{right:0}
+
+/* ── gap above filter chips ── */
+.filters{margin-top:var(--sp-6)}
+
+/* ── responsive nav (hamburger ≤768px) ── */
+.nav-toggle{display:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:var(--r-md);border:1px solid var(--border);color:var(--text);flex:0 0 auto}
+.nav-toggle:hover{border-color:var(--border-strong)}
+@media(max-width:768px){
+  .nav{flex-wrap:wrap;row-gap:0;padding-top:var(--sp-3);padding-bottom:var(--sp-3)}
+  .nav-logo{order:1}
+  .nav-toggle{display:inline-flex;order:2;margin-left:auto}
+  .nav-links{order:3;flex-basis:100%;flex-direction:column;align-items:stretch;gap:0;
+    max-height:0;overflow:hidden;opacity:0;transition:max-height .32s var(--ease),opacity .25s,margin .25s}
+  .nav-links li{width:100%}
+  .nav-links a{display:block;padding:var(--sp-3) var(--sp-1);font-size:var(--fs-base);border-bottom:1px solid var(--border)}
+  .nav-links a::after{display:none}
+  .nav-actions{order:4;flex-basis:100%;flex-direction:column;align-items:stretch;gap:var(--sp-3);
+    max-height:0;overflow:hidden;opacity:0;transition:max-height .36s var(--ease),opacity .25s,margin .25s}
+  .nav-actions .lang-toggle{align-self:flex-start}
+  .nav-actions .icon-btn{align-self:flex-start}
+  .nav-actions .btn-accent{width:100%;justify-content:center;text-align:center}
+  .nav.open{background:var(--bg)}
+  .nav.open .nav-links{max-height:420px;opacity:1;margin-top:var(--sp-3);border-top:1px solid var(--border)}
+  .nav.open .nav-actions{max-height:280px;opacity:1;margin:var(--sp-3) 0 var(--sp-2)}
+}
+@media(max-width:420px){
+  .nav-logo-name{display:none}
+  .cards{grid-template-columns:1fr}
+}
+
+
+.view{display:none}.view.active{display:block}
+.nav-links a.is-active{color:var(--text)}.nav-links a.is-active::after{right:0}
+</style></head><body>
+<nav class="nav"><a class="nav-logo" href="#home" data-route="home"><span class="nav-mark"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12.5" stroke="currentColor" stroke-width="1.5"/><path d="M14 6C14 6 8 10 8 14.5C8 18.5 10.5 22 14 22C17.5 22 20 18.5 20 14.5C20 10 14 6 14 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 18Q14 13 18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg></span><span class="nav-logo-name">Aevor</span></a><ul class="nav-links"><li><a data-nav="library" href="#library" data-route="library" data-i18n="nav_library">Library</a></li><li><a data-nav="compare" href="#compare" data-route="compare" data-i18n="nav_compare">Compare</a></li><li><a data-nav="assessment" href="#assessment" data-route="assessment" data-i18n="nav_assess">Assessment</a></li><li><a data-nav="science" href="#science" data-route="science" data-i18n="nav_science">The Science</a></li><li><a data-nav="faq" href="#faq" data-route="faq" data-i18n="nav_faq">FAQ</a></li></ul><div class="nav-actions"><div class="lang-toggle"><button data-lang="en" onclick="setLang('en')">EN</button><button data-lang="id" onclick="setLang('id')">ID</button></div><button class="icon-btn" data-theme-toggle aria-label="Toggle theme"></button><a href="#consult" data-route="consult" class="btn btn-accent" data-i18n="nav_cta">Consult</a></div><button class="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="toggleMenu(this)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></nav>
+<section class="view active" id="view-home">
+
+<header class="hero">
+  <div>
+    <span class="hero-eyebrow eyebrow"><span class="dot"></span><span data-i18n="hero_eyebrow">Education · Not medical advice</span></span>
+    <h1 data-i18n="hero_title">Understand peptides <em>before</em> you ever consider them.</h1>
+    <p class="hero-desc" data-i18n="hero_desc">A clear, evidence-based library and a guided assessment that orients you toward the right category of questions — then connects you with a licensed practitioner. We never sell, prescribe, or dose.</p>
+    <div class="hero-actions">
+      <a href="#assessment" data-route="assessment" class="btn btn-accent" data-i18n="hero_cta1">Start the assessment</a>
+      <a href="#library" data-route="library" class="btn btn-primary" data-i18n="hero_cta2">Explore the library →</a>
+    </div>
+    <div class="hero-trust">
+      <span class="trust"><svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3z"/></svg><span data-i18n="trust1">Evidence-graded</span></span>
+      <span class="trust"><svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span data-i18n="trust2">BPOM status labeled</span></span>
+      <span class="trust"><svg class="ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span data-i18n="trust3">Practitioner-routed</span></span>
+    </div>
+  </div>
+  <div class="ev-panel">
+    <div class="ev-panel-head"><span class="eyebrow" data-i18n="ev_panel_eyebrow">Evidence at a glance</span><span class="ev-panel-sub" data-i18n="ev_panel_sub">Avg. human-evidence signal by category</span></div>
+    <div class="ev-bars" id="evBars"></div>
+    <p class="ev-panel-note" data-i18n="ev_panel_note">Taller = stronger human-trial support. Tap a column to explore that category.</p>
+  </div>
+</header>
+
+<section class="section" id="how">
+  <div class="section-head">
+    <span class="eyebrow" data-i18n="how_eyebrow">The Flow</span>
+    <h2 data-i18n="how_title">Three steps. No shortcuts around a doctor.</h2>
+    <p data-i18n="how_desc">This site is built to inform a conversation with a clinician — not to replace one. Here is the only path we endorse.</p>
+  </div>
+  <div class="steps">
+    <a class="step" href="#library" data-route="library"><div class="step-num">01</div><h3 data-i18n="step1_t">Learn</h3><p data-i18n="step1_d">Read the library. Understand mechanisms, what the evidence actually shows, and each compound's regulatory status in Indonesia.</p></a>
+    <a class="step" href="#assessment" data-route="assessment"><div class="step-num">02</div><h3 data-i18n="step2_t">Assess</h3><p data-i18n="step2_d">Take the guided assessment. It orients you to a category of interest and surfaces relevant safety considerations — it does not prescribe.</p></a>
+    <a class="step" href="#consult" data-route="consult"><div class="step-num">03</div><h3 data-i18n="step3_t">Consult</h3><p data-i18n="step3_d">Bring your result to a licensed physician. Any decision to use, dose, or obtain a peptide happens only under medical supervision.</p></a>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="cta-card">
+    <span class="eyebrow" data-i18n="assess_eyebrow">Guided Orientation</span>
+    <h2 data-i18n="home_cta_t">Begin where the evidence is clearest.</h2>
+    <p data-i18n="home_cta_d">Take the five-question orientation, or read the full library first. Either way, the next step is always a licensed practitioner.</p>
+    <div class="hero-actions" style="justify-content:center">
+      <a href="#assessment" data-route="assessment" class="btn btn-accent" data-i18n="hero_cta1">Start the assessment</a>
+      <a href="#library" data-route="library" class="btn btn-primary" data-i18n="hero_cta2">Explore the library →</a>
+    </div>
+  </div>
+</section>
+
+</section><section class="view" id="view-library">
+
+<div class="page-head">
+  <span class="eyebrow" data-i18n="lib_eyebrow">Reference Library</span>
+  <h1 data-i18n="lib_title">Every compound, graded honestly.</h1>
+  <p data-i18n="lib_desc">No hype. Each entry shows mechanism, what the human evidence actually supports, its regulatory status in Indonesia, and the safety considerations a clinician would raise.</p>
+</div>
+
+<section class="section" style="padding-top:var(--sp-12)">
+  <div class="filters" id="filters">
+    <button class="chip active" data-filter="all" onclick="filterLib(this,'all')" data-i18n="f_all">All</button>
+    <button class="chip" data-filter="metabolic" onclick="filterLib(this,'metabolic')" data-i18n="f_metabolic">Metabolic</button>
+    <button class="chip" data-filter="recovery" onclick="filterLib(this,'recovery')" data-i18n="f_recovery">Recovery</button>
+    <button class="chip" data-filter="neuro" onclick="filterLib(this,'neuro')" data-i18n="f_neuro">Neuro</button>
+    <button class="chip" data-filter="longevity" onclick="filterLib(this,'longevity')" data-i18n="f_longevity">Longevity</button>
+    <button class="chip" data-filter="antiaging" onclick="filterLib(this,'antiaging')" data-i18n="f_antiaging">Anti-aging</button>
+    <button class="chip" data-filter="hormone" onclick="filterLib(this,'hormone')" data-i18n="f_hormone">Hormonal</button>
+    <button class="chip" data-filter="immune" onclick="filterLib(this,'immune')" data-i18n="f_immune">Immune</button>
+  </div>
+  <div class="lib-controls">
+    <label class="search-box"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input type="text" data-i18n-ph="search_ph" placeholder="Search compounds…" oninput="doSearch(this.value)"></label>
+    <div class="sort-sel"><span data-i18n="sort_by">Sort</span><select onchange="doSort(this.value)"><option value="default" data-i18n="sort_default">Default</option><option value="evidence" data-i18n="sort_evidence">Evidence</option><option value="bpom" data-i18n="sort_bpom">BPOM status</option><option value="name" data-i18n="sort_name">Name</option></select></div>
+  </div>
+  <div class="cards" id="cards"></div>
+</section>
+
+</section><section class="view" id="view-compare">
+<div class="page-head"><span class="eyebrow" data-i18n="cmp_eyebrow">Side by Side</span><h1 data-i18n="cmp_title">Compare compounds</h1><p data-i18n="cmp_desc">.</p></div>
+<section class="section" style="padding-top:var(--sp-12)"><div class="cmp-pick"><select onchange="renderCompare()"></select><select onchange="renderCompare()"></select><select onchange="renderCompare()"></select></div><div id="cmpOut"></div></section>
+</section><section class="view" id="view-assessment">
+<div class="page-head"><span class="eyebrow" data-i18n="assess_eyebrow">Guided Orientation</span><h1 data-i18n="assess_title">Where should your questions begin?</h1><p data-i18n="assess_desc">Eight short questions.</p></div>
+<section class="section" style="padding-top:var(--sp-12)"><div class="assess-wrap"><div class="progress" id="progressWrap"><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><span class="progress-label" id="progressLabel">01 / 08</span></div><div class="qstep active" id="q0"><div class="qstep-q" data-i18n="q0_q">.</div><div class="qstep-hint" data-i18n="q0_h">.</div><div class="opts grid2"><button class="opt" data-value="metabolic" onclick="pick(this,0)"><span class="opt-ico" style="--cat:var(--c-metabolic)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><span class="opt-txt"><b data-i18n="g_metabolic">.</b><small data-i18n="g_metabolic_s">.</small></span></button><button class="opt" data-value="recovery" onclick="pick(this,0)"><span class="opt-ico" style="--cat:var(--c-recovery)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span class="opt-txt"><b data-i18n="g_recovery">.</b><small data-i18n="g_recovery_s">.</small></span></button><button class="opt" data-value="neuro" onclick="pick(this,0)"><span class="opt-ico" style="--cat:var(--c-neuro)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 0-4 4 4 4 0 0 0-2 7 4 4 0 0 0 2 7 4 4 0 0 0 8 0 4 4 0 0 0 2-7 4 4 0 0 0-2-7 4 4 0 0 0-4-4z"/><path d="M12 6v14"/></svg></span><span class="opt-txt"><b data-i18n="g_neuro">.</b><small data-i18n="g_neuro_s">.</small></span></button><button class="opt" data-value="longevity" onclick="pick(this,0)"><span class="opt-ico" style="--cat:var(--c-longevity)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></span><span class="opt-txt"><b data-i18n="g_longevity">.</b><small data-i18n="g_longevity_s">.</small></span></button><button class="opt" data-value="antiaging" onclick="pick(this,0)"><span class="opt-ico" style="--cat:var(--c-antiaging)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6L12 2z"/></svg></span><span class="opt-txt"><b data-i18n="g_antiaging">.</b><small data-i18n="g_antiaging_s">.</small></span></button><button class="opt" data-value="hormone" onclick="pick(this,0)"><span class="opt-ico" style="--cat:var(--c-hormone)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 5l14 14M19 5L5 19"/></svg></span><span class="opt-txt"><b data-i18n="g_hormone">.</b><small data-i18n="g_hormone_s">.</small></span></button></div><div class="qnav"><span class="spacer"></span><button class="btn btn-accent" onclick="next()" data-i18n="next">Next</button></div></div><div class="qstep" id="q1"><div class="qstep-q" data-i18n="age_q">.</div><div class="qstep-hint" data-i18n="age_h">.</div><div class="opts"><button class="opt" data-value="u30" onclick="pick(this,1)"><span class="opt-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="opt-txt"><b data-i18n="age_u30">.</b></span></button><button class="opt" data-value="3044" onclick="pick(this,1)"><span class="opt-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="opt-txt"><b data-i18n="age_3044">.</b></span></button><button class="opt" data-value="4559" onclick="pick(this,1)"><span class="opt-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="opt-txt"><b data-i18n="age_4559">.</b></span></button><button class="opt" data-value="60" onclick="pick(this,1)"><span class="opt-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8M4 16h16M12 4v3M12 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg></span><span class="opt-txt"><b data-i18n="age_60">.</b></span></button></div><div class="qnav"><button class="btn btn-primary" onclick="prev()" data-i18n="back">Back</button><span class="spacer"></span><button class="btn btn-accent" onclick="next()" data-i18n="next">Next</button></div></div><div class="qstep" id="q2"><div class="qstep-q" data-i18n="sex_q">.</div><div class="qstep-hint" data-i18n="sex_h">.</div><div class="opts"><button class="opt" data-value="male" onclick="pick(this,2)"><span class="opt-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="opt-txt"><b data-i18n="sex_male">.</b></span></button><button class="opt" data-value="female" onclick="pick(this,2)"><span class="opt-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="opt-txt"><b data-i18n="sex_female">.</b></span></button><button class="opt" data-value="na" onclick="pick(this,2)"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span><span class="opt-txt"><b data-i18n="sex_na">.</b></span></button></div><div class="qnav"><button class="btn btn-primary" onclick="prev()" data-i18n="back">Back</button><span class="spacer"></span><button class="btn btn-accent" onclick="next()" data-i18n="next">Next</button></div></div><div class="qstep" id="q3"><div class="qstep-q" data-i18n="q1_q">.</div><div class="qstep-hint" data-i18n="q1_h">.</div><div class="opts"><button class="opt" data-value="sedentary" onclick="pick(this,3)"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg></span><span class="opt-txt"><b data-i18n="a_sed">.</b><small data-i18n="a_sed_s">.</small></span></button><button class="opt" data-value="active" onclick="pick(this,3)"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></span><span class="opt-txt"><b data-i18n="a_act">.</b><small data-i18n="a_act_s">.</small></span></button><button class="opt" data-value="athlete" onclick="pick(this,3)"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span><span class="opt-txt"><b data-i18n="a_ath">.</b><small data-i18n="a_ath_s">.</small></span></button><button class="opt" data-value="injured" onclick="pick(this,3)"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2h8l-1 9h2l-9 11 1-8H6l2-12z"/></svg></span><span class="opt-txt"><b data-i18n="a_inj">.</b><small data-i18n="a_inj_s">.</small></span></button></div><div class="qnav"><button class="btn btn-primary" onclick="prev()" data-i18n="back">Back</button><span class="spacer"></span><button class="btn btn-accent" onclick="next()" data-i18n="next">Next</button></div></div><div class="qstep" id="q4"><div class="qstep-q" data-i18n="tf_q">.</div><div class="qstep-hint" data-i18n="tf_h">.</div><div class="opts"><button class="opt" data-value="explore" onclick="pick(this,4)"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span class="opt-txt"><b data-i18n="tf_explore">.</b><small data-i18n="tf_explore_s">.</small></span></button><button class="opt" data-value="months" onclick="pick(this,4)"><span class="opt-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span class="opt-txt"><b data-i18n="tf_months">.</b><small data-i18n="tf_months_s">.</small></span></button><button class="opt" data-value="longterm" onclick="pick(this,4)"><span class="opt-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg></span><span class="opt-txt"><b data-i18n="tf_longterm">.</b><small data-i18n="tf_longterm_s">.</small></span></button></div><div class="qnav"><button class="btn btn-primary" onclick="prev()" data-i18n="back">Back</button><span class="spacer"></span><button class="btn btn-accent" onclick="next()" data-i18n="next">Next</button></div></div><div class="qstep" id="q5"><div class="qstep-q" data-i18n="tried_q">.</div><div class="qstep-hint" data-i18n="tried_h">.</div><div class="opts grid2" id="triedOpts"><button class="opt" data-value="diet" onclick="pickMulti(this,'tried')"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 2v7a3 3 0 0 0 6 0V2M6 2v20M21 15V2a5 5 0 0 0-3 5v6h3zm0 0v7"/></svg></span><span class="opt-txt"><b data-i18n="tr_diet">.</b><small data-i18n="tr_diet_s">.</small></span></button><button class="opt" data-value="training" onclick="pickMulti(this,'tried')"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></span><span class="opt-txt"><b data-i18n="tr_training">.</b><small data-i18n="tr_training_s">.</small></span></button><button class="opt" data-value="supps" onclick="pickMulti(this,'tried')"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.5 20.5a4.95 4.95 0 0 1-7-7l6-6a4.95 4.95 0 0 1 7 7zM8.5 8.5l7 7"/></svg></span><span class="opt-txt"><b data-i18n="tr_supps">.</b><small data-i18n="tr_supps_s">.</small></span></button><button class="opt" data-value="rx" onclick="pickMulti(this,'tried')"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span><span class="opt-txt"><b data-i18n="tr_rx">.</b><small data-i18n="tr_rx_s">.</small></span></button><button class="opt" data-value="none" onclick="pickMulti(this,'tried')"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></span><span class="opt-txt"><b data-i18n="tr_none">.</b><small data-i18n="tr_none_s">.</small></span></button></div><div class="qnav"><button class="btn btn-primary" onclick="prev()" data-i18n="back">Back</button><span class="spacer"></span><button class="btn btn-accent" onclick="next()" data-i18n="next">Next</button></div></div><div class="qstep" id="q6"><div class="qstep-q" data-i18n="q2_q">.</div><div class="qstep-hint" data-i18n="q2_h">.</div><div class="opts grid2" id="safetyOpts"><button class="opt" data-value="cancer" onclick="pickMulti(this,'safety')"><span class="opt-ico" style="--cat:var(--danger)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></span><span class="opt-txt"><b data-i18n="s_cancer">.</b><small data-i18n="s_cancer_s">.</small></span></button><button class="opt" data-value="pregnant" onclick="pickMulti(this,'safety')"><span class="opt-ico" style="--cat:var(--danger)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></span><span class="opt-txt"><b data-i18n="s_preg">.</b><small data-i18n="s_preg_s">.</small></span></button><button class="opt" data-value="cardio" onclick="pickMulti(this,'safety')"><span class="opt-ico" style="--cat:var(--danger)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></span><span class="opt-txt"><b data-i18n="s_cardio">.</b><small data-i18n="s_cardio_s">.</small></span></button><button class="opt" data-value="thyroid" onclick="pickMulti(this,'safety')"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/></svg></span><span class="opt-txt"><b data-i18n="s_thyroid">.</b><small data-i18n="s_thyroid_s">.</small></span></button><button class="opt" data-value="meds" onclick="pickMulti(this,'safety')"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.5 20.5a4.95 4.95 0 0 1-7-7l6-6a4.95 4.95 0 0 1 7 7zM8.5 8.5l7 7"/></svg></span><span class="opt-txt"><b data-i18n="s_meds">.</b><small data-i18n="s_meds_s">.</small></span></button><button class="opt" data-value="none" onclick="pickMulti(this,'safety')"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></span><span class="opt-txt"><b data-i18n="s_none">.</b><small data-i18n="s_none_s">.</small></span></button></div><div class="qnav"><button class="btn btn-primary" onclick="prev()" data-i18n="back">Back</button><span class="spacer"></span><button class="btn btn-accent" onclick="next()" data-i18n="next">Next</button></div></div><div class="qstep" id="q7"><div class="qstep-q" data-i18n="q4_q">.</div><div class="qstep-hint" data-i18n="q4_h">.</div><div class="opts"><button class="opt" data-value="learn" onclick="pick(this,7)"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span class="opt-txt"><b data-i18n="i_learn">.</b><small data-i18n="i_learn_s">.</small></span></button><button class="opt" data-value="consult" onclick="pick(this,7)"><span class="opt-ico"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span><span class="opt-txt"><b data-i18n="i_consult">.</b><small data-i18n="i_consult_s">.</small></span></button></div><div class="qnav"><button class="btn btn-primary" onclick="prev()" data-i18n="back">Back</button><span class="spacer"></span><button class="btn btn-accent" onclick="showResult()" data-i18n="see_result">See my orientation</button></div></div><div class="result" id="result"><span class="result-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg><span data-i18n="result_badge">Educational orientation</span></span><h3 id="resultTitle">.</h3><p class="result-lead" id="resultLead">.</p><div class="safety-flag" id="safetyFlag"><span class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><div><b data-i18n="safety_title">.</b><p id="safetyText" data-i18n="safety_text">.</p></div></div><div class="brief" id="briefBox"></div><div class="result-grid" id="resultGrid"></div><div class="result-cta"><a href="#consult" data-route="consult" class="btn btn-accent" data-i18n="result_cta1">Discuss with a practitioner</a><button class="btn btn-primary" onclick="resetQuiz()" data-i18n="result_cta2">Retake</button></div></div></div></section>
+</section><section class="view" id="view-science">
+
+<div class="page-head">
+  <span class="eyebrow" data-i18n="sci_eyebrow">Read the Methodology</span>
+  <h1 data-i18n="sci_title">How to read this site</h1>
+</div>
+
+<section class="section" style="padding-top:0">
+  <div class="sci">
+    <div class="sci-card">
+      <h3 data-i18n="sci_what_t">What peptides are</h3>
+      <p data-i18n="sci_what_d">Peptides are short chains of amino acids that act as signalling molecules…</p>
+    </div>
+    <div class="sci-card">
+      <h3 data-i18n="sci_legend_t">Our evidence scale</h3>
+      <div class="legend">
+        <div class="legend-row"><span class="badge ev-strong"><span class="d"></span><span data-i18n="ev_strong">Strong</span></span><span data-i18n="ev_strong_d">Well-powered human trials support the primary use.</span></div>
+        <div class="legend-row"><span class="badge ev-moderate"><span class="d"></span><span data-i18n="ev_moderate">Moderate</span></span><span data-i18n="ev_moderate_d">Some human data; effect plausible but not settled.</span></div>
+        <div class="legend-row"><span class="badge ev-emerging"><span class="d"></span><span data-i18n="ev_emerging">Emerging</span></span><span data-i18n="ev_emerging_d">Mostly preclinical or anecdotal; limited human data.</span></div>
+        <div class="legend-row"><span class="badge ev-caution"><span class="d"></span><span data-i18n="ev_caution">Caution</span></span><span data-i18n="ev_caution_d">Notable safety concerns; widely advised against outside strict supervision.</span></div>
+      </div>
+    </div>
+    <div class="sci-card" style="grid-column:1/-1">
+      <h3 data-i18n="sci_reg_t">Regulatory status</h3>
+      <p data-i18n="sci_reg_d">Indonesia requires a marketing authorisation (izin edar) from BPOM…</p>
+      <div class="legend" style="margin-top:var(--sp-5)">
+        <div class="legend-row"><span class="badge reg-yes"><span class="d" style="background:var(--success)"></span>BPOM ✓</span><span data-i18n="reg_yes_d">Holds an Indonesian marketing authorisation — prescription-only.</span></div>
+        <div class="legend-row"><span class="badge reg-no"><span class="d" style="background:var(--text-faint)"></span>BPOM ✕</span><span data-i18n="reg_no_d">No izin edar in Indonesia. Distribution to consumers is unlawful.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</section><section class="view" id="view-faq">
+<div class="page-head"><span class="eyebrow" data-i18n="faq_eyebrow">Questions</span><h1 data-i18n="faq_title">Peptides in Indonesia, answered plainly.</h1><p data-i18n="faq_desc">.</p></div>
+<section class="section" style="padding-top:var(--sp-12)"><div class="faq-list" id="faqList"></div></section>
+</section><section class="view" id="view-glossary">
+<div class="page-head"><span class="eyebrow" data-i18n="glo_eyebrow">Plain Language</span><h1 data-i18n="glo_title">Glossary</h1><p data-i18n="glo_desc">.</p></div>
+<section class="section" style="padding-top:var(--sp-12)"><div class="glo-list" id="gloList"></div></section>
+</section><section class="view" id="view-consult">
+
+<section class="section" style="padding-top:calc(90px + var(--sp-16))">
+  <div class="cta-card">
+    <span class="eyebrow" data-i18n="consult_eyebrow">The Only Next Step</span>
+    <h2 data-i18n="consult_title">Take your result to a licensed practitioner.</h2>
+    <p data-i18n="consult_desc">A clinician will assess eligibility, screen contraindications, and explain which options are lawful and appropriate for you. Nothing on this site replaces that conversation.</p>
+    <a href="https://wa.me/628996401950" target="_blank" rel="noopener" class="btn btn-accent" style="margin:0 auto">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35M12.05 21.79h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.69 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.42z"/></svg>
+      <span data-i18n="consult_btn">Book a consult via WhatsApp</span>
+    </a>
+  </div>
+</section>
+
+</section><div class="disclaimer"><p data-i18n="disclaimer">Educational use only.</p></div>
+
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand"><a class="nav-logo" href="#home" data-route="home"><span class="nav-mark"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12.5" stroke="currentColor" stroke-width="1.5"/><path d="M14 6C14 6 8 10 8 14.5C8 18.5 10.5 22 14 22C17.5 22 20 18.5 20 14.5C20 10 14 6 14 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span><span class="nav-logo-name">Aevor</span></a><p data-i18n="foot_brand">Independent, evidence-graded peptide education for Indonesia.</p></div>
+    <div class="foot-col"><h4 data-i18n="foot_explore">Explore</h4><ul><li><a href="#library" data-route="library" data-i18n="nav_library">Library</a></li><li><a href="#assessment" data-route="assessment" data-i18n="nav_assess">Assessment</a></li><li><a href="#science" data-route="science" data-i18n="nav_science">The Science</a></li><li><a href="#consult" data-route="consult" data-i18n="nav_cta">Consult</a></li></ul></div>
+    <div class="foot-col"><h4 data-i18n="foot_legal">Legal</h4><ul><li><a href="#" data-i18n="foot_terms">Terms of use</a></li><li><a href="#" data-i18n="foot_privacy">Privacy</a></li><li><a href="#" data-i18n="foot_med">Medical disclaimer</a></li></ul></div>
+  </div>
+  <div class="foot-bottom"><span>© 2026 Aevor · <span data-i18n="foot_rights">Educational platform</span></span><span>DOC · AEVOR-EDU-2026-001</span></div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()"><div class="modal" id="modal"></div></div>
+
+<script>
+/* ════════════════════════════════════════════════
+   AEVOR · shared app logic (data + i18n + behaviour)
+   Page-aware: each function no-ops if its DOM is absent.
+   Compound list & contacts sourced from the supplied
+   research catalogue; framed educationally (no pricing,
+   no dosing — this site never sells or doses).
+   ════════════════════════════════════════════════ */
+
+/* ── DATA: peptide library (educational; no dosing/price) ── */
+const PEPTIDES=[
+ {id:'sema',cat:'metabolic',ev:'strong',bpom:true,
+  name:'Semaglutide',sub:{en:'GLP-1 receptor agonist',id:'Agonis reseptor GLP-1'},
+  mech:{en:'Mimics the GLP-1 hormone to slow gastric emptying, blunt appetite, and improve insulin response — driving substantial weight loss in trials.',id:'Meniru hormon GLP-1 untuk memperlambat pengosongan lambung, menekan nafsu makan, dan memperbaiki respons insulin — menghasilkan penurunan berat badan signifikan dalam uji klinis.'},
+  studied:{en:'Obesity and type-2 diabetes, with large randomised trials behind it.',id:'Obesitas dan diabetes tipe-2, didukung uji acak berskala besar.'},
+  safety:{en:'GI side effects, gallbladder and pancreatitis risk; not for personal/family history of medullary thyroid carcinoma. Prescription-only.',id:'Efek samping pencernaan, risiko kandung empedu dan pankreatitis; tidak untuk riwayat karsinoma tiroid meduler. Hanya dengan resep.'}},
+ {id:'tirz',cat:'metabolic',ev:'strong',bpom:false,
+  name:'Tirzepatide',sub:{en:'Dual GIP / GLP-1 agonist',id:'Agonis ganda GIP / GLP-1'},
+  mech:{en:'Activates both GIP and GLP-1 receptors, generally producing greater weight loss than GLP-1 alone in head-to-head trials.',id:'Mengaktifkan reseptor GIP dan GLP-1 sekaligus, umumnya menghasilkan penurunan berat lebih besar dibanding GLP-1 tunggal dalam uji langsung.'},
+  studied:{en:'Obesity and type-2 diabetes; strong and growing clinical evidence base.',id:'Obesitas dan diabetes tipe-2; basis bukti klinis kuat dan terus bertambah.'},
+  safety:{en:'Similar GI and thyroid cautions to semaglutide. Verify current BPOM registration status before assuming availability.',id:'Peringatan pencernaan dan tiroid serupa semaglutide. Verifikasi status registrasi BPOM terkini sebelum mengasumsikan ketersediaan.'}},
+ {id:'mots',cat:'longevity',ev:'emerging',bpom:false,
+  name:'MOTS-c',sub:{en:'Mitochondrial-derived peptide',id:'Peptida turunan mitokondria'},
+  mech:{en:'A mitochondrial peptide that activates the AMPK energy pathway, studied as an "exercise mimetic" for metabolism and endurance.',id:'Peptida mitokondria yang mengaktifkan jalur energi AMPK, diteliti sebagai "peniru olahraga" untuk metabolisme dan daya tahan.'},
+  studied:{en:'Metabolic and longevity interest — but largely preclinical, with limited human data.',id:'Diminati untuk metabolisme dan longevity — namun sebagian besar masih praklinis, data manusia terbatas.'},
+  safety:{en:'Long-term human safety is not established. Avoid in acute inflammatory states. Strictly investigational.',id:'Keamanan jangka panjang pada manusia belum terbukti. Hindari saat peradangan akut. Bersifat investigasional.'}},
+ {id:'nad',cat:'longevity',ev:'emerging',bpom:false,
+  name:'NAD+',sub:{en:'Coenzyme / cellular energy',id:'Koenzim / energi seluler'},
+  mech:{en:'A coenzyme central to mitochondrial energy production, DNA repair and sirtuin activation; injectable forms claim higher bioavailability than oral precursors.',id:'Koenzim penting untuk produksi energi mitokondria, perbaikan DNA, dan aktivasi sirtuin; bentuk injeksi diklaim lebih bioavailable dibanding prekursor oral.'},
+  studied:{en:'Energy, cognition and longevity claims; human evidence remains thin and contested.',id:'Klaim energi, kognisi, dan longevity; bukti pada manusia masih tipis dan diperdebatkan.'},
+  safety:{en:'Infusion flushing and discomfort are common. Marketed widely as a supplement; injectable medical use needs oversight.',id:'Sensasi flushing dan tidak nyaman saat infus umum terjadi. Dipasarkan luas sebagai suplemen; penggunaan injeksi medis butuh pengawasan.'}},
+ {id:'bpc',cat:'recovery',ev:'emerging',bpom:false,
+  name:'BPC-157',sub:{en:'Body Protective Compound',id:'Body Protective Compound'},
+  mech:{en:'A synthetic peptide fragment studied for tendon, ligament and gut healing via angiogenesis and growth-factor signalling.',id:'Fragmen peptida sintetis yang diteliti untuk penyembuhan tendon, ligamen, dan usus melalui angiogenesis dan sinyal faktor pertumbuhan.'},
+  studied:{en:'Popular in sports recovery, but evidence is dominated by animal models — robust human trials are lacking.',id:'Populer untuk pemulihan olahraga, namun bukti didominasi model hewan — uji manusia yang kuat masih kurang.'},
+  safety:{en:'Avoid pro-angiogenic compounds with active cancer. Unregulated supply raises purity concerns. Investigational.',id:'Hindari senyawa pro-angiogenik pada kanker aktif. Pasokan tak teregulasi menimbulkan masalah kemurnian. Investigasional.'}},
+ {id:'tb500',cat:'recovery',ev:'emerging',bpom:false,
+  name:'TB-500',sub:{en:'Thymosin β4 fragment',id:'Fragmen Thymosin β4'},
+  mech:{en:'Promotes cell migration and actin regulation, theorised to support tissue repair and reduce inflammation — often stacked with BPC-157.',id:'Mendorong migrasi sel dan regulasi aktin, diduga mendukung perbaikan jaringan dan mengurangi peradangan — sering dikombinasikan dengan BPC-157.'},
+  studied:{en:'Mechanistically interesting but human clinical data is minimal.',id:'Menarik secara mekanistik, namun data klinis pada manusia sangat minim.'},
+  safety:{en:'Pro-angiogenic — caution with malignancy. No established human dosing or safety profile.',id:'Pro-angiogenik — hati-hati pada keganasan. Belum ada profil dosis atau keamanan manusia yang mapan.'}},
+ {id:'ghk',cat:'antiaging',ev:'moderate',bpom:false,
+  name:'GHK-Cu',sub:{en:'Copper tripeptide',id:'Tripeptida tembaga'},
+  mech:{en:'A copper-binding tripeptide that upregulates collagen synthesis and antioxidant genes — well evidenced topically for skin.',id:'Tripeptida pengikat tembaga yang meningkatkan sintesis kolagen dan gen antioksidan — terbukti baik untuk kulit secara topikal.'},
+  studied:{en:'Strong topical/cosmetic evidence; systemic injectable use is far less established.',id:'Bukti topikal/kosmetik kuat; penggunaan injeksi sistemik jauh kurang mapan.'},
+  safety:{en:'Generally well tolerated topically. Monitor copper status on prolonged systemic use.',id:'Umumnya ditoleransi baik secara topikal. Pantau status tembaga pada penggunaan sistemik berkepanjangan.'}},
+ {id:'cjc',cat:'hormone',ev:'emerging',bpom:false,
+  name:'CJC-1295 + Ipamorelin',sub:{en:'GHRH analog + GHRP',id:'Analog GHRH + GHRP'},
+  mech:{en:'Combines a GHRH analog with a selective growth-hormone secretagogue to stimulate the body’s own pulsatile GH release.',id:'Menggabungkan analog GHRH dengan sekretagog hormon pertumbuhan selektif untuk merangsang pelepasan GH alami yang berdenyut.'},
+  studied:{en:'Used for body composition and sleep; human outcome data is limited and short-term.',id:'Digunakan untuk komposisi tubuh dan tidur; data luaran pada manusia terbatas dan jangka pendek.'},
+  safety:{en:'Can raise IGF-1 — monitor regularly. Not for active cancer or acromegaly risk. Investigational.',id:'Dapat meningkatkan IGF-1 — pantau rutin. Tidak untuk kanker aktif atau risiko akromegali. Investigasional.'}},
+ {id:'tesa',cat:'hormone',ev:'strong',bpom:false,
+  name:'Tesamorelin',sub:{en:'Stabilised GHRH analog',id:'Analog GHRH terstabilkan'},
+  mech:{en:'A GHRH analog clinically proven to reduce visceral fat with a more physiological GH pulse than exogenous HGH.',id:'Analog GHRH yang terbukti klinis mengurangi lemak viseral dengan pola denyut GH lebih fisiologis dibanding HGH eksogen.'},
+  studied:{en:'Strongest evidence in HIV-associated lipodystrophy; off-label metabolic use is less validated.',id:'Bukti terkuat pada lipodistrofi terkait HIV; penggunaan metabolik off-label kurang tervalidasi.'},
+  safety:{en:'Monitor IGF-1. Contraindicated in active malignancy or pituitary tumour history. Verify BPOM status.',id:'Pantau IGF-1. Kontraindikasi pada keganasan aktif atau riwayat tumor hipofisis. Verifikasi status BPOM.'}},
+ {id:'mt2',cat:'antiaging',ev:'caution',bpom:false,warn:true,
+  name:'Melanotan II',sub:{en:'Melanocortin agonist',id:'Agonis melanokortin'},
+  mech:{en:'Stimulates melanogenesis (tanning) and affects libido and appetite via melanocortin receptors.',id:'Merangsang melanogenesis (penggelapan kulit) serta memengaruhi libido dan nafsu makan melalui reseptor melanokortin.'},
+  studied:{en:'Not approved by any major regulator. Linked to changing moles, nausea, and cardiovascular effects.',id:'Tidak disetujui oleh regulator besar manapun. Dikaitkan dengan perubahan tahi lalat, mual, dan efek kardiovaskular.'},
+  safety:{en:'Significant safety concerns. Avoid with any history of melanoma, atypical moles, cardiovascular disease, or pregnancy. Widely advised against.',id:'Masalah keamanan signifikan. Hindari pada riwayat melanoma, tahi lalat atipikal, penyakit kardiovaskular, atau kehamilan. Umumnya tidak dianjurkan.'}},
+ {id:'reta',cat:'metabolic',ev:'moderate',bpom:false,
+  name:'Retatrutide',sub:{en:'Triple GIP / GLP-1 / glucagon agonist',id:'Agonis tripel GIP / GLP-1 / glukagon'},
+  mech:{en:'Activates three metabolic receptors at once; early trials report some of the largest weight reductions yet seen for an injectable.',id:'Mengaktifkan tiga reseptor metabolik sekaligus; uji awal melaporkan penurunan berat di antara yang terbesar untuk sediaan injeksi.'},
+  studied:{en:'Obesity — promising phase-2 data, but still investigational and not approved by any regulator.',id:'Obesitas — data fase-2 menjanjikan, namun masih investigasional dan belum disetujui regulator manapun.'},
+  safety:{en:'Not an approved medicine anywhere. GI effects expected; long-term safety unknown. Any supply is unregulated.',id:'Bukan obat yang disetujui di mana pun. Efek pencernaan diperkirakan; keamanan jangka panjang belum diketahui. Pasokan tidak teregulasi.'}},
+ {id:'hgh',cat:'hormone',ev:'strong',bpom:true,
+  name:'Somatropin (HGH)',sub:{en:'Recombinant growth hormone',id:'Hormon pertumbuhan rekombinan'},
+  mech:{en:'Synthetic human growth hormone. Genuinely effective for diagnosed GH deficiency; widely misused for body composition and "anti-aging".',id:'Hormon pertumbuhan manusia sintetis. Benar-benar efektif untuk defisiensi GH terdiagnosis; banyak disalahgunakan untuk komposisi tubuh dan "anti-penuaan".'},
+  studied:{en:'Strong evidence in diagnosed deficiency. Performance and longevity use is off-label and not supported.',id:'Bukti kuat pada defisiensi terdiagnosis. Penggunaan untuk performa dan longevity bersifat off-label dan tidak didukung.'},
+  safety:{en:'Registered only for specific medical indications (verify product). Misuse risks insulin resistance, oedema, joint pain, and growth of tumours. Prescription-only.',id:'Terdaftar hanya untuk indikasi medis tertentu (verifikasi produk). Penyalahgunaan berisiko resistensi insulin, oedema, nyeri sendi, dan pertumbuhan tumor. Hanya dengan resep.'}},
+ {id:'serm',cat:'hormone',ev:'moderate',bpom:false,
+  name:'Sermorelin',sub:{en:'GHRH analog',id:'Analog GHRH'},
+  mech:{en:'Stimulates the pituitary to release the body’s own growth hormone — a gentler GH-axis approach than exogenous HGH.',id:'Merangsang hipofisis untuk melepas hormon pertumbuhan tubuh sendiri — pendekatan aksis GH yang lebih lembut dibanding HGH eksogen.'},
+  studied:{en:'Historically used in GH-deficiency testing; modern anti-aging use rests on limited evidence.',id:'Secara historis dipakai dalam uji defisiensi GH; penggunaan anti-penuaan modern bertumpu pada bukti terbatas.'},
+  safety:{en:'Monitor IGF-1. Contraindicated in active malignancy. No izin edar in Indonesia for the uses marketed online.',id:'Pantau IGF-1. Kontraindikasi pada keganasan aktif. Tidak ada izin edar di Indonesia untuk penggunaan yang dipasarkan daring.'}},
+ {id:'ipa',cat:'hormone',ev:'emerging',bpom:false,
+  name:'Ipamorelin',sub:{en:'Selective GH secretagogue (GHRP)',id:'Sekretagog GH selektif (GHRP)'},
+  mech:{en:'Triggers a clean pulse of growth hormone without strongly raising cortisol or prolactin; often paired with a GHRH analog.',id:'Memicu denyut hormon pertumbuhan yang bersih tanpa banyak menaikkan kortisol atau prolaktin; sering dipadukan dengan analog GHRH.'},
+  studied:{en:'Popular for sleep and recovery; human outcome evidence is limited and short-term.',id:'Populer untuk tidur dan pemulihan; bukti luaran pada manusia terbatas dan jangka pendek.'},
+  safety:{en:'Can raise IGF-1 — monitor. Investigational; unregulated supply raises purity concerns.',id:'Dapat menaikkan IGF-1 — pantau. Investigasional; pasokan tak teregulasi menimbulkan masalah kemurnian.'}},
+ {id:'igf',cat:'hormone',ev:'emerging',bpom:false,warn:true,
+  name:'IGF-1 LR3',sub:{en:'Insulin-like growth factor analog',id:'Analog faktor pertumbuhan mirip insulin'},
+  mech:{en:'A long-acting IGF-1 analog that drives cell growth and proliferation directly — marketed as a potent anabolic.',id:'Analog IGF-1 kerja-panjang yang langsung mendorong pertumbuhan dan proliferasi sel — dipasarkan sebagai anabolik kuat.'},
+  studied:{en:'Almost no controlled human safety data for the bodybuilding use it is sold for.',id:'Hampir tidak ada data keamanan manusia terkontrol untuk penggunaan binaraga yang dijual.'},
+  safety:{en:'Serious concerns: hypoglycaemia and a theoretical risk of promoting tumour growth. Strongly advised against outside research settings.',id:'Kekhawatiran serius: hipoglikemia dan risiko teoretis mendorong pertumbuhan tumor. Sangat tidak dianjurkan di luar konteks riset.'}},
+ {id:'epi',cat:'longevity',ev:'emerging',bpom:false,
+  name:'Epithalon',sub:{en:'Pineal tetrapeptide',id:'Tetrapeptida pineal'},
+  mech:{en:'A synthetic peptide claimed to influence telomerase and circadian/pineal signalling, promoted as a longevity compound.',id:'Peptida sintetis yang diklaim memengaruhi telomerase dan sinyal sirkadian/pineal, dipromosikan sebagai senyawa longevity.'},
+  studied:{en:'Most evidence comes from older, small studies from a single research lineage; independent human data is scarce.',id:'Sebagian besar bukti berasal dari studi lama berskala kecil dari satu lini riset; data manusia independen langka.'},
+  safety:{en:'Long-term human safety unestablished. Investigational; no izin edar.',id:'Keamanan jangka panjang pada manusia belum mapan. Investigasional; tidak ada izin edar.'}},
+ {id:'ss31',cat:'longevity',ev:'emerging',bpom:false,
+  name:'SS-31 (Elamipretide)',sub:{en:'Mitochondria-targeted peptide',id:'Peptida pentarget mitokondria'},
+  mech:{en:'Concentrates in mitochondrial membranes to stabilise energy production, studied for mitochondrial and cardiac disease.',id:'Terkonsentrasi di membran mitokondria untuk menstabilkan produksi energi, diteliti untuk penyakit mitokondria dan jantung.'},
+  studied:{en:'In legitimate clinical trials for specific diseases; general "longevity/energy" use is unproven.',id:'Dalam uji klinis resmi untuk penyakit tertentu; penggunaan umum "longevity/energi" belum terbukti.'},
+  safety:{en:'Still investigational. Self-directed use outside trials is not supported and unregulated.',id:'Masih investigasional. Penggunaan mandiri di luar uji tidak didukung dan tidak teregulasi.'}},
+ {id:'thymalin',cat:'longevity',ev:'emerging',bpom:false,
+  name:'Thymalin',sub:{en:'Thymic peptide complex',id:'Kompleks peptida timus'},
+  mech:{en:'A thymus-derived peptide preparation promoted to "reset" immune function toward a younger profile.',id:'Sediaan peptida turunan timus yang dipromosikan untuk "menyetel ulang" fungsi imun ke profil lebih muda.'},
+  studied:{en:'Long regional clinical use but limited modern, independent, peer-reviewed evidence.',id:'Penggunaan klinis regional yang lama namun bukti modern, independen, dan tertelaah sejawat terbatas.'},
+  safety:{en:'Safety profile not well characterised by modern standards. Investigational; no izin edar.',id:'Profil keamanan belum terkarakterisasi baik menurut standar modern. Investigasional; tidak ada izin edar.'}},
+ {id:'ta1',cat:'recovery',ev:'moderate',bpom:false,
+  name:'Thymosin Alpha-1',sub:{en:'Immune-modulating peptide',id:'Peptida pemodulasi imun'},
+  mech:{en:'Modulates T-cell and innate immune activity; used clinically in some countries as an adjunct in infection and immune conditions.',id:'Memodulasi aktivitas sel-T dan imun bawaan; dipakai klinis di beberapa negara sebagai tambahan pada infeksi dan kondisi imun.'},
+  studied:{en:'Real clinical evidence in specific indications; the broad "never get sick" marketing overstates it.',id:'Ada bukti klinis nyata pada indikasi tertentu; pemasaran luas "tak pernah sakit" melebih-lebihkan.'},
+  safety:{en:'Generally well tolerated in studied uses, but self-directed immune modulation needs medical oversight. Verify BPOM status.',id:'Umumnya ditoleransi baik pada penggunaan yang diteliti, namun modulasi imun mandiri butuh pengawasan medis. Verifikasi status BPOM.'}},
+ {id:'kpv',cat:'recovery',ev:'emerging',bpom:false,
+  name:'KPV',sub:{en:'α-MSH tripeptide fragment',id:'Fragmen tripeptida α-MSH'},
+  mech:{en:'An anti-inflammatory peptide fragment studied mainly for gut and inflammatory conditions.',id:'Fragmen peptida anti-inflamasi yang diteliti terutama untuk kondisi usus dan inflamasi.'},
+  studied:{en:'Mechanistically interesting but human clinical data is minimal.',id:'Menarik secara mekanistik namun data klinis pada manusia minim.'},
+  safety:{en:'No established human dosing or safety profile. Investigational.',id:'Belum ada profil dosis atau keamanan manusia yang mapan. Investigasional.'}},
+ {id:'amq',cat:'metabolic',ev:'emerging',bpom:false,
+  name:'5-Amino-1MQ',sub:{en:'NNMT enzyme inhibitor',id:'Inhibitor enzim NNMT'},
+  mech:{en:'Inhibits the NNMT enzyme in fat cells, theorised to shift metabolism toward energy expenditure.',id:'Menghambat enzim NNMT di sel lemak, diduga menggeser metabolisme ke arah pengeluaran energi.'},
+  studied:{en:'Promising in animal models; essentially no controlled human data yet.',id:'Menjanjikan pada model hewan; pada dasarnya belum ada data manusia terkontrol.'},
+  safety:{en:'Human safety unknown. Investigational; unregulated supply.',id:'Keamanan pada manusia belum diketahui. Investigasional; pasokan tidak teregulasi.'}},
+ {id:'aod',cat:'metabolic',ev:'emerging',bpom:false,
+  name:'AOD-9604',sub:{en:'HGH fragment (fat-loss)',id:'Fragmen HGH (penurun lemak)'},
+  mech:{en:'A fragment of growth hormone marketed for fat loss without the blood-sugar effects of full HGH.',id:'Fragmen hormon pertumbuhan yang dipasarkan untuk penurunan lemak tanpa efek gula darah seperti HGH utuh.'},
+  studied:{en:'Human obesity trials were largely disappointing — it did not beat placebo for weight loss.',id:'Uji obesitas pada manusia sebagian besar mengecewakan — tidak mengungguli plasebo untuk penurunan berat.'},
+  safety:{en:'Limited safety data; efficacy weak. Investigational; no izin edar.',id:'Data keamanan terbatas; efikasi lemah. Investigasional; tidak ada izin edar.'}},
+ {id:'frag',cat:'metabolic',ev:'emerging',bpom:false,
+  name:'HGH Frag 176-191',sub:{en:'Growth-hormone fragment',id:'Fragmen hormon pertumbuhan'},
+  mech:{en:'A GH fragment marketed for targeted fat loss; related to AOD-9604.',id:'Fragmen GH yang dipasarkan untuk penurunan lemak tertarget; terkait dengan AOD-9604.'},
+  studied:{en:'Claims rest mainly on preclinical work; robust human evidence is lacking.',id:'Klaim bertumpu terutama pada kerja praklinis; bukti manusia yang kuat masih kurang.'},
+  safety:{en:'Human safety and efficacy unestablished. Investigational.',id:'Keamanan dan efikasi pada manusia belum mapan. Investigasional.'}},
+ {id:'glut',cat:'antiaging',ev:'moderate',bpom:false,
+  name:'Glutathione',sub:{en:'Antioxidant tripeptide',id:'Tripeptida antioksidan'},
+  mech:{en:'The body’s main intracellular antioxidant. Oral and IV forms are promoted for detox and skin-brightening.',id:'Antioksidan intraseluler utama tubuh. Bentuk oral dan IV dipromosikan untuk detoks dan pencerahan kulit.'},
+  studied:{en:'Real antioxidant role; the popular IV skin-whitening use is not well supported and is not an approved indication.',id:'Peran antioksidan nyata; penggunaan IV pencerahan kulit yang populer kurang didukung dan bukan indikasi yang disetujui.'},
+  safety:{en:'Oral supplements are common; injectable cosmetic use lacks regulatory approval and carries infusion risks. Verify BPOM status of any product.',id:'Suplemen oral umum; penggunaan injeksi kosmetik tidak memiliki persetujuan regulasi dan membawa risiko infus. Verifikasi status BPOM produk apa pun.'}},
+ {id:'cagri',cat:'metabolic',ev:'moderate',bpom:false,
+  name:'Cagrilintide',sub:{en:'Long-acting amylin analog',id:'Analog amilin kerja-panjang'},
+  mech:{en:'Mimics the amylin hormone to promote satiety and slow gastric emptying; studied alone and combined with semaglutide (CagriSema).',id:'Meniru hormon amilin untuk meningkatkan rasa kenyang dan memperlambat pengosongan lambung; diteliti tunggal maupun dikombinasi dengan semaglutide (CagriSema).'},
+  studied:{en:'Obesity — phase-2 trials are encouraging, but it remains investigational and not approved by any regulator.',id:'Obesitas — uji fase-2 menjanjikan, namun masih investigasional dan belum disetujui regulator manapun.'},
+  safety:{en:'GI effects expected, similar to incretin drugs. Long-term safety unknown; any supply is unregulated.',id:'Efek pencernaan diperkirakan, mirip obat incretin. Keamanan jangka panjang belum diketahui; pasokan tidak teregulasi.'}},
+ {id:'slu',cat:'metabolic',ev:'emerging',bpom:false,
+  name:'SLU-PP-332',sub:{en:'ERR agonist (exercise mimetic)',id:'Agonis ERR (peniru olahraga)'},
+  mech:{en:'A synthetic ERR (estrogen-related receptor) agonist studied as an "exercise mimetic" that may increase fat oxidation and endurance.',id:'Agonis ERR sintetis yang diteliti sebagai "peniru olahraga" yang mungkin meningkatkan oksidasi lemak dan daya tahan.'},
+  studied:{en:'Striking results in mice; there is essentially no controlled human data.',id:'Hasil mencolok pada tikus; pada dasarnya tidak ada data manusia terkontrol.'},
+  safety:{en:'Human safety entirely unknown. Strictly investigational; unregulated supply.',id:'Keamanan pada manusia sama sekali belum diketahui. Bersifat investigasional; pasokan tidak teregulasi.'}},
+ {id:'ara290',cat:'recovery',ev:'emerging',bpom:false,
+  name:'ARA-290 (Cibinetide)',sub:{en:'Innate-repair receptor peptide',id:'Peptida reseptor perbaikan bawaan'},
+  mech:{en:'An EPO-derived peptide that targets the innate-repair receptor, studied for neuropathic pain and tissue repair without EPO’s blood effects.',id:'Peptida turunan EPO yang menargetkan reseptor perbaikan bawaan, diteliti untuk nyeri neuropatik dan perbaikan jaringan tanpa efek darah EPO.'},
+  studied:{en:'Small human trials in sarcoidosis neuropathy and diabetes; evidence is early.',id:'Uji manusia kecil pada neuropati sarkoidosis dan diabetes; bukti masih awal.'},
+  safety:{en:'Generally tolerated in trials, but long-term data are lacking. Investigational; no izin edar.',id:'Umumnya ditoleransi dalam uji, namun data jangka panjang kurang. Investigasional; tidak ada izin edar.'}},
+ {id:'pegmgf',cat:'recovery',ev:'emerging',bpom:false,
+  name:'PEG-MGF',sub:{en:'Mechano growth factor (pegylated)',id:'Faktor pertumbuhan mekano (pegilasi)'},
+  mech:{en:'A pegylated IGF-1 splice variant promoted to support muscle-cell repair and recruitment after damage.',id:'Varian sambungan IGF-1 terpegilasi yang dipromosikan untuk mendukung perbaikan dan rekrutmen sel otot setelah kerusakan.'},
+  studied:{en:'Claims rest on preclinical work; robust human evidence is lacking.',id:'Klaim bertumpu pada kerja praklinis; bukti manusia yang kuat masih kurang.'},
+  safety:{en:'As an IGF-axis compound, carries theoretical tumour-growth concerns. Investigational; unregulated supply.',id:'Sebagai senyawa aksis IGF, ada kekhawatiran teoretis pertumbuhan tumor. Investigasional; pasokan tidak teregulasi.'}},
+ {id:'ll37',cat:'immune',ev:'emerging',bpom:false,
+  name:'LL-37',sub:{en:'Antimicrobial host-defence peptide',id:'Peptida pertahanan inang antimikroba'},
+  mech:{en:'A human cathelicidin peptide with antimicrobial and immune-modulating activity, studied for infection and wound healing.',id:'Peptida cathelicidin manusia dengan aktivitas antimikroba dan pemodulasi imun, diteliti untuk infeksi dan penyembuhan luka.'},
+  studied:{en:'Mechanistically important in immunity, but therapeutic human use is early and unproven.',id:'Penting secara mekanistik dalam imunitas, namun penggunaan terapeutik pada manusia masih awal dan belum terbukti.'},
+  safety:{en:'Can be pro-inflammatory; self-directed use is not supported. Investigational; no izin edar.',id:'Dapat bersifat pro-inflamasi; penggunaan mandiri tidak didukung. Investigasional; tidak ada izin edar.'}},
+ {id:'vip',cat:'immune',ev:'emerging',bpom:false,
+  name:'VIP',sub:{en:'Vasoactive intestinal peptide',id:'Peptida intestinal vasoaktif'},
+  mech:{en:'A signalling peptide with vasodilatory and immune-regulating roles, promoted (intranasally) for chronic inflammatory conditions.',id:'Peptida sinyal dengan peran vasodilatasi dan pengaturan imun, dipromosikan (intranasal) untuk kondisi inflamasi kronis.'},
+  studied:{en:'Used off-label in some niche protocols; controlled human evidence is very limited.',id:'Dipakai off-label dalam beberapa protokol niche; bukti manusia terkontrol sangat terbatas.'},
+  safety:{en:'Can cause flushing and blood-pressure changes. Needs medical oversight. Investigational; no izin edar.',id:'Dapat menyebabkan flushing dan perubahan tekanan darah. Butuh pengawasan medis. Investigasional; tidak ada izin edar.'}},
+ {id:'dsip',cat:'neuro',ev:'emerging',bpom:false,
+  name:'DSIP',sub:{en:'Delta sleep-inducing peptide',id:'Peptida penginduksi tidur delta'},
+  mech:{en:'A neuropeptide investigated for its influence on sleep architecture, stress hormones and pain modulation.',id:'Neuropeptida yang diteliti karena pengaruhnya pada arsitektur tidur, hormon stres, dan modulasi nyeri.'},
+  studied:{en:'Older, small human studies with mixed results; modern evidence is thin.',id:'Studi manusia lama berskala kecil dengan hasil beragam; bukti modern tipis.'},
+  safety:{en:'No established human dosing or safety profile. Investigational; no izin edar.',id:'Belum ada profil dosis atau keamanan manusia yang mapan. Investigasional; tidak ada izin edar.'}},
+ {id:'selank',cat:'neuro',ev:'emerging',bpom:false,
+  name:'Selank',sub:{en:'Anxiolytic heptapeptide',id:'Heptapeptida anxiolitik'},
+  mech:{en:'A synthetic analog of tuftsin promoted for anxiety and cognition, thought to influence GABA and BDNF signalling.',id:'Analog sintetis tuftsin yang dipromosikan untuk kecemasan dan kognisi, diduga memengaruhi sinyal GABA dan BDNF.'},
+  studied:{en:'Some regional clinical use, but independent, peer-reviewed human evidence is limited.',id:'Ada penggunaan klinis regional, namun bukti manusia independen yang ditinjau sejawat terbatas.'},
+  safety:{en:'Safety not well characterised by modern standards. Investigational; no izin edar.',id:'Keamanan belum terkarakterisasi baik menurut standar modern. Investigasional; tidak ada izin edar.'}},
+ {id:'semax',cat:'neuro',ev:'emerging',bpom:false,
+  name:'Semax',sub:{en:'Nootropic ACTH fragment',id:'Fragmen ACTH nootropik'},
+  mech:{en:'An ACTH(4-10) analog promoted as a nootropic and neuroprotectant, theorised to raise BDNF in the brain.',id:'Analog ACTH(4-10) yang dipromosikan sebagai nootropik dan neuroprotektan, diduga meningkatkan BDNF di otak.'},
+  studied:{en:'Used regionally for stroke and cognition; broader human evidence base is limited.',id:'Dipakai regional untuk stroke dan kognisi; basis bukti manusia yang lebih luas terbatas.'},
+  safety:{en:'Generally well tolerated in reported use, but long-term data are scarce. Investigational; no izin edar.',id:'Umumnya ditoleransi baik pada penggunaan yang dilaporkan, namun data jangka panjang langka. Investigasional; tidak ada izin edar.'}},
+ {id:'cerebro',cat:'neuro',ev:'moderate',bpom:false,
+  name:'Cerebrolysin',sub:{en:'Neurotrophic peptide preparation',id:'Sediaan peptida neurotrofik'},
+  mech:{en:'A mixture of low-molecular-weight peptides derived from pig brain, with neurotrophic and neuroprotective activity.',id:'Campuran peptida berbobot molekul rendah dari otak babi, dengan aktivitas neurotrofik dan neuroprotektif.'},
+  studied:{en:'Studied in stroke, dementia and brain injury; trial results are real but mixed and debated.',id:'Diteliti pada stroke, demensia, dan cedera otak; hasil uji nyata namun beragam dan diperdebatkan.'},
+  safety:{en:'Administered clinically abroad under supervision; not a self-administered compound. Verify BPOM status.',id:'Diberikan secara klinis di luar negeri dengan pengawasan; bukan senyawa pemakaian sendiri. Verifikasi status BPOM.'}},
+ {id:'pinealon',cat:'neuro',ev:'emerging',bpom:false,
+  name:'Pinealon',sub:{en:'Brain peptide bioregulator',id:'Bioregulator peptida otak'},
+  mech:{en:'A short synthetic peptide bioregulator promoted for cognition and neuroprotection.',id:'Bioregulator peptida sintetis pendek yang dipromosikan untuk kognisi dan neuroproteksi.'},
+  studied:{en:'Evidence comes mostly from a single regional research lineage; independent human data is scarce.',id:'Bukti sebagian besar dari satu lini riset regional; data manusia independen langka.'},
+  safety:{en:'Long-term human safety unestablished. Investigational; no izin edar.',id:'Keamanan jangka panjang pada manusia belum mapan. Investigasional; tidak ada izin edar.'}},
+ {id:'hcg',cat:'hormone',ev:'strong',bpom:true,
+  name:'HCG',sub:{en:'Human chorionic gonadotropin',id:'Gonadotropin korionik manusia'},
+  mech:{en:'Mimics LH to stimulate gonadal hormone production; a legitimate fertility medicine, also misused in hormone protocols.',id:'Meniru LH untuk merangsang produksi hormon gonad; obat kesuburan yang sah, juga disalahgunakan dalam protokol hormon.'},
+  studied:{en:'Strong evidence in fertility treatment and specific endocrine uses; physique/anti-aging use is off-label.',id:'Bukti kuat pada terapi kesuburan dan penggunaan endokrin tertentu; penggunaan untuk fisik/anti-penuaan bersifat off-label.'},
+  safety:{en:'Prescription medicine. Risks include OHSS in fertility use and hormonal disruption if misused. Verify product registration.',id:'Obat resep. Risiko termasuk OHSS pada penggunaan kesuburan dan gangguan hormonal jika disalahgunakan. Verifikasi registrasi produk.'}},
+ {id:'hmg',cat:'hormone',ev:'strong',bpom:false,
+  name:'HMG',sub:{en:'Human menopausal gonadotropin',id:'Gonadotropin menopause manusia'},
+  mech:{en:'Contains FSH and LH activity to stimulate the gonads; an established fertility medicine.',id:'Mengandung aktivitas FSH dan LH untuk merangsang gonad; obat kesuburan yang mapan.'},
+  studied:{en:'Strong evidence within supervised fertility treatment; outside that context it is not appropriate.',id:'Bukti kuat dalam terapi kesuburan terawasi; di luar konteks itu tidak tepat.'},
+  safety:{en:'Prescription-only; OHSS and multiple-pregnancy risks require specialist monitoring. Verify BPOM status.',id:'Hanya dengan resep; risiko OHSS dan kehamilan ganda membutuhkan pemantauan spesialis. Verifikasi status BPOM.'}},
+ {id:'kiss',cat:'hormone',ev:'emerging',bpom:false,
+  name:'Kisspeptin-10',sub:{en:'Reproductive-axis peptide',id:'Peptida aksis reproduksi'},
+  mech:{en:'Stimulates GnRH release at the top of the reproductive hormone axis, studied for fertility and sexual function.',id:'Merangsang pelepasan GnRH di puncak aksis hormon reproduksi, diteliti untuk kesuburan dan fungsi seksual.'},
+  studied:{en:'Active research-grade clinical interest, but no approved consumer therapy.',id:'Minat klinis tingkat riset yang aktif, namun belum ada terapi konsumen yang disetujui.'},
+  safety:{en:'Effects on the hormone axis need medical oversight. Investigational; no izin edar.',id:'Efek pada aksis hormon butuh pengawasan medis. Investigasional; tidak ada izin edar.'}},
+ {id:'pt141',cat:'hormone',ev:'moderate',bpom:false,
+  name:'PT-141 (Bremelanotide)',sub:{en:'Melanocortin agonist (libido)',id:'Agonis melanokortin (libido)'},
+  mech:{en:'A melanocortin-receptor agonist that acts centrally on sexual arousal; approved abroad for low sexual desire in women.',id:'Agonis reseptor melanokortin yang bekerja sentral pada gairah seksual; disetujui di luar negeri untuk hasrat seksual rendah pada perempuan.'},
+  studied:{en:'Has approved use (HSDD) in some markets; broader off-label use is less validated.',id:'Memiliki penggunaan yang disetujui (HSDD) di beberapa pasar; penggunaan off-label yang lebih luas kurang tervalidasi.'},
+  safety:{en:'Nausea, flushing and transient blood-pressure rise are common; caution with cardiovascular disease. Verify BPOM status.',id:'Mual, flushing, dan kenaikan tekanan darah sementara umum; hati-hati pada penyakit kardiovaskular. Verifikasi status BPOM.'}},
+ {id:'oxy',cat:'hormone',ev:'moderate',bpom:true,
+  name:'Oxytocin',sub:{en:'Neurohypophysial hormone',id:'Hormon neurohipofisis'},
+  mech:{en:'The "bonding" hormone; clinically it contracts the uterus and aids lactation, with research interest in mood and social behaviour.',id:'Hormon "ikatan"; secara klinis mengontraksikan rahim dan membantu laktasi, dengan minat riset pada suasana hati dan perilaku sosial.'},
+  studied:{en:'Strong evidence for its approved obstetric uses; the "social/wellness" intranasal use is experimental.',id:'Bukti kuat untuk penggunaan obstetri yang disetujui; penggunaan intranasal "sosial/wellness" bersifat eksperimental.'},
+  safety:{en:'Approved obstetric forms are prescription medicines used in clinical settings; non-medical use is not supported. Verify product.',id:'Bentuk obstetri yang disetujui adalah obat resep yang dipakai di fasilitas klinis; penggunaan non-medis tidak didukung. Verifikasi produk.'}}
+];
+const CAT_GOALS={metabolic:['sema','tirz','cagri'],recovery:['bpc','tb500','ara290'],neuro:['cerebro','semax','selank'],longevity:['nad','mots','epi'],antiaging:['ghk','glut','mt2'],hormone:['tesa','hcg','pt141']};
+const EV_SCORE={strong:4,moderate:3,emerging:2,caution:1};
+const EV_CLASS={strong:'ev-strong',moderate:'ev-moderate',emerging:'ev-emerging',caution:'ev-caution'};
+
+/* ── i18n ── */
+const I18N={
+ en:{
+  nav_how:'How it works',nav_assess:'Assessment',nav_library:'Library',nav_science:'The Science',nav_cta:'Consult',
+  hero_eyebrow:'Education · Not medical advice',
+  hero_title:'Understand peptides <em>before</em> you ever consider them.',
+  hero_desc:'A clear, evidence-based library and a guided assessment that orients you toward the right category of questions — then connects you with a licensed practitioner. We never sell, prescribe, or dose.',
+  hero_cta1:'Start the assessment',hero_cta2:'Explore the library →',
+  trust1:'Evidence-graded',trust2:'BPOM status labeled',trust3:'Practitioner-routed',
+  ev_panel_eyebrow:'Evidence at a glance',ev_panel_sub:'Avg. human-evidence signal by category',ev_panel_note:'Taller = stronger human-trial support. Tap a column to explore that category.',
+  how_eyebrow:'The Flow',how_title:'Three steps. No shortcuts around a doctor.',
+  how_desc:'This site is built to inform a conversation with a clinician — not to replace one. Here is the only path we endorse.',
+  step1_t:'Learn',step1_d:'Read the library. Understand mechanisms, what the evidence actually shows, and each compound’s regulatory status in Indonesia.',
+  step2_t:'Assess',step2_d:'Take the guided assessment. It orients you to a category of interest and surfaces relevant safety considerations — it does not prescribe.',
+  step3_t:'Consult',step3_d:'Bring your result to a licensed physician. Any decision to use, dose, or obtain a peptide happens only under medical supervision.',
+  home_cta_t:'Begin where the evidence is clearest.',home_cta_d:'Take the five-question orientation, or read the full library first. Either way, the next step is always a licensed practitioner.',
+  assess_eyebrow:'Guided Orientation',assess_title:'Where should your questions begin?',
+  assess_desc:'Eight short questions. At the end you’ll see which peptide category aligns with your goals, what the evidence says, and what to raise with a practitioner.',
+  q0_q:'What outcome matters most to you right now?',q0_h:'Pick the single goal that feels most urgent.',
+  g_metabolic:'Weight & metabolism',g_metabolic_s:'Fat loss, appetite, metabolic health',
+  g_recovery:'Recovery & repair',g_recovery_s:'Injury, tendons, tissue healing',
+  g_neuro:'Brain & mood',g_neuro_s:'Sleep, focus, neuroprotection',
+  g_longevity:'Longevity & energy',g_longevity_s:'Cellular energy, healthspan',
+  g_antiaging:'Skin & anti-aging',g_antiaging_s:'Collagen, skin quality',
+  g_hormone:'Hormonal / GH support',g_hormone_s:'Body composition, sleep, GH axis',
+  q1_q:'How active is your current lifestyle?',q1_h:'This shapes which considerations are most relevant.',
+  a_sed:'Mostly sedentary',a_sed_s:'Desk-based, little structured exercise',
+  a_act:'Recreationally active',a_act_s:'Train a few times a week',
+  a_ath:'Competitive athlete',a_ath_s:'High training load / performance focus',
+  a_inj:'Recovering from injury',a_inj_s:'Currently managing a physical issue',
+  q2_q:'Do any of these apply to you?',q2_h:'Critical for safety. Select all that apply — this only changes the cautions we show you.',
+  s_cancer:'Cancer history',s_cancer_s:'Active or past malignancy',
+  s_preg:'Pregnant / planning',s_preg_s:'Pregnant, nursing, or trying',
+  s_cardio:'Cardiovascular condition',s_cardio_s:'Heart disease, hypertension',
+  s_none:'None of these',s_none_s:'No flagged conditions',
+  q3_q:'How familiar are you with peptide therapeutics?',q3_h:'We’ll calibrate how much background to give you.',
+  k_new:'New to this',k_new_s:'Start me from the basics',
+  k_some:'Done some research',k_some_s:'I know the main categories',
+  k_exp:'Experienced',k_exp_s:'Give me the depth',
+  q4_q:'What do you want from this assessment?',q4_h:'There’s no wrong answer.',
+  i_learn:'Just learning for now',i_learn_s:'Building understanding',
+  i_consult:'Considering it — want to consult',i_consult_s:'Ready to talk to a practitioner',
+  age_q:'How old are you?',age_h:'Age changes which considerations matter most.',
+  age_u30:'Under 30',age_3044:'30–44',age_4559:'45–59',age_60:'60+',
+  sex_q:'Biological sex',sex_h:'Some compounds carry sex-specific considerations.',
+  sex_male:'Male',sex_female:'Female',sex_na:'Prefer not to say',
+  tf_q:'What timeframe are you thinking?',tf_h:'How seriously are you weighing this?',
+  tf_explore:'Just exploring',tf_explore_s:'Curious, no commitment',
+  tf_months:'Next few months',tf_months_s:'Actively considering',
+  tf_longterm:'Long-term',tf_longterm_s:'Open to an ongoing protocol',
+  tried_q:'What have you already tried?',tried_h:'Select all that apply — context for your clinician.',
+  tr_diet:'Diet / nutrition',tr_diet_s:'Changed how I eat',
+  tr_training:'Training program',tr_training_s:'Structured exercise',
+  tr_supps:'Supplements',tr_supps_s:'Vitamins, OTC products',
+  tr_rx:'Prescription meds',tr_rx_s:'Doctor-prescribed',
+  tr_none:'Nothing yet',tr_none_s:'Starting fresh',
+  s_thyroid:'Thyroid condition',s_thyroid_s:'Hypo- or hyperthyroid',
+  s_meds:'On prescription meds',s_meds_s:'Currently taking medication',
+  lbl_goal:'Primary goal',lbl_age:'Age',lbl_sex:'Sex',lbl_activity:'Activity',lbl_timeframe:'Timeframe',lbl_tried:'Already tried',lbl_flags:'Health flags',lbl_intent:'Intent',flags_none:'None reported',
+  brief_title:'Your consultation brief',brief_note:'Bring this summary to a licensed practitioner. It is not a diagnosis or a recommendation to use any compound.',brief_copy:'Copy',brief_copied:'Copied ✓',
+  next:'Next →',back:'← Back',see_result:'See my orientation →',
+  result_badge:'Educational orientation',
+  safety_title:'A flagged condition needs medical clearance first.',
+  safety_text:'Based on your answers, several peptide categories carry specific contraindications for your situation. Please do not proceed with any compound without direct evaluation by a licensed physician.',
+  result_cta1:'Discuss with a practitioner',result_cta2:'↺ Retake',
+  lib_eyebrow:'Reference Library',lib_title:'Every compound, graded honestly.',
+  lib_desc:'No hype. Each entry shows mechanism, what the human evidence actually supports, its regulatory status in Indonesia, and the safety considerations a clinician would raise.',
+  f_all:'All',f_metabolic:'Metabolic',f_recovery:'Recovery',f_neuro:'Neuro',f_longevity:'Longevity',f_antiaging:'Anti-aging',f_hormone:'Hormonal',f_immune:'Immune',
+  sci_eyebrow:'Read the Methodology',sci_title:'How to read this site',
+  sci_what_t:'What peptides are',
+  sci_what_d:'Peptides are short chains of amino acids that act as signalling molecules in the body — instructing cells to release hormones, repair tissue, or shift metabolism. Therapeutic peptides aim to use that signalling with precision. "Precision" does not mean "risk-free": signalling that helps one system can harm another, which is exactly why clinical oversight matters.',
+  sci_legend_t:'Our evidence scale',
+  sci_reg_t:'Regulatory status',
+  sci_reg_d:'Indonesia requires a marketing authorisation (izin edar) from BPOM before a pharmaceutical may be circulated. Most peptides on this site hold none. We label each entry so you can see, at a glance, what is lawful to obtain through regulated channels and what is not — a question only a clinician can navigate for you.',
+  ev_strong:'Strong',ev_strong_d:'Well-powered human trials support the primary use.',
+  ev_moderate:'Moderate',ev_moderate_d:'Some human data; effect plausible but not settled.',
+  ev_emerging:'Emerging',ev_emerging_d:'Mostly preclinical or anecdotal; limited human data.',
+  ev_caution:'Caution',ev_caution_d:'Notable safety concerns; widely advised against outside strict supervision.',
+  reg_yes_d:'Holds an Indonesian marketing authorisation (izin edar) — prescription-only.',
+  reg_no_d:'No izin edar in Indonesia. Distribution to consumers is unlawful; discuss legal pathways with a clinician.',
+  consult_eyebrow:'The Only Next Step',consult_title:'Take your result to a licensed practitioner.',
+  consult_desc:'A clinician will assess eligibility, screen contraindications, and explain which options are lawful and appropriate for you. Nothing on this site replaces that conversation.',
+  consult_btn:'Book a consult via WhatsApp',
+  disclaimer:'<b>Educational use only.</b> This website provides general information and does not constitute medical advice, diagnosis, or a recommendation to use, purchase, or self-administer any substance. The assessment is an educational orientation tool, not a prescription. Many peptides described here are not registered with BPOM and may not be lawfully distributed to consumers in Indonesia. Always consult a licensed physician before considering any peptide therapy. Aevor does not sell or dispense peptides through this site.',
+  foot_brand:'Independent, evidence-graded peptide education for Indonesia. We inform decisions — licensed clinicians make them.',
+  foot_explore:'Explore',foot_legal:'Legal',foot_terms:'Terms of use',foot_privacy:'Privacy',foot_med:'Medical disclaimer',foot_rights:'Educational platform',
+  modal_mech:'Mechanism',modal_studied:'What it’s studied for',modal_safety:'Safety considerations',
+  modal_tf:'Expected timeframe',tf_tail:'Dosing schedule and duration are set by your practitioner — not self-administered.',
+  modal_cite:'Evidence & sources',cite_link:'View literature ↗',cite_note:'Indicative literature pointer — to be verified by our medical reviewer before launch.',
+  nav_compare:'Compare',nav_faq:'FAQ',nav_glossary:'Glossary',
+  search_ph:'Search compounds…',sort_by:'Sort',sort_default:'Default',sort_evidence:'Evidence',sort_bpom:'BPOM status',sort_name:'Name',no_results:'No matching compounds.',
+  cmp_pick:'Select…',cmp_empty:'Pick up to three compounds to compare them side by side.',col_cat:'Category',col_ev:'Evidence',col_bpom:'Regulatory',
+  faq_eyebrow:'Questions',faq_title:'Peptides in Indonesia, answered plainly.',faq_desc:'The legal and practical questions people actually ask — without the marketing spin.',
+  glo_eyebrow:'Plain Language',glo_title:'Glossary',glo_desc:'The terms used across this site, in plain English and Bahasa Indonesia.',
+  cmp_eyebrow:'Side by Side',cmp_title:'Compare compounds',cmp_desc:'Put up to three compounds next to each other — evidence, regulatory status, and what the research actually shows.',
+  rt_metabolic:'The metabolic family',rt_recovery:'The recovery & repair family',rt_neuro:'The brain & mood family',rt_longevity:'The longevity & cellular-energy family',rt_antiaging:'The skin & anti-aging family',rt_hormone:'The hormonal / GH family',
+  rl_metabolic:'Your goal aligns with metabolic peptides — the category with the strongest, most trial-backed evidence on this site. Here is what is studied for weight and metabolism, and how the evidence stacks up.',
+  rl_recovery:'Your goal aligns with tissue-repair peptides. Interest here is high among athletes, but note that most of these compounds rest on preclinical rather than human evidence.',
+  rl_neuro:'Your goal aligns with neuropeptides studied for sleep, mood and cognition. A few have real clinical history abroad, but most carry only early or regional human evidence — read the grades carefully.',
+  rl_longevity:'Your goal aligns with longevity and cellular-energy peptides — an exciting but early field. Read these with the evidence grades front of mind.',
+  rl_antiaging:'Your goal aligns with skin and anti-aging peptides. Evidence is strongest topically; injectable and systemic claims are weaker.',
+  rl_hormone:'Your goal aligns with growth-hormone-axis peptides. These touch the endocrine system directly, so physician monitoring is non-negotiable.'
+ },
+ id:{
+  nav_how:'Cara kerja',nav_assess:'Asesmen',nav_library:'Pustaka',nav_science:'Sains',nav_cta:'Konsultasi',
+  hero_eyebrow:'Edukasi · Bukan saran medis',
+  hero_title:'Pahami peptida <em>sebelum</em> Anda mempertimbangkannya.',
+  hero_desc:'Pustaka berbasis bukti yang jelas dan asesmen terpandu yang mengarahkan Anda ke kategori pertanyaan yang tepat — lalu menghubungkan Anda dengan praktisi berlisensi. Kami tidak menjual, meresepkan, atau menentukan dosis.',
+  hero_cta1:'Mulai asesmen',hero_cta2:'Jelajahi pustaka →',
+  trust1:'Bukti terklasifikasi',trust2:'Status BPOM tercantum',trust3:'Diarahkan ke praktisi',
+  ev_panel_eyebrow:'Bukti sekilas',ev_panel_sub:'Sinyal bukti manusia rata-rata per kategori',ev_panel_note:'Makin tinggi = dukungan uji klinis manusia makin kuat. Ketuk kolom untuk menjelajah kategori itu.',
+  how_eyebrow:'Alurnya',how_title:'Tiga langkah. Tanpa memotong jalur dokter.',
+  how_desc:'Situs ini dibangun untuk menginformasikan percakapan dengan klinisi — bukan menggantikannya. Inilah satu-satunya jalur yang kami dukung.',
+  step1_t:'Pelajari',step1_d:'Baca pustaka. Pahami mekanisme, apa yang sebenarnya ditunjukkan bukti, dan status regulasi tiap senyawa di Indonesia.',
+  step2_t:'Asesmen',step2_d:'Ikuti asesmen terpandu. Ia mengarahkan Anda ke kategori minat dan memunculkan pertimbangan keamanan terkait — bukan meresepkan.',
+  step3_t:'Konsultasi',step3_d:'Bawa hasil Anda ke dokter berlisensi. Keputusan menggunakan, dosis, atau memperoleh peptida hanya terjadi di bawah pengawasan medis.',
+  home_cta_t:'Mulai dari tempat bukti paling jelas.',home_cta_d:'Ikuti orientasi lima pertanyaan, atau baca pustaka lengkap dulu. Apa pun pilihannya, langkah berikutnya selalu praktisi berlisensi.',
+  assess_eyebrow:'Orientasi Terpandu',assess_title:'Dari mana pertanyaan Anda sebaiknya dimulai?',
+  assess_desc:'Delapan pertanyaan singkat. Di akhir, Anda akan melihat kategori peptida yang sesuai dengan tujuan Anda, apa kata bukti, dan apa yang perlu didiskusikan dengan praktisi.',
+  q0_q:'Hasil apa yang paling penting bagi Anda saat ini?',q0_h:'Pilih satu tujuan yang paling mendesak.',
+  g_metabolic:'Berat & metabolisme',g_metabolic_s:'Penurunan lemak, nafsu makan, kesehatan metabolik',
+  g_recovery:'Pemulihan & perbaikan',g_recovery_s:'Cedera, tendon, penyembuhan jaringan',
+  g_neuro:'Otak & suasana hati',g_neuro_s:'Tidur, fokus, neuroproteksi',
+  g_longevity:'Longevity & energi',g_longevity_s:'Energi seluler, healthspan',
+  g_antiaging:'Kulit & anti-penuaan',g_antiaging_s:'Kolagen, kualitas kulit',
+  g_hormone:'Hormonal / dukungan GH',g_hormone_s:'Komposisi tubuh, tidur, aksis GH',
+  q1_q:'Seberapa aktif gaya hidup Anda saat ini?',q1_h:'Ini menentukan pertimbangan mana yang paling relevan.',
+  a_sed:'Cenderung pasif',a_sed_s:'Banyak duduk, jarang olahraga terstruktur',
+  a_act:'Aktif rekreasional',a_act_s:'Berlatih beberapa kali seminggu',
+  a_ath:'Atlet kompetitif',a_ath_s:'Beban latihan tinggi / fokus performa',
+  a_inj:'Sedang pulih dari cedera',a_inj_s:'Sedang menangani masalah fisik',
+  q2_q:'Apakah ada yang berlaku untuk Anda?',q2_h:'Penting untuk keamanan. Pilih semua yang sesuai — ini hanya mengubah peringatan yang kami tampilkan.',
+  s_cancer:'Riwayat kanker',s_cancer_s:'Keganasan aktif atau masa lalu',
+  s_preg:'Hamil / merencanakan',s_preg_s:'Hamil, menyusui, atau program',
+  s_cardio:'Kondisi kardiovaskular',s_cardio_s:'Penyakit jantung, hipertensi',
+  s_none:'Tidak ada',s_none_s:'Tidak ada kondisi terflag',
+  q3_q:'Seberapa familiar Anda dengan terapi peptida?',q3_h:'Kami akan menyesuaikan kedalaman penjelasannya.',
+  k_new:'Baru mengenal',k_new_s:'Mulai dari dasar',
+  k_some:'Sudah riset sedikit',k_some_s:'Saya tahu kategori utamanya',
+  k_exp:'Berpengalaman',k_exp_s:'Beri saya kedalamannya',
+  q4_q:'Apa yang Anda inginkan dari asesmen ini?',q4_h:'Tidak ada jawaban yang salah.',
+  i_learn:'Sekadar belajar dulu',i_learn_s:'Membangun pemahaman',
+  i_consult:'Mempertimbangkan — ingin konsultasi',i_consult_s:'Siap bicara dengan praktisi',
+  age_q:'Berapa usia Anda?',age_h:'Usia memengaruhi pertimbangan mana yang paling penting.',
+  age_u30:'Di bawah 30',age_3044:'30–44',age_4559:'45–59',age_60:'60+',
+  sex_q:'Jenis kelamin biologis',sex_h:'Beberapa senyawa punya pertimbangan spesifik per jenis kelamin.',
+  sex_male:'Laki-laki',sex_female:'Perempuan',sex_na:'Memilih tidak menjawab',
+  tf_q:'Anda memikirkan jangka waktu berapa?',tf_h:'Seberapa serius Anda mempertimbangkannya?',
+  tf_explore:'Sekadar menjajaki',tf_explore_s:'Penasaran, tanpa komitmen',
+  tf_months:'Beberapa bulan ke depan',tf_months_s:'Sedang aktif mempertimbangkan',
+  tf_longterm:'Jangka panjang',tf_longterm_s:'Terbuka untuk protokol berkelanjutan',
+  tried_q:'Apa yang sudah Anda coba?',tried_h:'Pilih semua yang sesuai — konteks untuk klinisi Anda.',
+  tr_diet:'Diet / nutrisi',tr_diet_s:'Mengubah pola makan',
+  tr_training:'Program latihan',tr_training_s:'Olahraga terstruktur',
+  tr_supps:'Suplemen',tr_supps_s:'Vitamin, produk bebas',
+  tr_rx:'Obat resep',tr_rx_s:'Diresepkan dokter',
+  tr_none:'Belum ada',tr_none_s:'Mulai dari awal',
+  s_thyroid:'Kondisi tiroid',s_thyroid_s:'Hipo- atau hipertiroid',
+  s_meds:'Sedang minum obat resep',s_meds_s:'Saat ini mengonsumsi obat',
+  lbl_goal:'Tujuan utama',lbl_age:'Usia',lbl_sex:'Jenis kelamin',lbl_activity:'Aktivitas',lbl_timeframe:'Jangka waktu',lbl_tried:'Sudah dicoba',lbl_flags:'Tanda kesehatan',lbl_intent:'Niat',flags_none:'Tidak ada',
+  brief_title:'Ringkasan konsultasi Anda',brief_note:'Bawa ringkasan ini ke praktisi berlisensi. Ini bukan diagnosis atau rekomendasi untuk menggunakan senyawa apa pun.',brief_copy:'Salin',brief_copied:'Tersalin ✓',
+  next:'Lanjut →',back:'← Kembali',see_result:'Lihat orientasi saya →',
+  result_badge:'Orientasi edukasi',
+  safety_title:'Kondisi terflag perlu izin medis terlebih dulu.',
+  safety_text:'Berdasarkan jawaban Anda, beberapa kategori peptida memiliki kontraindikasi spesifik untuk situasi Anda. Mohon jangan melanjutkan senyawa apa pun tanpa evaluasi langsung oleh dokter berlisensi.',
+  result_cta1:'Diskusikan dengan praktisi',result_cta2:'↺ Ulangi',
+  lib_eyebrow:'Pustaka Referensi',lib_title:'Setiap senyawa, dinilai jujur.',
+  lib_desc:'Tanpa hype. Tiap entri menampilkan mekanisme, apa yang benar-benar didukung bukti pada manusia, status regulasinya di Indonesia, dan pertimbangan keamanan yang akan diangkat klinisi.',
+  f_all:'Semua',f_metabolic:'Metabolik',f_recovery:'Pemulihan',f_neuro:'Neuro',f_longevity:'Longevity',f_antiaging:'Anti-penuaan',f_hormone:'Hormonal',f_immune:'Imun',
+  sci_eyebrow:'Baca Metodologinya',sci_title:'Cara membaca situs ini',
+  sci_what_t:'Apa itu peptida',
+  sci_what_d:'Peptida adalah rantai pendek asam amino yang berperan sebagai molekul sinyal dalam tubuh — memerintahkan sel melepas hormon, memperbaiki jaringan, atau mengubah metabolisme. Peptida terapeutik berupaya memanfaatkan sinyal itu secara presisi. "Presisi" tidak berarti "tanpa risiko": sinyal yang membantu satu sistem bisa merugikan sistem lain — itulah mengapa pengawasan klinis penting.',
+  sci_legend_t:'Skala bukti kami',
+  sci_reg_t:'Status regulasi',
+  sci_reg_d:'Indonesia mensyaratkan izin edar dari BPOM sebelum suatu sediaan farmasi boleh diedarkan. Sebagian besar peptida di situs ini tidak memilikinya. Kami melabeli tiap entri agar Anda dapat melihat sekilas mana yang legal diperoleh melalui jalur teregulasi dan mana yang tidak — pertanyaan yang hanya bisa dinavigasi oleh klinisi.',
+  ev_strong:'Kuat',ev_strong_d:'Uji klinis manusia berkekuatan baik mendukung penggunaan utamanya.',
+  ev_moderate:'Sedang',ev_moderate_d:'Ada data manusia; efek masuk akal tetapi belum pasti.',
+  ev_emerging:'Awal',ev_emerging_d:'Sebagian besar praklinis atau anekdotal; data manusia terbatas.',
+  ev_caution:'Hati-hati',ev_caution_d:'Masalah keamanan menonjol; umumnya tidak dianjurkan di luar pengawasan ketat.',
+  reg_yes_d:'Memiliki izin edar di Indonesia — hanya dengan resep.',
+  reg_no_d:'Tidak memiliki izin edar di Indonesia. Distribusi ke konsumen melanggar hukum; diskusikan jalur legal dengan klinisi.',
+  consult_eyebrow:'Satu-satunya Langkah Berikutnya',consult_title:'Bawa hasil Anda ke praktisi berlisensi.',
+  consult_desc:'Klinisi akan menilai kelayakan, menyaring kontraindikasi, dan menjelaskan opsi mana yang legal dan tepat untuk Anda. Tidak ada di situs ini yang menggantikan percakapan tersebut.',
+  consult_btn:'Pesan konsultasi via WhatsApp',
+  disclaimer:'<b>Hanya untuk edukasi.</b> Situs ini menyediakan informasi umum dan bukan merupakan saran medis, diagnosis, atau rekomendasi untuk menggunakan, membeli, atau menyuntikkan zat apa pun secara mandiri. Asesmen adalah alat orientasi edukatif, bukan resep. Banyak peptida di sini tidak terdaftar di BPOM dan tidak boleh didistribusikan ke konsumen di Indonesia. Selalu konsultasikan dengan dokter berlisensi sebelum mempertimbangkan terapi peptida. Aevor tidak menjual atau menyalurkan peptida melalui situs ini.',
+  foot_brand:'Edukasi peptida independen berbasis bukti untuk Indonesia. Kami menginformasikan keputusan — klinisi berlisensi yang membuatnya.',
+  foot_explore:'Jelajahi',foot_legal:'Legal',foot_terms:'Ketentuan',foot_privacy:'Privasi',foot_med:'Disclaimer medis',foot_rights:'Platform edukasi',
+  modal_mech:'Mekanisme',modal_studied:'Diteliti untuk',modal_safety:'Pertimbangan keamanan',
+  modal_tf:'Perkiraan waktu hasil',tf_tail:'Jadwal dan durasi dosis ditentukan oleh praktisi Anda — bukan dipakai sendiri.',
+  modal_cite:'Bukti & sumber',cite_link:'Lihat literatur ↗',cite_note:'Penunjuk literatur indikatif — akan diverifikasi peninjau medis kami sebelum peluncuran.',
+  nav_compare:'Bandingkan',nav_faq:'FAQ',nav_glossary:'Glosarium',
+  search_ph:'Cari senyawa…',sort_by:'Urutkan',sort_default:'Default',sort_evidence:'Bukti',sort_bpom:'Status BPOM',sort_name:'Nama',no_results:'Tidak ada senyawa yang cocok.',
+  cmp_pick:'Pilih…',cmp_empty:'Pilih hingga tiga senyawa untuk dibandingkan berdampingan.',col_cat:'Kategori',col_ev:'Bukti',col_bpom:'Regulasi',
+  faq_eyebrow:'Pertanyaan',faq_title:'Peptida di Indonesia, dijelaskan apa adanya.',faq_desc:'Pertanyaan hukum dan praktis yang benar-benar ditanyakan — tanpa bumbu pemasaran.',
+  glo_eyebrow:'Bahasa Sederhana',glo_title:'Glosarium',glo_desc:'Istilah yang dipakai di situs ini, dalam bahasa Inggris dan Indonesia.',
+  cmp_eyebrow:'Berdampingan',cmp_title:'Bandingkan senyawa',cmp_desc:'Sandingkan hingga tiga senyawa — bukti, status regulasi, dan apa yang sebenarnya ditunjukkan riset.',
+  rt_metabolic:'Keluarga metabolik',rt_recovery:'Keluarga pemulihan & perbaikan',rt_neuro:'Keluarga otak & suasana hati',rt_longevity:'Keluarga longevity & energi seluler',rt_antiaging:'Keluarga kulit & anti-penuaan',rt_hormone:'Keluarga hormonal / GH',
+  rl_metabolic:'Tujuan Anda sesuai dengan peptida metabolik — kategori dengan bukti uji klinis terkuat di situs ini. Berikut apa yang diteliti untuk berat dan metabolisme, serta seberapa kuat buktinya.',
+  rl_recovery:'Tujuan Anda sesuai dengan peptida perbaikan jaringan. Minat di sini tinggi di kalangan atlet, namun perhatikan bahwa sebagian besar senyawa ini bertumpu pada bukti praklinis, bukan manusia.',
+  rl_neuro:'Tujuan Anda sesuai dengan neuropeptida yang diteliti untuk tidur, suasana hati, dan kognisi. Beberapa memiliki riwayat klinis nyata di luar negeri, tetapi sebagian besar hanya memiliki bukti manusia awal atau regional — baca grade-nya dengan cermat.',
+  rl_longevity:'Tujuan Anda sesuai dengan peptida longevity dan energi seluler — bidang yang menarik tetapi masih awal. Bacalah dengan grade bukti sebagai pertimbangan utama.',
+  rl_antiaging:'Tujuan Anda sesuai dengan peptida kulit dan anti-penuaan. Bukti paling kuat secara topikal; klaim injeksi dan sistemik lebih lemah.',
+  rl_hormone:'Tujuan Anda sesuai dengan peptida aksis hormon pertumbuhan. Ini menyentuh sistem endokrin secara langsung, sehingga pemantauan dokter tidak bisa ditawar.'
+ }
+};
+
+/* ── persistence (safe; degrades if storage blocked) ── */
+function store(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function recall(k){try{return localStorage.getItem(k)}catch(e){return null}}
+
+let lang=recall('aevor-lang')||'en';
+let currentFilter='all';
+
+/* ── i18n apply ── */
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(I18N[lang][k]!==undefined) el.innerHTML=I18N[lang][k];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const k=el.getAttribute('data-i18n-ph');
+    if(I18N[lang][k]!==undefined) el.setAttribute('placeholder',I18N[lang][k]);
+  });
+  document.documentElement.lang=lang;
+  document.querySelectorAll('.lang-toggle button').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));
+  renderCards(currentFilter);
+  renderEvPanel();
+  if(typeof renderFAQ==='function')renderFAQ();
+  if(typeof renderGlossary==='function')renderGlossary();
+  if(typeof fillCompare==='function')fillCompare();
+  if(document.getElementById('result')&&document.getElementById('result').classList.contains('show')) renderResult();
+}
+function setLang(l){lang=l;store('aevor-lang',l);applyI18n();}
+
+/* ── theme ── */
+const SUN='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>';
+const MOON='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+function applyTheme(mode){
+  document.documentElement.setAttribute('data-theme',mode);
+  const btn=document.querySelector('[data-theme-toggle]');
+  if(btn) btn.innerHTML=mode==='dark'?MOON:SUN;
+}
+function initTheme(){
+  let mode=recall('aevor-theme')||'dark';
+  applyTheme(mode);
+  const btn=document.querySelector('[data-theme-toggle]');
+  if(btn) btn.addEventListener('click',()=>{
+    mode=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    applyTheme(mode);store('aevor-theme',mode);
+  });
+}
+
+/* ── evidence panel ── */
+function renderEvPanel(){
+  const el=document.getElementById('evBars'); if(!el)return;
+  const t=I18N[lang],cats=['metabolic','recovery','neuro','longevity','antiaging','hormone','immune'];
+  el.innerHTML=cats.map(cat=>{
+    const items=PEPTIDES.filter(p=>p.cat===cat);
+    if(!items.length)return '';
+    const pct=Math.round(items.reduce((s,p)=>s+EV_SCORE[p.ev],0)/items.length/4*100);
+    return `<div class="ev-bar" style="--cat:var(--c-${cat})" onclick="jumpCat('${cat}')" title="${t['f_'+cat]}">
+      <div class="ev-bar-track"><div class="ev-bar-fill" data-h="${pct}"></div></div>
+      <div class="ev-bar-cap"><span class="ev-bar-val">${pct}</span><span class="ev-bar-name">${t['f_'+cat]}</span></div>
+    </div>`;
+  }).join('');
+  requestAnimationFrame(()=>el.querySelectorAll('.ev-bar-fill').forEach(f=>f.style.height=f.dataset.h+'%'));
+}
+
+/* ── library ── */
+function badgesHTML(p){
+  const t=I18N[lang];
+  const ev=`<span class="badge ${EV_CLASS[p.ev]}"><span class="d"></span>${t['ev_'+p.ev]}</span>`;
+  const reg=p.bpom
+    ? `<span class="badge reg-yes"><span class="d" style="background:var(--success)"></span>BPOM ✓</span>`
+    : `<span class="badge reg-no"><span class="d" style="background:var(--text-faint)"></span>BPOM ✕</span>`;
+  return ev+reg;
+}
+/* ── expected-timeframe (observed-results windows; numbers marked verify) ── */
+const TF={
+ sema:{en:'Trial weight-loss built up over many months under clinician supervision; appetite effects begin within weeks.',id:'Penurunan berat dalam uji klinis terbentuk selama berbulan-bulan di bawah pengawasan klinisi; efek nafsu makan mulai dalam hitungan minggu.'},
+ tirz:{en:'Approved/investigational depending on market; trial effects accrued over many months, clinician-supervised.',id:'Disetujui/investigasi tergantung pasar; efek uji klinis terbentuk berbulan-bulan, diawasi klinisi.'},
+ mots:{en:'No established human timeframe — animal/preclinical data only.',id:'Tidak ada perkiraan waktu pada manusia — baru data hewan/praklinis.'},
+ nad:{en:'Human evidence limited and mixed; no established timeframe for claimed benefits.',id:'Bukti pada manusia terbatas dan beragam; belum ada perkiraan waktu yang mapan.'},
+ bpc:{en:'No human trials — any timeframe is anecdotal, not established.',id:'Tidak ada uji klinis pada manusia — perkiraan waktu bersifat anekdotal, belum mapan.'},
+ tb500:{en:'No established human timeframe — animal/preclinical data only.',id:'Tidak ada perkiraan waktu pada manusia — baru data hewan/praklinis.'},
+ ghk:{en:'Topical cosmetic studies reported skin changes over roughly 8–12 weeks; injectable use is not established.',id:'Studi kosmetik topikal melaporkan perubahan kulit sekitar 8–12 minggu; penggunaan injeksi belum mapan.'},
+ cjc:{en:'No established human efficacy timeframe; limited pharmacokinetic data only.',id:'Belum ada perkiraan waktu efikasi pada manusia; baru data farmakokinetik terbatas.'},
+ tesa:{en:'In approved use (HIV-related fat), trials showed change over ~26 weeks, clinician-managed.',id:'Pada penggunaan yang disetujui (lemak terkait HIV), uji klinis menunjukkan perubahan ~26 minggu, dikelola klinisi.'},
+ mt2:{en:'No legitimate clinical timeframe; serious safety concerns — not for self-use.',id:'Tidak ada perkiraan waktu klinis yang sah; masalah keamanan serius — bukan untuk pemakaian sendiri.'},
+ reta:{en:'Investigational only; phase-2 trial effects accrued over months.',id:'Masih investigasi; efek uji fase-2 terbentuk selama berbulan-bulan.'},
+ hgh:{en:'In approved deficiency use, body-composition change emerges over ~3–6 months, clinician-managed.',id:'Pada penggunaan defisiensi yang disetujui, perubahan komposisi tubuh muncul ~3–6 bulan, dikelola klinisi.'},
+ serm:{en:'Prescription medication — duration is set by a physician, not "cycled".',id:'Obat resep — durasi ditentukan dokter, bukan "cycle".'},
+ ipa:{en:'No established human efficacy timeframe.',id:'Belum ada perkiraan waktu efikasi pada manusia.'},
+ igf:{en:'No human therapeutic timeframe; carries tumour-growth risk concerns.',id:'Tidak ada perkiraan waktu terapeutik pada manusia; ada kekhawatiran risiko pertumbuhan tumor.'},
+ epi:{en:'Human data are sparse and low-quality; no reliable timeframe.',id:'Data pada manusia sedikit dan berkualitas rendah; tidak ada perkiraan waktu yang andal.'},
+ ss31:{en:'Investigational; clinical-trial results to date are mixed.',id:'Masih investigasi; hasil uji klinis sejauh ini beragam.'},
+ thymalin:{en:'Limited modern clinical data; no established timeframe.',id:'Data klinis modern terbatas; tidak ada perkiraan waktu yang mapan.'},
+ ta1:{en:'Approved for some immune indications abroad; duration is clinician-set.',id:'Disetujui untuk sebagian indikasi imun di luar negeri; durasi ditentukan klinisi.'},
+ kpv:{en:'No established human timeframe — preclinical data only.',id:'Tidak ada perkiraan waktu pada manusia — baru data praklinis.'},
+ amq:{en:'No established human timeframe — preclinical/limited data only.',id:'Tidak ada perkiraan waktu pada manusia — baru data praklinis/terbatas.'},
+ aod:{en:'Human trials did not show meaningful fat-loss benefit — no useful timeframe.',id:'Uji klinis pada manusia tidak menunjukkan manfaat penurunan lemak berarti — tidak ada perkiraan waktu yang berguna.'},
+ frag:{en:'No robust human efficacy data; no established timeframe.',id:'Tidak ada data efikasi manusia yang kuat; tidak ada perkiraan waktu yang mapan.'},
+ glut:{en:'No established efficacy timeframe for cosmetic (skin-lightening) claims.',id:'Tidak ada perkiraan waktu efikasi yang mapan untuk klaim kosmetik (pemutih kulit).'},
+ cagri:{en:'Investigational; phase-2 obesity effects accrued over months, clinician-supervised.',id:'Investigasi; efek obesitas fase-2 terbentuk berbulan-bulan, diawasi klinisi.'},
+ slu:{en:'No human timeframe — animal data only.',id:'Tidak ada perkiraan waktu pada manusia — baru data hewan.'},
+ ara290:{en:'Small trials dosed over weeks; evidence is early and condition-specific.',id:'Uji kecil diberikan selama berminggu-minggu; bukti masih awal dan spesifik kondisi.'},
+ pegmgf:{en:'No established human timeframe — preclinical data only.',id:'Tidak ada perkiraan waktu pada manusia — baru data praklinis.'},
+ ll37:{en:'No established human therapeutic timeframe.',id:'Tidak ada perkiraan waktu terapeutik pada manusia yang mapan.'},
+ vip:{en:'Niche off-label protocols only; no established efficacy timeframe.',id:'Hanya protokol off-label niche; tidak ada perkiraan waktu efikasi yang mapan.'},
+ dsip:{en:'Older small studies; no reliable modern timeframe.',id:'Studi kecil lama; tidak ada perkiraan waktu modern yang andal.'},
+ selank:{en:'Regional clinical use reports short courses; independent timeframe data limited.',id:'Laporan penggunaan klinis regional dengan kursus singkat; data perkiraan waktu independen terbatas.'},
+ semax:{en:'Regional clinical use over short courses; broader timeframe data limited.',id:'Penggunaan klinis regional dalam kursus singkat; data perkiraan waktu yang lebih luas terbatas.'},
+ cerebro:{en:'Given clinically as supervised courses (often ~2–4 weeks); results debated.',id:'Diberikan secara klinis sebagai kursus terawasi (sering ~2–4 minggu); hasil diperdebatkan.'},
+ pinealon:{en:'No established independent human timeframe.',id:'Tidak ada perkiraan waktu manusia independen yang mapan.'},
+ hcg:{en:'In fertility/endocrine use, duration is set and monitored by a specialist.',id:'Pada penggunaan kesuburan/endokrin, durasi ditetapkan dan dipantau spesialis.'},
+ hmg:{en:'Used in supervised fertility cycles; duration is specialist-managed.',id:'Dipakai dalam siklus kesuburan terawasi; durasi dikelola spesialis.'},
+ kiss:{en:'Research-grade dosing only; no approved consumer timeframe.',id:'Hanya dosis tingkat riset; tidak ada perkiraan waktu konsumen yang disetujui.'},
+ pt141:{en:'Acts on-demand before activity in approved use; clinician-directed.',id:'Bekerja sesuai kebutuhan sebelum aktivitas pada penggunaan yang disetujui; diarahkan klinisi.'},
+ oxy:{en:'Approved obstetric forms act within minutes in clinical settings; wellness use unproven.',id:'Bentuk obstetri yang disetujui bekerja dalam hitungan menit di fasilitas klinis; penggunaan wellness belum terbukti.'}
+};
+/* ── citations (indicative literature pointers; PubMed term-searches resolve reliably) ── */
+const PM='https://pubmed.ncbi.nlm.nih.gov/?term=';
+const CITE={
+ sema:{en:'GLP-1 receptor agonist; large randomised obesity trials (STEP programme) and regulatory approval.',id:'Agonis reseptor GLP-1; uji acak obesitas berskala besar (program STEP) dan persetujuan regulator.',url:PM+'semaglutide+obesity+STEP'},
+ tirz:{en:'Dual GIP/GLP-1 agonist; randomised obesity trials (SURMOUNT programme).',id:'Agonis ganda GIP/GLP-1; uji acak obesitas (program SURMOUNT).',url:PM+'tirzepatide+obesity'},
+ mots:{en:'Human evidence is early/preclinical; no large clinical trials located.',id:'Bukti pada manusia masih awal/praklinis; tidak ditemukan uji klinis besar.',url:PM+'MOTS-c'},
+ nad:{en:'Human data limited and mixed across small studies.',id:'Data manusia terbatas dan beragam pada studi-studi kecil.',url:PM+'NAD++supplementation+humans'},
+ bpc:{en:'Evidence is animal/preclinical; no published human trials located.',id:'Bukti bersifat hewan/praklinis; tidak ditemukan uji manusia terpublikasi.',url:PM+'BPC-157'},
+ tb500:{en:'Animal/preclinical evidence (thymosin beta-4).',id:'Bukti hewan/praklinis (thymosin beta-4).',url:PM+'thymosin+beta-4'},
+ ghk:{en:'Copper-peptide cosmetic studies (largely topical); reviews by Pickart et al.',id:'Studi kosmetik peptida-tembaga (umumnya topikal); tinjauan Pickart dkk.',url:PM+'GHK-Cu+skin'},
+ cjc:{en:'Limited human pharmacokinetic data; no robust efficacy trials located.',id:'Data farmakokinetik manusia terbatas; tidak ada uji efikasi yang kuat.',url:PM+'CJC-1295'},
+ tesa:{en:'GHRH analogue approved for HIV-associated lipodystrophy; pivotal randomised trials.',id:'Analog GHRH disetujui untuk lipodistrofi terkait HIV; uji acak pivotal.',url:PM+'tesamorelin'},
+ mt2:{en:'No legitimate efficacy trials; case reports of adverse events.',id:'Tidak ada uji efikasi yang sah; laporan kasus efek samping.',url:PM+'melanotan+II'},
+ reta:{en:'Investigational triple agonist; phase-2 randomised obesity trial.',id:'Agonis tripel investigasi; uji acak obesitas fase-2.',url:PM+'retatrutide'},
+ hgh:{en:'Recombinant somatropin is approved for defined deficiencies; decades of clinical data.',id:'Somatropin rekombinan disetujui untuk defisiensi tertentu; data klinis puluhan tahun.',url:PM+'somatropin+body+composition'},
+ serm:{en:'Selective oestrogen receptor modulators are approved prescription medicines (context-specific).',id:'SERM adalah obat resep yang disetujui (tergantung konteks).',url:PM+'selective+estrogen+receptor+modulator'},
+ ipa:{en:'Growth-hormone secretagogue; human efficacy data limited.',id:'Sekretagog hormon pertumbuhan; data efikasi manusia terbatas.',url:PM+'ipamorelin'},
+ igf:{en:'No human therapeutic trials located; IGF-1 signalling linked to tumour-growth concerns.',id:'Tidak ada uji terapeutik manusia; sinyal IGF-1 dikaitkan kekhawatiran pertumbuhan tumor.',url:PM+'IGF-1+cancer+risk'},
+ epi:{en:'Human data sparse and largely low-quality.',id:'Data manusia sedikit dan umumnya berkualitas rendah.',url:PM+'epitalon'},
+ ss31:{en:'Investigational mitochondrial peptide (elamipretide); mixed clinical-trial results.',id:'Peptida mitokondria investigasi (elamipretide); hasil uji klinis beragam.',url:PM+'elamipretide'},
+ thymalin:{en:'Limited modern peer-reviewed clinical data located.',id:'Data klinis modern yang ditinjau sejawat terbatas.',url:PM+'thymalin'},
+ ta1:{en:'Thymosin alpha-1 is approved for some immune indications in certain countries.',id:'Thymosin alpha-1 disetujui untuk sebagian indikasi imun di negara tertentu.',url:PM+'thymosin+alpha-1'},
+ kpv:{en:'Anti-inflammatory peptide; evidence preclinical.',id:'Peptida anti-inflamasi; bukti praklinis.',url:PM+'KPV+peptide'},
+ amq:{en:'Limited/preclinical evidence located.',id:'Bukti terbatas/praklinis.',url:PM+'5-amino-1MQ'},
+ aod:{en:'Human trials did not demonstrate meaningful fat-loss benefit.',id:'Uji manusia tidak menunjukkan manfaat penurunan lemak yang berarti.',url:PM+'AOD-9604'},
+ frag:{en:'No robust human efficacy data located (HGH fragment 176-191).',id:'Tidak ada data efikasi manusia yang kuat (fragmen HGH 176-191).',url:PM+'HGH+fragment+176-191'},
+ glut:{en:'Glutathione injections lack robust evidence for cosmetic skin-lightening claims.',id:'Injeksi glutathione tidak punya bukti kuat untuk klaim pemutih kulit kosmetik.',url:PM+'glutathione+skin+lightening'},
+ cagri:{en:'Amylin analogue; phase-2 obesity trials, alone and as CagriSema.',id:'Analog amilin; uji obesitas fase-2, tunggal dan sebagai CagriSema.',url:PM+'cagrilintide+obesity'},
+ slu:{en:'ERR agonist "exercise mimetic"; preclinical (mouse) evidence only.',id:'Agonis ERR "peniru olahraga"; baru bukti praklinis (tikus).',url:PM+'SLU-PP-332'},
+ ara290:{en:'Innate-repair receptor peptide (cibinetide); small trials in neuropathy.',id:'Peptida reseptor perbaikan bawaan (cibinetide); uji kecil pada neuropati.',url:PM+'cibinetide+ARA+290'},
+ pegmgf:{en:'Mechano growth factor (IGF-1 splice variant); preclinical evidence.',id:'Faktor pertumbuhan mekano (varian sambungan IGF-1); bukti praklinis.',url:PM+'mechano+growth+factor'},
+ ll37:{en:'Human cathelicidin host-defence peptide; mostly mechanistic/preclinical.',id:'Peptida pertahanan inang cathelicidin manusia; sebagian besar mekanistik/praklinis.',url:PM+'LL-37+cathelicidin'},
+ vip:{en:'Vasoactive intestinal peptide; limited controlled human data for chronic-inflammation use.',id:'Peptida intestinal vasoaktif; data manusia terkontrol terbatas untuk penggunaan inflamasi kronis.',url:PM+'vasoactive+intestinal+peptide'},
+ dsip:{en:'Delta sleep-inducing peptide; older, small, mixed human studies.',id:'Peptida penginduksi tidur delta; studi manusia lama, kecil, beragam.',url:PM+'delta+sleep+inducing+peptide'},
+ selank:{en:'Anxiolytic peptide; mainly regional clinical literature.',id:'Peptida anxiolitik; terutama literatur klinis regional.',url:PM+'selank'},
+ semax:{en:'ACTH(4-10) analogue nootropic; mainly regional clinical literature.',id:'Nootropik analog ACTH(4-10); terutama literatur klinis regional.',url:PM+'semax'},
+ cerebro:{en:'Neurotrophic peptide mixture; trials in stroke/dementia with debated results.',id:'Campuran peptida neurotrofik; uji pada stroke/demensia dengan hasil diperdebatkan.',url:PM+'cerebrolysin'},
+ pinealon:{en:'Peptide bioregulator; evidence mainly from one regional lineage.',id:'Bioregulator peptida; bukti terutama dari satu lini regional.',url:PM+'pinealon+peptide'},
+ hcg:{en:'Human chorionic gonadotropin; established fertility/endocrine medicine.',id:'Gonadotropin korionik manusia; obat kesuburan/endokrin yang mapan.',url:PM+'human+chorionic+gonadotropin'},
+ hmg:{en:'Human menopausal gonadotropin; established in assisted reproduction.',id:'Gonadotropin menopause manusia; mapan dalam reproduksi berbantu.',url:PM+'human+menopausal+gonadotropin'},
+ kiss:{en:'Kisspeptin stimulates the reproductive axis; active clinical research.',id:'Kisspeptin merangsang aksis reproduksi; riset klinis aktif.',url:PM+'kisspeptin'},
+ pt141:{en:'Bremelanotide is approved (abroad) for hypoactive sexual desire disorder.',id:'Bremelanotide disetujui (di luar negeri) untuk gangguan hasrat seksual hipoaktif.',url:PM+'bremelanotide'},
+ oxy:{en:'Oxytocin has strong evidence for approved obstetric uses; social-use claims experimental.',id:'Oksitosin memiliki bukti kuat untuk penggunaan obstetri yang disetujui; klaim penggunaan sosial eksperimental.',url:PM+'oxytocin'}
+};
+const CLOCK_SVG='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+function cardHTML(p){
+  return `<div class="card" style="--cat:var(--c-${p.cat})" onclick="openModal('${p.id}')">
+    <div class="card-top"><div><div class="card-sub">${p.sub[lang]}</div><h3>${p.name}</h3></div><div class="card-cat"><i></i></div></div>
+    <p class="card-desc">${p.mech[lang].slice(0,110)}…</p>
+    ${TF[p.id]?`<div class="card-tf">${CLOCK_SVG}<span>${TF[p.id][lang]}</span></div>`:''}
+    <div class="card-badges">${badgesHTML(p)}</div></div>`;
+}
+let searchQ='',sortBy='default';
+const EVR={strong:4,moderate:3,emerging:2,caution:1};
+function renderCards(filter){
+  const grid=document.getElementById('cards'); if(!grid)return;
+  filter=filter||currentFilter;
+  let list=filter==='all'?PEPTIDES.slice():PEPTIDES.filter(p=>p.cat===filter);
+  if(searchQ){const q=searchQ.toLowerCase();list=list.filter(p=>(p.name+' '+p.sub.en+' '+(p.sub[lang]||'')+' '+p.mech[lang]).toLowerCase().includes(q));}
+  if(sortBy==='evidence')list.sort((a,b)=>EVR[b.ev]-EVR[a.ev]);
+  else if(sortBy==='bpom')list.sort((a,b)=>(b.bpom?1:0)-(a.bpom?1:0));
+  else if(sortBy==='name')list.sort((a,b)=>a.name.localeCompare(b.name));
+  const t=I18N[lang];
+  grid.innerHTML=list.length?list.map(cardHTML).join(''):('<p class="empty-note">'+(t.no_results||'No matches.')+'</p>');
+}
+function doSearch(v){searchQ=v;renderCards();}
+function doSort(v){sortBy=v;renderCards();}
+function filterLib(el,f){
+  currentFilter=f;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',c===el));
+  renderCards(f);
+}
+
+/* ── modal ── */
+function openModal(id){
+  const p=PEPTIDES.find(x=>x.id===id); if(!p)return;
+  const t=I18N[lang];
+  const warn=p.warn?`<div class="modal-warn"><span class="ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><p>${p.safety[lang]}</p></div>`:'';
+  document.getElementById('modal').innerHTML=`
+    <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-sub">${p.sub[lang]}</div><h3>${p.name}</h3>
+    <div class="modal-badges">${badgesHTML(p)}</div>${warn}
+    <div class="modal-block"><h4>${t.modal_mech}</h4><p>${p.mech[lang]}</p></div>
+    <div class="modal-block"><h4>${t.modal_studied}</h4><p>${p.studied[lang]}</p></div>
+    ${TF[p.id]?`<div class="modal-block"><h4>${t.modal_tf}</h4><p>${TF[p.id][lang]}</p><p class="modal-tf-tail">${t.tf_tail}</p></div>`:''}
+    ${!p.warn?`<div class="modal-block"><h4>${t.modal_safety}</h4><p>${p.safety[lang]}</p></div>`:''}
+    ${CITE[p.id]?`<div class="modal-block"><h4>${t.modal_cite}</h4><p>${CITE[p.id][lang]}</p>${CITE[p.id].url?`<div class="modal-cite"><a href="${CITE[p.id].url}" target="_blank" rel="noopener">${t.cite_link}</a></div>`:''}<p class="cite-note">${t.cite_note}</p></div>`:''}
+    <div class="modal-foot"><a href="#consult" data-route="consult" class="btn btn-accent">${t.result_cta1}</a></div>`;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(){const o=document.getElementById('modalOverlay');if(o)o.classList.remove('show');}
+
+/* ── assessment ── */
+let step=0,answers={};const STEPS=8;
+function pick(el,s){el.closest('.opts').querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');answers[s]=el.dataset.value;}
+function pickMulti(el,key){
+  const group=el.closest('.opts'),v=el.dataset.value;
+  if(v==='none'){group.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');answers[key]=['none'];return;}
+  const none=group.querySelector('.opt[data-value="none"]');if(none)none.classList.remove('selected');
+  el.classList.toggle('selected');
+  answers[key]=[...group.querySelectorAll('.opt.selected')].map(o=>o.dataset.value);
+}
+function showStep(n){
+  document.querySelectorAll('.qstep').forEach(q=>q.classList.remove('active'));
+  const el=document.getElementById('q'+n);if(!el)return;
+  el.classList.add('active');
+  document.getElementById('progressFill').style.width=((n+1)/STEPS*100)+'%';
+  const pad=x=>(x<10?'0':'')+x;
+  document.getElementById('progressLabel').textContent=pad(n+1)+' / '+pad(STEPS);
+  document.getElementById('progressWrap').style.display='flex';
+}
+function next(){if(step<STEPS-1){step++;showStep(step);}}
+function prev(){if(step>0){step--;showStep(step);}}
+function showResult(){
+  document.querySelectorAll('.qstep').forEach(q=>q.classList.remove('active'));
+  document.getElementById('progressWrap').style.display='none';
+  document.getElementById('result').classList.add('show');
+  renderResult();
+}
+function briefRow(k,v){return v?('<div class="brief-row"><span class="brief-k">'+k+'</span><span class="brief-v">'+v+'</span></div>'):'';}
+function renderResult(){
+  const r=document.getElementById('result'); if(!r)return;
+  const t=I18N[lang],goal=answers[0]||'longevity';
+  document.getElementById('resultTitle').textContent=t['rt_'+goal];
+  document.getElementById('resultLead').textContent=t['rl_'+goal];
+  const safety=answers['safety']||[];
+  document.getElementById('safetyFlag').classList.toggle('show',safety.some(s=>['cancer','pregnant','cardio'].includes(s)));
+  const ACT={sedentary:'a_sed',active:'a_act',athlete:'a_ath',injured:'a_inj'};
+  const SAFE={cancer:'s_cancer',pregnant:'s_preg',cardio:'s_cardio',thyroid:'s_thyroid',meds:'s_meds'};
+  const tried=(answers['tried']||[]).filter(x=>x!=='none').map(x=>t['tr_'+x]).join(', ');
+  const flags=safety.filter(x=>x!=='none').map(x=>t[SAFE[x]]).join(', ');
+  const rows=
+    briefRow(t.lbl_goal,t['g_'+goal])+
+    briefRow(t.lbl_age,answers[1]?t['age_'+answers[1]]:'')+
+    briefRow(t.lbl_sex,answers[2]?t['sex_'+answers[2]]:'')+
+    briefRow(t.lbl_activity,answers[3]?t[ACT[answers[3]]]:'')+
+    briefRow(t.lbl_timeframe,answers[4]?t['tf_'+answers[4]]:'')+
+    briefRow(t.lbl_tried,tried)+
+    briefRow(t.lbl_flags,flags||t.flags_none)+
+    briefRow(t.lbl_intent,answers[7]?t['i_'+answers[7]]:'');
+  const bb=document.getElementById('briefBox');
+  if(bb) bb.innerHTML='<div class="brief-head"><h4>'+t.brief_title+'</h4><button class="brief-copy" onclick="copyBrief()">'+t.brief_copy+'</button></div>'+rows+'<p class="brief-note">'+t.brief_note+'</p>';
+  document.getElementById('resultGrid').innerHTML=(CAT_GOALS[goal]||[]).map(id=>cardHTML(PEPTIDES.find(x=>x.id===id))).join('');
+}
+function copyBrief(){
+  const t=I18N[lang],rows=document.querySelectorAll('#briefBox .brief-row');
+  let txt='AEVOR — '+t.brief_title+'\n';
+  rows.forEach(r=>{txt+='• '+r.querySelector('.brief-k').textContent+': '+r.querySelector('.brief-v').textContent+'\n';});
+  const done=()=>{const b=document.querySelector('.brief-copy');if(b){const o=b.textContent;b.textContent=t.brief_copied;setTimeout(()=>b.textContent=o,1600);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,done);}else{done();}
+}
+function resetQuiz(){
+  step=0;answers={};
+  document.getElementById('result').classList.remove('show');
+  document.querySelectorAll('.opt.selected').forEach(o=>o.classList.remove('selected'));
+  showStep(0);
+}
+
+/* ── FAQ + glossary content (bilingual) ── */
+const FAQ=[
+ {q:{en:`Are peptides legal in Indonesia?`,id:`Apakah peptida legal di Indonesia?`},
+  a:{en:`It depends on the specific peptide. A few (like semaglutide) hold BPOM marketing authorisation (izin edar) and are legal when prescribed by a licensed doctor. Most "research" peptides have no izin edar — they are not approved for sale or human use, and importing or selling them to consumers is unlawful under UU 17/2023 on Health and BPOM regulations.`,
+     id:`Tergantung peptidanya. Beberapa (seperti semaglutide) memiliki izin edar BPOM dan legal jika diresepkan dokter berlisensi. Sebagian besar "research peptide" tidak punya izin edar — tidak disetujui untuk dijual atau digunakan pada manusia, dan mengimpor atau menjualnya ke konsumen melanggar UU 17/2023 tentang Kesehatan serta peraturan BPOM.`}},
+ {q:{en:`Why can't I just buy them online?`,id:`Kenapa tidak bisa langsung beli online?`},
+  a:{en:`Vendors selling injectable peptides direct to consumers are operating outside the law. Products without izin edar have no guarantee of identity, purity, dose, or sterility, and self-injecting an unapproved drug carries real risk. Aevor does not sell or source peptides; it helps you understand the evidence and connect with a licensed practitioner who can assess eligibility lawfully.`,
+     id:`Penjual yang menawarkan peptida injeksi langsung ke konsumen beroperasi di luar hukum. Produk tanpa izin edar tidak terjamin identitas, kemurnian, dosis, atau sterilitasnya, dan menyuntik obat tak berizin sendiri berisiko nyata. Aevor tidak menjual atau menyediakan peptida; kami membantu Anda memahami bukti dan terhubung dengan praktisi berlisensi yang dapat menilai kelayakan secara sah.`}},
+ {q:{en:`What does "research use only" mean versus "approved"?`,id:`Apa beda "research use only" dengan "approved"?`},
+  a:{en:`"Research use only" (RUO) means a substance is sold for laboratory research, not for human use — it is explicitly not a medicine and has not been assessed for safety or efficacy in people. "Approved" means a regulator (BPOM in Indonesia, or FDA/EMA abroad) reviewed clinical data and authorised it for a specific medical use. RUO labelling is often used to sidestep drug law; it does not make a peptide safe or legal to inject.`,
+     id:`"Research use only" (RUO) berarti zat dijual untuk riset laboratorium, bukan untuk manusia — secara tegas bukan obat dan belum dinilai keamanan atau efikasinya pada manusia. "Approved" berarti regulator (BPOM di Indonesia, atau FDA/EMA di luar negeri) telah meninjau data klinis dan mengizinkannya untuk penggunaan medis tertentu. Label RUO sering dipakai untuk menyiasati hukum obat; itu tidak membuat peptida aman atau sah untuk disuntik.`}},
+ {q:{en:`Are these peptides approved by BPOM?`,id:`Apakah peptida ini disetujui BPOM?`},
+  a:{en:`Only a small number. Each compound in our library is labelled BPOM ✓ (has izin edar) or BPOM ✗ (none on record). "BPOM ✗" means it is not approved for sale or human use in Indonesia. Always verify a product's status directly on BPOM's Cek Produk database before trusting any claim.`,
+     id:`Hanya sedikit. Setiap senyawa di pustaka kami diberi label BPOM ✓ (punya izin edar) atau BPOM ✗ (tidak tercatat). "BPOM ✗" berarti tidak disetujui untuk dijual atau digunakan pada manusia di Indonesia. Selalu verifikasi status produk langsung di basis data Cek Produk BPOM sebelum mempercayai klaim apa pun.`}},
+ {q:{en:`Is it safe to inject peptides myself?`,id:`Apakah aman menyuntik peptida sendiri?`},
+  a:{en:`No. Self-injecting an unapproved peptide means unknown purity and dose, infection and injection-site risk, and no medical monitoring for adverse effects or interactions. Any legitimate use of a prescribed peptide happens under a licensed clinician who sets the regimen and monitors you.`,
+     id:`Tidak. Menyuntik peptida tak berizin sendiri berarti kemurnian dan dosis tak diketahui, risiko infeksi dan reaksi di lokasi suntik, serta tanpa pemantauan medis atas efek samping atau interaksi. Penggunaan sah peptida yang diresepkan selalu di bawah klinisi berlisensi yang menetapkan regimen dan memantau Anda.`}},
+ {q:{en:`How do I access peptides legally?`,id:`Bagaimana cara mengakses peptida secara legal?`},
+  a:{en:`Through a licensed doctor. Bring the consultation brief from our assessment to a registered telemedicine or in-person consult under Permenkes 20/2019; the clinician assesses whether an approved therapy is appropriate and, if so, prescribes and supervises it. That is the only lawful and safe path.`,
+     id:`Melalui dokter berlisensi. Bawa ringkasan konsultasi dari asesmen kami ke layanan telemedicine terdaftar atau konsultasi tatap muka sesuai Permenkes 20/2019; klinisi menilai apakah terapi yang disetujui sesuai dan, jika ya, meresepkan serta mengawasinya. Itu satu-satunya jalur yang sah dan aman.`}}
+];
+const GLO=[
+ {t:{en:`Peptide`,id:`Peptida`},d:{en:`A short chain of amino acids — smaller than a protein. Many act as signals telling the body to do something, such as release a hormone.`,id:`Rantai pendek asam amino — lebih kecil dari protein. Banyak yang berperan sebagai sinyal yang menyuruh tubuh melakukan sesuatu, seperti melepas hormon.`}},
+ {t:{en:`GLP-1`,id:`GLP-1`},d:{en:`Glucagon-like peptide-1, a gut hormone that lowers appetite and blood sugar; the target of drugs like semaglutide.`,id:`Glucagon-like peptide-1, hormon usus yang menurunkan nafsu makan dan gula darah; target obat seperti semaglutide.`}},
+ {t:{en:`GIP`,id:`GIP`},d:{en:`Glucose-dependent insulinotropic polypeptide, another gut hormone; tirzepatide acts on both GIP and GLP-1.`,id:`Glucose-dependent insulinotropic polypeptide, hormon usus lain; tirzepatide bekerja pada GIP dan GLP-1.`}},
+ {t:{en:`GHRH`,id:`GHRH`},d:{en:`Growth-hormone-releasing hormone — signals the pituitary to release growth hormone; analogues include tesamorelin.`,id:`Hormon pelepas hormon pertumbuhan — memberi sinyal hipofisis melepas hormon pertumbuhan; analognya termasuk tesamorelin.`}},
+ {t:{en:`Secretagogue`,id:`Sekretagog`},d:{en:`A substance that prompts the body to secrete something — for example GH secretagogues that nudge natural growth-hormone release.`,id:`Zat yang memicu tubuh mengeluarkan sesuatu — misalnya sekretagog GH yang mendorong pelepasan hormon pertumbuhan alami.`}},
+ {t:{en:`BPOM izin edar`,id:`Izin edar BPOM`},d:{en:`Marketing authorisation from the Indonesian food and drug authority (BPOM). Without it, a product is not approved for sale or human use.`,id:`Izin edar dari otoritas obat dan makanan Indonesia (BPOM). Tanpa itu, produk tidak disetujui untuk dijual atau digunakan pada manusia.`}},
+ {t:{en:`Obat keras`,id:`Obat keras`},d:{en:`A prescription-only ("hard") drug class under Indonesian law — supplied only via a prescription from a doctor.`,id:`Golongan obat resep menurut hukum Indonesia — hanya diberikan melalui resep dokter.`}},
+ {t:{en:`Off-label`,id:`Off-label`},d:{en:`Using an approved drug for a purpose not on its approved label — a clinical decision a doctor may make, not a consumer.`,id:`Memakai obat yang disetujui untuk tujuan di luar labelnya — keputusan klinis yang dapat diambil dokter, bukan konsumen.`}},
+ {t:{en:`Preclinical (animal) study`,id:`Studi praklinis (hewan)`},d:{en:`Research in cells or animals before any human testing — promising preclinical data does not mean a substance works or is safe in people.`,id:`Riset pada sel atau hewan sebelum uji pada manusia — data praklinis menjanjikan tidak berarti zat itu efektif atau aman pada manusia.`}},
+ {t:{en:`Evidence grade`,id:`Tingkat bukti`},d:{en:`Our label for how strong the human evidence is — from Strong (large human trials) to Caution (little or poor data, or safety flags).`,id:`Label kami untuk kekuatan bukti pada manusia — dari Kuat (uji manusia besar) hingga Hati-hati (data sedikit/buruk, atau tanda keamanan).`}},
+ {t:{en:`Compounding`,id:`Peracikan (compounding)`},d:{en:`Pharmacy preparation of a tailored medicine for a specific patient — tightly regulated and clinician-directed, not a way to buy bulk peptides.`,id:`Penyiapan obat khusus untuk pasien tertentu oleh apotek — diatur ketat dan diarahkan klinisi, bukan cara membeli peptida massal.`}},
+ {t:{en:`Telemedicine (Permenkes 20/2019)`,id:`Telemedicine (Permenkes 20/2019)`},d:{en:`Remote clinical care regulated in Indonesia under Permenkes 20/2019 — a lawful way to reach a licensed doctor for assessment and prescription.`,id:`Layanan klinis jarak jauh yang diatur di Indonesia oleh Permenkes 20/2019 — cara sah menjangkau dokter berlisensi untuk asesmen dan resep.`}}
+];
+function renderFAQ(){var el=document.getElementById('faqList');if(!el)return;el.innerHTML=FAQ.map(function(f){return '<details class="faq-item"><summary>'+f.q[lang]+'</summary><div class="faq-a">'+f.a[lang]+'</div></details>';}).join('');}
+function renderGlossary(){var el=document.getElementById('gloList');if(!el)return;el.innerHTML=GLO.map(function(g){return '<div class="glo-item"><h4>'+g.t[lang]+'</h4><p>'+g.d[lang]+'</p></div>';}).join('');}
+function fillCompare(){var sels=document.querySelectorAll('.cmp-pick select');if(!sels.length)return;var t=I18N[lang];sels.forEach(function(s){var cur=s.value;s.innerHTML='<option value="">'+(t.cmp_pick||'Select…')+'</option>'+PEPTIDES.map(function(p){return '<option value="'+p.id+'">'+p.name+'</option>';}).join('');if(cur)s.value=cur;});renderCompare();}
+function renderCompare(){var out=document.getElementById('cmpOut');if(!out)return;var t=I18N[lang];var ids=[].slice.call(document.querySelectorAll('.cmp-pick select')).map(function(s){return s.value;}).filter(Boolean);if(!ids.length){out.innerHTML='<p class="cmp-empty">'+(t.cmp_empty||'Pick compounds to compare.')+'</p>';return;}var ps=ids.map(function(id){return PEPTIDES.find(function(p){return p.id===id;});}).filter(Boolean);var rows=[[t.col_cat,function(p){return t['f_'+p.cat]||p.cat;}],[t.col_ev,function(p){return t['ev_'+p.ev]||p.ev;}],[t.col_bpom,function(p){return p.bpom?'BPOM ✓':'BPOM ✗';}],[t.modal_tf,function(p){return TF[p.id]?TF[p.id][lang]:'—';}],[t.modal_mech,function(p){return p.mech[lang];}],[t.modal_safety,function(p){return p.safety[lang];}]];var h='<div class="cmp-wrap"><table class="cmp-table"><thead><tr><th></th>'+ps.map(function(p){return '<th>'+p.name+'</th>';}).join('')+'</tr></thead><tbody>';rows.forEach(function(r){h+='<tr><td class="cmp-row-label">'+r[0]+'</td>'+ps.map(function(p){return '<td>'+r[1](p)+'</td>';}).join('')+'</tr>';});h+='</tbody></table></div>';out.innerHTML=h;}
+
+function toggleMenu(b){var n=b.closest('.nav');if(!n)return;var open=n.classList.toggle('open');b.setAttribute('aria-expanded',open?'true':'false');}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  initTheme();
+  const hash=location.hash.replace('#','');
+  if(document.getElementById('cards')&&['metabolic','recovery','neuro','longevity','antiaging','hormone','immune'].includes(hash)){
+    currentFilter=hash;
+    const chip=document.querySelector(`.chip[data-filter="${hash}"]`);
+    if(chip){document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));chip.classList.add('active');}
+  }
+  if(document.getElementById('q0')) showStep(0);
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+  applyI18n();
+});
+
+</script>
+<script>
+function route(n){if(!document.getElementById('view-'+n))n='home';document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active')});document.getElementById('view-'+n).classList.add('active');document.querySelectorAll('.nav-links a[data-nav]').forEach(function(a){a.classList.toggle('is-active',a.getAttribute('data-nav')===n)});var nv=document.querySelector('.nav.open');if(nv)nv.classList.remove('open');window.scrollTo(0,0);}function jumpCat(c){var ch=document.querySelector('.chip[data-filter="'+c+'"]');if(typeof currentFilter!=='undefined')currentFilter=c;if(ch){document.querySelectorAll('.chip').forEach(function(x){x.classList.remove('active')});ch.classList.add('active');}if(typeof renderCards==='function')renderCards(c);route('library');}document.addEventListener('click',function(e){var t=e.target,a=t.closest?t.closest('[data-route]'):null;if(a){e.preventDefault();route(a.getAttribute('data-route'));}});route('home');
+</script></body></html>
