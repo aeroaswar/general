@@ -121,14 +121,7 @@ em { font-style: italic; }
 /* Print — render the contract as a real document: a Bodega letterhead on every
    page, clean page breaks, and light ink on white. */
 @media print {
-  /* zero side page-margin — the document supplies its own symmetric side padding
-     below, so margins stay correct whatever the print dialog's margin setting is */
-  @page { size: A4; margin: 12mm 0; }
-
-  /* guaranteed, symmetric side margins on every page (header, body, footer) */
-  .doc-table > thead > tr > td,
-  .doc-table > tbody > tr > td,
-  .doc-table > tfoot > tr > td { padding-left: 16mm !important; padding-right: 16mm !important; }
+  @page { size: A4; margin: 13mm; }
 
   aside, header.sticky, .no-print { display: none !important; }
   main { padding: 0 !important; max-width: none !important; margin: 0 !important; }
@@ -140,17 +133,21 @@ em { font-style: italic; }
   .print-area {
     --bg: #ffffff; --text: #15120f; --muted: #534d45; --faint: #6b655c;
     --card: #ffffff; --card-2: #f7f4ef; --line: rgba(0,0,0,0.14); --line-2: rgba(0,0,0,0.22); --accent: #b4540f;
-    box-shadow: none !important; border: 0 !important; background: #fff !important; max-width: none !important; margin: 0 !important; border-radius: 0 !important;
+    /* Fixed A4 content width (210 − 2×13mm margins) so mobile browsers can't lay
+       the doc out at the phone width and scale it — which inflated the margins
+       and pushed content onto extra pages. Centered = symmetric margins. */
+    width: 184mm !important; max-width: 184mm !important; margin: 0 auto !important;
+    box-shadow: none !important; border: 0 !important; background: #fff !important; border-radius: 0 !important;
   }
   /* Flex containers paginate unreliably in Chrome (break-inside:avoid is ignored
      on flex items), which splits clauses across pages. Block-flow the document
      column and its sections in print, and space children with margins instead
      of flex gap, so every clause/block stays whole. */
   .print-area .doc-body { padding: 0 !important; display: block !important; }
-  .print-area .doc-body > * { margin: 0 0 16px 0 !important; }
+  .print-area .doc-body > * { margin: 0 0 13px 0 !important; }
   .print-area .doc-body > *:last-child { margin-bottom: 0 !important; }
   .print-area .doc-body > section { display: block !important; }
-  .print-area .doc-body > section > * { margin: 0 0 11px 0 !important; }
+  .print-area .doc-body > section > * { margin: 0 0 9px 0 !important; }
   .print-area .doc-body > section > *:last-child { margin-bottom: 0 !important; }
   .print-area, .print-area * { color: #15120f !important; }
   .print-area .text-muted, .print-area [class*="text-muted"] { color: #534d45 !important; }
@@ -185,7 +182,7 @@ em { font-style: italic; }
   .print-letterhead .ll-meta { font-size: 8pt; line-height: 1.45; text-align: right; color: #6b655c !important; max-width: 70mm; overflow-wrap: anywhere; }
 
   /* belt-and-braces: nothing in the document may exceed the page width */
-  .print-area, .print-area .doc-body, .doc-table > tbody > tr > td { max-width: 100% !important; }
+  .print-area .doc-body, .doc-table > tbody > tr > td { max-width: 100% !important; }
   .print-area .doc-body > * { min-width: 0; }
 
   .print-footer {
