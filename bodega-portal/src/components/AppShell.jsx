@@ -165,7 +165,7 @@ export default function AppShell({ children }) {
       <div className="flex-1 min-w-0 flex flex-col">
         <header className="sticky top-0 z-30 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-3 border-b hairline" style={{ background: "var(--bg)" }}>
           <button className="lg:hidden p-2 -ml-1 text-muted shrink-0" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          <div className="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
+          <div className="flex items-center gap-1.5 min-w-0 flex-1">
             {clients.length > 1 ? (
               <Switcher label="Switch client" items={clients} activeId={selectedClient?.id} onPick={setSelectedClientId}
                 render={(c) => (<span className="flex items-center gap-2 min-w-0"><Avatar name={c.name} size={20} /><span className="max-w-[80px] sm:max-w-[140px] truncate">{c.name}</span></span>)} />
