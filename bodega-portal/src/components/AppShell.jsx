@@ -87,10 +87,10 @@ function Switcher({ label, items, activeId, onPick, render }) {
   const active = items.find((i) => i.id === activeId) || items[0];
   if (!active) return null;
   return (
-    <div className="relative">
-      <button onClick={() => setOpen((o) => !o)} className="glass-2 hairline border flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium">
+    <div className="relative min-w-0">
+      <button onClick={() => setOpen((o) => !o)} className="glass-2 hairline border flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg text-sm font-medium min-w-0 max-w-full">
         {render(active)}
-        <ChevronDown size={15} className="text-muted" />
+        <ChevronDown size={15} className="text-muted shrink-0" />
       </button>
       <AnimatePresence>
         {open && (
@@ -163,23 +163,25 @@ export default function AppShell({ children }) {
       </AnimatePresence>
 
       <div className="flex-1 min-w-0 flex flex-col">
-        <header className="sticky top-0 z-30 flex items-center gap-2 px-4 md:px-6 py-3 border-b hairline" style={{ background: "var(--bg)" }}>
-          <button className="lg:hidden p-2 -ml-2 text-muted" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
-          {clients.length > 1 ? (
-            <Switcher label="Switch client" items={clients} activeId={selectedClient?.id} onPick={setSelectedClientId}
-              render={(c) => (<span className="flex items-center gap-2"><Avatar name={c.name} size={20} /><span className="max-w-[110px] truncate">{c.name}</span></span>)} />
-          ) : selectedClient ? (
-            <span className="chip" style={{ color: "var(--muted)" }}><Avatar name={selectedClient.name} size={18} /> {selectedClient.name}</span>
-          ) : null}
-          {activeProject && <ChevronDown size={14} className="text-faint -rotate-90 hidden sm:block" />}
-          {projects.length > 1 ? (
-            <Switcher label="Switch project" items={projects} activeId={activeProject?.id} onPick={setSelectedProjectId}
-              render={(p) => (<span className="flex items-center gap-2"><i className="w-2 h-2 rounded-full" style={{ background: PROJECT_STATUS_C[p.status] }} /><span className="max-w-[130px] truncate">{p.name}</span></span>)} />
-          ) : activeProject ? (
-            <span className="chip" style={{ color: "var(--muted)" }}><i className="w-2 h-2 rounded-full" style={{ background: PROJECT_STATUS_C[activeProject.status] }} /> {activeProject.name}</span>
-          ) : null}
+        <header className="sticky top-0 z-30 flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 md:px-6 py-3 border-b hairline" style={{ background: "var(--bg)" }}>
+          <button className="lg:hidden p-2 -ml-1 text-muted shrink-0" onClick={() => setMobileOpen(true)}><Menu size={20} /></button>
+          <div className="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
+            {clients.length > 1 ? (
+              <Switcher label="Switch client" items={clients} activeId={selectedClient?.id} onPick={setSelectedClientId}
+                render={(c) => (<span className="flex items-center gap-2 min-w-0"><Avatar name={c.name} size={20} /><span className="max-w-[80px] sm:max-w-[140px] truncate">{c.name}</span></span>)} />
+            ) : selectedClient ? (
+              <span className="chip min-w-0" style={{ color: "var(--muted)" }}><Avatar name={selectedClient.name} size={18} /> <span className="truncate">{selectedClient.name}</span></span>
+            ) : null}
+            {activeProject && <ChevronDown size={14} className="text-faint -rotate-90 hidden sm:block shrink-0" />}
+            {projects.length > 1 ? (
+              <Switcher label="Switch project" items={projects} activeId={activeProject?.id} onPick={setSelectedProjectId}
+                render={(p) => (<span className="flex items-center gap-2 min-w-0"><i className="w-2 h-2 rounded-full shrink-0" style={{ background: PROJECT_STATUS_C[p.status] }} /><span className="max-w-[90px] sm:max-w-[150px] truncate">{p.name}</span></span>)} />
+            ) : activeProject ? (
+              <span className="chip min-w-0" style={{ color: "var(--muted)" }}><i className="w-2 h-2 rounded-full shrink-0" style={{ background: PROJECT_STATUS_C[activeProject.status] }} /> <span className="truncate">{activeProject.name}</span></span>
+            ) : null}
+          </div>
 
-          <div className="ml-auto flex items-center gap-1.5">
+          <div className="ml-auto flex items-center gap-0.5 sm:gap-1.5 shrink-0">
             <button onClick={toggle} className="p-2 rounded-lg text-muted hover:text-[color:var(--text)] hover:bg-[color:var(--card-2)]" title="Toggle theme">
               {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
             </button>
@@ -196,7 +198,7 @@ export default function AppShell({ children }) {
             </Link>
           </div>
         </header>
-        <main className="flex-1 p-4 md:p-6 max-w-[1280px] w-full mx-auto">{children}</main>
+        <main className="flex-1 p-4 md:p-6 max-w-[1280px] w-full mx-auto overflow-x-hidden">{children}</main>
       </div>
     </div>
   );
