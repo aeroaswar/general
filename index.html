@@ -235,7 +235,9 @@ footer{background:var(--ink);color:#cdd6e2;padding:58px 0 36px;margin-top:36px}
 .rcount b{color:var(--red)}
 
 /* ---------- Add-to-quote button ---------- */
-.add-cell{width:54px;text-align:right!important}
+.add-cell{width:92px;text-align:right!important;white-space:nowrap}
+.add-cell .ref-btn{margin-right:6px;vertical-align:middle}
+.add-cell .add-btn{vertical-align:middle}
 .add-btn{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink-2);cursor:pointer;display:inline-grid;place-items:center;font-size:17px;transition:.16s}
 .add-btn:hover{border-color:var(--accent,var(--red));color:var(--accent,var(--red));transform:translateY(-1px)}
 .add-btn.added{background:var(--accent,var(--red));border-color:var(--accent,var(--red));color:#fff}
@@ -296,6 +298,60 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
 .coa-cell .v.red{color:var(--red)}
 .coa-foot{padding:16px 26px;font-family:var(--mono);font-size:11px;color:var(--muted);border-top:1px solid var(--line);position:relative;z-index:1}
 @media(max-width:680px){.coa-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- Reference button + drawer ---------- */
+.ref-btn{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--line-2);background:var(--surface);color:var(--muted);cursor:pointer;display:inline-grid;place-items:center;font-size:16px;transition:.16s}
+.ref-btn:hover{border-color:var(--ink-2);color:var(--ink)}
+.drawer-ov{position:fixed;inset:0;z-index:70;background:rgba(11,19,32,.55);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .3s}
+.drawer-ov.show{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(440px,92vw);z-index:71;background:var(--surface);box-shadow:-30px 0 60px -30px rgba(0,0,0,.4);transform:translateX(100%);transition:transform .36s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column}
+.drawer.show{transform:none}
+.drawer-h{position:relative;padding:26px 24px;color:#fff;background:var(--ink-grad);overflow:hidden}
+.drawer-h .accent{position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--accent,var(--red))}
+.drawer-h .cls{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent,#ff6b74);font-weight:500}
+.drawer-h h3{font-family:var(--display);font-weight:800;font-size:25px;text-transform:uppercase;letter-spacing:-.01em;margin-top:8px;line-height:1.05}
+.drawer-h .doses{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+.drawer-h .doses span{font-family:var(--mono);font-size:11px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);padding:3px 9px;border-radius:6px}
+.drawer-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:9px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#fff;cursor:pointer;display:grid;place-items:center;font-size:18px}
+.drawer-close:hover{background:rgba(255,255,255,.16)}
+.drawer-b{padding:24px;overflow:auto;flex:1}
+.dr-block{margin-bottom:22px}
+.dr-block .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin-bottom:7px;display:flex;align-items:center;gap:7px}
+.dr-block .k i{color:var(--accent,var(--red));font-size:15px}
+.dr-block p{font-size:14.5px;color:var(--ink-2);line-height:1.65}
+.dr-block.half p{font-family:var(--mono);font-weight:700;color:var(--ink)}
+.dr-note{display:flex;gap:11px;align-items:flex-start;background:rgba(225,29,42,.06);border:1px solid rgba(225,29,42,.2);border-radius:11px;padding:14px 16px;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.dr-note i{color:var(--red);font-size:18px;flex-shrink:0;margin-top:1px}
+.dr-note b{color:var(--ink-2)}
+
+/* ---------- Compliance section ---------- */
+.compliance{background:var(--ink);color:#cdd6e2}
+.comp-card{max-width:900px;margin:0 auto;display:grid;gap:16px}
+.comp-lead{font-size:15px;line-height:1.75;color:#b9c4d2}
+.comp-lead b{color:#fff}
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+.comp-tile{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:13px;padding:20px}
+.comp-tile i{color:#ff6b74;font-size:24px}
+.comp-tile h4{font-family:var(--display);font-weight:700;font-size:15px;text-transform:uppercase;margin:10px 0 6px;color:#fff}
+.comp-tile p{font-size:13px;color:#9fadbf;line-height:1.6}
+.comp-strong{display:flex;gap:12px;align-items:flex-start;background:rgba(225,29,42,.1);border:1px solid rgba(255,107,116,.35);border-radius:13px;padding:18px 20px;margin-top:6px}
+.comp-strong i{color:#ff8a91;font-size:22px;flex-shrink:0;margin-top:2px}
+.comp-strong p{font-size:13.5px;color:#cdd6e2;line-height:1.65}
+.comp-strong b{color:#ff8a91}
+@media(max-width:760px){.comp-grid{grid-template-columns:1fr}}
+
+/* ---------- Acknowledgement gate ---------- */
+.gate{position:fixed;inset:0;z-index:90;background:rgba(7,11,20,.82);backdrop-filter:blur(8px);display:grid;place-items:center;padding:24px;opacity:0;animation:fadein .4s forwards}
+@keyframes fadein{to{opacity:1}}
+.gate-card{max-width:480px;background:var(--surface);border-radius:18px;padding:34px 30px;text-align:center;box-shadow:var(--shadow-lg)}
+.gate-card .mk{width:54px;height:54px;border-radius:14px;background:var(--red);color:#fff;display:grid;place-items:center;font-size:27px;margin:0 auto 18px}
+.gate-card h3{font-family:var(--display);font-weight:800;font-size:23px;text-transform:uppercase;letter-spacing:-.01em}
+.gate-card p{color:var(--muted);font-size:13.5px;line-height:1.65;margin-top:12px}
+.gate-card .small{font-size:11.5px;color:var(--muted-2);margin-top:14px}
+.gate-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.gate-actions .btn{flex:1;justify-content:center;min-width:130px}
+.gate-actions .btn.decline{border-color:var(--line-2);color:var(--muted)}
+.gate-actions .btn.decline:hover{background:var(--surface-2);color:var(--ink)}
 
 /* ---------- Reveal ---------- */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
@@ -513,6 +569,57 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
   </div>
 </section>
 
+<!-- ===== COMPLIANCE ===== -->
+<section class="section compliance" id="compliance">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker" style="color:#ff6b74">// Compliance &amp; Safety</div>
+      <h2 style="color:#fff">Important Notice</h2>
+    </div>
+    <div class="comp-card">
+      <p class="comp-lead reveal">Many compounds listed here are <b>experimental, lack long-term human safety data, or are strictly regulated</b>. This catalogue is published for qualified researchers and institutions. <b>We do not provide usage, dosing, administration, or cycling guidance of any kind</b> — those decisions require a licensed medical professional with knowledge of your specific situation.</p>
+      <div class="comp-grid">
+        <div class="comp-tile reveal"><i class="ph-bold ph-flask"></i><h4>Research Use Only</h4><p>Products are intended exclusively for in-vitro laboratory and scientific research — not for human or veterinary consumption, diagnosis, or treatment.</p></div>
+        <div class="comp-tile reveal"><i class="ph-bold ph-stethoscope"></i><h4>Consult a Physician</h4><p>Always consult a qualified physician before considering any peptide, hormone, or research chemical. Self-administration carries serious health risks.</p></div>
+        <div class="comp-tile reveal"><i class="ph-bold ph-scales"></i><h4>Know Your Law</h4><p>Several items (e.g. androgens, melanocortin agonists) are controlled or regulated in many jurisdictions. Buyers are responsible for legal compliance.</p></div>
+      </div>
+      <div class="comp-strong reveal"><i class="ph-fill ph-warning-octagon"></i><p><b>No medical advice.</b> Nothing on this site constitutes medical advice or a recommendation to use any compound. The per-compound reference panels describe scientific mechanism, pharmacokinetics and laboratory handling only — they intentionally contain no human dosing, routes, frequencies, cycles, or stacks.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REFERENCE DRAWER ===== -->
+<div class="drawer-ov" id="drawerOv"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Compound research information">
+  <div class="drawer-h">
+    <span class="accent"></span>
+    <button class="drawer-close" id="drawerClose" aria-label="Close"><i class="ph-bold ph-x"></i></button>
+    <div class="cls" id="drCls">—</div>
+    <h3 id="drName">—</h3>
+    <div class="doses" id="drDoses"></div>
+  </div>
+  <div class="drawer-b">
+    <div class="dr-block"><div class="k"><i class="ph-bold ph-atom"></i> Studied for</div><p id="drMech">—</p></div>
+    <div class="dr-block half"><div class="k"><i class="ph-bold ph-timer"></i> Approx. half-life</div><p id="drHalf">—</p></div>
+    <div class="dr-block"><div class="k"><i class="ph-bold ph-snowflake"></i> Storage &amp; reconstitution</div><p id="drHandling">—</p></div>
+    <div class="dr-note"><i class="ph-fill ph-info"></i><p><b>Research context only.</b> This panel intentionally provides no human dosing, administration routes, frequencies, cycles, or stacking guidance. Consult a licensed physician before any use.</p></div>
+  </div>
+</aside>
+
+<!-- ===== ACKNOWLEDGEMENT GATE ===== -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle" hidden>
+  <div class="gate-card">
+    <div class="mk"><i class="ph-bold ph-flask"></i></div>
+    <h3 id="gateTitle">Research Use Only</h3>
+    <p>The products in this catalogue are sold strictly for <b>in-vitro laboratory and research use</b> — not for human or veterinary consumption. By entering you confirm that you are <b>18 or older</b> and a qualified researcher or institutional buyer, and that you accept the research-use and compliance terms.</p>
+    <div class="gate-actions">
+      <button class="btn btn-red" id="gateAccept">I Confirm — Enter</button>
+      <a class="btn decline" href="https://www.google.com" id="gateDecline">Leave</a>
+    </div>
+    <div class="small">This site does not provide medical advice, dosing, or usage guidance.</div>
+  </div>
+</div>
+
 <!-- ===== QUOTE DRAWER ===== -->
 <div class="quote-bar" id="quoteBar">
   <div class="quote-inner">
@@ -602,7 +709,7 @@ CAT.forEach(c=>{
       <td><span class="pname">${it.name}</span>${it.dose?`<span class="dose">${it.dose}</span>`:''}</td>
       <td class="content">${it.content}</td>
       <td class="r price ${it.price==null?'na':''}">${it.price==null?'N/A':`<span class="cur">Rp</span>${fmt(it.price)}`}</td>
-      <td class="add-cell">${it.price==null?'':`<button class="add-btn" data-add="${id}" aria-label="Add to quote" title="Add to quote"><i class="ph-bold ph-plus"></i></button>`}</td>
+      <td class="add-cell"><button class="ref-btn" data-ref="${it.name}" aria-label="Research info" title="Research info"><i class="ph-bold ph-info"></i></button>${it.price==null?'':`<button class="add-btn" data-add="${id}" aria-label="Add to quote" title="Add to quote"><i class="ph-bold ph-plus"></i></button>`}</td>
     </tr>`;}).join("");
   const block=document.createElement("div");
   block.className="cat reveal";block.dataset.cat=c.id;block.id="cat-"+c.id;
@@ -731,6 +838,43 @@ const cio=new IntersectionObserver(es=>es.forEach(en=>{
   requestAnimationFrame(step);cio.unobserve(el);
 }),{threshold:.6});
 document.querySelectorAll("[data-count]").forEach(el=>cio.observe(el));
+
+/* ---- Reference drawer ---- */
+const NAME2ACCENT={},NAME2DOSES={};
+CAT.forEach(c=>c.items.forEach(it=>{
+  NAME2ACCENT[it.name]=ACCENTS[c.id]||"#e11d2a";
+  (NAME2DOSES[it.name]=NAME2DOSES[it.name]||[]).push(it.dose||"—");
+}));
+const REF=window.REFERENCE||{},HANDLING=window.REF_HANDLING||"";
+const drawer=document.getElementById("drawer"),drawerOv=document.getElementById("drawerOv");
+function openRef(name){
+  const r=REF[name];if(!r)return;
+  const accent=NAME2ACCENT[name]||"#e11d2a";
+  drawer.style.setProperty("--accent",accent);
+  document.getElementById("drCls").textContent=r.cls||"Research compound";
+  document.getElementById("drName").textContent=name;
+  document.getElementById("drMech").textContent=r.mech||"—";
+  document.getElementById("drHalf").textContent=r.half||"—";
+  document.getElementById("drHandling").textContent=HANDLING;
+  const doses=[...new Set(NAME2DOSES[name]||[])].filter(d=>d&&d!=="—");
+  document.getElementById("drDoses").innerHTML=doses.map(d=>`<span>${d}</span>`).join("");
+  drawer.classList.add("show");drawerOv.classList.add("show");drawer.setAttribute("aria-hidden","false");
+}
+function closeRef(){drawer.classList.remove("show");drawerOv.classList.remove("show");drawer.setAttribute("aria-hidden","true");}
+list.addEventListener("click",e=>{const b=e.target.closest("[data-ref]");if(b)openRef(b.dataset.ref);});
+drawerOv.addEventListener("click",closeRef);
+document.getElementById("drawerClose").addEventListener("click",closeRef);
+addEventListener("keydown",e=>{if(e.key==="Escape")closeRef();});
+
+/* ---- Acknowledgement gate ---- */
+(function(){
+  const gate=document.getElementById("gate");if(!gate)return;
+  if(localStorage.getItem("axiom_ack")==="1")return;
+  gate.hidden=false;document.documentElement.style.overflow="hidden";
+  document.getElementById("gateAccept").addEventListener("click",()=>{
+    localStorage.setItem("axiom_ack","1");gate.hidden=true;document.documentElement.style.overflow="";
+  });
+})();
 
 /* ---- ECG heartbeat canvas ---- */
 function ecg(canvas,color){
