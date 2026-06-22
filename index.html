@@ -106,6 +106,11 @@ nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.82);backdrop-f
 .btn-red{background:var(--red);border-color:var(--red);color:#fff;box-shadow:0 12px 24px -12px rgba(225,29,42,.6)}
 .btn-red:hover{background:var(--red-dark);border-color:var(--red-dark);color:#fff}
 .nav-toggle{display:none;background:none;border:1px solid var(--line-2);color:var(--ink);width:42px;height:42px;border-radius:10px;font-size:20px;cursor:pointer}
+.nav-right{display:flex;align-items:center;gap:16px}
+.navcart{position:relative;background:var(--surface);border:1.5px solid var(--line-2);color:var(--ink);width:44px;height:44px;border-radius:11px;cursor:pointer;display:grid;place-items:center;font-size:20px;transition:.18s}
+.navcart:hover{border-color:var(--red);color:var(--red);transform:translateY(-1px)}
+.cartbadge{position:absolute;top:-6px;right:-6px;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--red);color:#fff;font-family:var(--mono);font-size:10.5px;font-weight:700;display:grid;place-items:center;border:2px solid var(--surface)}
+.cartbadge[hidden]{display:none}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;padding:70px 0 64px;overflow:hidden;background:linear-gradient(180deg,#fff, var(--bg))}
@@ -397,15 +402,17 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
       <span class="mark"><i class="ph-bold ph-pulse"></i></span>
       <span class="nm">AXIOM<small>PERFORMANCE PEPTIDES</small></span>
     </a>
-    <div class="nav-links" id="navLinks">
-      <a href="#catalogue">Catalogue</a>
-      <a href="#quality">Quality</a>
-      <a href="#faq">FAQ</a>
-      <a href="#process">How to Order</a>
-      <a href="#contact">Contact</a>
-      <a href="#contact" class="btn btn-red">Request Quote</a>
+    <div class="nav-right">
+      <div class="nav-links" id="navLinks">
+        <a href="#catalogue">Catalogue</a>
+        <a href="#quality">Quality</a>
+        <a href="#faq">FAQ</a>
+        <a href="#process">How to Order</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <button class="navcart" id="navCart" aria-label="Open cart" title="Cart"><i class="ph-bold ph-shopping-cart-simple"></i><span class="cartbadge" id="navCartCount" hidden>0</span></button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ph ph-list"></i></button>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ph ph-list"></i></button>
   </div>
 </nav>
 
@@ -563,7 +570,7 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
       <h2>Build Your Research Order</h2>
       <p>Tell us which compounds and quantities you need. Quotes are returned within 24 hours with live stock and pricing.</p>
       <div class="cta-row">
-        <a href="https://wa.me/6281234567890?text=Hello%20AXIOM%2C%20I%27d%20like%20a%20research%20peptide%20quote." target="_blank" rel="noopener" class="btn btn-red"><i class="ph-fill ph-whatsapp-logo"></i> WhatsApp Us</a>
+        <a href="https://wa.me/18038573396?text=Hello%20AXIOM%2C%20I%27d%20like%20a%20research%20peptide%20quote." target="_blank" rel="noopener" class="btn btn-red"><i class="ph-fill ph-whatsapp-logo"></i> WhatsApp Us</a>
         <a href="mailto:research@axiompeptides.example?subject=Research%20Quote%20Request" class="btn"><i class="ph-fill ph-envelope-simple"></i> Email Enquiry</a>
       </div>
     </div>
@@ -627,14 +634,14 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
     <div class="quote-card">
       <div class="quote-top" id="quoteTop">
         <span class="qc" id="qCount">0</span>
-        <span class="ql">Your Research Quote</span>
+        <span class="ql">Your Cart</span>
         <span class="qt"><span id="qTotal">Rp 0</span><small>Estimated total</small></span>
         <i class="ph-bold ph-caret-up qcaret"></i>
       </div>
       <div class="quote-body">
         <div class="quote-items" id="qItems"></div>
         <div class="quote-actions">
-          <a class="btn btn-red" id="qWhatsApp" href="#" target="_blank" rel="noopener"><i class="ph-fill ph-whatsapp-logo"></i> Send to WhatsApp</a>
+          <a class="btn btn-red" id="qWhatsApp" href="#" target="_blank" rel="noopener"><i class="ph-fill ph-whatsapp-logo"></i> Checkout via WhatsApp</a>
           <button class="btn ghost" id="qCopy"><i class="ph-bold ph-copy"></i> Copy list</button>
           <button class="btn ghost" id="qClear"><i class="ph-bold ph-trash"></i> Clear</button>
         </div>
@@ -661,7 +668,7 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
       </div>
       <div>
         <h5>Contact</h5>
-        <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">WhatsApp Order Line</a>
+        <a href="https://wa.me/18038573396" target="_blank" rel="noopener">WhatsApp Order Line</a>
         <a href="mailto:research@axiompeptides.example">research@axiompeptides.example</a>
         <p>Mon–Sat · 09:00–18:00 WIB</p>
         <p>Jakarta, Indonesia</p>
@@ -710,7 +717,7 @@ CAT.forEach(c=>{
       <td><span class="pname">${it.name}</span>${it.dose?`<span class="dose">${it.dose}</span>`:''}</td>
       <td class="content">${it.content}</td>
       <td class="r price ${it.price==null?'na':''}">${it.price==null?'N/A':`<span class="cur">Rp</span>${fmt(it.price)}`}</td>
-      <td class="add-cell"><button class="ref-btn" data-ref="${it.name}" aria-label="Research info" title="Research info"><i class="ph-bold ph-info"></i></button>${it.price==null?'':`<button class="add-btn" data-add="${id}" aria-label="Add to quote" title="Add to quote"><i class="ph-bold ph-plus"></i></button>`}</td>
+      <td class="add-cell"><button class="ref-btn" data-ref="${it.name}" aria-label="Research info" title="Research info"><i class="ph-bold ph-info"></i></button>${it.price==null?'':`<button class="add-btn" data-add="${id}" aria-label="Add to cart" title="Add to cart"><i class="ph-bold ph-plus"></i></button>`}</td>
     </tr>`;}).join("");
   const block=document.createElement("div");
   block.className="cat reveal";block.dataset.cat=c.id;block.id="cat-"+c.id;
@@ -777,7 +784,7 @@ apply(); // initialise price-slider label + results count on load
 /* ---- Quote builder ---- */
 const quote=new Map();
 const qBar=document.getElementById("quoteBar"),qItems=document.getElementById("qItems"),qCount=document.getElementById("qCount"),qTotal=document.getElementById("qTotal");
-const WA_NUMBER="6281234567890";
+const WA_NUMBER="18038573396";
 function renderQuote(){
   const entries=[...quote.values()];
   qCount.textContent=entries.reduce((n,e)=>n+e.qty,0);
@@ -792,8 +799,10 @@ function renderQuote(){
     </div>`).join("");
   qBar.classList.toggle("show",entries.length>0);
   if(entries.length===0)qBar.classList.remove("open");
+  const badge=document.getElementById("navCartCount");
+  if(badge){const tq=entries.reduce((n,e)=>n+e.qty,0);badge.textContent=tq;badge.hidden=tq===0;}
   // WhatsApp link
-  let msg="Hello AXIOM, I'd like a quote for the following research compounds:\n";
+  let msg="Hello AXIOM, I'd like to order the following research compounds:\n";
   entries.forEach((e,i)=>{msg+=`${i+1}. ${e.name}${e.dose?' '+e.dose:''} — ${e.qty}× — Rp ${fmt(e.price*e.qty)}\n`;});
   msg+=`\nEstimated total: Rp ${fmt(total)}`;
   document.getElementById("qWhatsApp").href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
@@ -814,6 +823,10 @@ qItems.addEventListener("click",e=>{
   if(rm){quote.delete(rm.dataset.rm);renderQuote();}
 });
 document.getElementById("quoteTop").addEventListener("click",()=>qBar.classList.toggle("open"));
+document.getElementById("navCart").addEventListener("click",()=>{
+  if(quote.size){qBar.classList.add("show","open");}
+  else document.getElementById("catalogue").scrollIntoView({behavior:"smooth"});
+});
 document.getElementById("qClear").addEventListener("click",()=>{quote.clear();renderQuote();});
 document.getElementById("qCopy").addEventListener("click",e=>{
   navigator.clipboard?.writeText(qBar._msg||"");
