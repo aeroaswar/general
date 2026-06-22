@@ -89,6 +89,8 @@ a{color:inherit;text-decoration:none}
 nav{position:sticky;top:0;z-index:50;background:rgba(6,6,6,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px}
 .brand{display:flex;flex-direction:column;gap:3px;line-height:1}
+.brand-logo{height:44px;width:auto;display:block}
+@media(max-width:680px){.brand-logo{height:38px}}
 .brand .wm{font-family:var(--display);font-weight:500;font-size:23px;letter-spacing:.42em;color:var(--text)}
 .brand .wmsub{font-family:var(--display);font-weight:400;font-size:7.5px;letter-spacing:.44em;color:var(--muted)}
 .nav-links{display:flex;gap:28px;align-items:center;font-size:13.5px;font-weight:500;color:var(--ink-2)}
@@ -396,7 +398,7 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
 <nav>
   <div class="wrap nav-in">
     <a href="#top" class="brand">
-      <span class="wm">AXIOM</span><span class="wmsub">HUMAN PERFORMANCE</span>
+      <img class="brand-logo" src="assets/axiom-logo.svg" alt="AXIOM — Human Performance" width="160" height="46" />
     </a>
     <div class="nav-right">
       <div class="nav-links" id="navLinks">
@@ -650,7 +652,7 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a href="#top" class="brand" style="margin-bottom:16px"><span class="wm">AXIOM</span><span class="wmsub">HUMAN PERFORMANCE</span></a>
+        <a href="#top" class="brand" style="margin-bottom:16px;display:inline-block"><img class="brand-logo" src="assets/axiom-logo.svg" alt="AXIOM — Human Performance" width="170" height="49" /></a>
         <p style="max-width:340px">Clinical-grade research peptides for performance, recovery and longevity science. Independently tested, documented, and dispatched with care.</p>
       </div>
       <div>
