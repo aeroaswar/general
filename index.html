@@ -869,11 +869,14 @@ addEventListener("keydown",e=>{if(e.key==="Escape")closeRef();});
 /* ---- Acknowledgement gate ---- */
 (function(){
   const gate=document.getElementById("gate");if(!gate)return;
-  if(localStorage.getItem("axiom_ack")==="1")return;
+  let ack=false;try{ack=localStorage.getItem("axiom_ack")==="1";}catch(e){}
+  if(ack)return;
   gate.hidden=false;document.documentElement.style.overflow="hidden";
-  document.getElementById("gateAccept").addEventListener("click",()=>{
-    localStorage.setItem("axiom_ack","1");gate.hidden=true;document.documentElement.style.overflow="";
-  });
+  function enter(){
+    gate.hidden=true;document.documentElement.style.overflow="";   // close first — never block entry
+    try{localStorage.setItem("axiom_ack","1");}catch(e){}           // persist if storage is available
+  }
+  document.getElementById("gateAccept").addEventListener("click",enter);
 })();
 
 /* ---- ECG heartbeat canvas ---- */
