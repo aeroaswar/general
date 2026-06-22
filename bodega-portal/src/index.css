@@ -124,7 +124,9 @@ em { font-style: italic; }
   @page { size: A4; margin: 13mm; }
 
   aside, header.sticky, .no-print { display: none !important; }
-  main { padding: 0 !important; max-width: none !important; margin: 0 !important; }
+  /* overflow:visible — the screen view clips main's x-overflow, but in print that
+     would cut the right side of the document */
+  main { padding: 0 !important; max-width: none !important; margin: 0 !important; overflow: visible !important; }
   .brand-bg, .brand-grain { display: none !important; }
   body { background: #fff !important; }
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -133,10 +135,9 @@ em { font-style: italic; }
   .print-area {
     --bg: #ffffff; --text: #15120f; --muted: #534d45; --faint: #6b655c;
     --card: #ffffff; --card-2: #f7f4ef; --line: rgba(0,0,0,0.14); --line-2: rgba(0,0,0,0.22); --accent: #b4540f;
-    /* Fixed A4 content width (210 − 2×13mm margins) so mobile browsers can't lay
-       the doc out at the phone width and scale it — which inflated the margins
-       and pushed content onto extra pages. Centered = symmetric margins. */
-    width: 184mm !important; max-width: 184mm !important; margin: 0 auto !important;
+    /* Simply fill the @page content box — no fixed mm width (that overflowed the
+       container and the right edge got clipped). @page margins handle the borders. */
+    width: auto !important; max-width: 100% !important; margin: 0 !important;
     box-shadow: none !important; border: 0 !important; background: #fff !important; border-radius: 0 !important;
   }
   /* Flex containers paginate unreliably in Chrome (break-inside:avoid is ignored
