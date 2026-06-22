@@ -159,6 +159,18 @@ em { font-style: italic; }
   /* chips / platform tags / badges → light pill on white (colored dots keep their colour) */
   .print-area .chip { background: #f7f4ef !important; border-color: #ddd6ca !important; }
 
+  /* Force the document to its full A4 layout regardless of device width — mobile
+     browsers otherwise evaluate sm:/lg: breakpoints against the phone screen and
+     print the single-column mobile layout. This keeps the PDF identical on phone
+     and desktop. */
+  .print-area .sm\:hidden { display: none !important; }
+  .print-area .hidden.sm\:grid { display: grid !important; }
+  .print-area .sm\:grid-cols-2 { grid-template-columns: 1fr 1fr !important; }
+  .print-area .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr) !important; }
+  .print-area .sm\:text-right { text-align: right !important; }
+  .print-area .sm\:w-72 { width: 18rem !important; }
+  .print-area .sm\:contents { display: contents !important; }
+
   /* repeat the letterhead / footer on every page */
   .print-head { display: table-header-group !important; }
   .print-foot { display: table-footer-group !important; }
