@@ -342,6 +342,7 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
 
 /* ---------- Acknowledgement gate ---------- */
 .gate{position:fixed;inset:0;z-index:90;background:rgba(7,11,20,.82);backdrop-filter:blur(8px);display:grid;place-items:center;padding:24px;opacity:0;animation:fadein .4s forwards}
+.gate[hidden]{display:none}
 @keyframes fadein{to{opacity:1}}
 .gate-card{max-width:480px;background:var(--surface);border-radius:18px;padding:34px 30px;text-align:center;box-shadow:var(--shadow-lg)}
 .gate-card .mk{width:54px;height:54px;border-radius:14px;background:var(--red);color:#fff;display:grid;place-items:center;font-size:27px;margin:0 auto 18px}
