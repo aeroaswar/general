@@ -100,8 +100,7 @@ window.CATALOG = [
       { name: "GHK-Cu", dose: "100 mg", content: "Pen", price: 1400000 },
       { name: "AHK-Cu", dose: "100 mg", content: "Pen", price: 1700000 },
       { name: "Glutathione", dose: "1500 mg", content: "Pen", price: 1600000 },
-      { name: "Melanotan 2", dose: "10 mg", content: "Pen", price: 1800000 },
-      { name: "VIP", dose: "10 mg", content: "Pen", price: null }
+      { name: "Melanotan 2", dose: "10 mg", content: "Pen", price: 1800000 }
     ]
   }
 ];
@@ -151,6 +150,5 @@ window.REFERENCE = {
   "GHK-Cu":{cls:"Copper tripeptide",mech:"Gly-His-Lys:Cu studied for tissue-remodelling, antioxidant and dermal-research signalling.",half:"Short"},
   "AHK-Cu":{cls:"Copper tripeptide",mech:"Ala-His-Lys:Cu studied in hair-follicle and dermal research.",half:"Short"},
   "Glutathione":{cls:"Tripeptide antioxidant",mech:"Endogenous Glu-Cys-Gly antioxidant studied for redox and detoxification research.",half:"Short"},
-  "Melanotan 2":{cls:"α-MSH analogue ⚠ regulated",mech:"Synthetic melanocortin agonist studied for melanocortin-pathway/pigmentation research. Regulated in many jurisdictions.",half:"≈1–2 hours"},
-  "VIP":{cls:"Vasoactive Intestinal Peptide",mech:"Studied for VIP-receptor signalling in immune and inflammatory research.",half:"Very short"}
+  "Melanotan 2":{cls:"α-MSH analogue ⚠ regulated",mech:"Synthetic melanocortin agonist studied for melanocortin-pathway/pigmentation research. Regulated in many jurisdictions.",half:"≈1–2 hours"}
 };
