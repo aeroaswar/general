@@ -5,6 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>AXIOM Performance Peptides — Research Catalogue · For Research Use Only</title>
 <meta name="description" content="Clinical-grade research peptides for performance, recovery and longevity science. Third-party HPLC verified, ≥98% purity. For laboratory research use only." />
+<meta name="theme-color" content="#e11d2a" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://axiompeptides.example/" />
+<!-- Favicon (inline SVG: red tile + ECG pulse) -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23e11d2a'/%3E%3Cpath d='M10 56 h20 l7 -24 l12 44 l8 -22 h33' fill='none' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23e11d2a'/%3E%3Cpath d='M10 56 h20 l7 -24 l12 44 l8 -22 h33' fill='none' stroke='white' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="AXIOM Performance Peptides" />
+<meta property="og:title" content="AXIOM Performance Peptides — Research Catalogue" />
+<meta property="og:description" content="Clinical-grade research peptides — third-party HPLC verified, ≥98% purity. For research use only." />
+<meta property="og:url" content="https://axiompeptides.example/" />
+<meta property="og:image" content="og.svg" />
+<meta property="og:image:type" content="image/svg+xml" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AXIOM Performance Peptides — Research Catalogue" />
+<meta name="twitter:description" content="Clinical-grade research peptides — third-party HPLC verified, ≥98% purity. For research use only." />
+<meta name="twitter:image" content="og.svg" />
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"AXIOM Performance Peptides",
+  "description":"Clinical-grade research peptides for laboratory research use only.",
+  "url":"https://axiompeptides.example/",
+  "logo":"https://axiompeptides.example/og.svg",
+  "address":{"@type":"PostalAddress","addressLocality":"Jakarta","addressCountry":"ID"},
+  "contactPoint":{"@type":"ContactPoint","contactType":"sales","availableLanguage":["en","id"]}
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -188,9 +220,91 @@ footer{background:var(--ink);color:#cdd6e2;padding:58px 0 36px;margin-top:36px}
 .disclaimer b{color:#ff8a91;letter-spacing:.04em}
 .foot-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:28px;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);color:#7e8ca0;font-family:var(--mono);font-size:11px;letter-spacing:.04em}
 
+/* ---------- Toolbar extras ---------- */
+.toolbar2{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between;margin-bottom:24px}
+.tool-group{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.sel{position:relative}
+.sel select{appearance:none;font-family:var(--display);font-weight:600;font-size:12.5px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line-2);border-radius:9px;padding:10px 34px 10px 14px;cursor:pointer;outline:none}
+.sel select:focus{border-color:var(--red)}
+.sel::after{content:"▾";position:absolute;right:13px;top:50%;transform:translateY(-50%);color:var(--muted-2);pointer-events:none;font-size:11px}
+.range{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line-2);border-radius:9px;padding:8px 14px}
+.range label{font-family:var(--mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.range input[type=range]{accent-color:var(--red);width:150px}
+.range .val{font-family:var(--mono);font-size:11.5px;font-weight:700;color:var(--ink);white-space:nowrap;min-width:96px}
+.rcount{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.rcount b{color:var(--red)}
+
+/* ---------- Add-to-quote button ---------- */
+.add-cell{width:54px;text-align:right!important}
+.add-btn{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink-2);cursor:pointer;display:inline-grid;place-items:center;font-size:17px;transition:.16s}
+.add-btn:hover{border-color:var(--accent,var(--red));color:var(--accent,var(--red));transform:translateY(-1px)}
+.add-btn.added{background:var(--accent,var(--red));border-color:var(--accent,var(--red));color:#fff}
+
+/* ---------- Quote drawer ---------- */
+.quote-bar{position:fixed;left:0;right:0;bottom:0;z-index:60;transform:translateY(120%);transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.quote-bar.show{transform:none}
+.quote-inner{max-width:var(--maxw);margin:0 auto;padding:0 26px 18px}
+.quote-card{background:var(--ink);color:#fff;border-radius:16px 16px 0 0;box-shadow:0 -20px 50px -20px rgba(0,0,0,.5);overflow:hidden}
+@media(min-width:680px){.quote-card{border-radius:16px;margin-bottom:0}.quote-inner{padding-bottom:18px}}
+.quote-top{display:flex;align-items:center;gap:14px;padding:16px 22px;cursor:pointer}
+.quote-top .qc{width:34px;height:34px;border-radius:9px;background:var(--red);display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:15px;flex-shrink:0}
+.quote-top .ql{font-family:var(--display);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.02em}
+.quote-top .qt{margin-left:auto;font-family:var(--mono);font-weight:700;font-size:15px;color:#fff}
+.quote-top .qt small{display:block;font-size:9.5px;color:#9fadbf;letter-spacing:.1em;text-transform:uppercase;text-align:right;font-weight:500}
+.quote-top .qcaret{color:#9fadbf;transition:transform .3s;font-size:18px}
+.quote-bar.open .qcaret{transform:rotate(180deg)}
+.quote-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.quote-bar.open .quote-body{max-height:60vh;overflow:auto}
+.quote-items{padding:4px 22px 8px}
+.qrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid rgba(255,255,255,.08)}
+.qrow .qn{font-size:13.5px;font-weight:500}
+.qrow .qn small{color:#9fadbf;font-family:var(--mono);font-size:11px;margin-left:6px}
+.qrow .qp{margin-left:auto;font-family:var(--mono);font-size:12.5px;color:#cdd6e2;white-space:nowrap}
+.qty{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border-radius:8px;padding:3px}
+.qty button{width:24px;height:24px;border:none;border-radius:6px;background:transparent;color:#fff;cursor:pointer;font-size:15px;line-height:1}
+.qty button:hover{background:rgba(255,255,255,.14)}
+.qty span{font-family:var(--mono);font-size:12.5px;min-width:18px;text-align:center}
+.qremove{background:none;border:none;color:#ff8a91;cursor:pointer;font-size:17px;display:grid;place-items:center}
+.quote-actions{display:flex;gap:10px;flex-wrap:wrap;padding:14px 22px 20px;border-top:1px solid rgba(255,255,255,.08)}
+.quote-actions .btn{flex:1;justify-content:center;min-width:140px}
+.quote-actions .btn.ghost{border-color:rgba(255,255,255,.25);color:#fff;background:transparent}
+.quote-actions .btn.ghost:hover{background:rgba(255,255,255,.12)}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:840px;margin:0 auto;display:grid;gap:12px}
+.faq-item{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden;box-shadow:var(--shadow)}
+.faq-q{display:flex;align-items:center;gap:14px;padding:20px 22px;cursor:pointer;font-family:var(--display);font-weight:700;font-size:16px;list-style:none}
+.faq-q::-webkit-details-marker{display:none}
+.faq-q .qi{margin-left:auto;color:var(--red);transition:transform .3s;font-size:20px;flex-shrink:0}
+details[open] .faq-q .qi{transform:rotate(45deg)}
+.faq-q .num{font-family:var(--mono);font-size:12px;color:var(--muted-2);font-weight:500}
+.faq-a{padding:0 22px 22px 56px;color:var(--muted);font-size:14.5px;line-height:1.7}
+
+/* ---------- CoA specimen ---------- */
+.coa-wrap{max-width:760px;margin:0 auto}
+.coa{position:relative;background:var(--surface);border:1px solid var(--line-2);border-radius:var(--radius);box-shadow:var(--shadow-lg);overflow:hidden}
+.coa::after{content:"SPECIMEN";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:clamp(54px,11vw,120px);color:rgba(225,29,42,.06);transform:rotate(-18deg);pointer-events:none;letter-spacing:.05em}
+.coa-h{display:flex;align-items:center;gap:14px;padding:22px 26px;background:var(--ink);color:#fff}
+.coa-h .mark{width:38px;height:38px;border-radius:10px;background:var(--red);display:grid;place-items:center;font-size:20px}
+.coa-h h4{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:17px;letter-spacing:.01em}
+.coa-h p{font-family:var(--mono);font-size:10.5px;color:#9fadbf;letter-spacing:.16em;text-transform:uppercase;margin-top:2px}
+.coa-h .pass{margin-left:auto;font-family:var(--display);font-weight:800;font-size:12px;text-transform:uppercase;color:#16a34a;background:rgba(22,163,74,.16);border:1px solid rgba(22,163,74,.4);padding:7px 13px;border-radius:999px}
+.coa-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);position:relative;z-index:1}
+.coa-cell{background:var(--surface);padding:16px 22px}
+.coa-cell .k{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+.coa-cell .v{font-family:var(--display);font-weight:700;font-size:16px;margin-top:5px;color:var(--ink)}
+.coa-cell .v.red{color:var(--red)}
+.coa-foot{padding:16px 26px;font-family:var(--mono);font-size:11px;color:var(--muted);border-top:1px solid var(--line);position:relative;z-index:1}
+@media(max-width:680px){.coa-grid{grid-template-columns:repeat(2,1fr)}}
+
 /* ---------- Reveal ---------- */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
 .reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1!important;transform:none!important;transition:none!important}
+  .pill .live{animation:none}
+  html{scroll-behavior:auto}
+}
 
 /* ---------- Responsive ---------- */
 @media(max-width:900px){
@@ -229,6 +343,7 @@ footer{background:var(--ink);color:#cdd6e2;padding:58px 0 36px;margin-top:36px}
     <div class="nav-links" id="navLinks">
       <a href="#catalogue">Catalogue</a>
       <a href="#quality">Quality</a>
+      <a href="#faq">FAQ</a>
       <a href="#process">How to Order</a>
       <a href="#contact">Contact</a>
       <a href="#contact" class="btn btn-red">Request Quote</a>
@@ -283,6 +398,25 @@ footer{background:var(--ink);color:#cdd6e2;padding:58px 0 36px;margin-top:36px}
       </div>
     </div>
 
+    <div class="toolbar2 reveal">
+      <div class="tool-group">
+        <div class="sel">
+          <select id="sort" aria-label="Sort compounds">
+            <option value="featured">Sort: Featured</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+            <option value="name">Name: A → Z</option>
+          </select>
+        </div>
+        <div class="range">
+          <label for="price">Max price</label>
+          <input type="range" id="price" min="1000000" max="3400000" step="100000" value="3400000" />
+          <span class="val" id="priceVal">Rp 3.400.000</span>
+        </div>
+      </div>
+      <div class="rcount" id="rcount">Showing <b>49</b> of 49 compounds</div>
+    </div>
+
     <div id="catList"></div>
     <div class="empty" id="empty">No compounds match your search.</div>
   </div>
@@ -303,6 +437,46 @@ footer{background:var(--ink);color:#cdd6e2;padding:58px 0 36px;margin-top:36px}
       <div class="feat reveal"><div class="ic"><i class="ph-bold ph-flask"></i></div><h4>Lyophilised &amp; Sealed</h4><p>Freeze-dried and sealed under inert conditions for maximum shelf stability and reconstitution consistency.</p></div>
       <div class="feat reveal"><div class="ic"><i class="ph-bold ph-package"></i></div><h4>Discreet Packaging</h4><p>Neutral, protective packaging with tamper-evident seals and batch labelling on every unit.</p></div>
       <div class="feat reveal"><div class="ic"><i class="ph-bold ph-headset"></i></div><h4>Research Support</h4><p>Direct line to our team for handling, reconstitution and storage guidance — strictly for research contexts.</p></div>
+    </div>
+    <div class="coa-wrap reveal" style="margin-top:48px">
+      <div class="coa">
+        <div class="coa-h">
+          <span class="mark"><i class="ph-bold ph-pulse"></i></span>
+          <div>
+            <h4>Certificate of Analysis</h4>
+            <p>Specimen · Issued per lot</p>
+          </div>
+          <span class="pass"><i class="ph-bold ph-check-circle"></i> Pass</span>
+        </div>
+        <div class="coa-grid">
+          <div class="coa-cell"><div class="k">Compound</div><div class="v">BPC-157</div></div>
+          <div class="coa-cell"><div class="k">Lot No.</div><div class="v">AX-2406-1157</div></div>
+          <div class="coa-cell"><div class="k">Purity (HPLC)</div><div class="v red">99.2%</div></div>
+          <div class="coa-cell"><div class="k">Molecular Mass</div><div class="v">1419.5 Da</div></div>
+          <div class="coa-cell"><div class="k">Method</div><div class="v">HPLC / MS</div></div>
+          <div class="coa-cell"><div class="k">Appearance</div><div class="v">White lyophilate</div></div>
+        </div>
+        <div class="coa-foot">A representative CoA accompanies every lot. Figures shown are specimen values for illustration only.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section" id="faq">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="kicker">// Reference</div>
+      <h2>Research FAQ</h2>
+      <p>Handling, logistics and compliance — the essentials before you order.</p>
+    </div>
+    <div class="faq">
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">01</span> How should peptides be stored?<i class="ph-bold ph-plus qi"></i></summary><div class="faq-a">Lyophilised (freeze-dried) peptides are stable at −20 °C and tolerate short transit at ambient temperature. Once reconstituted, store at 2–8 °C and use within the window noted on the CoA. Protect from light and repeated freeze–thaw cycles.</div></details>
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">02</span> How are compounds reconstituted?<i class="ph-bold ph-plus qi"></i></summary><div class="faq-a">For in-vitro work, reconstitute with bacteriostatic or sterile water added slowly down the vial wall — do not shake. Swirl gently until fully dissolved. Reconstitution volume depends on your protocol's target concentration; our team can advise on request.</div></details>
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">03</span> What purity standard do you guarantee?<i class="ph-bold ph-plus qi"></i></summary><div class="faq-a">Every lot is independently analysed by HPLC and mass spectrometry to confirm identity and a minimum of 98% purity (most lots exceed 99%). A Certificate of Analysis accompanies each lot.</div></details>
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">04</span> How does shipping &amp; cold-chain work?<i class="ph-bold ph-plus qi"></i></summary><div class="faq-a">Orders are dispatched in protective, temperature-managed packaging with tamper-evident seals. Domestic delivery within Indonesia typically arrives in 2–4 working days; international timelines are quoted per destination.</div></details>
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">05</span> What payment methods are accepted?<i class="ph-bold ph-plus qi"></i></summary><div class="faq-a">Bank transfer and major e-wallets in IDR. After you send your compound list we return an itemised quote; payment is settled before dispatch. Prices are indicative and confirmed at quotation.</div></details>
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">06</span> Are these products for human use?<i class="ph-bold ph-plus qi"></i></summary><div class="faq-a"><b>No.</b> All compounds are sold strictly for in-vitro laboratory and research use. They are not drugs, supplements, food or cosmetics, and are not intended for human or veterinary consumption, diagnostic, or therapeutic use. By ordering you confirm you are a qualified researcher or institution.</div></details>
     </div>
   </div>
 </section>
@@ -338,6 +512,28 @@ footer{background:var(--ink);color:#cdd6e2;padding:58px 0 36px;margin-top:36px}
     </div>
   </div>
 </section>
+
+<!-- ===== QUOTE DRAWER ===== -->
+<div class="quote-bar" id="quoteBar">
+  <div class="quote-inner">
+    <div class="quote-card">
+      <div class="quote-top" id="quoteTop">
+        <span class="qc" id="qCount">0</span>
+        <span class="ql">Your Research Quote</span>
+        <span class="qt"><span id="qTotal">Rp 0</span><small>Estimated total</small></span>
+        <i class="ph-bold ph-caret-up qcaret"></i>
+      </div>
+      <div class="quote-body">
+        <div class="quote-items" id="qItems"></div>
+        <div class="quote-actions">
+          <a class="btn btn-red" id="qWhatsApp" href="#" target="_blank" rel="noopener"><i class="ph-fill ph-whatsapp-logo"></i> Send to WhatsApp</a>
+          <button class="btn ghost" id="qCopy"><i class="ph-bold ph-copy"></i> Copy list</button>
+          <button class="btn ghost" id="qClear"><i class="ph-bold ph-trash"></i> Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <footer>
   <div class="wrap">
@@ -388,16 +584,26 @@ CAT.forEach(c=>{
   filters.appendChild(b);
 });
 
+/* Item registry (for quote builder) */
+const ITEMS={};
+const TOTAL=CAT.reduce((n,c)=>n+c.items.length,0);
+const PRICES=CAT.flatMap(c=>c.items.map(i=>i.price)).filter(p=>p!=null);
+const PMIN=Math.min(...PRICES),PMAX=Math.max(...PRICES);
+
 /* Catalogue */
 const list=document.getElementById("catList");
 CAT.forEach(c=>{
-  const rows=c.items.map((it,i)=>`
-    <tr data-name="${(it.name+' '+it.dose).toLowerCase()}">
+  const rows=c.items.map((it,i)=>{
+    const id=`${c.id}-${i}`;
+    ITEMS[id]={id,name:it.name,dose:it.dose,price:it.price,cat:c.id};
+    return `
+    <tr data-id="${id}" data-name="${(it.name+' '+it.dose).toLowerCase()}" data-idx="${i}" data-price="${it.price==null?'':it.price}">
       <td class="rownum">${String(i+1).padStart(2,'0')}</td>
       <td><span class="pname">${it.name}</span>${it.dose?`<span class="dose">${it.dose}</span>`:''}</td>
       <td class="content">${it.content}</td>
       <td class="r price ${it.price==null?'na':''}">${it.price==null?'N/A':`<span class="cur">Rp</span>${fmt(it.price)}`}</td>
-    </tr>`).join("");
+      <td class="add-cell">${it.price==null?'':`<button class="add-btn" data-add="${id}" aria-label="Add to quote" title="Add to quote"><i class="ph-bold ph-plus"></i></button>`}</td>
+    </tr>`;}).join("");
   const block=document.createElement("div");
   block.className="cat reveal";block.dataset.cat=c.id;block.id="cat-"+c.id;
   block.style.setProperty("--accent",ACCENTS[c.id]||"#e11d2a");
@@ -409,32 +615,100 @@ CAT.forEach(c=>{
       <div class="cat-count">${c.items.length} compounds</div>
     </div>
     <table>
-      <thead><tr><th class="rownum">#</th><th>Compound</th><th>Content</th><th class="r">Price (IDR)</th></tr></thead>
+      <thead><tr><th class="rownum">#</th><th>Compound</th><th>Content</th><th class="r">Price (IDR)</th><th class="add-cell"></th></tr></thead>
       <tbody>${rows}</tbody>
     </table>`;
   list.appendChild(block);
 });
 
-/* Search + filter */
+/* Search + filter + sort + price-range */
 const search=document.getElementById("search"),empty=document.getElementById("empty");
+const sortSel=document.getElementById("sort"),priceInp=document.getElementById("price"),priceVal=document.getElementById("priceVal"),rcount=document.getElementById("rcount");
 let activeCat="all";
+priceInp.min=PMIN;priceInp.max=PMAX;priceInp.value=PMAX;
+function sortRows(){
+  const mode=sortSel.value;
+  document.querySelectorAll(".cat tbody").forEach(tb=>{
+    const trs=[...tb.querySelectorAll("tr")];
+    trs.sort((a,b)=>{
+      const pa=a.dataset.price===""?Infinity:+a.dataset.price, pb=b.dataset.price===""?Infinity:+b.dataset.price;
+      if(mode==="price-asc")return pa-pb;
+      if(mode==="price-desc")return (pb===Infinity?-1:pa===Infinity?1:pb-pa);
+      if(mode==="name")return a.querySelector(".pname").textContent.localeCompare(b.querySelector(".pname").textContent);
+      return (+a.dataset.idx)-(+b.dataset.idx); // featured
+    });
+    trs.forEach(tr=>tb.appendChild(tr));
+  });
+}
 function apply(){
-  const q=search.value.trim().toLowerCase();let any=false;
+  const q=search.value.trim().toLowerCase();const maxP=+priceInp.value;let any=false,shown=0;
+  priceVal.textContent="Rp "+fmt(maxP);
   document.querySelectorAll(".cat").forEach(cat=>{
     const catMatch=activeCat==="all"||cat.dataset.cat===activeCat;let vis=0;
     cat.querySelectorAll("tbody tr").forEach(tr=>{
-      const m=catMatch&&(!q||tr.dataset.name.includes(q));
-      tr.classList.toggle("hidden",!m);if(m)vis++;
+      const price=tr.dataset.price===""?null:+tr.dataset.price;
+      const priceOk = price==null || maxP>=PMAX || price<=maxP;
+      const m=catMatch&&(!q||tr.dataset.name.includes(q))&&priceOk;
+      tr.classList.toggle("hidden",!m);if(m){vis++;shown++;}
     });
     const show=catMatch&&vis>0;cat.classList.toggle("hidden",!show);if(show)any=true;
   });
   empty.style.display=any?"none":"block";
+  rcount.innerHTML=`Showing <b>${shown}</b> of ${TOTAL} compounds`;
 }
 search.addEventListener("input",apply);
+sortSel.addEventListener("change",()=>{sortRows();apply();});
+priceInp.addEventListener("input",apply);
 filters.addEventListener("click",e=>{
   const b=e.target.closest(".chip");if(!b)return;
   filters.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
   b.classList.add("active");activeCat=b.dataset.cat;apply();
+});
+
+/* ---- Quote builder ---- */
+const quote=new Map();
+const qBar=document.getElementById("quoteBar"),qItems=document.getElementById("qItems"),qCount=document.getElementById("qCount"),qTotal=document.getElementById("qTotal");
+const WA_NUMBER="6281234567890";
+function renderQuote(){
+  const entries=[...quote.values()];
+  qCount.textContent=entries.reduce((n,e)=>n+e.qty,0);
+  const total=entries.reduce((n,e)=>n+e.price*e.qty,0);
+  qTotal.textContent="Rp "+fmt(total);
+  qItems.innerHTML=entries.map(e=>`
+    <div class="qrow">
+      <div class="qn">${e.name}${e.dose?`<small>${e.dose}</small>`:''}</div>
+      <div class="qty"><button data-dec="${e.id}">–</button><span>${e.qty}</span><button data-inc="${e.id}">+</button></div>
+      <div class="qp">Rp ${fmt(e.price*e.qty)}</div>
+      <button class="qremove" data-rm="${e.id}" aria-label="Remove"><i class="ph-bold ph-x"></i></button>
+    </div>`).join("");
+  qBar.classList.toggle("show",entries.length>0);
+  if(entries.length===0)qBar.classList.remove("open");
+  // WhatsApp link
+  let msg="Hello AXIOM, I'd like a quote for the following research compounds:\n";
+  entries.forEach((e,i)=>{msg+=`${i+1}. ${e.name}${e.dose?' '+e.dose:''} — ${e.qty}× — Rp ${fmt(e.price*e.qty)}\n`;});
+  msg+=`\nEstimated total: Rp ${fmt(total)}`;
+  document.getElementById("qWhatsApp").href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  qBar._msg=msg;
+  // reflect added state on buttons
+  document.querySelectorAll(".add-btn").forEach(b=>b.classList.toggle("added",quote.has(b.dataset.add)));
+}
+function addItem(id){
+  const it=ITEMS[id];if(!it||it.price==null)return;
+  if(quote.has(id))quote.get(id).qty++;else quote.set(id,{...it,qty:1});
+  renderQuote();
+}
+list.addEventListener("click",e=>{const b=e.target.closest("[data-add]");if(b)addItem(b.dataset.add);});
+qItems.addEventListener("click",e=>{
+  const inc=e.target.closest("[data-inc]"),dec=e.target.closest("[data-dec]"),rm=e.target.closest("[data-rm]");
+  if(inc){quote.get(inc.dataset.inc).qty++;renderQuote();}
+  if(dec){const it=quote.get(dec.dataset.dec);if(--it.qty<=0)quote.delete(dec.dataset.dec);renderQuote();}
+  if(rm){quote.delete(rm.dataset.rm);renderQuote();}
+});
+document.getElementById("quoteTop").addEventListener("click",()=>qBar.classList.toggle("open"));
+document.getElementById("qClear").addEventListener("click",()=>{quote.clear();renderQuote();});
+document.getElementById("qCopy").addEventListener("click",e=>{
+  navigator.clipboard?.writeText(qBar._msg||"");
+  const t=e.currentTarget;const old=t.innerHTML;t.innerHTML='<i class="ph-bold ph-check"></i> Copied';setTimeout(()=>t.innerHTML=old,1500);
 });
 
 /* Mobile nav */
@@ -471,7 +745,7 @@ function ecg(canvas,color){
     y+=g(.55,.045,.30);   // T
     return y;
   }
-  function frame(){
+  function draw(){
     ctx.clearRect(0,0,w,h);
     ctx.strokeStyle="rgba(120,140,165,.10)";ctx.lineWidth=1;
     for(let gx=(t*0.6%28);gx<w;gx+=28){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,h);ctx.stroke();}
@@ -485,9 +759,17 @@ function ecg(canvas,color){
     ctx.strokeStyle=color;ctx.lineWidth=2.4;ctx.lineJoin="round";ctx.shadowColor=color;ctx.shadowBlur=10;ctx.stroke();ctx.shadowBlur=0;
     const lphase=(((w+t*speed)/period)%1+1)%1,ly=mid-beat(lphase)*amp;
     ctx.beginPath();ctx.arc(w-2,ly,3.2,0,7);ctx.fillStyle=color;ctx.fill();
-    t+=2.4;requestAnimationFrame(frame);
   }
-  size();addEventListener("resize",size);frame();
+  let raf=null;
+  function frame(){draw();t+=2.4;raf=requestAnimationFrame(frame);}
+  function start(){if(!raf)frame();}
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=null;}}
+  size();addEventListener("resize",()=>{size();draw();});
+  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(reduce){draw();return;}              // static single frame, no loop
+  // pause animation when canvas scrolls off-screen
+  new IntersectionObserver(es=>es.forEach(en=>en.isIntersecting?start():stop()),{threshold:0}).observe(canvas);
+  start();
 }
 ecg(document.getElementById("ecg"),"#e11d2a");
 const e2=document.getElementById("ecg2");if(e2)ecg(e2,"#ff5b64");
