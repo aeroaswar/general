@@ -108,7 +108,7 @@ export default function Invoices() {
 }
 
 function InvoiceDoc({ invoice, t, client }) {
-  const { subtotal, tax, total } = invoiceTotals(invoice);
+  const { subtotal, agencyFee, vat, total, agencyFeeRate, vatRate } = invoiceTotals(invoice);
   const cur = invoice.currency || "IDR";
   const cols = { gridTemplateColumns: "1fr 44px 120px 130px" };
   const paid = invoice.status === "Paid";
@@ -175,7 +175,8 @@ function InvoiceDoc({ invoice, t, client }) {
               <div className="flex justify-end mt-4 avoid-break">
                 <div className="w-full sm:w-72 flex flex-col gap-1.5">
                   <Row label={t.subtotal} value={money(subtotal, cur)} />
-                  {invoice.taxRate > 0 && <Row label={`${t.tax} (${invoice.taxRate}%)`} value={money(tax, cur)} />}
+                  {agencyFeeRate > 0 && <Row label={`${t.agencyFee} (${agencyFeeRate}%)`} value={money(agencyFee, cur)} />}
+                  {vatRate > 0 && <Row label={`${t.tax} (${vatRate}%)`} value={money(vat, cur)} />}
                   <div className="flex justify-between border-t-2 hairline pt-2 mt-1">
                     <span className="font-semibold">{t.total}</span>
                     <span className="font-bold tabular-nums">{money(total, cur)}</span>
@@ -211,7 +212,7 @@ function Row({ label, value }) {
 /* ── editor ──────────────────────────────────────────────────────────── */
 const seedForm = (v) => ({
   number: v?.number || "", issueDate: v?.issueDate || "", dueDate: v?.dueDate || "", status: v?.status || "Draft", currency: v?.currency || "IDR",
-  taxRate: v?.taxRate ?? 11, paymentTerms: v?.paymentTerms || "", notes: v?.notes || "",
+  agencyFeeRate: v?.agencyFeeRate ?? 10, vatRate: v?.vatRate ?? 2, paymentTerms: v?.paymentTerms || "", notes: v?.notes || "",
   company: v?.billTo?.company || "", attn: v?.billTo?.attn || "", email: v?.billTo?.email || "", address: v?.billTo?.address || "",
   bank: v?.bank?.bank || "", accountName: v?.bank?.accountName || "", accountNo: v?.bank?.accountNo || "",
   items: (v?.items || []).map((it) => ({ ...it })),
@@ -226,13 +227,13 @@ function InvoiceEditor({ invoice, onClose, onSave }) {
   const addItem = () => setF((p) => ({ ...p, items: [...p.items, { id: `it-${Date.now()}`, description: "", qty: 1, unitPrice: 0 }] }));
   const removeItem = (id) => setF((p) => ({ ...p, items: p.items.filter((it) => it.id !== id) }));
 
-  const liveTotal = invoiceTotals({ items: f.items, taxRate: f.taxRate });
+  const liveTotal = invoiceTotals({ items: f.items, agencyFeeRate: f.agencyFeeRate, vatRate: f.vatRate });
 
   const save = () => {
     if (!invoice) return;
     onSave({
       number: f.number.trim(), issueDate: f.issueDate, dueDate: f.dueDate, status: f.status, currency: f.currency,
-      taxRate: Number(f.taxRate) || 0, paymentTerms: f.paymentTerms.trim(), notes: f.notes.trim(),
+      agencyFeeRate: Number(f.agencyFeeRate) || 0, vatRate: Number(f.vatRate) || 0, paymentTerms: f.paymentTerms.trim(), notes: f.notes.trim(),
       billTo: { ...invoice.billTo, company: f.company.trim(), attn: f.attn.trim(), email: f.email.trim(), address: f.address.trim() },
       bank: { ...invoice.bank, bank: f.bank.trim(), accountName: f.accountName.trim(), accountNo: f.accountNo.trim() },
       items: f.items.map((it) => ({ id: it.id, description: it.description, qty: Number(it.qty) || 0, unitPrice: Number(it.unitPrice) || 0 })).filter((it) => it.description.trim() || it.unitPrice),
@@ -247,7 +248,8 @@ function InvoiceEditor({ invoice, onClose, onSave }) {
         <Field label="Currency"><Select value={f.currency} onChange={set("currency")}>{CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}</Select></Field>
         <Field label="Issue date"><Input type="date" value={f.issueDate} onChange={set("issueDate")} /></Field>
         <Field label="Due date"><Input type="date" value={f.dueDate} onChange={set("dueDate")} /></Field>
-        <Field label="Tax / PPN (%)"><Input type="number" min="0" value={f.taxRate} onChange={set("taxRate")} /></Field>
+        <Field label="Agency fee (%)"><Input type="number" min="0" value={f.agencyFeeRate} onChange={set("agencyFeeRate")} /></Field>
+        <Field label="VAT (%)"><Input type="number" min="0" value={f.vatRate} onChange={set("vatRate")} /></Field>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4 mt-4 pt-4 border-t hairline">

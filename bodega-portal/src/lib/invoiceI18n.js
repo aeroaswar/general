@@ -9,7 +9,7 @@ export const INV = {
     date: "Date", dueDate: "Due date",
     from: "From", billTo: "Bill to", attn: "Attn",
     description: "Description", qty: "Qty", unitPrice: "Unit price", amount: "Amount",
-    subtotal: "Subtotal", tax: "VAT", total: "Total due",
+    subtotal: "Subtotal", agencyFee: "Agency fee", tax: "VAT", total: "Total due",
     paymentTo: "Payment to", bank: "Bank", accountName: "Account name", accountNo: "Account no.",
     paymentTerms: "Payment terms", notes: "Notes", thanks: "Thank you for your business.",
     status: { Draft: "Draft", Sent: "Sent", Paid: "Paid", Overdue: "Overdue" },
@@ -24,7 +24,7 @@ export const INV = {
     date: "Tanggal", dueDate: "Jatuh tempo",
     from: "Dari", billTo: "Ditagihkan kepada", attn: "u.p.",
     description: "Deskripsi", qty: "Jml", unitPrice: "Harga satuan", amount: "Jumlah",
-    subtotal: "Subtotal", tax: "PPN", total: "Total tagihan",
+    subtotal: "Subtotal", agencyFee: "Biaya agensi", tax: "PPN", total: "Total tagihan",
     paymentTo: "Pembayaran ke", bank: "Bank", accountName: "Atas nama", accountNo: "No. rekening",
     paymentTerms: "Ketentuan pembayaran", notes: "Catatan", thanks: "Terima kasih atas kepercayaan Anda.",
     status: { Draft: "Draf", Sent: "Terkirim", Paid: "Lunas", Overdue: "Jatuh tempo" },
@@ -56,8 +56,13 @@ export function money(n, currency = "IDR") {
   }
 }
 
+// Subtotal → + agency fee (on subtotal) → + VAT (on subtotal + agency fee) → total.
+// Rates default to agency 10% / VAT 2%, and are editable per invoice.
 export const invoiceTotals = (invoice) => {
   const subtotal = (invoice.items || []).reduce((s, it) => s + (Number(it.qty) || 0) * (Number(it.unitPrice) || 0), 0);
-  const tax = Math.round(subtotal * (Number(invoice.taxRate) || 0) / 100);
-  return { subtotal, tax, total: subtotal + tax };
+  const agencyFeeRate = Number(invoice.agencyFeeRate ?? 0);
+  const vatRate = Number(invoice.vatRate ?? 0);
+  const agencyFee = Math.round(subtotal * agencyFeeRate / 100);
+  const vat = Math.round((subtotal + agencyFee) * vatRate / 100);
+  return { subtotal, agencyFee, vat, agencyFeeRate, vatRate, total: subtotal + agencyFee + vat };
 };

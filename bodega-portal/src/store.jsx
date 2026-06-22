@@ -348,7 +348,7 @@ export function DataProvider({ children }) {
       studio: { name: "Bodega Creative Studio", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330", ...input.studio },
       billTo: { company: client?.name || "", attn: "", email: "", address: "", ...input.billTo },
       items: input.items || [{ id: uid("it"), description: "", qty: 1, unitPrice: 0 }],
-      taxRate: input.taxRate ?? 11, paymentTerms: input.paymentTerms || "Net 14 days from invoice date",
+      vatRate: input.vatRate ?? 2, agencyFeeRate: input.agencyFeeRate ?? 10, paymentTerms: input.paymentTerms || "Net 14 days from invoice date",
       bank: { bank: "BCA", accountName: "Bodega Creative Studio", accountNo: "", ...input.bank }, notes: input.notes || "",
       createdAt: now(),
     };

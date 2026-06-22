@@ -413,7 +413,7 @@ export const INVOICES = [
     issueDate: iso(-35), dueDate: iso(-21), status: "Paid", currency: "IDR",
     studio: { ...STUDIO }, billTo: { company: "Maktour", attn: "Maya Putri", email: "maya@maktour.id", address: "" },
     items: [{ id: "inv1-1", description: "Social media management & content — December 2025", qty: 1, unitPrice: 25000000 }],
-    taxRate: 11, paymentTerms: "Net 14 days from invoice date", bank: { ...BANK }, notes: "",
+    vatRate: 2, agencyFeeRate: 10, paymentTerms: "Net 14 days from invoice date", bank: { ...BANK }, notes: "",
     createdAt: isot(-35),
   },
   {
@@ -424,7 +424,7 @@ export const INVOICES = [
       { id: "inv2-1", description: "Social media management & content — January 2026", qty: 1, unitPrice: 25000000 },
       { id: "inv2-2", description: "Ramadan campaign — additional production", qty: 1, unitPrice: 7500000 },
     ],
-    taxRate: 11, paymentTerms: "Net 14 days from invoice date", bank: { ...BANK }, notes: "Thank you — payment to the account below.",
+    vatRate: 2, agencyFeeRate: 10, paymentTerms: "Net 14 days from invoice date", bank: { ...BANK }, notes: "Thank you — payment to the account below.",
     createdAt: isot(-5),
   },
 ];
