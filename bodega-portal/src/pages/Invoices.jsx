@@ -160,17 +160,29 @@ function InvoiceDoc({ invoice, t, client }) {
 
             {/* line items */}
             <div className="text-sm">
-              <div className="grid gap-2 pb-2 border-b-2 hairline eyebrow !text-[10px]" style={cols}>
+              <div className="hidden sm:grid gap-2 pb-2 border-b-2 hairline eyebrow !text-[10px]" style={cols}>
                 <span>{t.description}</span><span className="text-right">{t.qty}</span><span className="text-right">{t.unitPrice}</span><span className="text-right">{t.amount}</span>
               </div>
-              {(invoice.items || []).map((it) => (
-                <div key={it.id} className="grid gap-2 py-2.5 border-b hairline avoid-break" style={cols}>
-                  <span>{it.description || "—"}</span>
-                  <span className="text-right tabular-nums">{it.qty}</span>
-                  <span className="text-right tabular-nums">{money(it.unitPrice, cur)}</span>
-                  <span className="text-right tabular-nums font-medium">{money((Number(it.qty) || 0) * (Number(it.unitPrice) || 0), cur)}</span>
-                </div>
-              ))}
+              {(invoice.items || []).map((it) => {
+                const amt = (Number(it.qty) || 0) * (Number(it.unitPrice) || 0);
+                return (
+                  <div key={it.id} className="py-2.5 border-b hairline avoid-break">
+                    <div className="hidden sm:grid gap-2" style={cols}>
+                      <span>{it.description || "—"}</span>
+                      <span className="text-right tabular-nums">{it.qty}</span>
+                      <span className="text-right tabular-nums">{money(it.unitPrice, cur)}</span>
+                      <span className="text-right tabular-nums font-medium">{money(amt, cur)}</span>
+                    </div>
+                    <div className="sm:hidden">
+                      <p>{it.description || "—"}</p>
+                      <div className="flex justify-between gap-3 text-xs text-muted mt-1">
+                        <span className="tabular-nums">{it.qty} × {money(it.unitPrice, cur)}</span>
+                        <span className="tabular-nums font-semibold text-[color:var(--text)]">{money(amt, cur)}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
               {/* totals */}
               <div className="flex justify-end mt-4 avoid-break">
                 <div className="w-full sm:w-72 flex flex-col gap-1.5">
@@ -267,11 +279,13 @@ function InvoiceEditor({ invoice, onClose, onSave }) {
         </div>
         <div className="flex flex-col gap-2">
           {f.items.map((it) => (
-            <div key={it.id} className="grid gap-2 items-center" style={{ gridTemplateColumns: "1fr 64px 130px 28px" }}>
-              <Input value={it.description} onChange={(e) => setItem(it.id, "description", e.target.value)} placeholder="Description" className="!py-1.5" />
-              <Input type="number" min="0" value={it.qty} onChange={(e) => setItem(it.id, "qty", e.target.value)} className="!py-1.5 text-right" />
-              <Input type="number" min="0" value={it.unitPrice} onChange={(e) => setItem(it.id, "unitPrice", e.target.value)} placeholder="Unit price" className="!py-1.5 text-right" />
-              <button onClick={() => removeItem(it.id)} className="p-1.5 rounded-lg text-muted hover:text-[#d6336c]" title="Remove"><Trash2 size={15} /></button>
+            <div key={it.id} className="sm:grid sm:items-center gap-2 pb-2 sm:pb-0 border-b sm:border-0 hairline" style={{ gridTemplateColumns: "1fr 64px 130px 28px" }}>
+              <Input value={it.description} onChange={(e) => setItem(it.id, "description", e.target.value)} placeholder="Description" className="!py-1.5 mb-2 sm:mb-0" />
+              <div className="flex items-center gap-2 sm:contents">
+                <Input type="number" min="0" value={it.qty} onChange={(e) => setItem(it.id, "qty", e.target.value)} className="!py-1.5 text-right w-16 sm:w-auto" placeholder="Qty" />
+                <Input type="number" min="0" value={it.unitPrice} onChange={(e) => setItem(it.id, "unitPrice", e.target.value)} placeholder="Unit price" className="!py-1.5 text-right flex-1 sm:w-auto" />
+                <button onClick={() => removeItem(it.id)} className="p-1.5 rounded-lg text-muted hover:text-[#d6336c] shrink-0" title="Remove"><Trash2 size={15} /></button>
+              </div>
             </div>
           ))}
           {f.items.length === 0 && <p className="text-sm text-muted">No items — add one.</p>}
