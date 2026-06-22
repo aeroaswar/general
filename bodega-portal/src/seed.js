@@ -402,3 +402,29 @@ export const CONTRACTS = [
     clientSignature: null, studioSignature: null, createdAt: isot(-150),
   },
 ];
+
+const STUDIO = { name: "Bodega Creative Studio", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330" };
+const BANK = { bank: "BCA", accountName: "Bodega Creative Studio", accountNo: "123-456-7890" };
+
+// Example invoices for Maktour — other clients start with none.
+export const INVOICES = [
+  {
+    id: "inv1", clientId: "c1", projectId: "p1", lang: "en", number: "INV/001/BCS/I/2026",
+    issueDate: iso(-35), dueDate: iso(-21), status: "Paid", currency: "IDR",
+    studio: { ...STUDIO }, billTo: { company: "Maktour", attn: "Maya Putri", email: "maya@maktour.id", address: "" },
+    items: [{ id: "inv1-1", description: "Social media management & content — December 2025", qty: 1, unitPrice: 25000000 }],
+    taxRate: 11, paymentTerms: "Net 14 days from invoice date", bank: { ...BANK }, notes: "",
+    createdAt: isot(-35),
+  },
+  {
+    id: "inv2", clientId: "c1", projectId: "p1", lang: "en", number: "INV/002/BCS/I/2026",
+    issueDate: iso(-5), dueDate: iso(9), status: "Sent", currency: "IDR",
+    studio: { ...STUDIO }, billTo: { company: "Maktour", attn: "Maya Putri", email: "maya@maktour.id", address: "" },
+    items: [
+      { id: "inv2-1", description: "Social media management & content — January 2026", qty: 1, unitPrice: 25000000 },
+      { id: "inv2-2", description: "Ramadan campaign — additional production", qty: 1, unitPrice: 7500000 },
+    ],
+    taxRate: 11, paymentTerms: "Net 14 days from invoice date", bank: { ...BANK }, notes: "Thank you — payment to the account below.",
+    createdAt: isot(-5),
+  },
+];

@@ -2,10 +2,11 @@ import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
   USERS, CLIENTS, PROJECTS, AUDIENCE_SEGMENTS, PHASES, PILLARS, CAMPAIGNS,
   CONTENT_ITEMS, APPROVALS, ASSETS, COMMENTS, REPORT_SNAPSHOTS,
-  INDUSTRY_TEMPLATES, ASSET_REQUESTS, REMINDER_LOGS, CONTRACTS,
+  INDUSTRY_TEMPLATES, ASSET_REQUESTS, REMINDER_LOGS, CONTRACTS, INVOICES,
 } from "./seed.js";
 import { CLIENT_VISIBLE } from "./lib/status.js";
 import { defaultClauses, defaultContractNumber } from "./lib/contractI18n.js";
+import { defaultInvoiceNumber } from "./lib/invoiceI18n.js";
 
 const now = () => new Date().toISOString();
 const today0 = () => new Date().toISOString().slice(0, 10);
@@ -73,6 +74,7 @@ export function DataProvider({ children }) {
   const [reminders, setReminders] = useState(() => seeded("reminders", REMINDER_LOGS));
   const [reportSnapshots, setReportSnapshots] = useState(() => seeded("reportSnapshots", REPORT_SNAPSHOTS));
   const [contracts, setContracts] = useState(() => seeded("contracts", CONTRACTS));
+  const [invoices, setInvoices] = useState(() => seeded("invoices", INVOICES));
   const [reportExports, setReportExports] = useState([]);
   const [audit, setAudit] = useState([]);
   const [selectedClientId, setSelectedClientIdState] = useState("c1");
@@ -80,9 +82,9 @@ export function DataProvider({ children }) {
 
   // Save the whole editable dataset whenever any of it changes.
   useEffect(() => {
-    const data = { clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots, contracts };
+    const data = { clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots, contracts, invoices };
     try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch { /* quota — ignore */ }
-  }, [clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots, contracts]);
+  }, [clients, projects, phases, pillars, audienceSegments, campaigns, contentItems, approvals, comments, assets, assetRequests, reminders, reportSnapshots, contracts, invoices]);
 
   // admin → all clients; team/client → only assigned (clientIds)
   const permittedClients = useMemo(() => {
@@ -331,6 +333,32 @@ export function DataProvider({ children }) {
     setContracts((a) => a.map((c) => (c.id !== id ? c : { ...c, [party === "client" ? "clientMeterai" : "studioMeterai"]: null })));
   };
 
+  /* ── Invoices ─────────────────────────────────────────────────────────── */
+  const addInvoice = (clientId, input = {}) => {
+    const client = clients.find((c) => c.id === clientId);
+    const firstProject = projects.find((p) => p.clientId === clientId);
+    const id = uid("inv");
+    const seq = invoices.filter((v) => v.clientId === clientId).length + 1;
+    const issueDate = input.issueDate || today0();
+    const due = new Date(issueDate); due.setDate(due.getDate() + 14);
+    const invoice = {
+      id, clientId, projectId: input.projectId ?? firstProject?.id ?? null, lang: input.lang || "en",
+      number: input.number || defaultInvoiceNumber(seq, issueDate), status: "Draft", currency: input.currency || "IDR",
+      issueDate, dueDate: input.dueDate || due.toISOString().slice(0, 10),
+      studio: { name: "Bodega Creative Studio", email: "creativestudiolabodega@gmail.com", address: "Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur, DKI Jakarta 13330", ...input.studio },
+      billTo: { company: client?.name || "", attn: "", email: "", address: "", ...input.billTo },
+      items: input.items || [{ id: uid("it"), description: "", qty: 1, unitPrice: 0 }],
+      taxRate: input.taxRate ?? 11, paymentTerms: input.paymentTerms || "Net 14 days from invoice date",
+      bank: { bank: "BCA", accountName: "Bodega Creative Studio", accountNo: "", ...input.bank }, notes: input.notes || "",
+      createdAt: now(),
+    };
+    setInvoices((a) => [invoice, ...a]);
+    logAudit("create", id, { to: "invoice" });
+    return invoice;
+  };
+  const updateInvoice = (id, patch) => { setInvoices((a) => a.map((v) => (v.id === id ? { ...v, ...patch } : v))); logAudit("update", id, { to: "invoice" }); };
+  const deleteInvoice = (id) => { setInvoices((a) => a.filter((v) => v.id !== id)); logAudit("delete", id, { to: "invoice" }); };
+
   const value = {
     users: USERS, clients, selectedClientId, setSelectedClientId, selectedProjectId, setSelectedProjectId,
     projects, audienceSegments, phases, pillars,
@@ -348,6 +376,7 @@ export function DataProvider({ children }) {
     addSegment, updateSegment, deleteSegment,
     // contracts
     contracts, createContract, updateContract, deleteContract, signContract, clearSignature, setMeterai, clearMeterai,
+    invoices, addInvoice, updateInvoice, deleteInvoice,
   };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }

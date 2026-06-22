@@ -12,6 +12,7 @@ import ContentBoard from "./pages/ContentBoard.jsx";
 import Approvals from "./pages/Approvals.jsx";
 import Calendar from "./pages/Calendar.jsx";
 import Reports from "./pages/Reports.jsx";
+import Invoices from "./pages/Invoices.jsx";
 import MyQueue from "./pages/MyQueue.jsx";
 import Campaigns from "./pages/Campaigns.jsx";
 import Assets from "./pages/Assets.jsx";
@@ -48,6 +49,7 @@ function Routes() {
       <Route path="/app/campaigns" component={Portal(Campaigns)} />
       <Route path="/app/assets" component={Portal(Assets)} />
       <Route path="/app/reports" component={Portal(Reports)} />
+      <Route path="/app/invoices" component={Portal(Invoices)} />
       <Route path="/app/assessment" component={Portal(Assessment)} />
       <Route path="/app/settings" component={Portal(Settings)} />
       <Route><Redirect to="/app" /></Route>
