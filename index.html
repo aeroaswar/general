@@ -280,6 +280,9 @@ tbody tr.clickable:hover{background:color-mix(in srgb,var(--accent) 10%,transpar
 .mapbubble circle{transition:stroke-width .15s}
 .mapbubble:hover circle{stroke-width:0.9}
 .maptip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);font-size:11px;font-weight:600;padding:5px 9px;border-radius:8px;transform:translate(-50%,-130%);white-space:nowrap;opacity:0;transition:opacity .12s;z-index:5}
+.mapctl{position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:5px;z-index:4}
+.mapctl button{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--solid);color:var(--ink);font-size:16px;font-weight:700;cursor:pointer;box-shadow:var(--shadow-sm);display:grid;place-items:center;line-height:1}
+.mapctl button:hover{border-color:var(--accent-deep)}
 /* sortable headers */
 th.sortable{cursor:pointer;user-select:none;white-space:nowrap}
 th.sortable:hover{color:var(--ink)}
@@ -871,11 +874,19 @@ function svgMap(scope){
   const pin=`<g><path d="M${hx.toFixed(1)} ${hy.toFixed(1)} C ${(hx-2.3).toFixed(1)} ${(hy-3).toFixed(1)} ${(hx-2.3).toFixed(1)} ${(hy-6.4).toFixed(1)} ${hx.toFixed(1)} ${(hy-6.4).toFixed(1)} C ${(hx+2.3).toFixed(1)} ${(hy-6.4).toFixed(1)} ${(hx+2.3).toFixed(1)} ${(hy-3).toFixed(1)} ${hx.toFixed(1)} ${hy.toFixed(1)} Z" fill="#E5097F" stroke="#fff" stroke-width="0.4"/>
     <circle cx="${hx.toFixed(1)}" cy="${(hy-4.3).toFixed(1)}" r="1.1" fill="#fff"/>
     <text x="${(hx+3.5).toFixed(1)}" y="${(hy-0.5).toFixed(1)}" font-size="3" font-weight="800" fill="var(--ink)" paint-order="stroke" stroke="var(--solid)" stroke-width="0.7">Labuan Bajo</text></g>`;
-  return `<div class="map-wrap"><svg viewBox="0 0 100 66" width="100%" style="display:block;border-radius:12px;background:linear-gradient(165deg,color-mix(in srgb,var(--turq) 16%,transparent),color-mix(in srgb,var(--blue) 6%,transparent))">
+  return `<div class="map-wrap"><svg id="wiMap" viewBox="${mapView.x} ${mapView.y} ${mapView.w} ${mapView.h}" width="100%" style="display:block;border-radius:12px;cursor:grab;touch-action:none;background:linear-gradient(165deg,color-mix(in srgb,var(--turq) 16%,transparent),color-mix(in srgb,var(--blue) 6%,transparent))" onpointerdown="mapPanStart(event)" onpointermove="mapPanMove(event)" onpointerup="mapPanEnd(event)" onpointerleave="mapPanEnd(event)">
     <defs></defs>
     ${[16.5,33,49.5].map(g=>`<line x1="0" y1="${g}" x2="100" y2="${g}" stroke="var(--border2)" stroke-width="0.2"/>`).join("")}${[25,50,75].map(g=>`<line x1="${g}" y1="0" x2="${g}" y2="66" stroke="var(--border2)" stroke-width="0.2"/>`).join("")}
     ${land}${arcs}${bubbles}${pin}
-    </svg><div class="maptip" id="maptip"></div></div>`;}
+    </svg>
+    <div class="mapctl"><button onclick="mapZoom(0.8)" title="${lang==="en"?"Zoom in":"Perbesar"}">+</button><button onclick="mapZoom(1.25)" title="${lang==="en"?"Zoom out":"Perkecil"}">−</button><button onclick="mapReset()" title="Reset">⟳</button></div>
+    <div class="maptip" id="maptip"></div></div>`;}
+let mapView={x:0,y:0,w:100,h:66};let _pan=null;
+function mapZoom(f){const cx=mapView.x+mapView.w/2,cy=mapView.y+mapView.h/2;let w=Math.min(100,Math.max(24,mapView.w*f)),h=w*0.66;mapView={w,h,x:cx-w/2,y:cy-h/2};RENDER[state.section]();}
+function mapReset(){mapView={x:0,y:0,w:100,h:66};RENDER[state.section]();}
+function mapPanStart(e){if(e.target.closest&&e.target.closest(".mapbubble"))return;const svg=e.currentTarget;_pan={sx:e.clientX,sy:e.clientY,vx:mapView.x,vy:mapView.y,bw:svg.getBoundingClientRect().width||1,svg};svg.style.cursor="grabbing";try{svg.setPointerCapture(e.pointerId);}catch(_){}}
+function mapPanMove(e){if(!_pan)return;const sc=mapView.w/_pan.bw;const nx=_pan.vx-(e.clientX-_pan.sx)*sc,ny=_pan.vy-(e.clientY-_pan.sy)*sc;_pan.nx=nx;_pan.ny=ny;_pan.svg.setAttribute("viewBox",nx+" "+ny+" "+mapView.w+" "+mapView.h);}
+function mapPanEnd(e){if(!_pan)return;if(_pan.nx!=null){mapView.x=_pan.nx;mapView.y=_pan.ny;}if(_pan.svg)_pan.svg.style.cursor="grab";_pan=null;}
 function mapTip(e,txt){const tip=el("maptip");if(!tip)return;const wrap=e.currentTarget.closest(".map-wrap").getBoundingClientRect();
   tip.textContent=txt;tip.style.left=(e.clientX-wrap.left)+"px";tip.style.top=(e.clientY-wrap.top)+"px";tip.style.opacity="1";}
 function mapTipHide(){const tip=el("maptip");if(tip)tip.style.opacity="0";}
@@ -935,18 +946,19 @@ function svgLine(vals,labels,id){
   return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="display:block"><defs><linearGradient id="g${id}" x1="0" x2="0" y1="0" y2="1">
     <stop offset="0" stop-color="var(--accent)" stop-opacity=".45"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
     ${grid}${ylab}<path d="${area}" fill="url(#g${id})"/><path d="${line}" fill="none" stroke="var(--accent-deep)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    ${vals.map((v,i)=>`<circle cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="7" fill="transparent" style="cursor:pointer"><title>${labels[i]}: ${fFol(v)}</title></circle>`).join("")}
     <circle cx="${X(vals.length-1)}" cy="${Y(vals[vals.length-1])}" r="4" fill="var(--accent-deep)" stroke="var(--solid)" stroke-width="2"/>${xlab}</svg>`;
 }
 function svgBars(items){
   const max=Math.max(...items.map(i=>i.value))||1;
   return `<div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">`+items.map(it=>`
-    <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+    <div title="${it.label}: ${it.disp!==undefined?it.disp:fInt(it.value)}"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
       <span style="font-weight:600">${it.label}</span><span class="num muted">${it.disp!==undefined?it.disp:fInt(it.value)}</span></div>
       <div class="bar-mini" style="height:9px"><span style="width:${(it.value/max*100).toFixed(1)}%;background:${it.color||'linear-gradient(90deg,var(--accent),var(--accent-deep))'}"></span></div></div>`).join("")+`</div>`;
 }
 function svgDonut(segs,centerTop,centerBot){
   const r=52,c=2*Math.PI*r,cx=70,cy=70;let off=0,total=segs.reduce((a,s)=>a+s.value,0)||1;
-  let circ=segs.map(s=>{const len=c*s.value/total;const el=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.color}" stroke-width="16" stroke-dasharray="${len.toFixed(2)} ${(c-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;off+=len;return el;}).join("");
+  let circ=segs.map(s=>{const len=c*s.value/total;const pc=Math.round(s.value/total*100);const el=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.color}" stroke-width="16" stroke-dasharray="${len.toFixed(2)} ${(c-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"><title>${s.label}: ${s.value} (${pc}%)</title></circle>`;off+=len;return el;}).join("");
   return `<div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
     <svg viewBox="0 0 140 140" width="130" height="130" style="flex:none">${circ}
       <text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="22" font-weight="800" fill="var(--ink)">${centerTop}</text>
