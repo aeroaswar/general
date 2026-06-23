@@ -197,6 +197,37 @@ tbody tr:hover{background:var(--border2)}
   color:var(--ink);border-radius:12px;padding:11px 14px;font-size:12.5px;margin-bottom:16px}
 .banner svg{width:18px;height:18px;color:var(--accent-deep);flex:none}
 .ver{display:inline-grid;place-items:center;width:14px;height:14px;border-radius:50%;background:var(--blue);color:#fff;font-size:9px;font-weight:800;flex:none}
+/* modal / forms / toast / notif / detail */
+.modal-wrap{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(8,12,18,.5);backdrop-filter:blur(3px);padding:20px}
+.modal{background:var(--solid);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);width:100%;max-width:540px;max-height:88vh;overflow:auto;animation:rise .25s ease both}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--solid)}
+.modal-h h3{margin:0;font-size:16px;font-weight:700}
+.modal-b{padding:20px}
+.modal-f{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid var(--border);position:sticky;bottom:0;background:var(--solid)}
+.x{cursor:pointer;border:none;background:var(--border2);width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:var(--muted);font-size:15px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.field input,.field select{width:100%;font-family:inherit;font-size:13px;padding:9px 11px;border:1px solid var(--border);border-radius:10px;background:var(--card2);color:var(--ink);outline:none}
+.field input:focus,.field select:focus{border-color:var(--accent-deep)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.checks{display:flex;gap:14px;flex-wrap:wrap}
+.checks label{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink);font-weight:500;cursor:pointer}
+.clickable{cursor:pointer}
+tbody tr.clickable:hover{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.client-card.clickable:hover{border-color:var(--accent-deep)}
+.kcard.clickable:hover{border-color:var(--accent-deep)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:80;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-4px)}
+.notif{position:absolute;top:50px;right:0;width:330px;background:var(--solid);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);z-index:50;overflow:hidden;animation:rise .2s ease both}
+.notif .nh{padding:12px 16px;border-bottom:1px solid var(--border);font-weight:700;font-size:13px;display:flex;justify-content:space-between}
+.notif .ni{padding:11px 16px;border-bottom:1px solid var(--border2);display:flex;gap:10px;cursor:pointer;font-size:12.5px}
+.notif .ni:hover{background:var(--border2)}
+.notif .ni:last-child{border:none}
+.notif .ni b{font-weight:600}
+.dot-i{width:8px;height:8px;border-radius:50%;margin-top:4px;flex:none}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+.detail-grid .dg small{display:block;color:var(--muted);font-size:11px;margin-bottom:2px}
+.detail-grid .dg b{font-size:14px;font-weight:600}
 @media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.cols-2,.cols-3,.cols-2b{grid-template-columns:1fr}}
 @media(max-width:900px){
   .app{grid-template-columns:1fr}
@@ -234,7 +265,7 @@ tbody tr:hover{background:var(--border2)}
         <input id="search" placeholder="Search…" data-i18n-ph="search_ph" oninput="onSearch(this.value)"/>
       </label>
       <select class="ctrl" id="clientFilter" onchange="onMarket(this.value)"></select>
-      <select class="ctrl" id="rangeFilter">
+      <select class="ctrl" id="rangeFilter" onchange="state.range=['full','quarter','month'][this.selectedIndex]||'full';RENDER[state.section]()">
         <option data-i18n="r_30">Full program</option>
         <option data-i18n="r_q">This quarter</option>
         <option data-i18n="r_y">This month</option>
@@ -243,8 +274,11 @@ tbody tr:hover{background:var(--border2)}
         <button id="langEN" class="on" onclick="setLang('en')">EN</button>
         <button id="langID" onclick="setLang('id')">ID</button>
       </div>
-      <button class="icon-btn" title="Notifications"><span class="dot"></span>
+      <div class="notif-wrap" style="position:relative">
+      <button class="icon-btn" title="Notifications" onclick="toggleNotif()"><span class="dot"></span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
+      <div id="notifPanel"></div>
+      </div>
       <button class="icon-btn" id="themeBtn" title="Theme" onclick="toggleTheme()">
         <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
     </header>
@@ -261,6 +295,10 @@ tbody tr:hover{background:var(--border2)}
     </div>
   </div>
 </div>
+
+<input type="file" id="csvInput" accept=".csv,text/csv" hidden />
+<div id="modalRoot"></div>
+<div id="toastRoot" class="toast"></div>
 
 <script>
 /* ============ i18n ============ */
@@ -423,8 +461,149 @@ const EMV_RATE=15000; // IDR per engagement (premium intl travel)
 const projEng=k=>k.fol*k.er/100;
 
 /* ============ state ============ */
-let state={section:"overview",market:"all",q:""};
+let state={section:"overview",market:"all",q:"",fStatus:"all",fTier:"all",fBrief:"all",range:"full",postView:"board",tlView:"gantt"};
 function fc(arr){return state.market==="all"?arr:arr.filter(x=>x.market===state.market);}
+
+/* ============ interactivity infra ============ */
+function el(id){return document.getElementById(id);}
+function esc(s){return (""+s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function toast(msg){const r=el("toastRoot");r.textContent=msg;r.classList.add("show");clearTimeout(r._t);r._t=setTimeout(()=>r.classList.remove("show"),2400);}
+function openModal(html,lg){el("modalRoot").innerHTML=`<div class="modal-wrap" onclick="if(event.target===this)closeModal()"><div class="modal${lg?' lg':''}">${html}</div></div>`;}
+function closeModal(){el("modalRoot").innerHTML="";}
+
+/* CSV parse (quote-aware) */
+function parseCSV(text){const rows=[];let f="",row=[],q=false;text=text.replace(/\uFEFF/g,"");
+  for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){if(c===String.fromCharCode(34)){if(text[i+1]===String.fromCharCode(34)){f+=String.fromCharCode(34);i++;}else q=false;}else f+=c;}
+    else{if(c===String.fromCharCode(34))q=true;else if(c===","){row.push(f);f="";}else if(c==="\n"){row.push(f);rows.push(row);row=[];f="";}else if(c!=="\r")f+=c;}}
+  if(f.length||row.length){row.push(f);rows.push(row);}return rows;}
+function toNum(s){if(s==null)return 0;return parseInt((""+s).replace(/[^0-9]/g,""))||0;}
+function toER(s){if(s==null)return 0;return parseFloat((""+s).replace(/[^0-9.]/g,""))||0;}
+function initials(name){const p=name.trim().split(/\s+/);return (((p[0]||"")[0]||"")+((p[1]||"")[0]||(p[0]||"")[1]||"")).toUpperCase();}
+function platsFrom(ig,tt,yt){const a=["ig"];if(tt&&(""+tt).trim()&&(""+tt).trim()!=="-")a.push("tiktok");if(yt&&(""+yt).trim()&&(""+yt).trim()!=="-")a.push("youtube");return a;}
+const COUNTRY={malaysia:"my",singapura:"sg",singapore:"sg",india:"in","korea selatan":"kr","south korea":"kr",korea:"kr",jepang:"jp",japan:"jp",australia:"au"};
+function marketIdFor(s){if(!s)return "xx";const key=(""+s).trim().toLowerCase();if(COUNTRY[key])return COUNTRY[key];
+  let id=key.replace(/[^a-z]/g,"").slice(0,4)||"xx";
+  if(!MKT[id]){const m={id,name:(""+s).trim(),ini:id.toUpperCase().slice(0,2),flag:"🏳️",col:"#64748B"};markets.push(m);MKT[id]=m;}
+  return id;}
+function tierFor(s){s=(""+s).toLowerCase();if(s.includes("nano"))return "nano";if(s.includes("micro")||s.includes("mikro"))return "micro";if(s.includes("macro")||s.includes("makro"))return "macro";if(s.includes("mega"))return "mega";return "mid";}
+function stageFor(s){s=(""+s).toLowerCase();if(s.includes("contact")||s.includes("hubung"))return "contacted";if(s.includes("repl")||s.includes("balas"))return "replied";if(s.includes("negoti")||s.includes("negosi"))return "negotiating";if(s.includes("confirm")||s.includes("konfirm"))return "confirmed";if(s.includes("trip"))return "ontrip";if(s.includes("post"))return "posted";return "identified";}
+function langFor(s){s=(""+(s||"EN")).toUpperCase();if(s.startsWith("KO")||s==="KR")return "KR";if(s.startsWith("JP")||s.startsWith("JA"))return "JP";if(s.startsWith("MS")||s.startsWith("MY")||s.includes("MELAYU"))return "MS";return "EN";}
+
+let kolSeq=kols.length;
+function handleCSV(file){const fr=new FileReader();fr.onload=()=>{try{importRows(parseCSV(fr.result));}catch(e){toast("CSV error: "+e.message);}};fr.readAsText(file);}
+function importRows(rows){
+  let hi=rows.findIndex(r=>r.some(c=>/nama lengkap/i.test(c||"")||/full name/i.test(c||"")));
+  if(hi<0){toast(lang==="en"?"No KOL header row found":"Baris header tidak ditemukan");return;}
+  const H=rows[hi].map(c=>(c||"").trim().toLowerCase());
+  const col=n=>H.findIndex(h=>h.includes(n));
+  const ci={name:col("nama lengkap")>=0?col("nama lengkap"):col("full name"),ig:col("instagram"),tt:col("tiktok"),yt:col("youtube"),
+    country:col("negara")>=0?col("negara"):col("country"),tier:col("tier"),folig:col("followers ig"),foltt:col("followers tiktok"),
+    er:col("engagement"),niche:col("niche"),lang:col("bahasa")>=0?col("bahasa"):col("language"),ver:col("verified"),
+    email:col("email"),stage:col("status pipeline")>=0?col("status pipeline"):col("status")};
+  const out=[];
+  for(let i=hi+1;i<rows.length;i++){const r=rows[i];const name=(r[ci.name]||"").trim();if(!name)continue;
+    const ig=(ci.ig>=0?(r[ci.ig]||""):"").trim();
+    out.push({id:"k"+(++kolSeq),name,h:ig?(ig[0]==="@"?ig:"@"+ig):"",ini:initials(name),market:marketIdFor(ci.country>=0?r[ci.country]:""),
+      plat:platsFrom(ig,ci.tt>=0?r[ci.tt]:"",ci.yt>=0?r[ci.yt]:""),tier:tierFor(ci.tier>=0?r[ci.tier]:""),
+      niche:(ci.niche>=0?(r[ci.niche]||"").trim():"")||"—",lang:langFor(ci.lang>=0?r[ci.lang]:""),
+      fol:toNum(ci.folig>=0?r[ci.folig]:0),folTT:toNum(ci.foltt>=0?r[ci.foltt]:0),er:toER(ci.er>=0?r[ci.er]:0),
+      ver:/yes/i.test(ci.ver>=0?(r[ci.ver]||""):"")?1:0,email:(ci.email>=0?(r[ci.email]||"").trim():"")||"—",stage:stageFor(ci.stage>=0?r[ci.stage]:"")});}
+  if(!out.length){toast(lang==="en"?"No KOL rows found":"Tidak ada baris KOL");return;}
+  kols.length=0;out.forEach(k=>kols.push(k));
+  state.market="all";state.fStatus="all";state.fTier="all";
+  buildNav();applyStatic();RENDER[state.section]();toast((lang==="en"?"Imported ":"Diimpor ")+out.length+" KOLs");
+}
+function download(name,text){const b=new Blob([text],{type:"text/csv;charset=utf-8"});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);}
+function exportReport(){const list=fc(kols);const head=["Name","Handle","Country","Tier","Niche","Language","Followers_IG","Followers_TikTok","ER_pct","Stage","Kemenpar","Projected_Engagements"];
+  const lines=[head.join(",")].concat(list.map(k=>[k.name,k.h,marketName(k.market),k.tier,k.niche,k.lang,k.fol,k.folTT,k.er,sName(k.stage),isApproved(k)?"Approved":"Pending",Math.round(projEng(k))].map(v=>`"${(""+v).replace(/"/g,'""')}"`).join(",")));
+  download("wonderful-indonesia-kol-report.csv",lines.join("\n"));toast((lang==="en"?"Exported ":"Diekspor ")+list.length+" KOLs");}
+
+/* Add KOL */
+function addKolForm(){openModal(`
+  <div class="modal-h"><h3>${t("b_add")}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-b">
+   <div class="field"><label>Name</label><input id="f_name" placeholder="Full name"></div>
+   <div class="frow"><div class="field"><label>Instagram handle</label><input id="f_h" placeholder="@handle"></div>
+    <div class="field"><label>Country</label><select id="f_market">${markets.map(m=>`<option value="${m.id}">${m.flag} ${m.name}</option>`).join("")}</select></div></div>
+   <div class="frow"><div class="field"><label>Tier</label><select id="f_tier"><option value="micro">Micro</option><option value="mid">Mid</option><option value="macro">Macro</option><option value="nano">Nano</option><option value="mega">Mega</option></select></div>
+    <div class="field"><label>Niche</label><input id="f_niche" value="Adventure"></div></div>
+   <div class="frow"><div class="field"><label>Followers (IG)</label><input id="f_fol" type="number" value="0"></div>
+    <div class="field"><label>Engagement rate %</label><input id="f_er" type="number" step="0.01" value="0"></div></div>
+   <div class="frow"><div class="field"><label>Language</label><select id="f_lang"><option>EN</option><option>MS</option><option>KR</option><option>JP</option></select></div>
+    <div class="field"><label>Pipeline stage</label><select id="f_stage">${["identified","contacted","replied","negotiating","confirmed","ontrip","posted"].map(s=>`<option value="${s}">${sName(s)}</option>`).join("")}</select></div></div>
+   <div class="field"><label>Platforms</label><div class="checks"><label><input type="checkbox" id="f_ig" checked>Instagram</label><label><input type="checkbox" id="f_tt">TikTok</label><label><input type="checkbox" id="f_yt">YouTube</label></div></div>
+   <div class="field"><label>Email / contact</label><input id="f_email" placeholder="email@…"></div>
+  </div>
+  <div class="modal-f"><button class="btn ghost" onclick="closeModal()">${lang==="en"?"Cancel":"Batal"}</button><button class="btn" onclick="submitKol()">${t("b_add")}</button></div>`);}
+function submitKol(){const name=el("f_name").value.trim();if(!name){toast(lang==="en"?"Name is required":"Nama wajib diisi");return;}
+  const plat=[];if(el("f_ig").checked)plat.push("ig");if(el("f_tt").checked)plat.push("tiktok");if(el("f_yt").checked)plat.push("youtube");
+  const ig=el("f_h").value.trim();
+  kols.push({id:"k"+(++kolSeq),name,h:ig?(ig[0]==="@"?ig:"@"+ig):"",ini:initials(name),market:el("f_market").value,plat:plat.length?plat:["ig"],
+    tier:el("f_tier").value,niche:el("f_niche").value.trim()||"—",lang:el("f_lang").value,fol:+el("f_fol").value||0,folTT:0,
+    er:+el("f_er").value||0,ver:0,email:el("f_email").value.trim()||"—",stage:el("f_stage").value});
+  closeModal();buildNav();RENDER[state.section]();toast((lang==="en"?"KOL added: ":"KOL ditambah: ")+name);}
+
+/* New brief */
+function newBriefForm(){openModal(`
+  <div class="modal-h"><h3>${t("b_newbrief")}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-b">
+   <div class="field"><label>Title</label><input id="b_title" value="Labuan Bajo Fam Trip"></div>
+   <div class="frow"><div class="field"><label>Market</label><select id="b_market">${markets.map(m=>`<option value="${m.id}">${m.flag} ${m.name}</option>`).join("")}</select></div>
+    <div class="field"><label>Objective</label><select id="b_obj"><option value="awareness">${sName("awareness")}</option><option value="consideration">${sName("consideration")}</option><option value="conversion">${sName("conversion")}</option></select></div></div>
+   <div class="frow"><div class="field"><label># KOLs</label><input id="b_kols" type="number" value="5"></div>
+    <div class="field"><label>Status</label><select id="b_status">${["draft","sent","acknowledged","revision","approved"].map(s=>`<option value="${s}">${sName(s)}</option>`).join("")}</select></div></div>
+   <div class="field"><label>Due (MM-DD)</label><input id="b_due" value="08-01"></div>
+  </div>
+  <div class="modal-f"><button class="btn ghost" onclick="closeModal()">${lang==="en"?"Cancel":"Batal"}</button><button class="btn" onclick="submitBrief()">${t("b_newbrief")}</button></div>`);}
+function submitBrief(){const title=el("b_title").value.trim()||"Brief";
+  briefs.push({id:"b"+(briefs.length+1),title,market:el("b_market").value,obj:el("b_obj").value,kols:+el("b_kols").value||0,status:el("b_status").value,due:el("b_due").value||"—"});
+  closeModal();RENDER[state.section]();toast(lang==="en"?"Brief created":"Brief dibuat");}
+
+/* KOL detail + advance */
+const STAGE_ORDER=["identified","contacted","replied","negotiating","confirmed","ontrip","posted"];
+function kolDetail(id){const k=kols.find(x=>x.id===id);if(!k)return;const mail=k.email&&k.email.includes("@");
+  openModal(`
+  <div class="modal-h"><h3>${esc(k.name)} ${k.ver?'<span class="ver">✓</span>':''}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-b">
+   <div class="row-flex" style="gap:12px;margin-bottom:18px">${avatar(k.ini,mcol(k.market),52)}<div><div style="font-weight:700;font-size:15px">${mflag(k.market)} ${marketName(k.market)}</div><div class="muted">${esc(k.h)}</div></div><span style="margin-left:auto">${chip(k.stage)}</span></div>
+   <div class="detail-grid">
+    <div class="dg"><small>${t("th_tier")}</small><b>${tierName(k.tier)}</b></div>
+    <div class="dg"><small>${t("th_niche")}</small><b>${esc(k.niche)}</b></div>
+    <div class="dg"><small>${t("th_lang")}</small><b>${(LANG[k.lang]?(lang==="en"?LANG[k.lang].en:LANG[k.lang].id):k.lang)}</b></div>
+    <div class="dg"><small>${t("th_plat")}</small><b>${platChips(k.plat)}</b></div>
+    <div class="dg"><small>Followers · IG</small><b>${fInt(k.fol)}</b></div>
+    <div class="dg"><small>Followers · TikTok</small><b>${k.folTT?fInt(k.folTT):"—"}</b></div>
+    <div class="dg"><small>ER</small><b>${k.er}%</b></div>
+    <div class="dg"><small>${t("k_projeng")}</small><b>${fInt(projEng(k))}</b></div>
+    <div class="dg"><small>${t("th_approval")}</small><b>${isApproved(k)?t("approvedw"):t("pending")}</b></div>
+    <div class="dg"><small>${t("destination")}</small><b>Labuan Bajo</b></div>
+    <div class="dg" style="grid-column:1/3"><small>${t("th_contact")}</small><b>${mail?`<a href="mailto:${esc(k.email)}">${esc(k.email)}</a>`:esc(k.email)}</b></div>
+   </div>
+  </div>
+  <div class="modal-f">${mail?`<a class="btn ghost" href="mailto:${esc(k.email)}">${lang==="en"?"Email":"Email"}</a>`:""}<button class="btn" onclick="advance('${k.id}')">${lang==="en"?"Advance stage →":"Lanjut tahap →"}</button></div>`);}
+function advance(id){const k=kols.find(x=>x.id===id);const i=STAGE_ORDER.indexOf(k.stage);if(i<STAGE_ORDER.length-1)k.stage=STAGE_ORDER[i+1];else{toast(lang==="en"?"Already at final stage":"Sudah tahap akhir");return;}
+  buildNav();RENDER[state.section]();kolDetail(id);toast(k.name+" → "+sName(k.stage));}
+
+/* notifications */
+let notifOpen=false;window.NOTIF=[];
+function toggleNotif(){notifOpen=!notifOpen;renderNotif();}
+function closeNotif(){notifOpen=false;renderNotif();}
+function renderNotif(){const p=el("notifPanel");if(!notifOpen){p.innerHTML="";return;}
+  const items=[];
+  kols.filter(k=>k.stage==="confirmed").forEach(k=>items.push({c:"var(--teal)",t:(lang==="en"?"Confirmed: ":"Terkonfirmasi: ")+k.name,s:marketName(k.market),a:()=>{closeNotif();kolDetail(k.id);}}));
+  kols.filter(k=>k.stage==="negotiating").forEach(k=>items.push({c:"var(--amber)",t:(lang==="en"?"Awaiting approval: ":"Menunggu persetujuan: ")+k.name,s:marketName(k.market),a:()=>{closeNotif();kolDetail(k.id);}}));
+  items.push({c:"var(--blue)",t:lang==="en"?"Kemenpar approval deadline":"Tenggat persetujuan Kemenpar",s:"31 Aug 2026",a:()=>{closeNotif();go("timeline");}});
+  window.NOTIF=items.map(x=>x.a);
+  p.innerHTML=`<div class="notif"><div class="nh">${lang==="en"?"Notifications":"Notifikasi"}<span class="muted">${items.length}</span></div>`+
+    items.map((x,i)=>`<div class="ni" onclick="NOTIF[${i}]()"><span class="dot-i" style="background:${x.c}"></span><div><b>${esc(x.t)}</b><br><span class="muted">${esc(x.s)}</span></div></div>`).join("")+`</div>`;}
+
+/* date-range window for timeline + deadlines */
+function rangeWindow(){const W={full:["06","11"],quarter:["06","08"],month:["06","06"]}[state.range]||["06","11"];
+  const names={"06":"Jun","07":"Jul","08":"Aug","09":"Sep","10":"Oct","11":"Nov"};const months=[];
+  for(let m=+W[0];m<=+W[1];m++){const mm=("0"+m).slice(-2);months.push({mm,label:names[mm]});}
+  const start=new Date("2026-"+W[0]+"-01");const end=new Date(2026,+W[1],0);
+  return {start,end,months};}
 
 /* ============ charts ============ */
 function svgLine(vals,labels,id){
@@ -529,7 +708,7 @@ function rOverview(){
   const tiers=["micro","mid","macro"];
   const donut=svgDonut(tiers.map(tk=>({label:tierName(tk),value:list.filter(k=>k.tier===tk).length,color:TIER[tk].c})).filter(s=>s.value),list.length,lang==="en"?"KOLs":"KOL");
   const topk=list.slice().sort((a,b)=>b.fol-a.fol).slice(0,5);
-  const lb=`<div class="lb">`+topk.map((x,i)=>`<div class="row"><span class="rank">${i+1}</span>${avatar(x.ini,mcol(x.market),30)}
+  const lb=`<div class="lb">`+topk.map((x,i)=>`<div class="row clickable" onclick="kolDetail('${x.id}')"><span class="rank">${i+1}</span>${avatar(x.ini,mcol(x.market),30)}
     <div class="meta"><b>${mflag(x.market)} ${x.name}</b><small>${tierName(x.tier)} · ${x.er}% ER</small></div><span class="v">${fFol(x.fol)}</span></div>`).join("")+`</div>`;
   const stages=["identified","contacted","replied","negotiating","confirmed","ontrip","posted"];
   const maxp=Math.max(...stages.map(s=>list.filter(k=>k.stage===s).length))||1;
@@ -537,12 +716,13 @@ function rOverview(){
     return `<div class="pr"><small>${sName(s)}</small><div class="track"><span style="width:${n/maxp*100}%;background:${sColor(s)}"></span></div><b>${n}</b></div>`;}).join("")+`</div>`;
   const langs=["EN","MS","KR","JP"];
   const langBars=svgBars(langs.map(l=>({label:(lang==="en"?LANG[l].en:LANG[l].id),value:list.filter(k=>k.lang===l).length,color:LANG[l].c})).filter(s=>s.value));
-  const dls=[{d:"30",m:"Jun",t:"Longlist finalization",s:"All markets",c:"identified"},
-    {d:"15",m:"Jul",t:"Wave 1 outreach — MY & SG",s:"Outreach",c:"contacted"},
-    {d:"31",m:"Aug",t:"Kemenpar approval deadline",s:"Approval",c:"negotiating"},
-    {d:"05",m:"Sep",t:"Fam trip departs — Labuan Bajo",s:"Trip",c:"confirmed"}];
-  const dl=`<div class="dl">`+dls.map(x=>`<div class="row"><div class="when"><b>${x.d}</b><small>${x.m}</small></div>
-    <div class="meta"><b>${x.t}</b><small>${x.s}</small></div>${chip(x.c)}</div>`).join("")+`</div>`;
+  const win=rangeWindow();
+  const dls=[{d:"30",m:"Jun",iso:"06-30",t:"Longlist finalization",s:"All markets",c:"identified"},
+    {d:"15",m:"Jul",iso:"07-15",t:"Wave 1 outreach — MY & SG",s:"Outreach",c:"contacted"},
+    {d:"31",m:"Aug",iso:"08-31",t:"Kemenpar approval deadline",s:"Approval",c:"negotiating"},
+    {d:"05",m:"Sep",iso:"09-05",t:"Fam trip departs — Labuan Bajo",s:"Trip",c:"confirmed"}].filter(x=>new Date("2026-"+x.iso)<=win.end);
+  const dl=dls.length?`<div class="dl">`+dls.map(x=>`<div class="row"><div class="when"><b>${x.d}</b><small>${x.m}</small></div>
+    <div class="meta"><b>${x.t}</b><small>${x.s}</small></div>${chip(x.c)}</div>`).join("")+`</div>`:`<div class="note">${lang==="en"?"No milestones in this range.":"Tidak ada milestone."}</div>`;
   const readiness=`<div style="display:flex;flex-direction:column;gap:10px">`+(state.market==="all"?markets:markets.filter(m=>m.id===state.market)).map(m=>{
     const ks=kols.filter(x=>x.market===m.id);const conf=ks.filter(isApproved).length;const out=ks.filter(inOutreach).length;
     const health=conf>0?"on-track":out>0?"at-risk":"delayed";
@@ -569,18 +749,21 @@ let kolView="table";
 function rKols(){
   let list=fc(kols);
   if(state.q){const q=state.q.toLowerCase();list=list.filter(k=>k.name.toLowerCase().includes(q)||k.h.toLowerCase().includes(q)||k.niche.toLowerCase().includes(q)||marketName(k.market).toLowerCase().includes(q));}
+  if(state.fStatus!=="all")list=list.filter(k=>k.stage===state.fStatus);
+  if(state.fTier!=="all")list=list.filter(k=>k.tier===state.fTier);
   const tiers=["micro","mid","macro"];
   const segs=tiers.map(tk=>({label:tierName(tk),value:list.filter(k=>k.tier===tk).length,color:TIER[tk].c})).filter(s=>s.value);
   const donut=svgDonut(segs,list.length,lang==="en"?"KOLs":"KOL");
   const avgER=(list.reduce((a,k)=>a+k.er,0)/(list.length||1)).toFixed(1);
   const byMkt=svgBars(markets.map(m=>({label:m.flag+" "+m.ini,value:list.filter(k=>k.market===m.id).length,color:m.col})).filter(s=>s.value));
 
+  const stOpts=["identified","contacted","replied","negotiating","confirmed","ontrip","posted"];
   const filters=`<div class="filters">
-    <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>${t("b_add")}</button>
-    <button class="btn ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg>${t("b_import")}</button>
+    <button class="btn" onclick="addKolForm()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>${t("b_add")}</button>
+    <button class="btn ghost" onclick="document.getElementById('csvInput').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg>${t("b_import")}</button>
     <span style="flex:1"></span>
-    <select class="ctrl"><option>${t("f_all_status")}</option><option>Identified</option><option>Contacted</option><option>Confirmed</option></select>
-    <select class="ctrl"><option>${t("f_all_tier")}</option>${tiers.map(tk=>`<option>${tierName(tk)}</option>`).join("")}</select>
+    <select class="ctrl" onchange="state.fStatus=this.value;rKols()"><option value="all">${t("f_all_status")}</option>${stOpts.map(s=>`<option value="${s}" ${state.fStatus===s?"selected":""}>${sName(s)}</option>`).join("")}</select>
+    <select class="ctrl" onchange="state.fTier=this.value;rKols()"><option value="all">${t("f_all_tier")}</option>${tiers.map(tk=>`<option value="${tk}" ${state.fTier===tk?"selected":""}>${tierName(tk)}</option>`).join("")}</select>
     <div class="seg"><button class="${kolView==="table"?"on":""}" onclick="kolView='table';rKols()">${t("view_table")}</button><button class="${kolView==="grid"?"on":""}" onclick="kolView='grid';rKols()">${t("view_grid")}</button></div>
   </div>`;
   const stats=`<div class="grid cols-3" style="margin-bottom:16px">
@@ -588,37 +771,42 @@ function rKols(){
     <div class="card"><h3>${t("c_country")}</h3><div class="hint">${lang==="en"?"By source market":"Per pasar sumber"}</div>${byMkt}</div>
     <div class="card kpi"><div class="top"><span class="lab">${lang==="en"?"Avg ER · roster":"Rata-rata ER · roster"}</span><span class="ic">${ICON.er}</span></div>
       <div class="val">${avgER}%</div><div class="top">${delta(4)}<span class="muted" style="font-size:12px">${list.length} ${lang==="en"?"KOLs":"KOL"}</span></div>
-      <div class="note" style="margin-top:12px">${lang==="en"?"Travel-niche KOLs across 6 source markets, all assigned to Labuan Bajo.":"KOL niche travel di 6 pasar sumber, semua untuk Labuan Bajo."}</div></div>
+      <div class="note" style="margin-top:12px">${lang==="en"?"Click any KOL to open its profile & advance the pipeline.":"Klik KOL untuk buka profil & lanjutkan pipeline."}</div></div>
   </div>`;
   let body;
   if(kolView==="table"){
     body=`<div class="card pad0" style="overflow-x:auto"><table><thead><tr>
       <th>${t("th_kol")}</th><th>${t("th_country")}</th><th>${t("th_plat")}</th><th>${t("th_tier")}</th><th>${t("th_niche")}</th><th>${t("th_lang")}</th>
       <th class="num">${t("th_followers")}</th><th class="num">${t("th_er")}</th><th>${t("th_status")}</th><th>${t("th_approval")}</th></tr></thead><tbody>`+
-      list.map(k=>`<tr><td><div class="who">${avatar(k.ini,mcol(k.market))}<div><b>${k.name} ${k.ver?'<span class="ver" title="Audience verified">✓</span>':''}</b><br><small>${k.h}</small></div></div></td>
+      (list.length?list.map(k=>`<tr class="clickable" onclick="kolDetail('${k.id}')"><td><div class="who">${avatar(k.ini,mcol(k.market))}<div><b>${k.name} ${k.ver?'<span class="ver" title="Audience verified">✓</span>':''}</b><br><small>${k.h}</small></div></div></td>
         <td>${mflag(k.market)} ${marketName(k.market)}</td><td>${platChips(k.plat)}</td><td>${tierChip(k.tier)}</td><td>${k.niche}</td><td>${k.lang}</td>
         <td class="num">${fFol(k.fol)}${k.folTT?`<br><small class="muted">TT ${fFol(k.folTT)}</small>`:''}</td><td class="num">${k.er}%</td><td>${chip(k.stage)}</td>
-        <td>${isApproved(k)?'<span class="chip" style="color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)">'+t("approvedw")+'</span>':'<span class="chip" style="color:var(--muted);background:var(--border2)">'+t("pending")+'</span>'}</td></tr>`).join("")+
+        <td>${isApproved(k)?'<span class="chip" style="color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)">'+t("approvedw")+'</span>':'<span class="chip" style="color:var(--muted);background:var(--border2)">'+t("pending")+'</span>'}</td></tr>`).join("")
+        :`<tr><td colspan="10" class="muted" style="text-align:center;padding:30px">${lang==="en"?"No KOLs match your filters.":"Tidak ada KOL yang cocok."}</td></tr>`)+
       `</tbody></table></div>`;
   } else {
-    body=`<div class="grid cols-3">`+list.map(k=>`<div class="card client-card">
+    body=`<div class="grid cols-3">`+list.map(k=>`<div class="card client-card clickable" onclick="kolDetail('${k.id}')">
       <div class="ch">${avatar(k.ini,mcol(k.market),46)}<div class="nm"><b>${k.name} ${k.ver?'<span class="ver">✓</span>':''}</b><small>${k.h} · ${mflag(k.market)} ${marketName(k.market)}</small></div></div>
       <div class="row-flex">${tierChip(k.tier)}${platChips(k.plat)}<span class="chip" style="background:var(--border2);color:var(--muted)">${k.niche}</span></div>
       <div class="cstat"><div><small>${t("th_followers")}</small><b>${fFol(k.fol)}</b></div><div><small>ER</small><b>${k.er}%</b></div><div><small>${t("th_lang")}</small><b>${k.lang}</b></div></div>
-      <div class="row-flex" style="justify-content:space-between">${chip(k.stage)}<small class="muted" style="font-size:11px">${k.email.includes("@")?k.email:k.email}</small></div></div>`).join("")+`</div>`;
+      <div class="row-flex" style="justify-content:space-between">${chip(k.stage)}<small class="muted" style="font-size:11px">${k.email}</small></div></div>`).join("")+`</div>`;
   }
   document.getElementById("s-kols").innerHTML=filters+stats+body;
 }
 
 /* ============ Briefs ============ */
 function rBriefs(){
-  const list=fc(briefs);
+  let list=fc(briefs);
+  if(state.q){const q=state.q.toLowerCase();list=list.filter(b=>b.title.toLowerCase().includes(q)||marketName(b.market).toLowerCase().includes(q));}
+  if(state.fBrief!=="all")list=list.filter(b=>b.status===state.fBrief);
   const stages=["draft","sent","acknowledged","revision","approved"];
-  const funnel=svgBars(stages.map(s=>({label:sName(s),value:list.filter(b=>b.status===s).length,color:sColor(s),disp:fInt(list.filter(b=>b.status===s).length)})));
-  const head=`<div class="filters"><button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>${t("b_newbrief")}</button>
-    <span class="muted" style="margin-left:6px">${t("destination")}</span><span style="flex:1"></span></div>`;
+  const funnel=svgBars(stages.map(s=>({label:sName(s),value:fc(briefs).filter(b=>b.status===s).length,color:sColor(s),disp:fInt(fc(briefs).filter(b=>b.status===s).length)})));
+  const head=`<div class="filters"><button class="btn" onclick="newBriefForm()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>${t("b_newbrief")}</button>
+    <span class="muted" style="margin-left:6px">${t("destination")}</span><span style="flex:1"></span>
+    <select class="ctrl" onchange="state.fBrief=this.value;rBriefs()"><option value="all">${t("f_all_status")}</option>${stages.map(s=>`<option value="${s}" ${state.fBrief===s?"selected":""}>${sName(s)}</option>`).join("")}</select></div>`;
   const table=`<div class="card pad0" style="overflow-x:auto"><table><thead><tr><th>${t("th_brief")}</th><th>${t("th_market")}</th><th>${t("th_trip")}</th><th>${t("th_obj")}</th><th class="num">${t("th_kols")}</th><th>${t("th_status")}</th><th class="num">${t("th_due")}</th></tr></thead><tbody>`+
-    list.map(b=>`<tr><td><b>${b.title}</b></td><td>${mflag(b.market)} ${marketName(b.market)}</td><td>Labuan Bajo</td><td>${chip(b.obj)}</td><td class="num">${b.kols}</td><td>${chip(b.status)}</td><td class="num">${b.due}</td></tr>`).join("")+`</tbody></table></div>`;
+    (list.length?list.map(b=>`<tr><td><b>${b.title}</b></td><td>${mflag(b.market)} ${marketName(b.market)}</td><td>Labuan Bajo</td><td>${chip(b.obj)}</td><td class="num">${b.kols}</td><td>${chip(b.status)}</td><td class="num">${b.due}</td></tr>`).join("")
+      :`<tr><td colspan="7" class="muted" style="text-align:center;padding:30px">${lang==="en"?"No briefs match.":"Tidak ada brief."}</td></tr>`)+`</tbody></table></div>`;
   document.getElementById("s-briefs").innerHTML=head+
     `<div class="grid cols-2b" style="margin-bottom:16px">
       <div class="card"><h3>${t("c_brieffunnel")}</h3><div class="hint">${lang==="en"?"Briefs by stage":"Brief per tahap"}</div>${funnel}</div>
@@ -630,22 +818,31 @@ function rBriefs(){
 
 /* ============ Posting (recruitment pipeline) ============ */
 function rPosting(){
-  const list=fc(kols);
+  let list=fc(kols);
+  if(state.q){const q=state.q.toLowerCase();list=list.filter(k=>k.name.toLowerCase().includes(q)||k.h.toLowerCase().includes(q)||marketName(k.market).toLowerCase().includes(q));}
   const cols=["identified","contacted","replied","negotiating","confirmed","ontrip","posted"];
-  const board=`<div class="kanban">`+cols.map(s=>{const items=list.filter(k=>k.stage===s);
-    return `<div class="kcol"><div class="kh"><span style="display:flex;align-items:center;gap:7px"><span class="pdot" style="width:8px;height:8px;border-radius:50%;background:${sColor(s)}"></span>${sName(s)}</span><span class="cnt">${items.length}</span></div>`+
-      (items.length?items.map(k=>`<div class="kcard"><div class="kt">${avatar(k.ini,mcol(k.market),26)}<div><b>${k.name}</b><br><small>${mflag(k.market)} ${k.h}</small></div></div>
-        <div class="row-flex">${platChips(k.plat)}${tierChip(k.tier)}</div>
-        <div class="meta"><span class="due">📍 Labuan Bajo</span><span class="num muted" style="font-size:11px">${fFol(k.fol)} · ${k.er}%</span></div></div>`).join("")
-        :`<div class="note" style="text-align:center">—</div>`)+`</div>`;}).join("")+`</div>`;
-  const head=`<div class="filters"><span class="muted">${list.length} ${lang==="en"?"KOLs in pipeline · drag to advance stage":"KOL di pipeline · seret untuk pindah tahap"}</span><span style="flex:1"></span>
-    <div class="seg"><button class="on">${lang==="en"?"Board":"Papan"}</button><button>${t("view_table")}</button></div></div>`;
-  document.getElementById("s-posting").innerHTML=head+board;
+  const head=`<div class="filters"><span class="muted">${list.length} ${lang==="en"?"KOLs in pipeline · click a card to open & advance":"KOL di pipeline · klik kartu untuk buka & lanjut"}</span><span style="flex:1"></span>
+    <div class="seg"><button class="${state.postView==="board"?"on":""}" onclick="state.postView='board';rPosting()">${lang==="en"?"Board":"Papan"}</button><button class="${state.postView==="table"?"on":""}" onclick="state.postView='table';rPosting()">${t("view_table")}</button></div></div>`;
+  let body;
+  if(state.postView==="board"){
+    body=`<div class="kanban">`+cols.map(s=>{const items=list.filter(k=>k.stage===s);
+      return `<div class="kcol"><div class="kh"><span style="display:flex;align-items:center;gap:7px"><span class="pdot" style="width:8px;height:8px;border-radius:50%;background:${sColor(s)}"></span>${sName(s)}</span><span class="cnt">${items.length}</span></div>`+
+        (items.length?items.map(k=>`<div class="kcard clickable" onclick="kolDetail('${k.id}')"><div class="kt">${avatar(k.ini,mcol(k.market),26)}<div><b>${k.name}</b><br><small>${mflag(k.market)} ${k.h}</small></div></div>
+          <div class="row-flex">${platChips(k.plat)}${tierChip(k.tier)}</div>
+          <div class="meta"><span class="due">📍 Labuan Bajo</span><span class="num muted" style="font-size:11px">${fFol(k.fol)} · ${k.er}%</span></div></div>`).join("")
+          :`<div class="note" style="text-align:center">—</div>`)+`</div>`;}).join("")+`</div>`;
+  } else {
+    body=`<div class="card pad0" style="overflow-x:auto"><table><thead><tr><th>${t("th_kol")}</th><th>${t("th_country")}</th><th>${t("th_tier")}</th><th class="num">${t("th_followers")}</th><th class="num">${t("th_er")}</th><th>${t("th_status")}</th></tr></thead><tbody>`+
+      cols.flatMap(s=>list.filter(k=>k.stage===s)).map(k=>`<tr class="clickable" onclick="kolDetail('${k.id}')"><td><div class="who">${avatar(k.ini,mcol(k.market),28)}<div><b>${k.name}</b><br><small>${k.h}</small></div></div></td>
+        <td>${mflag(k.market)} ${marketName(k.market)}</td><td>${tierChip(k.tier)}</td><td class="num">${fFol(k.fol)}</td><td class="num">${k.er}%</td><td>${chip(k.stage)}</td></tr>`).join("")+`</tbody></table></div>`;
+  }
+  document.getElementById("s-posting").innerHTML=head+body;
 }
 
 /* ============ Reports (projection) ============ */
 function rReports(){
-  const list=fc(kols);
+  let list=fc(kols);
+  if(state.q){const q=state.q.toLowerCase();list=list.filter(k=>k.name.toLowerCase().includes(q)||k.h.toLowerCase().includes(q)||marketName(k.market).toLowerCase().includes(q));}
   const reach=list.reduce((a,k)=>a+k.fol,0);
   const eng=list.reduce((a,k)=>a+projEng(k),0);
   const aer=(list.reduce((a,k)=>a+k.er,0)/(list.length||1)).toFixed(1);
@@ -655,7 +852,7 @@ function rReports(){
     ${kpi(t("k_projeng"),fFol(eng),18,[8,10,12,14,16,18,21],"er")}
     ${kpi(t("k_er"),aer+"%",4,[3.2,3.5,3.8,4.1,4.4,4.6,+aer],"er")}
     ${kpi(t("k_db"),list.length,8,[20,26,30,33,36,38,list.length],"kols")}
-    ${kpi(t("k_markets"),state.market==="all"?6:1,0,[6,6,6,6,6,6,6],"clients")}
+    ${kpi(t("k_markets"),state.market==="all"?[...new Set(list.map(x=>x.market))].length:1,0,[6,6,6,6,6,6,6],"clients")}
     ${kpi(t("k_projemv"),fIDR(emv),24,[6,9,12,16,20,26,31],"emv")}
   </div>`;
   const reachByMkt=svgBars(markets.map(m=>({label:m.flag+" "+m.name,value:list.filter(x=>x.market===m.id).reduce((a,x)=>a+x.fol,0),color:m.col,disp:fFol(list.filter(x=>x.market===m.id).reduce((a,x)=>a+x.fol,0))})).filter(s=>s.value).sort((a,b)=>b.value-a.value));
@@ -663,11 +860,11 @@ function rReports(){
   const engByTier=svgBars(tiers.map(tk=>({label:tierName(tk),value:list.filter(k=>k.tier===tk).reduce((a,k)=>a+projEng(k),0),color:TIER[tk].c,disp:fFol(list.filter(k=>k.tier===tk).reduce((a,k)=>a+projEng(k),0))})).filter(s=>s.value));
   const top=list.slice().sort((a,b)=>projEng(b)-projEng(a)).slice(0,8);
   const topT=`<div class="card pad0" style="overflow-x:auto"><table><thead><tr><th>${t("th_kol")}</th><th>${t("th_country")}</th><th>${t("th_plat")}</th><th class="num">${t("th_followers")}</th><th class="num">ER</th><th class="num">${t("k_projeng")}</th></tr></thead><tbody>`+
-    top.map(x=>`<tr><td><div class="who">${avatar(x.ini,mcol(x.market),28)}<div><b>${x.name}</b><br><small>${x.h}</small></div></div></td>
+    top.map(x=>`<tr class="clickable" onclick="kolDetail('${x.id}')"><td><div class="who">${avatar(x.ini,mcol(x.market),28)}<div><b>${x.name}</b><br><small>${x.h}</small></div></div></td>
       <td>${mflag(x.market)} ${marketName(x.market)}</td><td>${platChips(x.plat)}</td><td class="num">${fFol(x.fol)}</td><td class="num">${x.er}%</td><td class="num"><b>${fFol(projEng(x))}</b></td></tr>`).join("")+`</tbody></table></div>`;
   const banner=`<div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>${t("proj_note")}</div>`;
   const head=`<div class="filters"><span class="muted">${lang==="en"?"Projected program reach & forecast":"Proyeksi jangkauan & perkiraan program"}</span><span style="flex:1"></span>
-    <button class="btn ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 11l4 4 4-4M5 21h14"/></svg>${t("b_export")}</button></div>`;
+    <button class="btn ghost" onclick="exportReport()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 11l4 4 4-4M5 21h14"/></svg>${t("b_export")}</button></div>`;
   document.getElementById("s-reports").innerHTML=head+banner+k+
     `<div class="grid cols-2" style="margin:16px 0"><div class="card"><h3>${t("c_reachmkt")}</h3><div class="hint">${lang==="en"?"Instagram followers":"Pengikut Instagram"}</div>${reachByMkt}</div>
       <div class="card"><h3>${lang==="en"?"Projected engagement by tier":"Proyeksi interaksi per tier"}</h3><div class="hint">${lang==="en"?"Followers × ER":"Pengikut × ER"}</div>${engByTier}</div></div>`+
@@ -678,12 +875,12 @@ function rReports(){
 function rClients(){
   const ms=state.market==="all"?markets:markets.filter(m=>m.id===state.market);
   document.getElementById("s-clients").innerHTML=`<div class="grid cols-3">`+ms.map(m=>{
-    const ks=kols.filter(x=>x.market===m.id);const reach=ks.reduce((a,x)=>a+x.fol,0);
+    const ks=kols.filter(x=>x.market===m.id);if(!ks.length)return "";const reach=ks.reduce((a,x)=>a+x.fol,0);
     const aer=(ks.reduce((a,x)=>a+x.er,0)/(ks.length||1)).toFixed(1);
     const out=ks.filter(inOutreach).length;const conf=ks.filter(isApproved).length;const pct=Math.round(out/ks.length*100);
     const health=conf>0?"on-track":out>0?"at-risk":"delayed";
     const langs=[...new Set(ks.map(x=>x.lang))].join(", ");
-    return `<div class="card client-card">
+    return `<div class="card client-card clickable" title="${lang==="en"?"View roster":"Lihat roster"}" onclick="state.market='${m.id}';var cf=document.getElementById('clientFilter');if(cf)cf.value='${m.id}';go('kols')">
       <div class="ch"><span style="font-size:30px">${m.flag}</span><div class="nm"><b>${m.name}</b><small>${langs}</small></div><span style="margin-left:auto">${chip(health)}</span></div>
       <div class="cstat"><div><small>${t("engaged")}</small><b>${ks.length}</b></div><div><small>${t("k_reach")}</small><b>${fFol(reach)}</b></div><div><small>ER</small><b>${aer}%</b></div><div><small>${t("k_confirmed")}</small><b>${conf}</b></div></div>
       <div class="budget"><small><span>${out}/${ks.length} ${lang==="en"?"in outreach":"di outreach"}</span><span>${pct}%</span></small>
@@ -693,21 +890,39 @@ function rClients(){
 
 /* ============ Timeline ============ */
 function rTimeline(){
-  const start=new Date("2026-06-01"),end=new Date("2026-11-30"),span=(end-start)/86400000;
-  const pos=d=>((new Date("2026-"+d)-start)/86400000)/span*100;
-  const months=["Jun","Jul","Aug","Sep","Oct","Nov"];
-  let rows=tlrows.map(r=>{const l=pos(r.start),w=pos(r.end)-l;
-    const miles=r.miles.map(m=>`<div class="gmile" title="${m}" style="left:${pos(m)}%"></div>`).join("");
-    return `<div class="grow"><div class="glab"><b>${lang==="en"?r.name[0]:r.name[1]}</b><small>${r.start} → ${r.end}</small></div>
-      <div class="gtrack"><div class="gridlines">${months.map(()=>`<span></span>`).join("")}</div>
-        <div class="gbar" style="left:${l}%;width:${w}%;background:${r.col}">${lang==="en"?r.name[0]:r.name[1]}</div>${miles}
-        <div class="today" style="left:${pos("06-23")}%"><b>${t("today")}</b></div></div></div>`;}).join("");
-  const legend=`<div class="legend" style="margin-top:14px">
-    <span><i style="background:var(--accent);transform:rotate(45deg)"></i>${lang==="en"?"Milestone":"Milestone"}</span>
-    <span><i style="background:var(--accent-deep)"></i>${lang==="en"?"Today (23 Jun 2026)":"Hari ini (23 Jun 2026)"}</span></div>`;
-  document.getElementById("s-timeline").innerHTML=`<div class="filters"><span class="muted">${t("sub_timeline")}</span><span style="flex:1"></span>
-    <div class="seg"><button class="on">Gantt</button><button>${lang==="en"?"Calendar":"Kalender"}</button><button>${lang==="en"?"List":"Daftar"}</button></div></div>
-    <div class="card gantt"><div class="ghead"><div></div><div class="months">${months.map(m=>`<div>${m}</div>`).join("")}</div></div>${rows}${legend}</div>`;
+  const win=rangeWindow();const span=(win.end-win.start)/86400000||1;
+  const pos=d=>((new Date("2026-"+d)-win.start)/86400000)/span*100;
+  const months=win.months;
+  const rows=tlrows.filter(r=>new Date("2026-"+r.end)>=win.start&&new Date("2026-"+r.start)<=win.end);
+  const MN=["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const head=`<div class="filters"><span class="muted">${t("sub_timeline")}</span><span style="flex:1"></span>
+    <div class="seg"><button class="${state.tlView==="gantt"?"on":""}" onclick="state.tlView='gantt';rTimeline()">Gantt</button><button class="${state.tlView==="calendar"?"on":""}" onclick="state.tlView='calendar';rTimeline()">${lang==="en"?"Calendar":"Kalender"}</button><button class="${state.tlView==="list"?"on":""}" onclick="state.tlView='list';rTimeline()">${lang==="en"?"List":"Daftar"}</button></div></div>`;
+  let body;
+  if(state.tlView==="gantt"){
+    const rowsH=rows.map(r=>{let l=Math.max(0,pos(r.start)),w=Math.min(100,pos(r.end))-l;if(w<0)w=0;
+      const miles=r.miles.filter(m=>pos(m)>=0&&pos(m)<=100).map(m=>`<div class="gmile" title="${m}" style="left:${pos(m)}%"></div>`).join("");
+      const tdy=pos("06-23");
+      return `<div class="grow"><div class="glab"><b>${lang==="en"?r.name[0]:r.name[1]}</b><small>${r.start} → ${r.end}</small></div>
+        <div class="gtrack"><div class="gridlines" style="grid-template-columns:repeat(${months.length},1fr)">${months.map(()=>`<span></span>`).join("")}</div>
+          <div class="gbar" style="left:${l}%;width:${w}%;background:${r.col}">${lang==="en"?r.name[0]:r.name[1]}</div>${miles}
+          ${tdy>=0&&tdy<=100?`<div class="today" style="left:${tdy}%"><b>${t("today")}</b></div>`:""}</div></div>`;}).join("");
+    const legend=`<div class="legend" style="margin-top:14px"><span><i style="background:var(--accent);transform:rotate(45deg)"></i>${lang==="en"?"Milestone":"Milestone"}</span><span><i style="background:var(--accent-deep)"></i>${lang==="en"?"Today (23 Jun 2026)":"Hari ini (23 Jun 2026)"}</span></div>`;
+    body=`<div class="card gantt"><div class="ghead"><div></div><div class="months" style="grid-template-columns:repeat(${months.length},1fr)">${months.map(m=>`<div>${m.label}</div>`).join("")}</div></div>${rowsH||`<div class="note">${lang==="en"?"No phases in range.":"Tidak ada fase."}</div>`}${legend}</div>`;
+  } else if(state.tlView==="list"){
+    const ev=[];rows.forEach(r=>r.miles.forEach(m=>{const d=new Date("2026-"+m);if(d>=win.start&&d<=win.end)ev.push({d,iso:m,name:lang==="en"?r.name[0]:r.name[1],col:r.col});}));
+    ev.sort((a,b)=>a.d-b.d);
+    body=`<div class="card"><div class="dl">`+(ev.length?ev.map(x=>`<div class="row"><div class="when"><b>${x.iso.slice(3)}</b><small>${MN[+x.iso.slice(0,2)]}</small></div>
+      <div class="meta"><b>${x.name}</b><small>Labuan Bajo · Wonderful Indonesia 2026</small></div><span class="pdot" style="width:9px;height:9px;border-radius:50%;background:${x.col}"></span></div>`).join("")
+      :`<div class="note">${lang==="en"?"No milestones in range.":"Tidak ada milestone."}</div>`)+`</div></div>`;
+  } else {
+    body=`<div class="grid cols-3">`+months.map(mo=>{
+      const phases=rows.filter(r=>+mo.mm>=+r.start.slice(0,2)&&+mo.mm<=+r.end.slice(0,2));
+      const miles=[];rows.forEach(r=>r.miles.forEach(m=>{if(m.slice(0,2)===mo.mm)miles.push({iso:m,name:lang==="en"?r.name[0]:r.name[1],col:r.col});}));
+      return `<div class="card"><h3>${mo.label} 2026</h3><div class="hint">${phases.length} ${lang==="en"?"active phases":"fase aktif"}</div>
+        ${phases.map(p=>`<div class="row-flex" style="gap:7px;margin-bottom:7px"><span class="pdot" style="width:8px;height:8px;border-radius:50%;background:${p.col}"></span><span style="font-size:12.5px;font-weight:600">${lang==="en"?p.name[0]:p.name[1]}</span></div>`).join("")||`<div class="note">—</div>`}
+        ${miles.length?`<div style="margin-top:8px;border-top:1px solid var(--border2);padding-top:8px;display:flex;flex-direction:column;gap:6px">`+miles.map(m=>`<div class="row-flex" style="gap:7px;font-size:12px;color:var(--muted)"><span style="transform:rotate(45deg);width:8px;height:8px;background:var(--accent);display:inline-block"></span>${m.iso.slice(3)} · ${m.name}</div>`).join("")+`</div>`:""}</div>`;}).join("")+`</div>`;
+  }
+  document.getElementById("s-timeline").innerHTML=head+body;
 }
 
 /* ============ Settings ============ */
@@ -740,8 +955,8 @@ function go(sec){state.section=sec;
   setActive();RENDER[sec]();
   const c=document.querySelector(".content");c.style.animation="none";void c.offsetWidth;c.style.animation="";
 }
-function onMarket(v){state.market=v;RENDER[state.section]();}
-function onSearch(v){state.q=v;if(state.section==="kols")rKols();}
+function onMarket(v){state.market=v;const cf=document.getElementById("clientFilter");if(cf)cf.value=v;RENDER[state.section]();}
+function onSearch(v){state.q=v;RENDER[state.section]();}
 
 /* ============ lang / theme ============ */
 function applyStatic(){
@@ -763,6 +978,8 @@ function toggleTheme(){const h=document.documentElement;const dark=h.getAttribut
   RENDER[state.section]();}
 
 /* ============ init ============ */
+document.getElementById("csvInput").addEventListener("change",e=>{const f=e.target.files[0];if(f)handleCSV(f);e.target.value="";});
+document.addEventListener("click",e=>{if(notifOpen&&!e.target.closest(".notif-wrap"))closeNotif();});
 buildNav();applyStatic();rOverview();
 </script>
 </body>
