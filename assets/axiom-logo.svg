@@ -1,18 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" fill="none" role="img" aria-label="AXIOM — Human Performance">
-  <g stroke="#ECE9E3" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round">
-    <!-- A — chevron, no crossbar -->
+  <g stroke="#ECE9E3" stroke-width="4.2" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="6">
+    <!-- A — chevron, no crossbar, sharp apex -->
     <polyline points="30,100 60,20 90,100"/>
-    <!-- X — split, gap at the crossing -->
-    <line x1="130" y1="20" x2="154" y2="56"/>
-    <line x1="190" y1="20" x2="166" y2="56"/>
-    <line x1="130" y1="100" x2="154" y2="64"/>
-    <line x1="190" y1="100" x2="166" y2="64"/>
+    <!-- X — split, subtle gap at the crossing -->
+    <line x1="130" y1="20" x2="153" y2="55"/>
+    <line x1="190" y1="20" x2="167" y2="55"/>
+    <line x1="130" y1="100" x2="153" y2="65"/>
+    <line x1="190" y1="100" x2="167" y2="65"/>
     <!-- I -->
     <line x1="230" y1="20" x2="230" y2="100"/>
     <!-- O — perfect circle -->
     <circle cx="320" cy="60" r="40"/>
     <!-- M — pointed centre vertex -->
-    <polyline points="400,100 400,20 435,70 470,20 470,100"/>
+    <polyline points="400,100 400,20 435,68 470,20 470,100"/>
   </g>
   <text x="250" y="138" text-anchor="middle" font-family="Jost, 'Century Gothic', system-ui, sans-serif"
         font-size="13.5" font-weight="400" letter-spacing="11" fill="#9A958B">HUMAN&#160;PERFORMANCE</text>
