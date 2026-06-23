@@ -389,6 +389,41 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
   td.rownum{position:absolute;right:16px;top:14px}
   td.price{margin-top:8px;font-size:16px}
 }
+
+/* ===== Premium redesign: hero + product cards ===== */
+.hero{padding:60px 0 80px;background:var(--bg)}
+.hero-glow{position:absolute;inset:0;z-index:0;background:radial-gradient(55% 55% at 74% 42%,rgba(255,255,255,.055),transparent 70%)}
+.hero-in{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:48px;text-align:left}
+.hero-copy{max-width:560px}
+.hero-vis{position:relative;display:flex;justify-content:center;align-items:center;min-height:440px}
+.hero-vis .vial{height:min(58vh,460px);width:auto;filter:drop-shadow(0 50px 70px rgba(0,0,0,.7))}
+.hero .hero-cta{justify-content:flex-start}
+@media(max-width:860px){
+  .hero-in{grid-template-columns:1fr;text-align:center;gap:18px}
+  .hero-copy{max-width:none}
+  .hero-copy .pill{margin-inline:auto}
+  .hero .hero-cta{justify-content:center}
+  .hero-vis{order:-1;min-height:0}
+  .hero-vis .vial{height:280px}
+}
+
+/* product grid + cards */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:14px;padding:22px}
+.pcard{position:relative;display:flex;flex-direction:column;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .22s,border-color .22s,box-shadow .22s}
+.pcard:hover{transform:translateY(-5px);border-color:var(--line-2);box-shadow:var(--shadow-lg)}
+.pcard-vis{position:relative;display:flex;justify-content:center;padding:24px 0 8px;background:radial-gradient(58% 60% at 50% 32%,rgba(255,255,255,.045),transparent 72%)}
+.pcard-vis .vial{height:158px;width:auto}
+.pcard-body{padding:0 16px 16px;display:flex;flex-direction:column;gap:7px;flex:1}
+.pcard-meta{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+.pcard-name{font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:-.01em;line-height:1.2;color:var(--text)}
+.pcard-name .dose{display:inline-block;margin-left:6px;font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.02em}
+.pcard-foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px solid var(--line)}
+.pcard-price{font-family:var(--display);font-weight:600;font-size:15px;color:var(--text);white-space:nowrap}
+.pcard-price .cur{color:var(--muted-2);font-size:11px;margin-right:2px;font-weight:500}
+.pcard-price.na{font-size:11px;font-weight:500;color:var(--muted-2);letter-spacing:.02em}
+.pcard-actions{display:flex;gap:6px;flex-shrink:0}
+.pcard.hidden{display:none}
+@media(max-width:520px){.pgrid{grid-template-columns:repeat(2,1fr);gap:10px;padding:14px}.pcard-vis .vial{height:128px}.pcard-body{padding:0 12px 12px}}
 </style>
 </head>
 <body>
@@ -415,16 +450,18 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
 </nav>
 
 <header class="hero" id="top">
-  <div class="hero-grid"></div>
-  <canvas id="ecg"></canvas>
+  <div class="hero-glow"></div>
   <div class="wrap hero-in">
-    <span class="pill"><span class="live"></span> ≥98% Purity · Third-Party HPLC Verified</span>
-    <h1 class="display">Peak Human<br><span class="out">Performance</span></h1>
-    <p class="lead">A clinical-grade catalogue of research peptides — every lot independently assayed and documented.</p>
-    <div class="hero-cta">
-      <a href="#catalogue" class="btn btn-red">Browse the Catalogue <i class="ph-bold ph-arrow-right"></i></a>
-      <a href="#quality" class="btn">Our Standards</a>
+    <div class="hero-copy">
+      <span class="pill"><span class="live"></span> ≥98% Purity · Third-Party HPLC Verified</span>
+      <h1 class="display">Peak Human<br><span class="out">Performance</span></h1>
+      <p class="lead">A clinical-grade catalogue of research peptides — every lot independently assayed, documented, and dispatched cold-chain.</p>
+      <div class="hero-cta">
+        <a href="#catalogue" class="btn btn-red">Browse the Catalogue <i class="ph-bold ph-arrow-right"></i></a>
+        <a href="#quality" class="btn">Our Standards</a>
+      </div>
     </div>
+    <div class="hero-vis" id="heroVis"></div>
   </div>
 </header>
 
@@ -550,7 +587,7 @@ details[open] .faq-q .qi{transform:rotate(45deg)}
 <section class="section" id="contact">
   <div class="wrap">
     <div class="cta reveal">
-      <canvas id="ecg2"></canvas>
+      
       <div class="kicker">// Request a Quote</div>
       <h2>Build Your Research Order</h2>
       <p>Tell us which compounds and quantities you need. Quotes are returned within 24 hours with live stock and pricing.</p>
@@ -691,19 +728,43 @@ const PRICES=CAT.flatMap(c=>c.items.map(i=>i.price)).filter(p=>p!=null);
 const PMIN=Math.min(...PRICES),PMAX=Math.max(...PRICES);
 
 /* Catalogue */
+/* Reusable AXIOM vial render (vector) */
+const VIAL=`<svg class="vial" viewBox="0 0 110 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <ellipse cx="55" cy="292" rx="34" ry="6" fill="#000" opacity=".55"/>
+  <rect x="38" y="6" width="34" height="30" rx="5" fill="#cfcabf"/>
+  <rect x="38" y="13" width="34" height="7" fill="#8f8a80" opacity=".55"/>
+  <rect x="40" y="34" width="30" height="13" fill="#b4afa3"/>
+  <rect x="30" y="45" width="50" height="248" rx="15" fill="#131313" stroke="rgba(255,255,255,.13)"/>
+  <rect x="36" y="54" width="6" height="230" rx="3" fill="rgba(255,255,255,.10)"/>
+  <rect x="33.5" y="150" width="43" height="120" rx="6" fill="#0a0a0a" stroke="rgba(200,194,182,.45)"/>
+  <text x="55" y="176" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="600" font-size="13" letter-spacing="2.4" fill="#ECE9E3">AXIOM</text>
+  <line x1="45" y1="189" x2="65" y2="189" stroke="rgba(200,194,182,.4)" stroke-width="1"/>
+  <text x="55" y="256" text-anchor="middle" font-family="Inter,sans-serif" font-size="5.2" letter-spacing="1.1" fill="#9a958b">RESEARCH USE ONLY</text>
+</svg>`;
+const heroVis=document.getElementById("heroVis");if(heroVis)heroVis.innerHTML=VIAL;
+
 const list=document.getElementById("catList");
 CAT.forEach(c=>{
-  const rows=c.items.map((it,i)=>{
+  const short=c.name.split(" & ")[0].split(",")[0];
+  const cards=c.items.map((it,i)=>{
     const id=`${c.id}-${i}`;
     ITEMS[id]={id,name:it.name,dose:it.dose,price:it.price,cat:c.id};
+    const priceHtml=it.price==null?'<span class="pcard-price na">Price on request</span>':`<span class="pcard-price"><span class="cur">Rp</span>${fmt(it.price)}</span>`;
     return `
-    <tr data-id="${id}" data-name="${(it.name+' '+it.dose).toLowerCase()}" data-idx="${i}" data-price="${it.price==null?'':it.price}">
-      <td class="rownum">${String(i+1).padStart(2,'0')}</td>
-      <td><span class="pname">${it.name}</span>${it.dose?`<span class="dose">${it.dose}</span>`:''}</td>
-      <td class="content">${it.content}</td>
-      <td class="r price ${it.price==null?'na':''}">${it.price==null?'N/A':`<span class="cur">Rp</span>${fmt(it.price)}`}</td>
-      <td class="add-cell"><button class="ref-btn" data-ref="${it.name}" aria-label="Research info" title="Research info"><i class="ph-bold ph-info"></i></button>${it.price==null?'':`<button class="add-btn" data-add="${id}" aria-label="Add to cart" title="Add to cart"><i class="ph-bold ph-plus"></i></button>`}</td>
-    </tr>`;}).join("");
+    <article class="pcard" data-id="${id}" data-name="${(it.name+' '+it.dose).toLowerCase()}" data-idx="${i}" data-price="${it.price==null?'':it.price}">
+      <div class="pcard-vis">${VIAL}</div>
+      <div class="pcard-body">
+        <div class="pcard-meta">${c.no} · ${short}</div>
+        <h4 class="pcard-name">${it.name}${it.dose?`<span class="dose">${it.dose}</span>`:''}</h4>
+        <div class="pcard-foot">
+          ${priceHtml}
+          <div class="pcard-actions">
+            <button class="ref-btn" data-ref="${it.name}" aria-label="Research info" title="Research info"><i class="ph-bold ph-info"></i></button>
+            ${it.price==null?'':`<button class="add-btn" data-add="${id}" aria-label="Add to cart" title="Add to cart"><i class="ph-bold ph-plus"></i></button>`}
+          </div>
+        </div>
+      </div>
+    </article>`;}).join("");
   const block=document.createElement("div");
   block.className="cat reveal";block.dataset.cat=c.id;block.id="cat-"+c.id;
   block.style.setProperty("--accent",ACCENTS[c.id]||"#C8C2B6");
@@ -714,10 +775,7 @@ CAT.forEach(c=>{
       <div class="cat-titles"><h3>${c.name}</h3><p>${c.blurb}</p></div>
       <div class="cat-count">${c.items.length} compounds</div>
     </div>
-    <table>
-      <thead><tr><th class="rownum">#</th><th>Compound</th><th>Content</th><th class="r">Price (IDR)</th><th class="add-cell"></th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table>`;
+    <div class="pgrid">${cards}</div>`;
   list.appendChild(block);
 });
 
@@ -728,16 +786,16 @@ let activeCat="all";
 priceInp.min=PMIN;priceInp.max=PMAX;priceInp.value=PMAX;
 function sortRows(){
   const mode=sortSel.value;
-  document.querySelectorAll(".cat tbody").forEach(tb=>{
-    const trs=[...tb.querySelectorAll("tr")];
-    trs.sort((a,b)=>{
+  document.querySelectorAll(".cat .pgrid").forEach(grid=>{
+    const cards=[...grid.querySelectorAll(".pcard")];
+    cards.sort((a,b)=>{
       const pa=a.dataset.price===""?Infinity:+a.dataset.price, pb=b.dataset.price===""?Infinity:+b.dataset.price;
       if(mode==="price-asc")return pa-pb;
       if(mode==="price-desc")return (pb===Infinity?-1:pa===Infinity?1:pb-pa);
-      if(mode==="name")return a.querySelector(".pname").textContent.localeCompare(b.querySelector(".pname").textContent);
+      if(mode==="name")return a.querySelector(".pcard-name").textContent.localeCompare(b.querySelector(".pcard-name").textContent);
       return (+a.dataset.idx)-(+b.dataset.idx); // featured
     });
-    trs.forEach(tr=>tb.appendChild(tr));
+    cards.forEach(c=>grid.appendChild(c));
   });
 }
 function apply(){
@@ -745,11 +803,11 @@ function apply(){
   priceVal.textContent="Rp "+fmt(maxP);
   document.querySelectorAll(".cat").forEach(cat=>{
     const catMatch=activeCat==="all"||cat.dataset.cat===activeCat;let vis=0;
-    cat.querySelectorAll("tbody tr").forEach(tr=>{
-      const price=tr.dataset.price===""?null:+tr.dataset.price;
+    cat.querySelectorAll(".pcard").forEach(card=>{
+      const price=card.dataset.price===""?null:+card.dataset.price;
       const priceOk = price==null || maxP>=PMAX || price<=maxP;
-      const m=catMatch&&(!q||tr.dataset.name.includes(q))&&priceOk;
-      tr.classList.toggle("hidden",!m);if(m){vis++;shown++;}
+      const m=catMatch&&(!q||card.dataset.name.includes(q))&&priceOk;
+      card.classList.toggle("hidden",!m);if(m){vis++;shown++;}
     });
     const show=catMatch&&vis>0;cat.classList.toggle("hidden",!show);if(show)any=true;
   });
@@ -878,40 +936,7 @@ addEventListener("keydown",e=>{if(e.key==="Escape")closeRef();});
   document.getElementById("gateAccept").addEventListener("click",enter);
 })();
 
-/* ---- ECG heartbeat canvas ---- */
-function ecg(canvas,color){
-  const ctx=canvas.getContext("2d");let w,h,dpr,t=0;
-  function size(){dpr=Math.min(devicePixelRatio||1,2);w=canvas.clientWidth;h=canvas.clientHeight;canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
-  function beat(x){
-    // calm precision signal: layered low sine waves
-    return Math.sin(x*Math.PI*2)*0.6 + Math.sin(x*Math.PI*6+0.7)*0.18;
-  }
-  function draw(){
-    ctx.clearRect(0,0,w,h);
-    const mid=h*0.6,amp=h*0.16,period=520,speed=0.7;
-    ctx.beginPath();
-    for(let px=0;px<=w;px+=2){
-      const phase=(((px+t*speed)/period)%1+1)%1;
-      const y=mid-beat(phase)*amp;
-      px===0?ctx.moveTo(px,y):ctx.lineTo(px,y);
-    }
-    ctx.strokeStyle=color;ctx.lineWidth=1.1;ctx.lineJoin="round";ctx.globalAlpha=.5;ctx.stroke();ctx.globalAlpha=1;
-    const lphase=(((w+t*speed)/period)%1+1)%1,ly=mid-beat(lphase)*amp;
-    ctx.beginPath();ctx.arc(w-2,ly,2,0,7);ctx.fillStyle=color;ctx.fill();
-  }
-  let raf=null;
-  function frame(){draw();t+=2.4;raf=requestAnimationFrame(frame);}
-  function start(){if(!raf)frame();}
-  function stop(){if(raf){cancelAnimationFrame(raf);raf=null;}}
-  size();addEventListener("resize",()=>{size();draw();});
-  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if(reduce){draw();return;}              // static single frame, no loop
-  // pause animation when canvas scrolls off-screen
-  new IntersectionObserver(es=>es.forEach(en=>en.isIntersecting?start():stop()),{threshold:0}).observe(canvas);
-  start();
-}
-ecg(document.getElementById("ecg"),"#C8C2B6");
-const e2=document.getElementById("ecg2");if(e2)ecg(e2,"#C8C2B6");
+/* (decorative ECG canvas removed in premium redesign) */
 </script>
 </body>
 </html>
