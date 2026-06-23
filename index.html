@@ -1,0 +1,769 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wonderful Indonesia · KOL Program 2026</title>
+<meta name="description" content="KOL management dashboard — Wonderful Indonesia KOL Program 2026 · Kementerian Pariwisata RI · executed by PT. EORI Indonesia Kreatif" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#F3F5F9; --bg2:#E9EEF4;
+  --card:rgba(255,255,255,.72); --card2:rgba(255,255,255,.55); --solid:#FFFFFF;
+  --border:rgba(15,23,42,.09); --border2:rgba(15,23,42,.06);
+  --ink:#0F172A; --muted:#5B677A; --muted2:#94A3B8;
+  --accent:#FFD85F; --accent-deep:#F2C42E; --accent-ink:#3A2E00;
+  --green:#16A34A; --amber:#F59E0B; --red:#DC2626; --blue:#2563EB; --teal:#0D9488; --emerald:#059669; --slate:#64748B; --indigo:#4F46E5;
+  --shadow:0 1px 2px rgba(15,23,42,.04), 0 10px 30px rgba(15,23,42,.07);
+  --shadow-sm:0 1px 2px rgba(15,23,42,.05);
+  --r:18px; --r-sm:12px;
+}
+[data-theme="dark"]{
+  --bg:#0A0D12; --bg2:#0F141B;
+  --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.03); --solid:#141A22;
+  --border:rgba(255,255,255,.09); --border2:rgba(255,255,255,.06);
+  --ink:#E8ECF2; --muted:#9AA6B6; --muted2:#677181;
+  --accent:#FFD85F; --accent-deep:#FFD85F; --accent-ink:#241C00;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 40px rgba(0,0,0,.45);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); background:var(--bg);
+  background-image:
+    radial-gradient(1200px 600px at 110% -10%, rgba(255,216,95,.16), transparent 60%),
+    radial-gradient(900px 500px at -10% 0%, rgba(37,99,235,.10), transparent 55%);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased; font-size:14px; line-height:1.45;
+}
+a{color:inherit}
+.app{display:grid; grid-template-columns:252px 1fr; min-height:100vh}
+.sidebar{position:sticky; top:0; align-self:start; height:100vh; padding:20px 14px; display:flex; flex-direction:column; gap:6px;
+  border-right:1px solid var(--border); background:var(--card2); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px)}
+.brand{display:flex; align-items:center; gap:11px; padding:6px 8px 16px}
+.logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(140deg,var(--accent),var(--accent-deep));
+  display:grid;place-items:center;font-weight:800;color:var(--accent-ink);box-shadow:var(--shadow-sm);flex:none;font-size:13px;letter-spacing:-.5px}
+.brand b{display:block;font-size:13.5px;font-weight:700;letter-spacing:-.2px}
+.brand span{display:block;font-size:11px;color:var(--muted)}
+.nav-label{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted2);padding:14px 10px 6px;font-weight:600}
+.nav a{display:flex;align-items:center;gap:11px;padding:9px 11px;border-radius:11px;color:var(--muted);font-weight:500;cursor:pointer;
+  text-decoration:none;transition:background .15s,color .15s;font-size:13.5px}
+.nav a svg{width:18px;height:18px;flex:none;opacity:.85}
+.nav a:hover{background:var(--border2);color:var(--ink)}
+.nav a.active{background:var(--solid);color:var(--ink);font-weight:600;box-shadow:var(--shadow-sm)}
+.nav a.active svg{color:var(--accent-deep);opacity:1}
+.nav a .badge{margin-left:auto;background:var(--accent);color:var(--accent-ink);font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px}
+.side-foot{margin-top:auto;padding:12px 8px 2px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.avatar{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:12px;color:#fff;flex:none}
+.side-foot small{color:var(--muted)}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;padding:14px 26px;
+  border-bottom:1px solid var(--border);background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.page-title{font-size:18px;font-weight:700;letter-spacing:-.3px;margin:0}
+.page-sub{font-size:12px;color:var(--muted)}
+.topbar .spacer{flex:1}
+.ctrl{display:flex;align-items:center;gap:7px;background:var(--solid);border:1px solid var(--border);border-radius:10px;
+  padding:7px 11px;font-size:13px;color:var(--ink);box-shadow:var(--shadow-sm);cursor:pointer}
+.ctrl svg{width:15px;height:15px;color:var(--muted)}
+select.ctrl,input.ctrl{font-family:inherit;outline:none}
+select.ctrl{appearance:none;padding-right:26px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat:no-repeat;background-position:right 9px center}
+.search{flex:0 1 240px}
+.search input{border:none;background:transparent;outline:none;color:var(--ink);width:100%;font-size:13px;font-family:inherit}
+.icon-btn{display:grid;place-items:center;width:38px;height:38px;border-radius:10px;background:var(--solid);border:1px solid var(--border);
+  cursor:pointer;box-shadow:var(--shadow-sm);position:relative}
+.icon-btn svg{width:17px;height:17px;color:var(--muted)}
+.icon-btn .dot{position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;background:var(--red);border:2px solid var(--solid)}
+.seg{display:flex;background:var(--solid);border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm)}
+.seg button{border:none;background:transparent;padding:7px 12px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+.content{padding:24px 26px 60px;animation:rise .4s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.content{animation:none}*{transition:none!important}}
+.section{display:none}
+.section.show{display:block}
+.grid{display:grid;gap:16px}
+.kpis{grid-template-columns:repeat(4,1fr)}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-2{grid-template-columns:1.5fr 1fr}
+.cols-2b{grid-template-columns:1fr 1fr}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:18px}
+.card.pad0{padding:0;overflow:hidden}
+.card h3{margin:0 0 2px;font-size:14px;font-weight:700;letter-spacing:-.2px}
+.card .hint{font-size:12px;color:var(--muted);margin-bottom:14px}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:14px}
+.card-head h3{margin:0}
+.kpi .top{display:flex;align-items:center;justify-content:space-between}
+.kpi .lab{font-size:12px;color:var(--muted);font-weight:500}
+.kpi .val{font-size:25px;font-weight:800;letter-spacing:-1px;margin:8px 0 4px}
+.kpi .ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--border2)}
+.kpi .ic svg{width:17px;height:17px;color:var(--accent-deep)}
+.delta{display:inline-flex;align-items:center;gap:3px;font-size:11.5px;font-weight:700;padding:2px 7px;border-radius:999px}
+.delta.up{color:var(--green);background:rgba(22,163,74,.12)}
+.delta.down{color:var(--red);background:rgba(220,38,38,.12)}
+.delta svg{width:11px;height:11px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap;line-height:1.4}
+.chip .pdot{width:6px;height:6px;border-radius:50%}
+.tier{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:6px;text-transform:uppercase;letter-spacing:.03em;color:#fff}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted2);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--border)}
+td{padding:12px 14px;border-bottom:1px solid var(--border2);font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--border2)}
+.who{display:flex;align-items:center;gap:10px}
+.who small{color:var(--muted);font-weight:400}
+.who b{font-weight:600}
+.plat{display:inline-flex;gap:4px}
+.pf{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-size:9px;font-weight:800;color:#fff}
+.num{font-variant-numeric:tabular-nums}
+.bar-mini{height:6px;border-radius:999px;background:var(--border2);overflow:hidden;min-width:60px}
+.bar-mini span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-deep))}
+.lb{display:flex;flex-direction:column;gap:2px}
+.lb .row{display:flex;align-items:center;gap:11px;padding:9px 4px;border-bottom:1px solid var(--border2)}
+.lb .row:last-child{border:none}
+.rank{width:20px;text-align:center;font-weight:800;color:var(--muted2);font-size:12px}
+.lb .meta{flex:1;min-width:0}
+.lb .meta b{font-size:13px;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb .meta small{color:var(--muted);font-size:11.5px}
+.lb .v{font-weight:700;font-variant-numeric:tabular-nums;font-size:13px}
+.pipe{display:flex;flex-direction:column;gap:11px}
+.pipe .pr{display:grid;grid-template-columns:132px 1fr 34px;align-items:center;gap:10px}
+.pipe .pr small{color:var(--muted);font-size:12px}
+.pipe .track{height:8px;border-radius:999px;background:var(--border2);overflow:hidden}
+.pipe .track span{display:block;height:100%;border-radius:999px}
+.pipe .pr b{text-align:right;font-variant-numeric:tabular-nums;font-size:13px}
+.dl{display:flex;flex-direction:column;gap:3px}
+.dl .row{display:flex;align-items:center;gap:11px;padding:9px 2px;border-bottom:1px solid var(--border2)}
+.dl .row:last-child{border:none}
+.dl .when{width:48px;text-align:center;flex:none}
+.dl .when b{display:block;font-size:16px;font-weight:800;line-height:1}
+.dl .when small{font-size:10px;color:var(--muted);text-transform:uppercase}
+.dl .meta{flex:1;min-width:0}
+.dl .meta b{display:block;font-size:13px;font-weight:600}
+.dl .meta small{color:var(--muted);font-size:11.5px}
+.kanban{display:flex;gap:14px;overflow-x:auto;padding-bottom:8px}
+.kcol{flex:0 0 240px;background:var(--card2);border:1px solid var(--border);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:10px}
+.kcol .kh{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;font-weight:700}
+.kcol .kh .cnt{background:var(--border2);color:var(--muted);border-radius:999px;padding:1px 8px;font-size:11px;font-weight:700}
+.kcard{background:var(--solid);border:1px solid var(--border);border-radius:12px;padding:11px;box-shadow:var(--shadow-sm);cursor:grab}
+.kcard .kt{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.kcard .kt b{font-size:12.5px;font-weight:600}
+.kcard .kt small{color:var(--muted);font-size:11px}
+.kcard .meta{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+.kcard .due{font-size:11px;color:var(--muted)}
+.client-card{display:flex;flex-direction:column;gap:13px}
+.client-card .ch{display:flex;align-items:center;gap:12px}
+.client-card .ch .nm b{font-size:14.5px;font-weight:700;display:block}
+.client-card .ch .nm small{color:var(--muted)}
+.cstat{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.cstat div small{display:block;color:var(--muted);font-size:11px}
+.cstat div b{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}
+.budget small{display:flex;justify-content:space-between;color:var(--muted);font-size:11.5px;margin-bottom:5px}
+.gantt{overflow-x:auto}
+.gantt .ghead{display:grid;grid-template-columns:190px 1fr;border-bottom:1px solid var(--border);padding-bottom:8px;margin-bottom:6px}
+.gantt .months{display:grid;grid-template-columns:repeat(6,1fr);font-size:10.5px;color:var(--muted2);font-weight:600;text-transform:uppercase}
+.grow{display:grid;grid-template-columns:190px 1fr;align-items:center;padding:9px 0;border-bottom:1px solid var(--border2)}
+.grow:last-child{border:none}
+.grow .glab b{font-size:12.5px;font-weight:600;display:block}
+.grow .glab small{color:var(--muted);font-size:11px}
+.gtrack{position:relative;height:26px}
+.gridlines{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);pointer-events:none}
+.gridlines span{border-left:1px dashed var(--border2)}
+.gbar{position:absolute;top:5px;height:16px;border-radius:8px;display:flex;align-items:center;padding:0 8px;font-size:10.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;box-shadow:var(--shadow-sm)}
+.gmile{position:absolute;top:3px;width:11px;height:11px;background:var(--accent);border:2px solid var(--solid);transform:rotate(45deg) translateX(-50%);box-shadow:var(--shadow-sm);z-index:2}
+.today{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--accent-deep);z-index:3}
+.today b{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:800;color:var(--accent-ink);background:var(--accent);padding:1px 5px;border-radius:5px;white-space:nowrap}
+.row-flex{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.legend i{width:9px;height:9px;border-radius:3px;display:inline-block}
+.btn{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:var(--accent-ink);border:none;border-radius:10px;
+  padding:8px 14px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;box-shadow:var(--shadow-sm)}
+.btn.ghost{background:var(--solid);color:var(--ink);border:1px solid var(--border)}
+.btn svg{width:15px;height:15px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+.matrix td,.matrix th{font-size:12px}
+.matrix .yes{color:var(--green);font-weight:700}
+.matrix .no{color:var(--muted2)}
+.matrix .part{color:var(--amber);font-weight:700}
+.note{font-size:12px;color:var(--muted);background:var(--border2);border-radius:10px;padding:11px 13px}
+.banner{display:flex;align-items:center;gap:10px;background:color-mix(in srgb,var(--accent) 18%,transparent);border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);
+  color:var(--ink);border-radius:12px;padding:11px 14px;font-size:12.5px;margin-bottom:16px}
+.banner svg{width:18px;height:18px;color:var(--accent-deep);flex:none}
+.ver{display:inline-grid;place-items:center;width:14px;height:14px;border-radius:50%;background:var(--blue);color:#fff;font-size:9px;font-weight:800;flex:none}
+@media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.cols-2,.cols-3,.cols-2b{grid-template-columns:1fr}}
+@media(max-width:900px){
+  .app{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;overflow-x:auto}
+  .sidebar .nav-label,.side-foot{display:none}.nav{display:flex;gap:4px;flex-wrap:wrap}
+  .nav a{padding:7px 9px}.nav a span{display:none}
+  .search{display:none}
+}
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">WI</div>
+      <div><b>Wonderful Indonesia</b><span data-i18n="brand_sub">KOL Program 2026</span></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <div class="avatar" style="background:linear-gradient(140deg,#2563EB,#4F46E5)">EO</div>
+      <div><b style="font-size:12.5px">PT. EORI Kreatif</b><br><small data-i18n="role_am">Agency · Kemenpar RI</small></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <h1 class="page-title" id="pgTitle">Overview</h1>
+        <div class="page-sub" id="pgSub" data-i18n="sub_overview">Program pulse across all source markets</div>
+      </div>
+      <div class="spacer"></div>
+      <label class="ctrl search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input id="search" placeholder="Search…" data-i18n-ph="search_ph" oninput="onSearch(this.value)"/>
+      </label>
+      <select class="ctrl" id="clientFilter" onchange="onMarket(this.value)"></select>
+      <select class="ctrl" id="rangeFilter">
+        <option data-i18n="r_30">Full program</option>
+        <option data-i18n="r_q">This quarter</option>
+        <option data-i18n="r_y">This month</option>
+      </select>
+      <div class="seg" title="Language">
+        <button id="langEN" class="on" onclick="setLang('en')">EN</button>
+        <button id="langID" onclick="setLang('id')">ID</button>
+      </div>
+      <button class="icon-btn" title="Notifications"><span class="dot"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
+      <button class="icon-btn" id="themeBtn" title="Theme" onclick="toggleTheme()">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+    </header>
+
+    <div class="content">
+      <section id="s-overview" class="section show"></section>
+      <section id="s-kols" class="section"></section>
+      <section id="s-briefs" class="section"></section>
+      <section id="s-posting" class="section"></section>
+      <section id="s-reports" class="section"></section>
+      <section id="s-clients" class="section"></section>
+      <section id="s-timeline" class="section"></section>
+      <section id="s-settings" class="section"></section>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ i18n ============ */
+const T={
+  brand_sub:["KOL Program 2026","Program KOL 2026"], role_am:["Agency · Kemenpar RI","Agensi · Kemenpar RI"],
+  search_ph:["Search KOLs, country, niche…","Cari KOL, negara, niche…"],
+  r_30:["Full program","Program penuh"], r_q:["This quarter","Kuartal ini"], r_y:["This month","Bulan ini"],
+  nav_overview:["Overview","Ringkasan"], nav_kols:["KOL Monitoring List","Daftar Pantauan KOL"],
+  nav_briefs:["KOL Brief","Brief KOL"], nav_posting:["KOL Posting","Posting KOL"],
+  nav_reports:["KOL Report","Laporan KOL"], nav_clients:["Market Monitoring","Pantauan Pasar"],
+  nav_timeline:["Timeline","Timeline"], nav_settings:["Settings","Pengaturan"],
+  grp_main:["Program","Program"], grp_kol:["KOL Operations","Operasi KOL"], grp_acc:["Markets & Plan","Pasar & Rencana"],
+  sub_overview:["Program pulse across all source markets","Denyut program di semua pasar sumber"],
+  sub_kols:["Master KOL database · Wonderful Indonesia 2026","Database KOL utama · Wonderful Indonesia 2026"],
+  sub_briefs:["Familiarization-trip briefs by market","Brief fam-trip per pasar"],
+  sub_posting:["Recruitment & activation pipeline","Pipeline rekrutmen & aktivasi"],
+  sub_reports:["Projected reach & program forecast","Proyeksi jangkauan & perkiraan program"],
+  sub_clients:["Source-market portfolios","Portofolio pasar sumber"],
+  sub_timeline:["Program master schedule · Jun–Nov 2026","Jadwal induk program · Jun–Nov 2026"],
+  sub_settings:["Roles, tiers & benchmarks","Peran, tier & tolok ukur"],
+  k_db:["KOLs in database","KOL di database"], k_markets:["Source markets","Pasar sumber"],
+  k_potreach:["Potential reach","Jangkauan potensial"], k_er:["Avg engagement rate","Rata-rata ER"],
+  k_contacted:["In outreach","Dalam outreach"], k_confirmed:["Confirmed","Terkonfirmasi"],
+  k_projeng:["Projected engagements","Proyeksi interaksi"], k_projemv:["Projected EMV","Proyeksi EMV"],
+  k_approved:["Approved by Kemenpar","Disetujui Kemenpar"], k_reach:["Reach","Jangkauan"],
+  c_reachmkt:["Potential reach by market","Jangkauan potensial per pasar"],
+  c_tier:["Tier mix","Komposisi tier"], c_plat:["By platform","Per platform"],
+  c_top:["Top KOLs by reach","KOL teratas (jangkauan)"], c_top_h:["Instagram followers","Pengikut Instagram"],
+  c_pipe:["Recruitment pipeline","Pipeline rekrutmen"], c_pipe_h:["KOLs by stage","KOL per tahap"],
+  c_dl:["Upcoming milestones","Milestone mendatang"], c_lang:["Content language","Bahasa konten"],
+  c_health:["Market readiness","Kesiapan pasar"], c_country:["KOLs by market","KOL per pasar"],
+  c_topposts:["Top KOLs by projected engagement","KOL teratas (proyeksi interaksi)"],
+  c_brieffunnel:["Brief funnel","Funnel brief"],
+  th_kol:["KOL","KOL"], th_country:["Country","Negara"], th_plat:["Platforms","Platform"], th_tier:["Tier","Tier"],
+  th_niche:["Niche","Niche"], th_lang:["Lang","Bahasa"], th_followers:["Followers","Pengikut"], th_er:["ER","ER"],
+  th_status:["Pipeline","Pipeline"], th_approval:["Kemenpar","Kemenpar"], th_contact:["Contact","Kontak"],
+  th_brief:["Brief","Brief"], th_market:["Market","Pasar"], th_trip:["Trip","Trip"], th_obj:["Objective","Tujuan"],
+  th_kols:["KOLs","KOL"], th_due:["Due","Tenggat"], th_role:["Role","Peran"],
+  b_add:["Add KOL","Tambah KOL"], b_import:["Import CSV","Impor CSV"], b_newbrief:["New brief","Brief baru"],
+  b_export:["Export report","Ekspor laporan"], view_table:["Table","Tabel"], view_grid:["Grid","Grid"],
+  f_all_plat:["All platforms","Semua platform"], f_all_tier:["All tiers","Semua tier"],
+  f_all_status:["All stages","Semua tahap"], f_all_niche:["All niches","Semua niche"],
+  engaged:["KOLs","KOL"], readiness:["Pipeline progress","Progres pipeline"],
+  approvals_me:["Awaiting Kemenpar approval","Menunggu persetujuan Kemenpar"],
+  all_clients:["All markets","Semua pasar"], today:["TODAY","HARI INI"], pending:["Pending","Menunggu"], approvedw:["Approved","Disetujui"],
+  perm_matrix:["Permissions matrix","Matriks izin"], emv_title:["EMV benchmarks (per action)","Tolok ukur EMV (per aksi)"],
+  emv_note:["Earned Media Value is computed as Σ(action × benchmark). International travel content uses premium benchmarks; adjust per platform.","EMV dihitung sebagai Σ(aksi × tolok ukur). Konten travel internasional memakai tolok ukur premium; sesuaikan per platform."],
+  tiers_title:["KOL tiers","Tier KOL"], proj_note:["Projections based on current roster followers × engagement rate. Actuals will populate after content go-live (Oct–Nov 2026).","Proyeksi berdasarkan pengikut roster × engagement rate. Data aktual akan terisi setelah konten tayang (Okt–Nov 2026)."],
+  brief_wf:["Approved briefs auto-generate fam-trip itineraries & posting tasks per confirmed KOL.","Brief yang disetujui otomatis membuat itinerary fam-trip & tugas posting per KOL terkonfirmasi."],
+  destination:["Destination · Labuan Bajo","Destinasi · Labuan Bajo"],
+};
+let lang="en";
+function t(k){const e=T[k];return e?e[lang==="en"?0:1]:k;}
+
+/* ============ status defs ============ */
+const ST={
+  identified:{en:"Identified",id:"Teridentifikasi",c:"--slate"}, contacted:{en:"Contacted",id:"Dihubungi",c:"--blue"},
+  replied:{en:"Replied",id:"Membalas",c:"--indigo"}, negotiating:{en:"Negotiating",id:"Negosiasi",c:"--amber"},
+  confirmed:{en:"Confirmed",id:"Terkonfirmasi",c:"--teal"}, ontrip:{en:"On Trip",id:"Sedang Trip",c:"--emerald"},
+  posted:{en:"Posted",id:"Telah Posting",c:"--green"},
+  "on-track":{en:"On-track",id:"Sesuai Jadwal",c:"--green"}, "at-risk":{en:"In progress",id:"Berjalan",c:"--amber"},
+  delayed:{en:"Not started",id:"Belum mulai",c:"--slate"},
+  draft:{en:"Draft",id:"Draf",c:"--slate"}, sent:{en:"Sent",id:"Dikirim",c:"--blue"},
+  acknowledged:{en:"Acknowledged",id:"Dikonfirmasi",c:"--indigo"}, revision:{en:"Revision",id:"Revisi",c:"--amber"},
+  approved:{en:"Approved",id:"Disetujui",c:"--green"},
+  awareness:{en:"Awareness",id:"Kesadaran",c:"--blue"}, consideration:{en:"Consideration",id:"Pertimbangan",c:"--indigo"},
+  conversion:{en:"Conversion",id:"Konversi",c:"--emerald"},
+};
+function sName(k){const s=ST[k];return s?(lang==="en"?s.en:s.id):k;}
+function sColor(k){const s=ST[k];return s?`var(${s.c})`:"var(--slate)";}
+function chip(k){const col=sColor(k);return `<span class="chip" style="color:${col};background:color-mix(in srgb, ${col} 14%, transparent)"><span class="pdot" style="background:${col}"></span>${sName(k)}</span>`;}
+
+/* ============ refs ============ */
+const PLAT={ig:{n:"IG",c:"#E1306C"},tiktok:{n:"TT",c:"#111"},youtube:{n:"YT",c:"#FF0000"},x:{n:"X",c:"#1D9BF0"},fb:{n:"FB",c:"#1877F2"}};
+const TIER={nano:{en:"Nano",id:"Nano",c:"#64748B"},micro:{en:"Micro",id:"Mikro",c:"#0D9488"},mid:{en:"Mid",id:"Menengah",c:"#2563EB"},macro:{en:"Macro",id:"Makro",c:"#4F46E5"},mega:{en:"Mega",id:"Mega",c:"#DC2626"}};
+const tierName=k=>lang==="en"?TIER[k].en:TIER[k].id;
+const LANG={EN:{en:"English",id:"Inggris",c:"#2563EB"},MS:{en:"Malay",id:"Melayu",c:"#0D9488"},KR:{en:"Korean",id:"Korea",c:"#1E40AF"},JP:{en:"Japanese",id:"Jepang",c:"#DC2626"}};
+
+const markets=[
+  {id:"my",name:"Malaysia",ini:"MY",flag:"🇲🇾",col:"#D21034"},
+  {id:"sg",name:"Singapore",ini:"SG",flag:"🇸🇬",col:"#0EA5E9"},
+  {id:"in",name:"India",ini:"IN",flag:"🇮🇳",col:"#F59E0B"},
+  {id:"kr",name:"South Korea",ini:"KR",flag:"🇰🇷",col:"#1E40AF"},
+  {id:"jp",name:"Japan",ini:"JP",flag:"🇯🇵",col:"#DC2626"},
+  {id:"au",name:"Australia",ini:"AU",flag:"🇦🇺",col:"#0D9488"},
+];
+const MKT={}; markets.forEach(m=>MKT[m.id]=m);
+const marketName=id=>(MKT[id]||{}).name||"—";
+const mflag=id=>(MKT[id]||{}).flag||"";
+const mcol=id=>(MKT[id]||{}).col||"#64748B";
+
+/* ============ KOL roster — from Wonderful Indonesia KOL Master Database CSV ============ */
+const kols=[
+  {id:"k1",name:"Fikri Zamri",h:"@fikri_zamri",ini:"FZ",market:"my",plat:["ig","tiktok","youtube"],tier:"micro",niche:"Adventure",lang:"EN",fol:85602,folTT:206900,er:1.16,ver:1,email:"contact@fikrizamri.com",stage:"contacted"},
+  {id:"k2",name:"Thomas Goh",h:"@gottagoh",ini:"TG",market:"sg",plat:["ig","youtube"],tier:"mid",niche:"Adventure",lang:"EN",fol:110216,folTT:0,er:1.54,ver:1,email:"thomasgoh.pm@gmail.com",stage:"replied"},
+  {id:"k3",name:"Ankita Kumar",h:"@monkey.inc",ini:"AK",market:"in",plat:["ig"],tier:"macro",niche:"Adventure",lang:"EN",fol:608986,folTT:0,er:2.44,ver:1,email:"themonkeyinc@gmail.com",stage:"negotiating"},
+  {id:"k4",name:"Seosum",h:"@seosum",ini:"SE",market:"kr",plat:["ig"],tier:"mid",niche:"Adventure",lang:"KR",fol:333084,folTT:0,er:5.31,ver:1,email:"seosumwork@gmail.com",stage:"confirmed"},
+  {id:"k5",name:"Shiho",h:"@shiho_zekkei",ini:"SH",market:"jp",plat:["ig","tiktok","youtube"],tier:"mid",niche:"Adventure",lang:"JP",fol:202125,folTT:477200,er:1.30,ver:1,email:"contact@zekkei-project.com",stage:"contacted"},
+  {id:"k6",name:"Kendall Baggerly",h:"@kendallbaggerly",ini:"KB",market:"au",plat:["ig","tiktok","youtube"],tier:"mid",niche:"Adventure",lang:"EN",fol:134058,folTT:268000,er:4.06,ver:0,email:"Kendall@thetalentsociety.com.au",stage:"replied"},
+  {id:"k7",name:"Azlan Andi",h:"@azlanandi",ini:"AA",market:"my",plat:["ig"],tier:"mid",niche:"Adventure",lang:"MS",fol:122407,folTT:0,er:0.53,ver:0,email:"WhatsApp",stage:"identified"},
+  {id:"k8",name:"Aereon Wong",h:"@aereonwong",ini:"AW",market:"my",plat:["ig"],tier:"micro",niche:"Adventure",lang:"EN",fol:51704,folTT:0,er:0.65,ver:0,email:"DM",stage:"identified"},
+  {id:"k9",name:"M. Shahril Fawzy",h:"@pojiegraphy",ini:"PG",market:"my",plat:["ig","tiktok","youtube"],tier:"micro",niche:"Adventure",lang:"EN",fol:43624,folTT:25600,er:2.50,ver:0,email:"hello@pojiegraphy.com",stage:"identified"},
+  {id:"k10",name:"Atasha A.",h:"@tachichosz",ini:"AT",market:"my",plat:["ig"],tier:"micro",niche:"Adventure",lang:"EN",fol:68092,folTT:0,er:50.59,ver:0,email:"hello@tachichosz.com",stage:"identified"},
+  {id:"k11",name:"Viv Tan Wei Wen",h:"@travelvivme",ini:"VT",market:"my",plat:["ig","tiktok"],tier:"micro",niche:"Adventure",lang:"EN",fol:21061,folTT:1671,er:5.01,ver:0,email:"gotosocialgal@gmail.com",stage:"identified"},
+  {id:"k12",name:"Ian Iskandar",h:"@azmeeriskndr",ini:"II",market:"my",plat:["ig"],tier:"micro",niche:"Adventure",lang:"EN",fol:70240,folTT:0,er:1.38,ver:0,email:"—",stage:"identified"},
+  {id:"k13",name:"Chelsea Yap",h:"@offbeatsingaporean",ini:"CY",market:"sg",plat:["ig"],tier:"micro",niche:"Adventure",lang:"EN",fol:24692,folTT:0,er:6.13,ver:0,email:"hello@offbeatsingaporean.com",stage:"identified"},
+  {id:"k14",name:"Marcus & Chelsey",h:"@voyagewithmc",ini:"MC",market:"sg",plat:["ig","youtube"],tier:"mid",niche:"Adventure",lang:"EN",fol:309247,folTT:0,er:0.46,ver:0,email:"hello@voyagewithmc.com",stage:"contacted"},
+  {id:"k15",name:"Marilyn & JS",h:"@shrugmyshoulder",ini:"MJ",market:"sg",plat:["ig","tiktok","youtube"],tier:"micro",niche:"Adventure",lang:"EN",fol:55653,folTT:29100,er:0.29,ver:0,email:"shrugmyshoulder@gmail.com",stage:"identified"},
+  {id:"k16",name:"Amelyn Beverly",h:"@amebeverly",ini:"AB",market:"sg",plat:["ig"],tier:"mid",niche:"Adventure",lang:"EN",fol:159824,folTT:0,er:1.71,ver:0,email:"hello@amebeverly.com",stage:"identified"},
+  {id:"k17",name:"Aiken Chia",h:"@aikenchia",ini:"AC",market:"sg",plat:["ig","youtube"],tier:"mid",niche:"Gastronomy",lang:"EN",fol:170878,folTT:0,er:0.59,ver:0,email:"aikenmatthewchia@gmail.com",stage:"identified"},
+  {id:"k18",name:"Kritika Goel",h:"@kritika_goel",ini:"KG",market:"in",plat:["ig","youtube"],tier:"mid",niche:"Adventure",lang:"EN",fol:180590,folTT:0,er:0.23,ver:0,email:"business@kritikagoel.com",stage:"identified"},
+  {id:"k19",name:"Preethi",h:"@peppytravelgirl",ini:"PR",market:"in",plat:["ig","youtube"],tier:"mid",niche:"Adventure",lang:"EN",fol:204185,folTT:0,er:3.71,ver:0,email:"peppy.traveling@gmail.com",stage:"contacted"},
+  {id:"k20",name:"Sharanya Iyer",h:"@trulynomadly",ini:"SI",market:"in",plat:["ig"],tier:"macro",niche:"Adventure",lang:"EN",fol:523139,folTT:0,er:2.04,ver:0,email:"trulynomadly@oml.in",stage:"negotiating"},
+  {id:"k21",name:"Rachita Saxena",h:"@meanderandwander",ini:"RS",market:"in",plat:["ig"],tier:"micro",niche:"Adventure",lang:"EN",fol:42846,folTT:0,er:0.48,ver:0,email:"—",stage:"identified"},
+  {id:"k22",name:"Purva Joshi",h:"@purvajoshiii",ini:"PJ",market:"in",plat:["ig"],tier:"mid",niche:"Adventure",lang:"EN",fol:111379,folTT:0,er:2.03,ver:0,email:"purva@create.wtf",stage:"identified"},
+  {id:"k23",name:"Mohnish Doultani",h:"@mohnishdoultani",ini:"MD",market:"in",plat:["ig"],tier:"mid",niche:"Adventure",lang:"EN",fol:290377,folTT:0,er:19.72,ver:0,email:"contact@mohnishdoultani.com",stage:"negotiating"},
+  {id:"k24",name:"Ko Hyojoo",h:"@hyo_joo",ini:"KH",market:"kr",plat:["ig"],tier:"macro",niche:"Adventure",lang:"KR",fol:514856,folTT:0,er:0.48,ver:0,email:"rgsg.hyojoo@gmail.com",stage:"contacted"},
+  {id:"k25",name:"Juyeon",h:"@ju_ulip",ini:"JU",market:"kr",plat:["ig"],tier:"mid",niche:"Adventure",lang:"KR",fol:125323,folTT:0,er:0.52,ver:0,email:"hellojy12@naver.com",stage:"identified"},
+  {id:"k26",name:"Pilsung Lee",h:"@pillter_",ini:"PL",market:"kr",plat:["ig"],tier:"mid",niche:"Adventure",lang:"KR",fol:331541,folTT:0,er:1.65,ver:0,email:"pillter_@naver.com",stage:"identified"},
+  {id:"k27",name:"Alice",h:"@travelaaalice",ini:"AL",market:"kr",plat:["ig"],tier:"micro",niche:"Adventure",lang:"KR",fol:94884,folTT:0,er:0.68,ver:0,email:"koyto21@gmail.com",stage:"identified"},
+  {id:"k28",name:"Kim Dew",h:"@dewlog_",ini:"KD",market:"kr",plat:["ig"],tier:"micro",niche:"Adventure",lang:"KR",fol:47351,folTT:0,er:1.66,ver:0,email:"kimdew1@naver.com",stage:"identified"},
+  {id:"k29",name:"Yuka",h:"@yuka.lifetime.traveler",ini:"YU",market:"jp",plat:["ig","tiktok"],tier:"mid",niche:"Adventure",lang:"JP",fol:143074,folTT:4079,er:12.81,ver:0,email:"info.yukalifetimetraveler@gmail.com",stage:"confirmed"},
+  {id:"k30",name:"Hitomi",h:"@pito_820",ini:"HI",market:"jp",plat:["ig","tiktok","youtube"],tier:"mid",niche:"Adventure",lang:"JP",fol:146125,folTT:202800,er:1.01,ver:0,email:"hitomijp333@gmail.com",stage:"contacted"},
+  {id:"k31",name:"Shumpei",h:"@_shunpei_1118",ini:"SP",market:"jp",plat:["ig","tiktok"],tier:"micro",niche:"Adventure",lang:"JP",fol:46674,folTT:40300,er:2.72,ver:0,email:"—",stage:"identified"},
+  {id:"k32",name:"Eiki Akiyama",h:"@eiki_akiyama",ini:"EA",market:"jp",plat:["ig"],tier:"micro",niche:"Adventure",lang:"JP",fol:27424,folTT:0,er:82.96,ver:0,email:"eiki@lilspark.tokyo",stage:"identified"},
+  {id:"k33",name:"Mitsu",h:"@mitsu_travel777",ini:"MI",market:"jp",plat:["ig"],tier:"micro",niche:"Adventure",lang:"JP",fol:35782,folTT:0,er:2.95,ver:0,email:"—",stage:"identified"},
+  {id:"k34",name:"Mark Fitz",h:"@_markfitz",ini:"MF",market:"au",plat:["ig","youtube"],tier:"mid",niche:"Adventure",lang:"EN",fol:105180,folTT:0,er:0.95,ver:0,email:"—",stage:"identified"},
+  {id:"k35",name:"Katrina & Erol",h:"@thetravellingkangaroos",ini:"KE",market:"au",plat:["ig"],tier:"mid",niche:"Adventure",lang:"EN",fol:205412,folTT:0,er:0.14,ver:0,email:"thetravellingkangaroos@gmail.com",stage:"identified"},
+  {id:"k36",name:"Chester See",h:"@seeshots",ini:"CS",market:"au",plat:["ig","tiktok","youtube"],tier:"mid",niche:"Gastronomy",lang:"EN",fol:199925,folTT:35900,er:0.89,ver:0,email:"Seeshots.au@gmail.com",stage:"replied"},
+  {id:"k37",name:"Adriana Maria",h:"@adriana_maria_",ini:"AM",market:"au",plat:["ig"],tier:"mid",niche:"Adventure",lang:"EN",fol:342898,folTT:0,er:0.98,ver:0,email:"hello@adriana-maria.com",stage:"contacted"},
+  {id:"k38",name:"Lola Hubner",h:"@lolahubner",ini:"LH",market:"au",plat:["ig"],tier:"mid",niche:"Adventure",lang:"EN",fol:271760,folTT:0,er:3.74,ver:0,email:"info@lolahubner.com",stage:"negotiating"},
+];
+const isApproved=k=>["confirmed","ontrip","posted"].includes(k.stage);
+const inOutreach=k=>k.stage!=="identified";
+
+const briefs=[
+  {id:"b1",title:"Labuan Bajo Fam Trip — Wave 1",market:"my",obj:"awareness",kols:7,status:"approved",due:"07-15"},
+  {id:"b2",title:"Labuan Bajo Fam Trip — Wave 1",market:"sg",obj:"awareness",kols:6,status:"sent",due:"07-20"},
+  {id:"b3",title:"Labuan Bajo Fam Trip — Wave 2",market:"in",obj:"consideration",kols:7,status:"acknowledged",due:"08-05"},
+  {id:"b4",title:"Labuan Bajo Fam Trip — Wave 2",market:"kr",obj:"awareness",kols:6,status:"draft",due:"08-20"},
+  {id:"b5",title:"Labuan Bajo Fam Trip — Wave 3",market:"jp",obj:"awareness",kols:6,status:"revision",due:"09-01"},
+  {id:"b6",title:"Labuan Bajo Fam Trip — Wave 3",market:"au",obj:"consideration",kols:6,status:"sent",due:"09-15"},
+];
+
+const tlrows=[
+  {name:["Identification & Longlisting","Identifikasi & Longlist"],col:"#64748B",start:"06-01",end:"06-30",miles:["06-30"]},
+  {name:["Outreach & Negotiation","Outreach & Negosiasi"],col:"#2563EB",start:"07-01",end:"08-20",miles:["07-15","08-20"]},
+  {name:["Kemenpar Approval","Persetujuan Kemenpar"],col:"#F59E0B",start:"08-10",end:"08-31",miles:["08-31"]},
+  {name:["Fam Trips · Labuan Bajo","Fam Trip · Labuan Bajo"],col:"#0D9488",start:"09-05",end:"10-25",miles:["09-05","10-25"]},
+  {name:["Content Go-Live","Konten Tayang"],col:"#16A34A",start:"10-10",end:"11-20",miles:["10-10","11-20"]},
+  {name:["Reporting & Wrap-up","Pelaporan & Penutup"],col:"#4F46E5",start:"11-15",end:"11-30",miles:["11-30"]},
+];
+
+/* ============ format ============ */
+const nf=new Intl.NumberFormat("id-ID");
+function fInt(n){return nf.format(Math.round(n));}
+function fFol(n){return n>=1e6?(n/1e6).toFixed(1).replace(".0","")+"M":n>=1e3?Math.round(n/1e3)+"K":""+Math.round(n);}
+function fIDR(n){if(n>=1e9)return "Rp "+(n/1e9).toFixed(1).replace(".",",")+" M";if(n>=1e6)return "Rp "+Math.round(n/1e6)+" jt";return "Rp "+fInt(n);}
+const EMV_RATE=15000; // IDR per engagement (premium intl travel)
+const projEng=k=>k.fol*k.er/100;
+
+/* ============ state ============ */
+let state={section:"overview",market:"all",q:""};
+function fc(arr){return state.market==="all"?arr:arr.filter(x=>x.market===state.market);}
+
+/* ============ charts ============ */
+function svgLine(vals,labels,id){
+  const w=560,h=200,p={t:16,r:16,b:28,l:42},iw=w-p.l-p.r,ih=h-p.t-p.b;
+  const max=Math.max(...vals)*1.12||1;
+  const X=i=>p.l+iw*(i/(vals.length-1)),Y=v=>p.t+ih*(1-v/max);
+  let line="";vals.forEach((v,i)=>{line+=(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)+" ";});
+  const area=line+`L ${X(vals.length-1).toFixed(1)} ${(p.t+ih).toFixed(1)} L ${p.l} ${(p.t+ih).toFixed(1)} Z`;
+  let grid="",ylab="";
+  for(let g=0;g<=3;g++){const yy=p.t+ih*g/3;grid+=`<line x1="${p.l}" y1="${yy}" x2="${w-p.r}" y2="${yy}" stroke="var(--border2)"/>`;
+    ylab+=`<text x="${p.l-8}" y="${yy+3}" text-anchor="end" font-size="9.5" fill="var(--muted2)">${fFol(max*(1-g/3))}</text>`;}
+  let xlab="";labels.forEach((l,i)=>xlab+=`<text x="${X(i)}" y="${h-8}" text-anchor="middle" font-size="9.5" fill="var(--muted2)">${l}</text>`);
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="display:block"><defs><linearGradient id="g${id}" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="var(--accent)" stop-opacity=".45"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+    ${grid}${ylab}<path d="${area}" fill="url(#g${id})"/><path d="${line}" fill="none" stroke="var(--accent-deep)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="${X(vals.length-1)}" cy="${Y(vals[vals.length-1])}" r="4" fill="var(--accent-deep)" stroke="var(--solid)" stroke-width="2"/>${xlab}</svg>`;
+}
+function svgBars(items){
+  const max=Math.max(...items.map(i=>i.value))||1;
+  return `<div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">`+items.map(it=>`
+    <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+      <span style="font-weight:600">${it.label}</span><span class="num muted">${it.disp!==undefined?it.disp:fInt(it.value)}</span></div>
+      <div class="bar-mini" style="height:9px"><span style="width:${(it.value/max*100).toFixed(1)}%;background:${it.color||'linear-gradient(90deg,var(--accent),var(--accent-deep))'}"></span></div></div>`).join("")+`</div>`;
+}
+function svgDonut(segs,centerTop,centerBot){
+  const r=52,c=2*Math.PI*r,cx=70,cy=70;let off=0,total=segs.reduce((a,s)=>a+s.value,0)||1;
+  let circ=segs.map(s=>{const len=c*s.value/total;const el=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${s.color}" stroke-width="16" stroke-dasharray="${len.toFixed(2)} ${(c-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;off+=len;return el;}).join("");
+  return `<div style="display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+    <svg viewBox="0 0 140 140" width="130" height="130" style="flex:none">${circ}
+      <text x="${cx}" y="${cy-2}" text-anchor="middle" font-size="22" font-weight="800" fill="var(--ink)">${centerTop}</text>
+      <text x="${cx}" y="${cy+15}" text-anchor="middle" font-size="10" fill="var(--muted)">${centerBot}</text></svg>
+    <div class="legend" style="flex-direction:column;gap:8px">${segs.map(s=>`<span><i style="background:${s.color}"></i>${s.label} · <b style="color:var(--ink)">${s.value}</b></span>`).join("")}</div></div>`;
+}
+function sparkline(vals,col){
+  const w=90,h=28,max=Math.max(...vals),min=Math.min(...vals);
+  const X=i=>i/(vals.length-1)*w,Y=v=>h-2-((v-min)/((max-min)||1))*(h-4);
+  let d="";vals.forEach((v,i)=>d+=(i?"L":"M")+X(i).toFixed(1)+" "+Y(v).toFixed(1)+" ");
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}"><path d="${d}" fill="none" stroke="${col||'var(--accent-deep)'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+/* ============ builders ============ */
+function platChips(arr){return `<span class="plat">`+arr.map(p=>`<span class="pf" title="${p}" style="background:${PLAT[p].c}">${PLAT[p].n}</span>`).join("")+`</span>`;}
+function tierChip(k){return `<span class="tier" style="background:${TIER[k].c}">${tierName(k)}</span>`;}
+function avatar(ini,col,sz){sz=sz||32;return `<span class="avatar" style="width:${sz}px;height:${sz}px;font-size:${sz*0.36}px;background:linear-gradient(140deg,${col},${col}cc)">${ini}</span>`;}
+function delta(v){const up=v>=0;return `<span class="delta ${up?'up':'down'}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="${up?'M6 15l6-6 6 6':'M6 9l6 6 6-6'}"/></svg>${Math.abs(v)}%</span>`;}
+function kpi(lab,val,d,spark,icon){return `<div class="card kpi"><div class="top"><span class="lab">${lab}</span><span class="ic">${ICON[icon]||""}</span></div>
+  <div class="val">${val}</div><div class="top"><span>${delta(d)}</span>${sparkline(spark)}</div></div>`;}
+
+/* ============ icons ============ */
+const ICON={
+  overview:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>',
+  kols:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="17.5" cy="9" r="2.6"/><path d="M16 14.5a4.5 4.5 0 0 1 5 4.5"/></svg>',
+  briefs:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>',
+  posting:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="5" height="16" rx="1.3"/><rect x="10" y="4" width="5" height="11" rx="1.3"/><rect x="17" y="4" width="4" height="14" rx="1.3"/></svg>',
+  reports:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>',
+  clients:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 6 3.8 9S14.5 18.5 12 21M12 3C9.5 5.5 8.2 9 8.2 12S9.5 18.5 12 21"/></svg>',
+  timeline:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
+  settings:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.3l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2.2-1.3L14 1h-4l-.4 2.5a7 7 0 0 0-2.2 1.3l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12a7 7 0 0 0 .1 1.3l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2.2 1.3L10 23h4l.4-2.5a7 7 0 0 0 2.2-1.3l2.3 1 2-3.4-2-1.5A7 7 0 0 0 19 12z"/></svg>',
+  reach:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/></svg>',
+  er:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 8.5c0-2-1.6-3.5-3.6-3.5-1.4 0-2.6.8-3.4 2-0.8-1.2-2-2-3.4-2C7.6 5 6 6.5 6 8.5c0 4 6 8.5 7 8.5s7-4.5 7-8.5z"/></svg>',
+  emv:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.5 5 5.5.8-4 3.9 1 5.5L12 20l-5 2.7 1-5.5-4-3.9 5.5-.8z"/></svg>',
+  flag:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 21V4M5 4h11l-1.5 3.5L16 11H5"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>',
+  pipe:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M6 8.5V14a4 4 0 0 0 4 4h5.5"/></svg>',
+  hand:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2 5 4-12 2 7h6"/></svg>',
+};
+
+/* ============ NAV ============ */
+const NAV=[["grp_main",[["overview","overview"]]],
+  ["grp_kol",[["kols","kols"],["briefs","briefs"],["posting","posting"],["reports","reports"]]],
+  ["grp_acc",[["clients","clients"],["timeline","timeline"],["settings","settings"]]]];
+function buildNav(){
+  let h="";
+  NAV.forEach(([grp,items])=>{h+=`<div class="nav-label" data-i18n="${grp}">${t(grp)}</div>`;
+    items.forEach(([id,icon])=>{const badge=id==="kols"?`<span class="badge">${kols.length}</span>`:id==="posting"?`<span class="badge">${kols.filter(inOutreach).length}</span>`:"";
+      h+=`<a data-sec="${id}" onclick="go('${id}')"><span style="display:flex">${ICON[icon]}</span><span data-i18n="nav_${id}">${t("nav_"+id)}</span>${badge}</a>`;});});
+  document.getElementById("nav").innerHTML=h;setActive();
+}
+function setActive(){document.querySelectorAll(".nav a").forEach(a=>a.classList.toggle("active",a.dataset.sec===state.section));}
+
+/* ============ Overview ============ */
+function rOverview(){
+  const list=fc(kols);
+  const nMarkets=state.market==="all"?markets.length:1;
+  const reach=list.reduce((a,k)=>a+k.fol,0);
+  const eng=list.reduce((a,k)=>a+projEng(k),0);
+  const aer=(list.reduce((a,k)=>a+k.er,0)/(list.length||1)).toFixed(1);
+  const outreach=list.filter(inOutreach).length;
+  const confirmed=list.filter(isApproved).length;
+  const emv=eng*EMV_RATE;
+  const k=`<div class="grid kpis">
+    ${kpi(t("k_db"),list.length,8,[20,26,30,33,36,38,list.length],"kols")}
+    ${kpi(t("k_markets"),nMarkets,0,[6,6,6,6,6,6,nMarkets],"clients")}
+    ${kpi(t("k_potreach"),fFol(reach),15,[18,22,26,30,34,38,42],"reach")}
+    ${kpi(t("k_er"),aer+"%",4,[3,3.5,4,4.5,5,5.5,+aer],"er")}
+    ${kpi(t("k_contacted"),outreach,20,[2,4,6,8,11,14,outreach],"hand")}
+    ${kpi(t("k_confirmed"),confirmed,33,[0,0,1,1,1,2,confirmed],"check")}
+    ${kpi(t("k_projeng"),fFol(eng),18,[8,11,14,18,22,28,33],"er")}
+    ${kpi(t("k_projemv"),fIDR(emv),24,[8,11,14,18,22,28,33],"emv")}
+  </div>`;
+  const reachByMkt=svgBars((state.market==="all"?markets:markets.filter(m=>m.id===state.market)).map(m=>({label:m.flag+" "+m.name,value:kols.filter(x=>x.market===m.id).reduce((a,x)=>a+x.fol,0),color:m.col,disp:fFol(kols.filter(x=>x.market===m.id).reduce((a,x)=>a+x.fol,0))})).sort((a,b)=>b.value-a.value));
+  const tiers=["micro","mid","macro"];
+  const donut=svgDonut(tiers.map(tk=>({label:tierName(tk),value:list.filter(k=>k.tier===tk).length,color:TIER[tk].c})).filter(s=>s.value),list.length,lang==="en"?"KOLs":"KOL");
+  const topk=list.slice().sort((a,b)=>b.fol-a.fol).slice(0,5);
+  const lb=`<div class="lb">`+topk.map((x,i)=>`<div class="row"><span class="rank">${i+1}</span>${avatar(x.ini,mcol(x.market),30)}
+    <div class="meta"><b>${mflag(x.market)} ${x.name}</b><small>${tierName(x.tier)} · ${x.er}% ER</small></div><span class="v">${fFol(x.fol)}</span></div>`).join("")+`</div>`;
+  const stages=["identified","contacted","replied","negotiating","confirmed","ontrip","posted"];
+  const maxp=Math.max(...stages.map(s=>list.filter(k=>k.stage===s).length))||1;
+  const pipe=`<div class="pipe">`+stages.map(s=>{const n=list.filter(k=>k.stage===s).length;
+    return `<div class="pr"><small>${sName(s)}</small><div class="track"><span style="width:${n/maxp*100}%;background:${sColor(s)}"></span></div><b>${n}</b></div>`;}).join("")+`</div>`;
+  const langs=["EN","MS","KR","JP"];
+  const langBars=svgBars(langs.map(l=>({label:(lang==="en"?LANG[l].en:LANG[l].id),value:list.filter(k=>k.lang===l).length,color:LANG[l].c})).filter(s=>s.value));
+  const dls=[{d:"30",m:"Jun",t:"Longlist finalization",s:"All markets",c:"identified"},
+    {d:"15",m:"Jul",t:"Wave 1 outreach — MY & SG",s:"Outreach",c:"contacted"},
+    {d:"31",m:"Aug",t:"Kemenpar approval deadline",s:"Approval",c:"negotiating"},
+    {d:"05",m:"Sep",t:"Fam trip departs — Labuan Bajo",s:"Trip",c:"confirmed"}];
+  const dl=`<div class="dl">`+dls.map(x=>`<div class="row"><div class="when"><b>${x.d}</b><small>${x.m}</small></div>
+    <div class="meta"><b>${x.t}</b><small>${x.s}</small></div>${chip(x.c)}</div>`).join("")+`</div>`;
+  const readiness=`<div style="display:flex;flex-direction:column;gap:10px">`+(state.market==="all"?markets:markets.filter(m=>m.id===state.market)).map(m=>{
+    const ks=kols.filter(x=>x.market===m.id);const conf=ks.filter(isApproved).length;const out=ks.filter(inOutreach).length;
+    const health=conf>0?"on-track":out>0?"at-risk":"delayed";
+    return `<div class="row-flex" style="justify-content:space-between"><div class="row-flex"><span style="font-size:18px">${m.flag}</span><b style="font-size:13px">${m.name}</b><small class="muted">${ks.length} ${t("engaged")}</small></div>${chip(health)}</div>`;}).join("")+`</div>`;
+
+  document.getElementById("s-overview").innerHTML=k+
+    `<div class="grid cols-2" style="margin-top:16px">
+      <div class="card"><h3>${t("c_reachmkt")}</h3><div class="hint">${t("c_top_h")}</div>${reachByMkt}</div>
+      <div class="card"><h3>${t("c_tier")}</h3><div class="hint">${lang==="en"?"Roster distribution":"Distribusi roster"}</div>${donut}</div>
+    </div>
+    <div class="grid cols-3" style="margin-top:16px">
+      <div class="card"><div class="card-head"><div><h3>${t("c_top")}</h3><div class="hint">${t("c_top_h")}</div></div></div>${lb}</div>
+      <div class="card"><div class="card-head"><div><h3>${t("c_pipe")}</h3><div class="hint">${t("c_pipe_h")}</div></div></div>${pipe}</div>
+      <div class="card"><h3>${t("c_lang")}</h3><div class="hint">${lang==="en"?"KOLs by content language":"KOL per bahasa konten"}</div>${langBars}</div>
+    </div>
+    <div class="grid cols-2" style="margin-top:16px">
+      <div class="card"><h3>${t("c_health")}</h3><div class="hint">${lang==="en"?"Outreach status by market":"Status outreach per pasar"}</div>${readiness}</div>
+      <div class="card"><h3>${t("c_dl")}</h3><div class="hint">${lang==="en"?"Program milestones":"Milestone program"}</div>${dl}</div>
+    </div>`;
+}
+
+/* ============ KOL list ============ */
+let kolView="table";
+function rKols(){
+  let list=fc(kols);
+  if(state.q){const q=state.q.toLowerCase();list=list.filter(k=>k.name.toLowerCase().includes(q)||k.h.toLowerCase().includes(q)||k.niche.toLowerCase().includes(q)||marketName(k.market).toLowerCase().includes(q));}
+  const tiers=["micro","mid","macro"];
+  const segs=tiers.map(tk=>({label:tierName(tk),value:list.filter(k=>k.tier===tk).length,color:TIER[tk].c})).filter(s=>s.value);
+  const donut=svgDonut(segs,list.length,lang==="en"?"KOLs":"KOL");
+  const avgER=(list.reduce((a,k)=>a+k.er,0)/(list.length||1)).toFixed(1);
+  const byMkt=svgBars(markets.map(m=>({label:m.flag+" "+m.ini,value:list.filter(k=>k.market===m.id).length,color:m.col})).filter(s=>s.value));
+
+  const filters=`<div class="filters">
+    <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>${t("b_add")}</button>
+    <button class="btn ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg>${t("b_import")}</button>
+    <span style="flex:1"></span>
+    <select class="ctrl"><option>${t("f_all_status")}</option><option>Identified</option><option>Contacted</option><option>Confirmed</option></select>
+    <select class="ctrl"><option>${t("f_all_tier")}</option>${tiers.map(tk=>`<option>${tierName(tk)}</option>`).join("")}</select>
+    <div class="seg"><button class="${kolView==="table"?"on":""}" onclick="kolView='table';rKols()">${t("view_table")}</button><button class="${kolView==="grid"?"on":""}" onclick="kolView='grid';rKols()">${t("view_grid")}</button></div>
+  </div>`;
+  const stats=`<div class="grid cols-3" style="margin-bottom:16px">
+    <div class="card"><h3>${t("c_tier")}</h3><div class="hint">${lang==="en"?"Roster distribution":"Distribusi roster"}</div>${donut}</div>
+    <div class="card"><h3>${t("c_country")}</h3><div class="hint">${lang==="en"?"By source market":"Per pasar sumber"}</div>${byMkt}</div>
+    <div class="card kpi"><div class="top"><span class="lab">${lang==="en"?"Avg ER · roster":"Rata-rata ER · roster"}</span><span class="ic">${ICON.er}</span></div>
+      <div class="val">${avgER}%</div><div class="top">${delta(4)}<span class="muted" style="font-size:12px">${list.length} ${lang==="en"?"KOLs":"KOL"}</span></div>
+      <div class="note" style="margin-top:12px">${lang==="en"?"Travel-niche KOLs across 6 source markets, all assigned to Labuan Bajo.":"KOL niche travel di 6 pasar sumber, semua untuk Labuan Bajo."}</div></div>
+  </div>`;
+  let body;
+  if(kolView==="table"){
+    body=`<div class="card pad0" style="overflow-x:auto"><table><thead><tr>
+      <th>${t("th_kol")}</th><th>${t("th_country")}</th><th>${t("th_plat")}</th><th>${t("th_tier")}</th><th>${t("th_niche")}</th><th>${t("th_lang")}</th>
+      <th class="num">${t("th_followers")}</th><th class="num">${t("th_er")}</th><th>${t("th_status")}</th><th>${t("th_approval")}</th></tr></thead><tbody>`+
+      list.map(k=>`<tr><td><div class="who">${avatar(k.ini,mcol(k.market))}<div><b>${k.name} ${k.ver?'<span class="ver" title="Audience verified">✓</span>':''}</b><br><small>${k.h}</small></div></div></td>
+        <td>${mflag(k.market)} ${marketName(k.market)}</td><td>${platChips(k.plat)}</td><td>${tierChip(k.tier)}</td><td>${k.niche}</td><td>${k.lang}</td>
+        <td class="num">${fFol(k.fol)}${k.folTT?`<br><small class="muted">TT ${fFol(k.folTT)}</small>`:''}</td><td class="num">${k.er}%</td><td>${chip(k.stage)}</td>
+        <td>${isApproved(k)?'<span class="chip" style="color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)">'+t("approvedw")+'</span>':'<span class="chip" style="color:var(--muted);background:var(--border2)">'+t("pending")+'</span>'}</td></tr>`).join("")+
+      `</tbody></table></div>`;
+  } else {
+    body=`<div class="grid cols-3">`+list.map(k=>`<div class="card client-card">
+      <div class="ch">${avatar(k.ini,mcol(k.market),46)}<div class="nm"><b>${k.name} ${k.ver?'<span class="ver">✓</span>':''}</b><small>${k.h} · ${mflag(k.market)} ${marketName(k.market)}</small></div></div>
+      <div class="row-flex">${tierChip(k.tier)}${platChips(k.plat)}<span class="chip" style="background:var(--border2);color:var(--muted)">${k.niche}</span></div>
+      <div class="cstat"><div><small>${t("th_followers")}</small><b>${fFol(k.fol)}</b></div><div><small>ER</small><b>${k.er}%</b></div><div><small>${t("th_lang")}</small><b>${k.lang}</b></div></div>
+      <div class="row-flex" style="justify-content:space-between">${chip(k.stage)}<small class="muted" style="font-size:11px">${k.email.includes("@")?k.email:k.email}</small></div></div>`).join("")+`</div>`;
+  }
+  document.getElementById("s-kols").innerHTML=filters+stats+body;
+}
+
+/* ============ Briefs ============ */
+function rBriefs(){
+  const list=fc(briefs);
+  const stages=["draft","sent","acknowledged","revision","approved"];
+  const funnel=svgBars(stages.map(s=>({label:sName(s),value:list.filter(b=>b.status===s).length,color:sColor(s),disp:fInt(list.filter(b=>b.status===s).length)})));
+  const head=`<div class="filters"><button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>${t("b_newbrief")}</button>
+    <span class="muted" style="margin-left:6px">${t("destination")}</span><span style="flex:1"></span></div>`;
+  const table=`<div class="card pad0" style="overflow-x:auto"><table><thead><tr><th>${t("th_brief")}</th><th>${t("th_market")}</th><th>${t("th_trip")}</th><th>${t("th_obj")}</th><th class="num">${t("th_kols")}</th><th>${t("th_status")}</th><th class="num">${t("th_due")}</th></tr></thead><tbody>`+
+    list.map(b=>`<tr><td><b>${b.title}</b></td><td>${mflag(b.market)} ${marketName(b.market)}</td><td>Labuan Bajo</td><td>${chip(b.obj)}</td><td class="num">${b.kols}</td><td>${chip(b.status)}</td><td class="num">${b.due}</td></tr>`).join("")+`</tbody></table></div>`;
+  document.getElementById("s-briefs").innerHTML=head+
+    `<div class="grid cols-2b" style="margin-bottom:16px">
+      <div class="card"><h3>${t("c_brieffunnel")}</h3><div class="hint">${lang==="en"?"Briefs by stage":"Brief per tahap"}</div>${funnel}</div>
+      <div class="card"><h3>${lang==="en"?"Workflow":"Alur kerja"}</h3><div class="hint">${lang==="en"?"Brief lifecycle":"Siklus hidup brief"}</div>
+        <div class="row-flex" style="gap:6px;margin-top:6px">`+stages.map((s,i)=>`${chip(s)}${i<stages.length-1?'<span class="muted">→</span>':''}`).join("")+`</div>
+        <div class="note" style="margin-top:14px">${t("brief_wf")}</div></div>
+    </div>`+table;
+}
+
+/* ============ Posting (recruitment pipeline) ============ */
+function rPosting(){
+  const list=fc(kols);
+  const cols=["identified","contacted","replied","negotiating","confirmed","ontrip","posted"];
+  const board=`<div class="kanban">`+cols.map(s=>{const items=list.filter(k=>k.stage===s);
+    return `<div class="kcol"><div class="kh"><span style="display:flex;align-items:center;gap:7px"><span class="pdot" style="width:8px;height:8px;border-radius:50%;background:${sColor(s)}"></span>${sName(s)}</span><span class="cnt">${items.length}</span></div>`+
+      (items.length?items.map(k=>`<div class="kcard"><div class="kt">${avatar(k.ini,mcol(k.market),26)}<div><b>${k.name}</b><br><small>${mflag(k.market)} ${k.h}</small></div></div>
+        <div class="row-flex">${platChips(k.plat)}${tierChip(k.tier)}</div>
+        <div class="meta"><span class="due">📍 Labuan Bajo</span><span class="num muted" style="font-size:11px">${fFol(k.fol)} · ${k.er}%</span></div></div>`).join("")
+        :`<div class="note" style="text-align:center">—</div>`)+`</div>`;}).join("")+`</div>`;
+  const head=`<div class="filters"><span class="muted">${list.length} ${lang==="en"?"KOLs in pipeline · drag to advance stage":"KOL di pipeline · seret untuk pindah tahap"}</span><span style="flex:1"></span>
+    <div class="seg"><button class="on">${lang==="en"?"Board":"Papan"}</button><button>${t("view_table")}</button></div></div>`;
+  document.getElementById("s-posting").innerHTML=head+board;
+}
+
+/* ============ Reports (projection) ============ */
+function rReports(){
+  const list=fc(kols);
+  const reach=list.reduce((a,k)=>a+k.fol,0);
+  const eng=list.reduce((a,k)=>a+projEng(k),0);
+  const aer=(list.reduce((a,k)=>a+k.er,0)/(list.length||1)).toFixed(1);
+  const emv=eng*EMV_RATE;
+  const k=`<div class="grid kpis">
+    ${kpi(t("k_potreach"),fFol(reach),15,[12,15,18,22,25,28,32],"reach")}
+    ${kpi(t("k_projeng"),fFol(eng),18,[8,10,12,14,16,18,21],"er")}
+    ${kpi(t("k_er"),aer+"%",4,[3.2,3.5,3.8,4.1,4.4,4.6,+aer],"er")}
+    ${kpi(t("k_db"),list.length,8,[20,26,30,33,36,38,list.length],"kols")}
+    ${kpi(t("k_markets"),state.market==="all"?6:1,0,[6,6,6,6,6,6,6],"clients")}
+    ${kpi(t("k_projemv"),fIDR(emv),24,[6,9,12,16,20,26,31],"emv")}
+  </div>`;
+  const reachByMkt=svgBars(markets.map(m=>({label:m.flag+" "+m.name,value:list.filter(x=>x.market===m.id).reduce((a,x)=>a+x.fol,0),color:m.col,disp:fFol(list.filter(x=>x.market===m.id).reduce((a,x)=>a+x.fol,0))})).filter(s=>s.value).sort((a,b)=>b.value-a.value));
+  const tiers=["micro","mid","macro"];
+  const engByTier=svgBars(tiers.map(tk=>({label:tierName(tk),value:list.filter(k=>k.tier===tk).reduce((a,k)=>a+projEng(k),0),color:TIER[tk].c,disp:fFol(list.filter(k=>k.tier===tk).reduce((a,k)=>a+projEng(k),0))})).filter(s=>s.value));
+  const top=list.slice().sort((a,b)=>projEng(b)-projEng(a)).slice(0,8);
+  const topT=`<div class="card pad0" style="overflow-x:auto"><table><thead><tr><th>${t("th_kol")}</th><th>${t("th_country")}</th><th>${t("th_plat")}</th><th class="num">${t("th_followers")}</th><th class="num">ER</th><th class="num">${t("k_projeng")}</th></tr></thead><tbody>`+
+    top.map(x=>`<tr><td><div class="who">${avatar(x.ini,mcol(x.market),28)}<div><b>${x.name}</b><br><small>${x.h}</small></div></div></td>
+      <td>${mflag(x.market)} ${marketName(x.market)}</td><td>${platChips(x.plat)}</td><td class="num">${fFol(x.fol)}</td><td class="num">${x.er}%</td><td class="num"><b>${fFol(projEng(x))}</b></td></tr>`).join("")+`</tbody></table></div>`;
+  const banner=`<div class="banner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>${t("proj_note")}</div>`;
+  const head=`<div class="filters"><span class="muted">${lang==="en"?"Projected program reach & forecast":"Proyeksi jangkauan & perkiraan program"}</span><span style="flex:1"></span>
+    <button class="btn ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 11l4 4 4-4M5 21h14"/></svg>${t("b_export")}</button></div>`;
+  document.getElementById("s-reports").innerHTML=head+banner+k+
+    `<div class="grid cols-2" style="margin:16px 0"><div class="card"><h3>${t("c_reachmkt")}</h3><div class="hint">${lang==="en"?"Instagram followers":"Pengikut Instagram"}</div>${reachByMkt}</div>
+      <div class="card"><h3>${lang==="en"?"Projected engagement by tier":"Proyeksi interaksi per tier"}</h3><div class="hint">${lang==="en"?"Followers × ER":"Pengikut × ER"}</div>${engByTier}</div></div>`+
+    `<div class="card"><div class="card-head"><div><h3>${t("c_topposts")}</h3><div class="hint">${lang==="en"?"Highest projected impact":"Proyeksi dampak tertinggi"}</div></div></div>${topT}</div>`;
+}
+
+/* ============ Market Monitoring ============ */
+function rClients(){
+  const ms=state.market==="all"?markets:markets.filter(m=>m.id===state.market);
+  document.getElementById("s-clients").innerHTML=`<div class="grid cols-3">`+ms.map(m=>{
+    const ks=kols.filter(x=>x.market===m.id);const reach=ks.reduce((a,x)=>a+x.fol,0);
+    const aer=(ks.reduce((a,x)=>a+x.er,0)/(ks.length||1)).toFixed(1);
+    const out=ks.filter(inOutreach).length;const conf=ks.filter(isApproved).length;const pct=Math.round(out/ks.length*100);
+    const health=conf>0?"on-track":out>0?"at-risk":"delayed";
+    const langs=[...new Set(ks.map(x=>x.lang))].join(", ");
+    return `<div class="card client-card">
+      <div class="ch"><span style="font-size:30px">${m.flag}</span><div class="nm"><b>${m.name}</b><small>${langs}</small></div><span style="margin-left:auto">${chip(health)}</span></div>
+      <div class="cstat"><div><small>${t("engaged")}</small><b>${ks.length}</b></div><div><small>${t("k_reach")}</small><b>${fFol(reach)}</b></div><div><small>ER</small><b>${aer}%</b></div><div><small>${t("k_confirmed")}</small><b>${conf}</b></div></div>
+      <div class="budget"><small><span>${out}/${ks.length} ${lang==="en"?"in outreach":"di outreach"}</span><span>${pct}%</span></small>
+        <div class="bar-mini" style="height:9px"><span style="width:${pct}%;background:${m.col}"></span></div></div>
+      <div class="row-flex" style="justify-content:space-between;font-size:12px"><span class="muted">${lang==="en"?"Top KOL":"KOL teratas"}</span><b>${ks.slice().sort((a,b)=>b.fol-a.fol)[0].name}</b></div></div>`;}).join("")+`</div>`;
+}
+
+/* ============ Timeline ============ */
+function rTimeline(){
+  const start=new Date("2026-06-01"),end=new Date("2026-11-30"),span=(end-start)/86400000;
+  const pos=d=>((new Date("2026-"+d)-start)/86400000)/span*100;
+  const months=["Jun","Jul","Aug","Sep","Oct","Nov"];
+  let rows=tlrows.map(r=>{const l=pos(r.start),w=pos(r.end)-l;
+    const miles=r.miles.map(m=>`<div class="gmile" title="${m}" style="left:${pos(m)}%"></div>`).join("");
+    return `<div class="grow"><div class="glab"><b>${lang==="en"?r.name[0]:r.name[1]}</b><small>${r.start} → ${r.end}</small></div>
+      <div class="gtrack"><div class="gridlines">${months.map(()=>`<span></span>`).join("")}</div>
+        <div class="gbar" style="left:${l}%;width:${w}%;background:${r.col}">${lang==="en"?r.name[0]:r.name[1]}</div>${miles}
+        <div class="today" style="left:${pos("06-23")}%"><b>${t("today")}</b></div></div></div>`;}).join("");
+  const legend=`<div class="legend" style="margin-top:14px">
+    <span><i style="background:var(--accent);transform:rotate(45deg)"></i>${lang==="en"?"Milestone":"Milestone"}</span>
+    <span><i style="background:var(--accent-deep)"></i>${lang==="en"?"Today (23 Jun 2026)":"Hari ini (23 Jun 2026)"}</span></div>`;
+  document.getElementById("s-timeline").innerHTML=`<div class="filters"><span class="muted">${t("sub_timeline")}</span><span style="flex:1"></span>
+    <div class="seg"><button class="on">Gantt</button><button>${lang==="en"?"Calendar":"Kalender"}</button><button>${lang==="en"?"List":"Daftar"}</button></div></div>
+    <div class="card gantt"><div class="ghead"><div></div><div class="months">${months.map(m=>`<div>${m}</div>`).join("")}</div></div>${rows}${legend}</div>`;
+}
+
+/* ============ Settings ============ */
+function rSettings(){
+  const roles=[["Agency Admin (EORI)","Admin Agensi (EORI)"],["Program Manager","Manajer Program"],["Talent Manager","Manajer Talent"],["Content Reviewer","Reviewer Konten"],["Kemenpar (Client)","Kemenpar (Klien)"],["Finance","Keuangan"]];
+  const caps=[["KOLs",[1,2,1,0,0,0]],["Briefs",[1,1,2,0,3,0]],["Approve",[1,1,0,2,1,0]],["Reports",[1,1,0,0,3,1]],["Budget",[1,1,0,0,0,1]],["Users",[1,0,0,0,0,0]]];
+  const cell=v=>v===1?`<span class="yes">●</span>`:v===0?`<span class="no">○</span>`:`<span class="part">◐</span>`;
+  const matrix=`<div class="card pad0" style="overflow-x:auto"><table class="matrix"><thead><tr><th>${t("th_role")}</th>${caps.map(c=>`<th style="text-align:center">${c[0]}</th>`).join("")}</tr></thead><tbody>`+
+    roles.map((r,ri)=>`<tr><td><b>${lang==="en"?r[0]:r[1]}</b></td>${caps.map(c=>`<td style="text-align:center">${cell(c[1][ri])}</td>`).join("")}</tr>`).join("")+`</tbody></table></div>`;
+  const tiers=[["Micro / Mikro","10K – 100K","micro"],["Mid / Menengah","100K – 500K","mid"],["Macro / Makro","500K – 1M","macro"]];
+  const emv=[["Instagram","Rp 15.000 / eng"],["TikTok","Rp 9.000 / view"],["YouTube","Rp 24.000 / view"]];
+  document.getElementById("s-settings").innerHTML=`
+    <div class="card" style="margin-bottom:16px"><h3>${t("perm_matrix")}</h3><div class="hint">${lang==="en"?"● full · ◐ scoped · ○ none — Kemenpar sees only approved/reporting data":"● penuh · ◐ terbatas · ○ tidak ada — Kemenpar hanya melihat data disetujui/laporan"}</div>${matrix}</div>
+    <div class="grid cols-2b">
+      <div class="card"><h3>${t("tiers_title")}</h3><div class="hint">${lang==="en"?"Tiers present in this roster":"Tier yang ada di roster ini"}</div>
+        <table>${tiers.map(x=>`<tr><td><span class="tier" style="background:${TIER[x[2]].c}">${x[0]}</span></td><td class="num" style="text-align:right">${x[1]}</td><td class="num muted" style="text-align:right">${kols.filter(k=>k.tier===x[2]).length} KOL</td></tr>`).join("")}</table></div>
+      <div class="card"><h3>${t("emv_title")}</h3><div class="hint">${lang==="en"?"Premium intl-travel benchmarks":"Tolok ukur travel internasional premium"}</div>
+        <table>${emv.map(x=>`<tr><td><b>${x[0]}</b></td><td class="num" style="text-align:right">${x[1]}</td></tr>`).join("")}</table>
+        <div class="note" style="margin-top:12px">${t("emv_note")}</div></div>
+    </div>`;
+}
+
+/* ============ router ============ */
+const RENDER={overview:rOverview,kols:rKols,briefs:rBriefs,posting:rPosting,reports:rReports,clients:rClients,timeline:rTimeline,settings:rSettings};
+function go(sec){state.section=sec;
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("show"));
+  document.getElementById("s-"+sec).classList.add("show");
+  document.getElementById("pgTitle").textContent=t("nav_"+sec);
+  document.getElementById("pgSub").textContent=t("sub_"+sec);
+  setActive();RENDER[sec]();
+  const c=document.querySelector(".content");c.style.animation="none";void c.offsetWidth;c.style.animation="";
+}
+function onMarket(v){state.market=v;RENDER[state.section]();}
+function onSearch(v){state.q=v;if(state.section==="kols")rKols();}
+
+/* ============ lang / theme ============ */
+function applyStatic(){
+  document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=t(e.getAttribute("data-i18n")));
+  document.querySelectorAll("[data-i18n-ph]").forEach(e=>e.setAttribute("placeholder",t(e.getAttribute("data-i18n-ph"))));
+  const cf=document.getElementById("clientFilter");
+  cf.innerHTML=`<option value="all">${t("all_clients")}</option>`+markets.map(m=>`<option value="${m.id}">${m.flag} ${m.name}</option>`).join("");
+  cf.value=state.market;
+  document.getElementById("pgTitle").textContent=t("nav_"+state.section);
+  document.getElementById("pgSub").textContent=t("sub_"+state.section);
+}
+function setLang(l){lang=l;document.documentElement.lang=l;
+  document.getElementById("langEN").classList.toggle("on",l==="en");
+  document.getElementById("langID").classList.toggle("on",l==="id");
+  buildNav();applyStatic();RENDER[state.section]();}
+function toggleTheme(){const h=document.documentElement;const dark=h.getAttribute("data-theme")==="dark";
+  h.setAttribute("data-theme",dark?"light":"dark");
+  document.getElementById("themeIcon").innerHTML=dark?'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>':'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+  RENDER[state.section]();}
+
+/* ============ init ============ */
+buildNav();applyStatic();rOverview();
+</script>
+</body>
+</html>
