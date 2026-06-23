@@ -17,14 +17,14 @@
 <meta property="og:title" content="AXIOM — Human Performance · Research Peptides" />
 <meta property="og:description" content="Research-grade peptides — third-party HPLC verified, ≥98% purity. For research use only." />
 <meta property="og:url" content="https://axiompeptides.example/" />
-<meta property="og:image" content="og.svg" />
-<meta property="og:image:type" content="image/svg+xml" />
+<meta property="og:image" content="og.png" />
+<meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="AXIOM — Human Performance · Research Peptides" />
 <meta name="twitter:description" content="Research-grade peptides — third-party HPLC verified, ≥98% purity. For research use only." />
-<meta name="twitter:image" content="og.svg" />
+<meta name="twitter:image" content="og.png" />
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -32,7 +32,7 @@
   "name":"AXIOM — Human Performance",
   "description":"Research-grade peptides for laboratory research use only.",
   "url":"https://axiompeptides.example/",
-  "logo":"https://axiompeptides.example/og.svg",
+  "logo":"https://axiompeptides.example/og.png",
   "address":{"@type":"PostalAddress","addressLocality":"Jakarta","addressCountry":"ID"},
   "contactPoint":{"@type":"ContactPoint","contactType":"sales","availableLanguage":["en","id"]}
 }
@@ -77,6 +77,8 @@ a{color:inherit;text-decoration:none}
 img{max-width:100%}
 ::selection{background:var(--bone);color:var(--onyx)}
 :where(a,button,input,select,summary,[tabindex]):focus-visible{outline:2px solid var(--bone);outline-offset:3px}
+.skip-link{position:absolute;left:8px;top:-64px;z-index:100;background:var(--bone);color:var(--onyx);padding:11px 18px;font-size:13px;font-weight:500;transition:top .2s}
+.skip-link:focus{top:8px}
 h1,h2,h3,h4{font-weight:400}
 .mono{font-family:var(--mono)}
 
@@ -127,7 +129,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(5,5,5,.72);backdrop-filter:
 .hero-logo canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
 .hero-logo .poster{display:none;position:absolute;inset:0;margin:auto;max-width:78%;max-height:74%;object-fit:contain}
 .hero-logo.no-webgl canvas{display:none}
-.hero-logo.no-webgl .poster{display:block}
+.hero-logo.no-webgl .poster,.hero-logo.pending .poster{display:block}
 .hero-h1{font-family:var(--display);font-weight:300;font-size:clamp(19px,2.6vw,32px);line-height:1.18;letter-spacing:.03em;text-transform:uppercase;color:var(--bone);max-width:20ch;margin:clamp(20px,3vw,30px) auto 0}
 .hero-lead{max-width:560px;margin:clamp(13px,1.8vw,18px) auto 0;color:var(--titanium);font-size:16px;line-height:1.7}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:clamp(26px,3vw,34px)}
@@ -380,6 +382,8 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
 </head>
 <body>
 
+<a class="skip-link" href="#catalogue">Skip to catalogue</a>
+
 <div class="ribbon">For <b>Research &amp; Laboratory Use Only</b> <span class="dot">/</span> Not for human or veterinary consumption <span class="dot">/</span> Prices in IDR</div>
 
 <nav>
@@ -395,7 +399,7 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
       <a href="#contact">Contact</a>
     </div>
     <div class="nav-actions">
-      <button class="navcart" id="navCart" aria-label="Open cart" title="Cart"><i class="ph-light ph-shopping-bag-open"></i><span class="cartbadge" id="navCartCount" hidden>0</span></button>
+      <button class="navcart" id="navCart" aria-label="Open cart" title="Cart"><i class="ph-light ph-shopping-bag-open"></i><span class="cartbadge" id="navCartCount" aria-live="polite" hidden>0</span></button>
       <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ph-light ph-list"></i></button>
     </div>
   </div>
@@ -677,6 +681,7 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
   </div>
 </footer>
 
+<script defer src="/_vercel/insights/script.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="data.js"></script>
@@ -821,6 +826,7 @@ function renderQuote(){
   document.getElementById("qWhatsApp").href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   qBar._msg=msg;
   document.querySelectorAll(".add-btn").forEach(b=>b.classList.toggle("added",quote.has(b.dataset.add)));
+  try{localStorage.setItem("axiom_cart",JSON.stringify([...quote.values()]));}catch(e){}
 }
 function addItem(id){
   const it=ITEMS[id];if(!it||it.price==null)return;
@@ -844,6 +850,9 @@ document.getElementById("qCopy").addEventListener("click",e=>{
   navigator.clipboard?.writeText(qBar._msg||"");
   const t=e.currentTarget;const old=t.innerHTML;t.innerHTML='<i class="ph-light ph-check"></i> Copied';setTimeout(()=>t.innerHTML=old,1500);
 });
+/* restore saved cart */
+try{JSON.parse(localStorage.getItem("axiom_cart")||"[]").forEach(e=>{if(ITEMS[e.id]&&ITEMS[e.id].price!=null)quote.set(e.id,{...ITEMS[e.id],qty:Math.max(1,e.qty|0)});});}catch(e){}
+renderQuote();
 
 /* Mobile nav */
 const navToggle=document.getElementById("navToggle"),navLinks=document.getElementById("navLinks");
@@ -852,6 +861,18 @@ navLinks.addEventListener("click",e=>{if(e.target.tagName==="A")navLinks.classLi
 
 /* Year */
 document.getElementById("yr").textContent=new Date().getFullYear();
+
+/* Product structured data (research-use only) */
+try{
+  const ld={"@context":"https://schema.org","@type":"ItemList","name":"AXIOM Research Peptides Catalogue","itemListElement":[]};
+  let pos=1;
+  CAT.forEach(c=>c.items.forEach(it=>{
+    const item={"@type":"Product","name":it.dose?`${it.name} ${it.dose}`:it.name,"category":c.name,"description":`Research-use-only ${it.name} — not for human or veterinary consumption.`};
+    if(it.price!=null)item.offers={"@type":"Offer","price":it.price,"priceCurrency":"IDR","availability":"https://schema.org/InStock"};
+    ld.itemListElement.push({"@type":"ListItem","position":pos++,"item":item});
+  }));
+  const s=document.createElement("script");s.type="application/ld+json";s.textContent=JSON.stringify(ld);document.head.appendChild(s);
+}catch(e){}
 
 /* ---- Reference drawer ---- */
 const NAME2DOSES={};
@@ -914,8 +935,10 @@ addEventListener("keydown",e=>{if(e.key==="Escape")closeRef();});
 const holder = document.getElementById("heroLogo");
 const canvas = document.getElementById("logoCanvas");
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SAVE_DATA = !!(navigator.connection && navigator.connection.saveData);
+const MOBILE = matchMedia("(max-width:760px)").matches || (navigator.hardwareConcurrency||8) <= 4;
 
-try {
+async function init(){
   const THREE = await import("three");
   const { RoomEnvironment } = await import("three/addons/environments/RoomEnvironment.js");
 
@@ -949,7 +972,7 @@ try {
   const logo = new THREE.Group(); scene.add(logo);
 
   // extruded body — depth-graded titanium (dark deep -> light near the face) for a real bevel
-  const LAYERS = 26, DEPTH = 0.18;
+  const LAYERS = MOBILE ? 12 : 26, DEPTH = 0.18;
   const cFront = new THREE.Color(0xd0cab6), cBack = new THREE.Color(0x5e5a50);
   for(let i=LAYERS-1; i>=1; i--){
     const f = i/(LAYERS-1);                                   // 1 = deepest
@@ -1003,17 +1026,14 @@ try {
 
   new IntersectionObserver(es=>es.forEach(en=>{ running = en.isIntersecting && !REDUCED; if(running) loop(); }), {threshold:0.02}).observe(holder);
 
-  if(REDUCED){
-    logo.rotation.y = -0.12; render();
-  } else {
-    if(window.gsap){   // assemble-in: gentle turn + scale settle + fade
-      logo.rotation.y = -0.55; logo.rotation.x = 0.12; logo.scale.setScalar(0.9);
-      window.gsap.to(logo.rotation, { y:0, x:0, duration:1.5, ease:"expo.out", delay:0.15 });
-      window.gsap.to(logo.scale, { x:1, y:1, z:1, duration:1.5, ease:"expo.out", delay:0.15 });
-      window.gsap.fromTo(holder, { opacity:0 }, { opacity:1, duration:1.1, ease:"power2.out", delay:0.15 });
-    }
-    loop();
+  if(window.gsap){   // assemble-in: gentle turn + scale settle
+    logo.rotation.y = -0.55; logo.rotation.x = 0.12; logo.scale.setScalar(0.9);
+    window.gsap.to(logo.rotation, { y:0, x:0, duration:1.5, ease:"expo.out", delay:0.15 });
+    window.gsap.to(logo.scale, { x:1, y:1, z:1, duration:1.5, ease:"expo.out", delay:0.15 });
   }
+  render();
+  holder.classList.remove("pending");   // 3D ready — swap out the flat poster
+  loop();
 
   // debug handle (house convention)
   window.__axiom = {
@@ -1022,9 +1042,15 @@ try {
     spin(d){ logo.rotation.y += (d||0.4); render(); },
     scene, logo, camera, renderer
   };
-} catch (err) {
-  console.warn("[AXIOM] WebGL logo unavailable:", err);
+}
+
+// lazy-init: skip 3D on reduced-motion / data-saver (flat poster), else defer to idle
+if (REDUCED || SAVE_DATA) {
   holder.classList.add("no-webgl");
+} else {
+  holder.classList.add("pending");
+  const go = () => init().catch(err => { console.warn("[AXIOM] WebGL logo unavailable:", err); holder.classList.remove("pending"); holder.classList.add("no-webgl"); });
+  if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 1800 }); else setTimeout(go, 250);
 }
 </script>
 </body>
