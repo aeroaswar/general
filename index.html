@@ -354,11 +354,36 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opa
 @media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.cols-2,.cols-3,.cols-2b{grid-template-columns:1fr}}
 @media(max-width:900px){
   .app{grid-template-columns:1fr}
-  .sidebar{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;overflow-x:auto}
-  .sidebar .nav-label,.side-foot{display:none}.nav{display:flex;gap:4px;flex-wrap:wrap}
-  .nav a{padding:7px 9px}.nav a span{display:none}
+  .sidebar{position:static;height:auto;flex-direction:row;align-items:center;gap:8px;padding:8px 12px;overflow-x:auto}
+  .sidebar .nav-label,.side-foot{display:none}
+  .brand{padding:2px 4px;flex:none}.brand b{font-size:12.5px}.brand span{display:none}
+  .nav{display:flex;gap:3px;flex-wrap:nowrap}
+  .nav a{padding:8px 10px}.nav a span{display:none}.nav a .badge{display:none}
   .search{display:none}
+  .topbar{flex-wrap:wrap;gap:8px;padding:12px 16px}
+  .topbar .spacer{display:none}
+  .page-sub{display:none}
+  .batik-divider{margin:-2px 0 12px}
 }
+@media(max-width:680px){
+  .content{padding:14px 13px 48px}
+  .topbar{padding:10px 13px}.page-title{font-size:16px}
+  .ctrl{padding:6px 9px;font-size:12.5px}
+  select.ctrl{max-width:46vw}
+  .kpi .val{font-size:21px}.kpi .ic{width:30px;height:30px}
+  .hero{min-height:150px}.hero h2{font-size:19px}.hero .hc{padding:15px 17px}.hero p{font-size:12px}
+  .hero .hstats{gap:14px;flex-wrap:wrap}.hero .hstats div b{font-size:16px}
+  .card{padding:14px}
+  .frow{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+  .vs{grid-template-columns:1fr}
+  .modal-wrap{padding:12px}.modal-b{padding:16px}.modal-h,.modal-f{padding:13px 16px}
+  .modal-f{flex-wrap:wrap;gap:8px}.modal-f .btn{flex:1;justify-content:center}
+  .dtabs{overflow-x:auto;flex-wrap:nowrap;white-space:nowrap}
+  .cal .cd{min-height:52px;padding:3px 4px}.cal .ev{font-size:9px}
+  th,td{padding:9px 10px}
+}
+@media(max-width:420px){.kpis{grid-template-columns:1fr}}
 .hide{display:none!important}
 </style>
 </head>
