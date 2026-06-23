@@ -126,7 +126,6 @@ nav{position:sticky;top:0;z-index:50;background:rgba(5,5,5,.72);backdrop-filter:
 .hero-logo .poster{display:none;position:absolute;inset:0;margin:auto;max-width:78%;max-height:74%;object-fit:contain}
 .hero-logo.no-webgl canvas{display:none}
 .hero-logo.no-webgl .poster{display:block}
-.hero-sub{font-family:var(--mono);font-size:clamp(11px,1.3vw,14px);letter-spacing:.44em;text-transform:uppercase;color:var(--titanium);margin-top:clamp(2px,1vw,10px);padding-left:.44em}
 .hero-lead{max-width:560px;margin:clamp(22px,3vw,30px) auto 0;color:var(--titanium);font-size:16px;line-height:1.7}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:clamp(26px,3vw,34px)}
 .hero .spec-rail{width:100%;max-width:780px;margin-left:auto;margin-right:auto}
@@ -401,7 +400,6 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
       <canvas id="logoCanvas"></canvas>
       <img class="poster" src="assets/axiom-logo.png" alt="AXIOM — Human Performance" />
     </div>
-    <p class="hero-sub reveal">Human Performance</p>
     <p class="hero-lead reveal">A research-grade catalogue of peptides for performance, recovery and longevity science — every lot independently assayed by HPLC, documented, and dispatched cold-chain.</p>
     <div class="hero-cta reveal">
       <a href="#catalogue" class="btn btn-solid">Browse the Catalogue <i class="ph-light ph-arrow-right"></i></a>
@@ -921,34 +919,30 @@ try {
   const rim = new THREE.DirectionalLight(0xeae6dd, 2.1); rim.position.set(5, 2, -3); scene.add(rim);
   scene.add(new THREE.AmbientLight(0x3a3a3a, 0.5));
 
-  // ---- build the AXIOM mark from stroke segments (matches the logo geometry) ----
-  const S = 0.016;            // svg-units -> world
-  const R = 0.05;             // stroke radius
-  const toW = (x,y)=> new THREE.Vector3((x-250)*S, (60-y)*S, 0);
-  const newMat = ()=> new THREE.MeshStandardMaterial({ color:0xEDEAE3, metalness:1.0, roughness:0.24, envMapIntensity:1.35, transparent:true, opacity:1 });
-  function stroke(a, b, g, m){
-    const A=toW(a[0],a[1]), B=toW(b[0],b[1]);
-    const dir=new THREE.Vector3().subVectors(B,A), len=dir.length();
-    const mesh=new THREE.Mesh(new THREE.CapsuleGeometry(R, len, 6, 18), m);
-    mesh.position.copy(A).addScaledVector(dir, 0.5);
-    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0), dir.normalize());
-    g.add(mesh);
-  }
-  function ring(cx, cy, r, g, m){
-    const mesh=new THREE.Mesh(new THREE.TorusGeometry(r*S, R, 18, 88), m);
-    mesh.position.copy(toW(cx,cy)); g.add(mesh);
-  }
+  // ---- the REAL AXIOM logo, extruded into a 3D metallic object ----
+  const tex = await new THREE.TextureLoader().loadAsync("assets/axiom-logo.png");
+  tex.colorSpace = THREE.SRGBColorSpace;
+  tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const ASPECT = (tex.image && tex.image.width/tex.image.height) || 3.41;
+  const H = 1.0, W = H*ASPECT;
+  const geo = new THREE.PlaneGeometry(W, H);
   const logo = new THREE.Group(); scene.add(logo);
-  const glyphs=[];
-  function glyph(build){ const g=new THREE.Group(), m=newMat(); build(g,m); logo.add(g); glyphs.push({g,m}); }
-  glyph((g,m)=>{ stroke([30,100],[60,20],g,m); stroke([60,20],[90,100],g,m); });                                    // A
-  glyph((g,m)=>{ stroke([130,20],[153,55],g,m); stroke([190,20],[167,55],g,m); stroke([130,100],[153,65],g,m); stroke([190,100],[167,65],g,m); }); // X (split)
-  glyph((g,m)=>{ stroke([230,20],[230,100],g,m); });                                                                 // I
-  glyph((g,m)=>{ ring(320,60,40,g,m); });                                                                            // O
-  glyph((g,m)=>{ stroke([400,100],[400,20],g,m); stroke([400,20],[435,68],g,m); stroke([435,68],[470,20],g,m); stroke([470,20],[470,100],g,m); }); // M
 
-  // ---- fit camera so the wordmark fills the frame at any aspect ----
-  const LOGO_W = (470-30)*S, LOGO_H = (100-20)*S;
+  // extruded body — stacked cutout layers tinted titanium (masked by the logo's alpha)
+  const LAYERS = 16, DEPTH = 0.16;
+  for(let i=LAYERS-1; i>=1; i--){
+    const m = new THREE.MeshStandardMaterial({ map:tex, transparent:false, alphaTest:0.5, color:0x9a958b, metalness:1.0, roughness:0.34, envMapIntensity:1.0 });
+    const mesh = new THREE.Mesh(geo, m);
+    mesh.position.z = -(i/(LAYERS-1))*DEPTH;
+    logo.add(mesh);
+  }
+  // front face — bone, polished metal, soft anti-aliased edges
+  const face = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ map:tex, transparent:true, alphaTest:0.02, color:0xffffff, metalness:0.82, roughness:0.26, envMapIntensity:1.45 }));
+  face.position.z = 0.001; face.renderOrder = 2; logo.add(face);
+  logo.position.z = DEPTH/2;   // centre the extrusion depth
+
+  // ---- fit camera so the logo fills the frame at any aspect ----
+  const LOGO_W = W;
   let baseZ = 10;
   function fit(){
     const w=holder.clientWidth||1, h=holder.clientHeight||1;
@@ -956,8 +950,8 @@ try {
     renderer.setSize(w, h, false);
     camera.aspect = w/h; camera.updateProjectionMatrix();
     const vFov=camera.fov*Math.PI/180, hFov=2*Math.atan(Math.tan(vFov/2)*camera.aspect);
-    const distW=(LOGO_W*1.34/2)/Math.tan(hFov/2), distH=(LOGO_H*1.9/2)/Math.tan(vFov/2);
-    baseZ=Math.max(distW, distH, 3.5); camera.position.z=baseZ;
+    const distW=(LOGO_W*1.28/2)/Math.tan(hFov/2), distH=(H*1.85/2)/Math.tan(vFov/2);
+    baseZ=Math.max(distW, distH, 3); camera.position.z=baseZ;
   }
   fit(); addEventListener("resize", fit);
 
@@ -971,12 +965,12 @@ try {
   const clock=new THREE.Clock();
   function render(){
     const t=clock.getElapsedTime();
-    const targetY = pX*0.6 + scrollP*0.8;   // cursor turn + scroll spin
-    const targetX = -pY*0.4;
+    const targetY = pX*0.55 + scrollP*0.7;   // cursor turn + scroll spin
+    const targetX = -pY*0.36;
     logo.rotation.y += (targetY - logo.rotation.y)*0.06;
     logo.rotation.x += (targetX - logo.rotation.x)*0.06;
-    logo.position.y = Math.sin(t*0.8)*0.035 - scrollP*0.6;   // gentle float + lift on scroll
-    camera.position.z = baseZ + scrollP*2.6;                 // recede on scroll
+    logo.position.y = Math.sin(t*0.8)*0.03 - scrollP*0.5;   // gentle float + lift on scroll
+    camera.position.z = baseZ + scrollP*2.4;                // recede on scroll
     holder.style.opacity = String(1 - scrollP*0.82);
     renderer.render(scene, camera);
   }
@@ -985,13 +979,13 @@ try {
   new IntersectionObserver(es=>es.forEach(en=>{ running = en.isIntersecting && !REDUCED; if(running) loop(); }), {threshold:0.02}).observe(holder);
 
   if(REDUCED){
-    glyphs.forEach(gl=>{ gl.m.opacity=1; gl.g.position.y=0; });
-    render();
+    logo.rotation.y = -0.22; render();
   } else {
-    if(window.gsap){   // staggered assemble-in
-      glyphs.forEach(gl=>{ gl.m.opacity=0; gl.g.position.y=0.6; });
-      window.gsap.to(glyphs.map(gl=>gl.g.position), { y:0, duration:1.25, ease:"expo.out", stagger:0.1, delay:0.25 });
-      window.gsap.to(glyphs.map(gl=>gl.m), { opacity:1, duration:0.9, ease:"power2.out", stagger:0.1, delay:0.25 });
+    if(window.gsap){   // assemble-in: turn + scale settle + fade
+      logo.rotation.y = -0.7; logo.scale.setScalar(0.86);
+      window.gsap.to(logo.rotation, { y:0, duration:1.4, ease:"expo.out", delay:0.2 });
+      window.gsap.to(logo.scale, { x:1, y:1, z:1, duration:1.4, ease:"expo.out", delay:0.2 });
+      window.gsap.fromTo(holder, { opacity:0 }, { opacity:1, duration:1.0, ease:"power2.out", delay:0.2 });
     }
     loop();
   }
