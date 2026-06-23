@@ -228,6 +228,10 @@ tbody tr.clickable:hover{background:color-mix(in srgb,var(--accent) 10%,transpar
 .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
 .detail-grid .dg small{display:block;color:var(--muted);font-size:11px;margin-bottom:2px}
 .detail-grid .dg b{font-size:14px;font-weight:600}
+.inline-sel{appearance:none;font-family:inherit;font-size:11.5px;font-weight:600;padding:4px 24px 4px 10px;border:1px solid var(--border);border-radius:999px;background-color:var(--solid);color:var(--ink);cursor:pointer;outline:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 7px center}
+.inline-sel:focus{border-color:var(--accent-deep)}
+.app-chip{cursor:pointer;border:none;font-family:inherit}
 @media(max-width:1100px){.kpis{grid-template-columns:repeat(2,1fr)}.cols-2,.cols-3,.cols-2b{grid-template-columns:1fr}}
 @media(max-width:900px){
   .app{grid-template-columns:1fr}
@@ -431,7 +435,7 @@ const kols=[
   {id:"k37",name:"Adriana Maria",h:"@adriana_maria_",ini:"AM",market:"au",plat:["ig"],tier:"mid",niche:"Adventure",lang:"EN",fol:342898,folTT:0,er:0.98,ver:0,email:"hello@adriana-maria.com",stage:"contacted"},
   {id:"k38",name:"Lola Hubner",h:"@lolahubner",ini:"LH",market:"au",plat:["ig"],tier:"mid",niche:"Adventure",lang:"EN",fol:271760,folTT:0,er:3.74,ver:0,email:"info@lolahubner.com",stage:"negotiating"},
 ];
-const isApproved=k=>["confirmed","ontrip","posted"].includes(k.stage);
+const isApproved=k=>k.approved!=null?k.approved:["confirmed","ontrip","posted"].includes(k.stage);
 const inOutreach=k=>k.stage!=="identified";
 
 const briefs=[
@@ -470,6 +474,20 @@ function esc(s){return (""+s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace
 function toast(msg){const r=el("toastRoot");r.textContent=msg;r.classList.add("show");clearTimeout(r._t);r._t=setTimeout(()=>r.classList.remove("show"),2400);}
 function openModal(html,lg){el("modalRoot").innerHTML=`<div class="modal-wrap" onclick="if(event.target===this)closeModal()"><div class="modal${lg?' lg':''}">${html}</div></div>`;}
 function closeModal(){el("modalRoot").innerHTML="";}
+function confirmModal(msg,onYes,danger){openModal(`<div class="modal-h"><h3>${lang==="en"?"Please confirm":"Konfirmasi"}</h3><button class="x" onclick="closeModal()">✕</button></div>
+  <div class="modal-b"><p style="margin:0;font-size:14px;line-height:1.6">${msg}</p></div>
+  <div class="modal-f"><button class="btn ghost" onclick="closeModal()">${lang==="en"?"Cancel":"Batal"}</button><button class="btn" id="cYes" style="${danger?"background:var(--red);color:#fff":""}">${lang==="en"?"Confirm":"Ya"}</button></div>`);
+  el("cYes").onclick=()=>{closeModal();onYes();};}
+
+/* persistence (localStorage) */
+function persist(){try{localStorage.setItem("wi_kols",JSON.stringify(kols));localStorage.setItem("wi_briefs",JSON.stringify(briefs));localStorage.setItem("wi_markets",JSON.stringify(markets));}catch(e){}}
+function loadPersist(){try{
+  const mk=localStorage.getItem("wi_markets");if(mk)JSON.parse(mk).forEach(m=>{if(!MKT[m.id]){markets.push(m);MKT[m.id]=m;}});
+  const k=localStorage.getItem("wi_kols");if(k){const a=JSON.parse(k);if(Array.isArray(a)){kols.length=0;a.forEach(x=>kols.push(x));}}
+  const b=localStorage.getItem("wi_briefs");if(b){const a=JSON.parse(b);if(Array.isArray(a)){briefs.length=0;a.forEach(x=>briefs.push(x));}}
+}catch(e){}}
+function syncSeq(){kolSeq=kols.reduce((m,k)=>Math.max(m,parseInt((k.id||"").replace(/\D/g,""))||0),0);}
+function resetData(){confirmModal(lang==="en"?"Reset all data back to the original Wonderful Indonesia seed? Your edits, additions and imports will be lost.":"Kembalikan semua data ke data awal Wonderful Indonesia? Perubahan & impor Anda akan hilang.",()=>{try{localStorage.removeItem("wi_kols");localStorage.removeItem("wi_briefs");localStorage.removeItem("wi_markets");}catch(e){}location.reload();},true);}
 
 /* CSV parse (quote-aware) */
 function parseCSV(text){const rows=[];let f="",row=[],q=false;text=text.replace(/\uFEFF/g,"");
@@ -510,9 +528,9 @@ function importRows(rows){
       fol:toNum(ci.folig>=0?r[ci.folig]:0),folTT:toNum(ci.foltt>=0?r[ci.foltt]:0),er:toER(ci.er>=0?r[ci.er]:0),
       ver:/yes/i.test(ci.ver>=0?(r[ci.ver]||""):"")?1:0,email:(ci.email>=0?(r[ci.email]||"").trim():"")||"—",stage:stageFor(ci.stage>=0?r[ci.stage]:"")});}
   if(!out.length){toast(lang==="en"?"No KOL rows found":"Tidak ada baris KOL");return;}
-  kols.length=0;out.forEach(k=>kols.push(k));
+  kols.length=0;out.forEach(k=>kols.push(k));syncSeq();
   state.market="all";state.fStatus="all";state.fTier="all";
-  buildNav();applyStatic();RENDER[state.section]();toast((lang==="en"?"Imported ":"Diimpor ")+out.length+" KOLs");
+  persist();buildNav();applyStatic();RENDER[state.section]();toast((lang==="en"?"Imported ":"Diimpor ")+out.length+" KOLs");
 }
 function download(name,text){const b=new Blob([text],{type:"text/csv;charset=utf-8"});const u=URL.createObjectURL(b);const a=document.createElement("a");a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);}
 function exportReport(){const list=fc(kols);const head=["Name","Handle","Country","Tier","Niche","Language","Followers_IG","Followers_TikTok","ER_pct","Stage","Kemenpar","Projected_Engagements"];
@@ -520,45 +538,56 @@ function exportReport(){const list=fc(kols);const head=["Name","Handle","Country
   download("wonderful-indonesia-kol-report.csv",lines.join("\n"));toast((lang==="en"?"Exported ":"Diekspor ")+list.length+" KOLs");}
 
 /* Add KOL */
-function addKolForm(){openModal(`
-  <div class="modal-h"><h3>${t("b_add")}</h3><button class="x" onclick="closeModal()">✕</button></div>
+function addKolForm(){kolForm();}
+function kolForm(id){const k=id?kols.find(x=>x.id===id):null;const ed=!!k;const sel=(a,b)=>a===b?" selected":"";const tiers=["micro","mid","macro","nano","mega"];const lgs=["EN","MS","KR","JP"];const sts=["identified","contacted","replied","negotiating","confirmed","ontrip","posted"];
+  openModal(`
+  <div class="modal-h"><h3>${ed?(lang==="en"?"Edit KOL":"Edit KOL"):t("b_add")}</h3><button class="x" onclick="closeModal()">✕</button></div>
   <div class="modal-b">
-   <div class="field"><label>Name</label><input id="f_name" placeholder="Full name"></div>
-   <div class="frow"><div class="field"><label>Instagram handle</label><input id="f_h" placeholder="@handle"></div>
-    <div class="field"><label>Country</label><select id="f_market">${markets.map(m=>`<option value="${m.id}">${m.flag} ${m.name}</option>`).join("")}</select></div></div>
-   <div class="frow"><div class="field"><label>Tier</label><select id="f_tier"><option value="micro">Micro</option><option value="mid">Mid</option><option value="macro">Macro</option><option value="nano">Nano</option><option value="mega">Mega</option></select></div>
-    <div class="field"><label>Niche</label><input id="f_niche" value="Adventure"></div></div>
-   <div class="frow"><div class="field"><label>Followers (IG)</label><input id="f_fol" type="number" value="0"></div>
-    <div class="field"><label>Engagement rate %</label><input id="f_er" type="number" step="0.01" value="0"></div></div>
-   <div class="frow"><div class="field"><label>Language</label><select id="f_lang"><option>EN</option><option>MS</option><option>KR</option><option>JP</option></select></div>
-    <div class="field"><label>Pipeline stage</label><select id="f_stage">${["identified","contacted","replied","negotiating","confirmed","ontrip","posted"].map(s=>`<option value="${s}">${sName(s)}</option>`).join("")}</select></div></div>
-   <div class="field"><label>Platforms</label><div class="checks"><label><input type="checkbox" id="f_ig" checked>Instagram</label><label><input type="checkbox" id="f_tt">TikTok</label><label><input type="checkbox" id="f_yt">YouTube</label></div></div>
-   <div class="field"><label>Email / contact</label><input id="f_email" placeholder="email@…"></div>
+   <div class="field"><label>Name</label><input id="f_name" placeholder="Full name" value="${k?esc(k.name):""}"></div>
+   <div class="frow"><div class="field"><label>Instagram handle</label><input id="f_h" placeholder="@handle" value="${k?esc(k.h):""}"></div>
+    <div class="field"><label>Country</label><select id="f_market">${markets.map(m=>`<option value="${m.id}"${sel(k&&k.market,m.id)}>${m.flag} ${m.name}</option>`).join("")}</select></div></div>
+   <div class="frow"><div class="field"><label>Tier</label><select id="f_tier">${tiers.map(tk=>`<option value="${tk}"${sel(k&&k.tier,tk)}>${tierName(tk)}</option>`).join("")}</select></div>
+    <div class="field"><label>Niche</label><input id="f_niche" value="${k?esc(k.niche):"Adventure"}"></div></div>
+   <div class="frow"><div class="field"><label>Followers (IG)</label><input id="f_fol" type="number" value="${k?k.fol:0}"></div>
+    <div class="field"><label>Engagement rate %</label><input id="f_er" type="number" step="0.01" value="${k?k.er:0}"></div></div>
+   <div class="frow"><div class="field"><label>Language</label><select id="f_lang">${lgs.map(l=>`<option${sel(k&&k.lang,l)}>${l}</option>`).join("")}</select></div>
+    <div class="field"><label>Pipeline stage</label><select id="f_stage">${sts.map(s=>`<option value="${s}"${sel(k&&k.stage,s)}>${sName(s)}</option>`).join("")}</select></div></div>
+   <div class="field"><label>Platforms</label><div class="checks"><label><input type="checkbox" id="f_ig"${(!k||k.plat.includes("ig"))?" checked":""}>Instagram</label><label><input type="checkbox" id="f_tt"${k&&k.plat.includes("tiktok")?" checked":""}>TikTok</label><label><input type="checkbox" id="f_yt"${k&&k.plat.includes("youtube")?" checked":""}>YouTube</label></div></div>
+   <div class="field"><label>Email / contact</label><input id="f_email" placeholder="email@…" value="${k&&k.email!=="—"?esc(k.email):""}"></div>
   </div>
-  <div class="modal-f"><button class="btn ghost" onclick="closeModal()">${lang==="en"?"Cancel":"Batal"}</button><button class="btn" onclick="submitKol()">${t("b_add")}</button></div>`);}
-function submitKol(){const name=el("f_name").value.trim();if(!name){toast(lang==="en"?"Name is required":"Nama wajib diisi");return;}
+  <div class="modal-f" style="justify-content:space-between"><div>${ed?`<button class="btn ghost" style="color:var(--red)" onclick="deleteKol('${k.id}')">${lang==="en"?"Delete":"Hapus"}</button>`:""}</div>
+   <div style="display:flex;gap:10px"><button class="btn ghost" onclick="closeModal()">${lang==="en"?"Cancel":"Batal"}</button><button class="btn" onclick="submitKol('${id||""}')">${ed?(lang==="en"?"Save":"Simpan"):t("b_add")}</button></div></div>`);}
+function submitKol(id){const name=el("f_name").value.trim();if(!name){toast(lang==="en"?"Name is required":"Nama wajib diisi");return;}
   const plat=[];if(el("f_ig").checked)plat.push("ig");if(el("f_tt").checked)plat.push("tiktok");if(el("f_yt").checked)plat.push("youtube");
   const ig=el("f_h").value.trim();
-  kols.push({id:"k"+(++kolSeq),name,h:ig?(ig[0]==="@"?ig:"@"+ig):"",ini:initials(name),market:el("f_market").value,plat:plat.length?plat:["ig"],
-    tier:el("f_tier").value,niche:el("f_niche").value.trim()||"—",lang:el("f_lang").value,fol:+el("f_fol").value||0,folTT:0,
-    er:+el("f_er").value||0,ver:0,email:el("f_email").value.trim()||"—",stage:el("f_stage").value});
-  closeModal();buildNav();RENDER[state.section]();toast((lang==="en"?"KOL added: ":"KOL ditambah: ")+name);}
+  const data={name,h:ig?(ig[0]==="@"?ig:"@"+ig):"",ini:initials(name),market:el("f_market").value,plat:plat.length?plat:["ig"],
+    tier:el("f_tier").value,niche:el("f_niche").value.trim()||"—",lang:el("f_lang").value,fol:+el("f_fol").value||0,
+    er:+el("f_er").value||0,email:el("f_email").value.trim()||"—",stage:el("f_stage").value};
+  if(id){const k=kols.find(x=>x.id===id);Object.assign(k,data);}else{kols.push(Object.assign({id:"k"+(++kolSeq),folTT:0,ver:0},data));}
+  persist();closeModal();buildNav();RENDER[state.section]();toast(id?(lang==="en"?"Saved: ":"Disimpan: ")+name:(lang==="en"?"KOL added: ":"KOL ditambah: ")+name);}
+function deleteKol(id){const k=kols.find(x=>x.id===id);if(!k)return;
+  confirmModal((lang==="en"?"Delete KOL <b>":"Hapus KOL <b>")+esc(k.name)+"</b>?",()=>{const i=kols.findIndex(x=>x.id===id);if(i>=0)kols.splice(i,1);persist();buildNav();RENDER[state.section]();toast((lang==="en"?"Deleted ":"Dihapus ")+k.name);},true);}
 
 /* New brief */
-function newBriefForm(){openModal(`
-  <div class="modal-h"><h3>${t("b_newbrief")}</h3><button class="x" onclick="closeModal()">✕</button></div>
+function newBriefForm(){briefForm();}
+function briefForm(id){const b=id?briefs.find(x=>x.id===id):null;const ed=!!b;const sel=(a,c)=>a===c?" selected":"";const objs=["awareness","consideration","conversion"];const sts=["draft","sent","acknowledged","revision","approved"];
+  openModal(`
+  <div class="modal-h"><h3>${ed?(lang==="en"?"Edit brief":"Edit brief"):t("b_newbrief")}</h3><button class="x" onclick="closeModal()">✕</button></div>
   <div class="modal-b">
-   <div class="field"><label>Title</label><input id="b_title" value="Labuan Bajo Fam Trip"></div>
-   <div class="frow"><div class="field"><label>Market</label><select id="b_market">${markets.map(m=>`<option value="${m.id}">${m.flag} ${m.name}</option>`).join("")}</select></div>
-    <div class="field"><label>Objective</label><select id="b_obj"><option value="awareness">${sName("awareness")}</option><option value="consideration">${sName("consideration")}</option><option value="conversion">${sName("conversion")}</option></select></div></div>
-   <div class="frow"><div class="field"><label># KOLs</label><input id="b_kols" type="number" value="5"></div>
-    <div class="field"><label>Status</label><select id="b_status">${["draft","sent","acknowledged","revision","approved"].map(s=>`<option value="${s}">${sName(s)}</option>`).join("")}</select></div></div>
-   <div class="field"><label>Due (MM-DD)</label><input id="b_due" value="08-01"></div>
+   <div class="field"><label>Title</label><input id="b_title" value="${b?esc(b.title):"Labuan Bajo Fam Trip"}"></div>
+   <div class="frow"><div class="field"><label>Market</label><select id="b_market">${markets.map(m=>`<option value="${m.id}"${sel(b&&b.market,m.id)}>${m.flag} ${m.name}</option>`).join("")}</select></div>
+    <div class="field"><label>Objective</label><select id="b_obj">${objs.map(o=>`<option value="${o}"${sel(b&&b.obj,o)}>${sName(o)}</option>`).join("")}</select></div></div>
+   <div class="frow"><div class="field"><label># KOLs</label><input id="b_kols" type="number" value="${b?b.kols:5}"></div>
+    <div class="field"><label>Status</label><select id="b_status">${sts.map(s=>`<option value="${s}"${sel(b&&b.status,s)}>${sName(s)}</option>`).join("")}</select></div></div>
+   <div class="field"><label>Due (MM-DD)</label><input id="b_due" value="${b?esc(b.due):"08-01"}"></div>
   </div>
-  <div class="modal-f"><button class="btn ghost" onclick="closeModal()">${lang==="en"?"Cancel":"Batal"}</button><button class="btn" onclick="submitBrief()">${t("b_newbrief")}</button></div>`);}
-function submitBrief(){const title=el("b_title").value.trim()||"Brief";
-  briefs.push({id:"b"+(briefs.length+1),title,market:el("b_market").value,obj:el("b_obj").value,kols:+el("b_kols").value||0,status:el("b_status").value,due:el("b_due").value||"—"});
-  closeModal();RENDER[state.section]();toast(lang==="en"?"Brief created":"Brief dibuat");}
+  <div class="modal-f" style="justify-content:space-between"><div>${ed?`<button class="btn ghost" style="color:var(--red)" onclick="deleteBrief('${b.id}')">${lang==="en"?"Delete":"Hapus"}</button>`:""}</div>
+   <div style="display:flex;gap:10px"><button class="btn ghost" onclick="closeModal()">${lang==="en"?"Cancel":"Batal"}</button><button class="btn" onclick="submitBrief('${id||""}')">${ed?(lang==="en"?"Save":"Simpan"):t("b_newbrief")}</button></div></div>`);}
+function submitBrief(id){const data={title:el("b_title").value.trim()||"Brief",market:el("b_market").value,obj:el("b_obj").value,kols:+el("b_kols").value||0,status:el("b_status").value,due:el("b_due").value||"—"};
+  if(id){const b=briefs.find(x=>x.id===id);Object.assign(b,data);}else{briefs.push(Object.assign({id:"b"+Date.now()},data));}
+  persist();closeModal();RENDER[state.section]();toast(id?(lang==="en"?"Brief saved":"Brief disimpan"):(lang==="en"?"Brief created":"Brief dibuat"));}
+function deleteBrief(id){const b=briefs.find(x=>x.id===id);if(!b)return;
+  confirmModal((lang==="en"?"Delete brief <b>":"Hapus brief <b>")+esc(b.title)+"</b>?",()=>{const i=briefs.findIndex(x=>x.id===id);if(i>=0)briefs.splice(i,1);persist();RENDER[state.section]();toast(lang==="en"?"Brief deleted":"Brief dihapus");},true);}
 
 /* KOL detail + advance */
 const STAGE_ORDER=["identified","contacted","replied","negotiating","confirmed","ontrip","posted"];
@@ -581,9 +610,13 @@ function kolDetail(id){const k=kols.find(x=>x.id===id);if(!k)return;const mail=k
     <div class="dg" style="grid-column:1/3"><small>${t("th_contact")}</small><b>${mail?`<a href="mailto:${esc(k.email)}">${esc(k.email)}</a>`:esc(k.email)}</b></div>
    </div>
   </div>
-  <div class="modal-f">${mail?`<a class="btn ghost" href="mailto:${esc(k.email)}">${lang==="en"?"Email":"Email"}</a>`:""}<button class="btn" onclick="advance('${k.id}')">${lang==="en"?"Advance stage →":"Lanjut tahap →"}</button></div>`);}
+  <div class="modal-f" style="justify-content:space-between">
+   <button class="btn ghost" style="color:var(--red)" onclick="deleteKol('${k.id}')">${lang==="en"?"Delete":"Hapus"}</button>
+   <div style="display:flex;gap:10px">${mail?`<a class="btn ghost" href="mailto:${esc(k.email)}">${lang==="en"?"Email":"Email"}</a>`:""}<button class="btn ghost" onclick="kolForm('${k.id}')">${lang==="en"?"Edit":"Edit"}</button><button class="btn" onclick="advance('${k.id}')">${lang==="en"?"Advance stage →":"Lanjut tahap →"}</button></div></div>`);}
 function advance(id){const k=kols.find(x=>x.id===id);const i=STAGE_ORDER.indexOf(k.stage);if(i<STAGE_ORDER.length-1)k.stage=STAGE_ORDER[i+1];else{toast(lang==="en"?"Already at final stage":"Sudah tahap akhir");return;}
-  buildNav();RENDER[state.section]();kolDetail(id);toast(k.name+" → "+sName(k.stage));}
+  persist();buildNav();RENDER[state.section]();kolDetail(id);toast(k.name+" → "+sName(k.stage));}
+function setStage(id,v){const k=kols.find(x=>x.id===id);if(!k)return;k.stage=v;persist();buildNav();RENDER[state.section]();toast(k.name+" → "+sName(v));}
+function setApproval(id){const k=kols.find(x=>x.id===id);if(!k)return;k.approved=!isApproved(k);persist();RENDER[state.section]();toast(k.name+" · "+(k.approved?t("approvedw"):t("pending")));}
 
 /* notifications */
 let notifOpen=false;window.NOTIF=[];
@@ -780,8 +813,9 @@ function rKols(){
       <th class="num">${t("th_followers")}</th><th class="num">${t("th_er")}</th><th>${t("th_status")}</th><th>${t("th_approval")}</th></tr></thead><tbody>`+
       (list.length?list.map(k=>`<tr class="clickable" onclick="kolDetail('${k.id}')"><td><div class="who">${avatar(k.ini,mcol(k.market))}<div><b>${k.name} ${k.ver?'<span class="ver" title="Audience verified">✓</span>':''}</b><br><small>${k.h}</small></div></div></td>
         <td>${mflag(k.market)} ${marketName(k.market)}</td><td>${platChips(k.plat)}</td><td>${tierChip(k.tier)}</td><td>${k.niche}</td><td>${k.lang}</td>
-        <td class="num">${fFol(k.fol)}${k.folTT?`<br><small class="muted">TT ${fFol(k.folTT)}</small>`:''}</td><td class="num">${k.er}%</td><td>${chip(k.stage)}</td>
-        <td>${isApproved(k)?'<span class="chip" style="color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)">'+t("approvedw")+'</span>':'<span class="chip" style="color:var(--muted);background:var(--border2)">'+t("pending")+'</span>'}</td></tr>`).join("")
+        <td class="num">${fFol(k.fol)}${k.folTT?`<br><small class="muted">TT ${fFol(k.folTT)}</small>`:''}</td><td class="num">${k.er}%</td>
+        <td onclick="event.stopPropagation()"><select class="inline-sel" title="${lang==="en"?"Change pipeline stage":"Ubah tahap pipeline"}" onchange="setStage('${k.id}',this.value)">${["identified","contacted","replied","negotiating","confirmed","ontrip","posted"].map(s=>`<option value="${s}" ${k.stage===s?"selected":""}>${sName(s)}</option>`).join("")}</select></td>
+        <td onclick="event.stopPropagation()">${isApproved(k)?`<button class="chip app-chip" style="color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)" title="${lang==="en"?"Toggle approval":"Ubah persetujuan"}" onclick="setApproval('${k.id}')">${t("approvedw")}</button>`:`<button class="chip app-chip" style="color:var(--muted);background:var(--border2)" title="${lang==="en"?"Toggle approval":"Ubah persetujuan"}" onclick="setApproval('${k.id}')">${t("pending")}</button>`}</td></tr>`).join("")
         :`<tr><td colspan="10" class="muted" style="text-align:center;padding:30px">${lang==="en"?"No KOLs match your filters.":"Tidak ada KOL yang cocok."}</td></tr>`)+
       `</tbody></table></div>`;
   } else {
@@ -805,7 +839,7 @@ function rBriefs(){
     <span class="muted" style="margin-left:6px">${t("destination")}</span><span style="flex:1"></span>
     <select class="ctrl" onchange="state.fBrief=this.value;rBriefs()"><option value="all">${t("f_all_status")}</option>${stages.map(s=>`<option value="${s}" ${state.fBrief===s?"selected":""}>${sName(s)}</option>`).join("")}</select></div>`;
   const table=`<div class="card pad0" style="overflow-x:auto"><table><thead><tr><th>${t("th_brief")}</th><th>${t("th_market")}</th><th>${t("th_trip")}</th><th>${t("th_obj")}</th><th class="num">${t("th_kols")}</th><th>${t("th_status")}</th><th class="num">${t("th_due")}</th></tr></thead><tbody>`+
-    (list.length?list.map(b=>`<tr><td><b>${b.title}</b></td><td>${mflag(b.market)} ${marketName(b.market)}</td><td>Labuan Bajo</td><td>${chip(b.obj)}</td><td class="num">${b.kols}</td><td>${chip(b.status)}</td><td class="num">${b.due}</td></tr>`).join("")
+    (list.length?list.map(b=>`<tr class="clickable" title="${lang==="en"?"Edit brief":"Edit brief"}" onclick="briefForm('${b.id}')"><td><b>${b.title}</b></td><td>${mflag(b.market)} ${marketName(b.market)}</td><td>Labuan Bajo</td><td>${chip(b.obj)}</td><td class="num">${b.kols}</td><td>${chip(b.status)}</td><td class="num">${b.due}</td></tr>`).join("")
       :`<tr><td colspan="7" class="muted" style="text-align:center;padding:30px">${lang==="en"?"No briefs match.":"Tidak ada brief."}</td></tr>`)+`</tbody></table></div>`;
   document.getElementById("s-briefs").innerHTML=head+
     `<div class="grid cols-2b" style="margin-bottom:16px">
@@ -942,7 +976,14 @@ function rSettings(){
       <div class="card"><h3>${t("emv_title")}</h3><div class="hint">${lang==="en"?"Premium intl-travel benchmarks":"Tolok ukur travel internasional premium"}</div>
         <table>${emv.map(x=>`<tr><td><b>${x[0]}</b></td><td class="num" style="text-align:right">${x[1]}</td></tr>`).join("")}</table>
         <div class="note" style="margin-top:12px">${t("emv_note")}</div></div>
-    </div>`;
+    </div>
+    <div class="card" style="margin-top:16px"><h3>${lang==="en"?"Data management":"Manajemen data"}</h3><div class="hint">${lang==="en"?"All edits, additions, imports & approvals are saved to this browser automatically.":"Semua perubahan, tambahan, impor & persetujuan tersimpan otomatis di browser ini."}</div>
+      <div class="row-flex" style="gap:10px;margin-top:4px">
+        <button class="btn ghost" onclick="document.getElementById('csvInput').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3M7 8l5-5 5 5M5 21h14"/></svg>${t("b_import")}</button>
+        <button class="btn ghost" onclick="exportReport()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 11l4 4 4-4M5 21h14"/></svg>${t("b_export")}</button>
+        <span style="flex:1"></span>
+        <button class="btn ghost" style="color:var(--red)" onclick="resetData()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg>${lang==="en"?"Reset to seed data":"Setel ulang data"}</button>
+      </div></div>`;
 }
 
 /* ============ router ============ */
@@ -980,6 +1021,7 @@ function toggleTheme(){const h=document.documentElement;const dark=h.getAttribut
 /* ============ init ============ */
 document.getElementById("csvInput").addEventListener("change",e=>{const f=e.target.files[0];if(f)handleCSV(f);e.target.value="";});
 document.addEventListener("click",e=>{if(notifOpen&&!e.target.closest(".notif-wrap"))closeNotif();});
+loadPersist();syncSeq();
 buildNav();applyStatic();rOverview();
 </script>
 </body>
