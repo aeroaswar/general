@@ -39,7 +39,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
 <style>
 :root{
@@ -60,9 +60,9 @@
   --ink-grad:linear-gradient(180deg,#0e0e0e,#000000);
   --radius:14px;
   --maxw:1240px;
-  --display:"Jost",system-ui,sans-serif;
+  --display:"Archivo",system-ui,sans-serif;
   --sans:"Inter",system-ui,sans-serif;
-  --mono:"JetBrains Mono",monospace;
+  --mono:"Inter",system-ui,sans-serif;
   --shadow:0 18px 40px -24px rgba(0,0,0,.55);
   --shadow-lg:0 30px 70px -34px rgba(0,0,0,.65);
 }
@@ -122,7 +122,7 @@ nav{position:sticky;top:0;z-index:50;background:rgba(6,6,6,.82);backdrop-filter:
 .pill .live{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(200,194,182,.5);animation:pulse 1.8s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(200,194,182,.5)}70%{box-shadow:0 0 0 9px rgba(200,194,182,0)}100%{box-shadow:0 0 0 0 rgba(200,194,182,0)}}
 h1.display{
-  font-family:var(--display);font-weight:500;line-height:.96;letter-spacing:.04em;text-transform:uppercase;
+  font-family:var(--display);font-weight:800;line-height:.9;letter-spacing:-.015em;text-transform:uppercase;
   font-size:clamp(44px,8.6vw,108px);margin-top:24px;color:var(--text);
 }
 h1.display .red{color:var(--red)}
@@ -145,7 +145,7 @@ h1.display .out{color:transparent;-webkit-text-stroke:1.5px var(--muted);}
 .section{padding:80px 0}
 .sec-head{max-width:720px;margin:0 auto 46px;text-align:center}
 .sec-head .kicker{color:var(--red);margin-bottom:14px}
-.sec-head h2{font-family:var(--display);font-weight:500;font-size:clamp(30px,4.6vw,50px);line-height:1.06;letter-spacing:.05em;text-transform:uppercase}
+.sec-head h2{font-family:var(--display);font-weight:700;font-size:clamp(30px,4.6vw,50px);line-height:1.05;letter-spacing:-.01em;text-transform:uppercase}
 .sec-head p{color:var(--muted);margin-top:14px;font-size:16px}
 
 /* ---------- Controls ---------- */
