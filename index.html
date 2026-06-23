@@ -922,7 +922,7 @@ try {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true, powerPreference:"high-performance" });
   renderer.setClearColor(0x000000, 0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.16;
+  renderer.toneMappingExposure = 1.26;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
   const scene = new THREE.Scene();
@@ -934,9 +934,9 @@ try {
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.035).texture;
 
   // lighting — warm key, back rim for edge glow, cool fill
-  const key = new THREE.DirectionalLight(0xfff3e2, 2.7); key.position.set(-4, 5, 6); scene.add(key);
-  const rim = new THREE.DirectionalLight(0xf3efe6, 2.7); rim.position.set(4.5, 3, -5); scene.add(rim);
-  const fill = new THREE.DirectionalLight(0xc6cad2, 0.7); fill.position.set(3, -3, 4); scene.add(fill);
+  const key = new THREE.DirectionalLight(0xfff6ea, 3.2); key.position.set(-4, 5, 6); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xf6f2ea, 3.3); rim.position.set(4.5, 3, -5); scene.add(rim);
+  const fill = new THREE.DirectionalLight(0xccd0d8, 0.9); fill.position.set(3, -3, 4); scene.add(fill);
   scene.add(new THREE.AmbientLight(0x2a2a2a, 0.45));
 
   // ---- the REAL AXIOM logo, extruded into a 3D metallic object ----
@@ -950,17 +950,17 @@ try {
 
   // extruded body — depth-graded titanium (dark deep -> light near the face) for a real bevel
   const LAYERS = 26, DEPTH = 0.18;
-  const cFront = new THREE.Color(0x97917f), cBack = new THREE.Color(0x44413a);
+  const cFront = new THREE.Color(0xc2bca8), cBack = new THREE.Color(0x565249);
   for(let i=LAYERS-1; i>=1; i--){
     const f = i/(LAYERS-1);                                   // 1 = deepest
     const col = cBack.clone().lerp(cFront, 1-f);
-    const m = new THREE.MeshStandardMaterial({ map:tex, transparent:false, alphaTest:0.5, color:col, metalness:1.0, roughness:0.4, envMapIntensity:0.95 });
+    const m = new THREE.MeshStandardMaterial({ map:tex, transparent:false, alphaTest:0.5, color:col, metalness:1.0, roughness:0.26, envMapIntensity:1.2 });
     const mesh = new THREE.Mesh(geo, m);
     mesh.position.z = -f*DEPTH;
     logo.add(mesh);
   }
   // front face — polished bone metal with clearcoat, soft anti-aliased edges
-  const face = new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ map:tex, transparent:true, alphaTest:0.02, color:0xf4f1ea, metalness:0.9, roughness:0.17, clearcoat:1, clearcoatRoughness:0.18, reflectivity:0.6, envMapIntensity:1.7 }));
+  const face = new THREE.Mesh(geo, new THREE.MeshPhysicalMaterial({ map:tex, transparent:true, alphaTest:0.02, color:0xfdfcf8, metalness:1.0, roughness:0.08, clearcoat:1, clearcoatRoughness:0.07, reflectivity:0.95, envMapIntensity:2.5 }));
   face.position.z = 0.002; face.renderOrder = 2; logo.add(face);
   logo.position.z = DEPTH/2;   // centre the extrusion depth
 
