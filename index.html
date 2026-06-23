@@ -859,6 +859,14 @@ navLinks.addEventListener("click",e=>{if(e.target.tagName==="A")navLinks.classLi
 /* Year */
 document.getElementById("yr").textContent=new Date().getFullYear();
 
+/* Header/footer logo: fall back to the wordmark if the logo asset is missing */
+document.querySelectorAll(".brand-logo").forEach(img=>{
+  img.addEventListener("error",()=>{
+    const a=img.closest(".brand");
+    if(a) a.innerHTML='<span class="wm">AXIOM</span><span class="wmsub">HUMAN PERFORMANCE</span>';
+  });
+});
+
 /* Reveal */
 const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}}),{threshold:.12});
 document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
