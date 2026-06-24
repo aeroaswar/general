@@ -1,0 +1,29 @@
+{
+  "_comment": "INACTIVE TEMPLATE — Claude Code only reads settings.json / settings.local.json, NOT this file. To activate the Headroom hooks, copy the `hooks` block below into .claude/settings.json (merge it if that file already exists). See .claude/README-headroom.md.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/headroom-ensure.sh install",
+            "timeout": 120
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/headroom-ensure.sh",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}
