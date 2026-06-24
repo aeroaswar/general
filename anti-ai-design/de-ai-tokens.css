@@ -1,0 +1,183 @@
+/* =============================================================================
+   de-ai-tokens.css — a drop-in token system that defaults AWAY from the
+   "AI-generated" look. Companion to FIELD-GUIDE.md.
+
+   Philosophy: every token here is a *made decision*, not a framework default.
+   The point isn't these exact values — it's that you start from an opinionated
+   base and then bend it toward the specific brand, instead of starting from
+   Tailwind/shadcn defaults (purple, even spacing, shadow-lg, one safe sans).
+
+   HOW TO USE
+   1. Copy into a new project, link before your own styles.
+   2. Replace the --brand-* values in step 1 with colors pulled from the actual
+      brand / a real photo / the subject matter — NOT from a UI framework.
+   3. Use the scales (--space-*, --text-*, --r-*, --shadow-*) everywhere instead
+      of ad-hoc px values. Range + restraint is what reads as craft.
+   Tailwind users: map these to theme.extend (notes inline).
+   ============================================================================= */
+
+:root {
+  /* 1 · BRAND — REPLACE THESE. Derive from content, never from a framework.
+     Defaults below are this workspace's "daylight wake" identity (bold sports,
+     Merah-Putih red, daylight turquoise, navy ink) as a worked example.
+     RULE: no indigo / violet / purple unless the brand is literally purple. */
+  --brand-ink:      #0F1B2D;   /* deep navy — primary text / dark surfaces      */
+  --brand-accent:   #E2342B;   /* Merah-Putih red — ONE saturated accent, ~5%   */
+  --brand-support:  #10A6B8;   /* daylight turquoise — secondary, sparing        */
+  --brand-canvas:   #FBFAF7;   /* warm near-white — NOT pure #FFFFFF (too clean) */
+
+  /* 2 · SEMANTIC — distinct hues, no purple. Tuned, not Tailwind-stock. */
+  --ok:    #16A34A;
+  --warn:  #F59E0B;
+  --bad:   #DC2626;
+  --info:  #2563EB;
+  --muted: #5B677A;
+
+  /* 3 · SURFACES — warm-tinted neutrals (pure grey reads synthetic). */
+  --bg:        var(--brand-canvas);
+  --surface:   #FFFFFF;
+  --surface-2: #F4F2EC;             /* warm card-2 / hover                       */
+  --hairline:  rgba(15, 27, 45, .10); /* 1px borders — craft signal vs shadow-lg */
+
+  /* 4 · TYPE RAMP — a *defined* scale with real jumps (1.25 major-third-ish).
+     This is the antidote to "15 ad-hoc font sizes". Pick from this ladder only.
+     Tailwind: theme.extend.fontSize. */
+  --text-xs:   0.75rem;   /* 12px — captions, labels                            */
+  --text-sm:   0.875rem;  /* 14px — secondary body                             */
+  --text-base: 1rem;      /* 16px — body                                       */
+  --text-lg:   1.25rem;   /* 20px — lead / card titles                         */
+  --text-xl:   1.625rem;  /* 26px — section sub-heads                          */
+  --text-2xl:  2.25rem;   /* 36px — section heads                              */
+  --text-3xl:  3.25rem;   /* 52px — page hero (note the BIG jump = hierarchy)  */
+  --text-4xl:  4.75rem;   /* 76px — display, use once per page                 */
+
+  /* Two faces: a body workhorse + a display voice. Swap display for real
+     character per brand (Italiana, a grotesk, a serif) — the tell is flatness,
+     so even keeping one family, lean on weight + tracking for contrast. */
+  --font-body:    'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --font-display: 'Geist', var(--font-body);
+  --tracking-tight: -0.02em;   /* on large display type                        */
+  --tracking-caps:   0.09em;   /* on uppercase labels                          */
+
+  /* 5 · SPACING SCALE — range matters. Tight where related, generous to rest.
+     Do NOT default every gap to one value; that's the "rhythmless" tell. */
+  --space-1:  0.25rem;  /*  4px */
+  --space-2:  0.5rem;   /*  8px */
+  --space-3:  1rem;     /* 16px */
+  --space-4:  2rem;     /* 32px */
+  --space-5:  4rem;     /* 64px */
+  --space-6:  8rem;     /* 128px — between major sections; vary this per break  */
+
+  /* 6 · RADII — a *small* set (3 steps), used deliberately. Not rounded-xl
+     on everything. */
+  --r-sm: 8px;
+  --r:    14px;
+  --r-lg: 22px;
+  --r-pill: 999px;
+
+  /* 7 · SHADOWS — a 2-step ambient system + hairline, not shadow-lg everywhere.
+     Soft, low-spread, tinted with the ink color (pure-black shadow reads cheap). */
+  --shadow-sm: 0 1px 2px rgba(15, 27, 45, .05);
+  --shadow:    0 1px 2px rgba(15, 27, 45, .04), 0 12px 32px rgba(15, 27, 45, .08);
+
+  /* 8 · MOTION — one easing personality (expo-out), reduced-motion safe below. */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);   /* expo-out                          */
+  --dur:  0.5s;
+}
+
+/* ---- Base ---------------------------------------------------------------- */
+body {
+  font-family: var(--font-body);
+  color: var(--brand-ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+
+/* Display type: big, tracked-in, weighty — hierarchy via the ramp, not color. */
+.display {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.04;
+}
+
+/* Uppercase micro-labels — tracking is the craft signal. */
+.eyebrow {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ALWAYS tabular numerals on data/metrics (anti-tell #4). */
+.tnum { font-variant-numeric: tabular-nums; }
+
+/* ---- Patterns engineered against the tells ------------------------------- */
+
+/* Frosted card: hairline + ONE ambient shadow (not shadow-lg). talvex recipe. */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+}
+
+/* Accent used sparingly: a thin rule / chip, never a full-bleed gradient. */
+.accent-rule { height: 2px; width: 56px; background: var(--brand-accent); border: 0; }
+.chip {
+  display: inline-flex; align-items: center; gap: .4em;
+  font-size: var(--text-xs); font-weight: 600;
+  padding: .25em .7em; border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--brand-accent) 12%, transparent);
+  color: var(--brand-accent);
+}
+
+/* BENTO grid — varied cell sizes (anti-tell #3: not an identical 3-card row).
+   Cells deliberately differ in span so the layout reads as authored. */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-3);
+}
+.bento > .span-2 { grid-column: span 2; }
+.bento > .span-3 { grid-column: span 3; }
+.bento > .span-4 { grid-column: span 4; }
+.bento > .tall   { grid-row: span 2; }
+
+/* Asymmetric hero: left-aligned, content offset off-center (anti-tell #2). */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); /* not 50/50 */
+  align-items: end;
+  gap: var(--space-5);
+  padding-block: var(--space-6) var(--space-5);   /* asymmetric vertical rhythm */
+}
+
+/* Section rhythm helpers — VARY these between sections, don't repeat one value. */
+.section      { padding-block: var(--space-6); }
+.section-tight { padding-block: var(--space-4); }
+
+/* ---- Reduced motion (always ship this) ----------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =============================================================================
+   TAILWIND MAPPING (drop into tailwind.config.js theme.extend):
+     colors:     { ink:'#0F1B2D', accent:'#E2342B', support:'#10A6B8',
+                   canvas:'#FBFAF7' }   // delete the default indigo/violet
+     fontSize:   xs:'0.75rem' … '4xl':'4.75rem'  (the ramp above)
+     spacing:    use 1,2,3,4,5,6 = 4/8/16/32/64/128px
+     borderRadius: sm:'8px', DEFAULT:'14px', lg:'22px'
+     boxShadow:  sm + DEFAULT above (NOT the stock shadow-lg on everything)
+     transitionTimingFunction: { ease: 'cubic-bezier(0.16,1,0.3,1)' }
+   Then: never reach for from-blue-500 to-purple-600. Ever.
+   ============================================================================= */

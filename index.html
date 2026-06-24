@@ -15,7 +15,7 @@
   --border:rgba(15,23,42,.09); --border2:rgba(15,23,42,.06);
   --ink:#0F172A; --muted:#5B677A; --muted2:#94A3B8;
   --accent:#FFD85F; --accent-deep:#F2C42E; --accent-ink:#3A2E00;
-  --green:#16A34A; --amber:#F59E0B; --red:#DC2626; --blue:#2563EB; --teal:#0D9488; --emerald:#059669; --slate:#64748B; --indigo:#4F46E5;
+  --green:#16A34A; --amber:#F59E0B; --red:#DC2626; --blue:#2563EB; --teal:#0D9488; --emerald:#059669; --slate:#64748B; --indigo:#1E40AF;
   --turq:#10A6B8; --turq-deep:#0B7E8C; --coral:#FF6A5A; --sand:#F4E4C1;
   --shadow:0 1px 2px rgba(15,23,42,.04), 0 10px 30px rgba(15,23,42,.07);
   --shadow-sm:0 1px 2px rgba(15,23,42,.05);
@@ -402,7 +402,7 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opa
     </div>
     <nav class="nav" id="nav"></nav>
     <div class="side-foot">
-      <div class="avatar" style="background:linear-gradient(140deg,#2563EB,#4F46E5)">EO</div>
+      <div class="avatar" style="background:linear-gradient(140deg,#2563EB,#1E40AF)">EO</div>
       <div><b style="font-size:12.5px">PT. EORI Kreatif</b><br><small data-i18n="role_am">Agency · Kemenpar RI</small></div>
     </div>
   </aside>
@@ -530,7 +530,7 @@ function chip(k){const col=sColor(k);return `<span class="chip" style="color:${c
 
 /* ============ refs ============ */
 const PLAT={ig:{n:"IG",c:"#E1306C"},tiktok:{n:"TT",c:"#111"},youtube:{n:"YT",c:"#FF0000"},x:{n:"X",c:"#1D9BF0"},fb:{n:"FB",c:"#1877F2"}};
-const TIER={nano:{en:"Nano",id:"Nano",c:"#64748B"},micro:{en:"Micro",id:"Mikro",c:"#0D9488"},mid:{en:"Mid",id:"Menengah",c:"#2563EB"},macro:{en:"Macro",id:"Makro",c:"#4F46E5"},mega:{en:"Mega",id:"Mega",c:"#DC2626"}};
+const TIER={nano:{en:"Nano",id:"Nano",c:"#64748B"},micro:{en:"Micro",id:"Mikro",c:"#0D9488"},mid:{en:"Mid",id:"Menengah",c:"#2563EB"},macro:{en:"Macro",id:"Makro",c:"#1E40AF"},mega:{en:"Mega",id:"Mega",c:"#DC2626"}};
 const tierName=k=>lang==="en"?TIER[k].en:TIER[k].id;
 const LANG={EN:{en:"English",id:"Inggris",c:"#2563EB"},MS:{en:"Malay",id:"Melayu",c:"#0D9488"},KR:{en:"Korean",id:"Korea",c:"#1E40AF"},JP:{en:"Japanese",id:"Jepang",c:"#DC2626"}};
 
@@ -606,7 +606,7 @@ const tlrows=[
   {name:["Kemenpar Approval","Persetujuan Kemenpar"],col:"#F59E0B",start:"08-10",end:"08-31",miles:["08-31"]},
   {name:["Fam Trips · Labuan Bajo","Fam Trip · Labuan Bajo"],col:"#0D9488",start:"09-05",end:"10-25",miles:["09-05","10-25"]},
   {name:["Content Go-Live","Konten Tayang"],col:"#16A34A",start:"10-10",end:"11-20",miles:["10-10","11-20"]},
-  {name:["Reporting & Wrap-up","Pelaporan & Penutup"],col:"#4F46E5",start:"11-15",end:"11-30",miles:["11-30"]},
+  {name:["Reporting & Wrap-up","Pelaporan & Penutup"],col:"#1E40AF",start:"11-15",end:"11-30",miles:["11-30"]},
 ];
 
 /* ============ format ============ */
