@@ -1,0 +1,69 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   bodega® — brand tokens (editorial-monochrome "paper → ink").
+   Drop into any standalone page (marketing site, deck, microsite).
+   Fonts: Fraunces (display) · Instrument Sans (body) · JetBrains Mono (labels).
+   The page lives on ONE brand colour at a time (--paper) with text in --ink;
+   JS may grade --paper/--ink across scroll sections for the cinematic effect.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Load the three families (Google Fonts) */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  --paper: #F2E400;          /* live background — the current brand colour       */
+  --ink:   #0d0d0d;          /* live text colour (near-black, or white on dark)  */
+  --muted:  color-mix(in srgb, var(--ink) 90%, transparent);
+  --border: color-mix(in srgb, var(--ink) 16%, transparent);
+  --line:   color-mix(in srgb, var(--ink) 7%,  transparent);   /* grid dividers  */
+  --card:   color-mix(in srgb, var(--paper) 72%, transparent); /* glassy panels  */
+  --ember:  var(--ink);                                         /* accent (rare)  */
+  --radius: .85rem;
+}
+
+/* The brand spectrum — the only sanctioned background colours. Pick one per
+   page, or grade between them down a scroll. Never use purple. */
+:root {
+  --brand-yellow: #F2E400;   /* primary / default                                */
+  --brand-mint:   #2FE4A4;
+  --brand-blue:   #2A46E8;
+  --brand-pink:   #FF2E93;
+  --brand-orange: #FF7A2F;
+  --brand-ink:    #0d0d0d;   /* the "ink" close — paper fades to near-black      */
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased; text-rendering: geometricPrecision;
+  line-height: 1.5; overflow-x: hidden;
+}
+h1, h2, h3, h4 { font-family: "Fraunces", ui-serif, Georgia, serif; letter-spacing: -.01em; font-weight: 500; margin: 0; }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+em { font-style: italic; }                 /* Fraunces italic = the one emphasis */
+
+.serif   { font-family: "Fraunces", ui-serif, Georgia, serif; }
+.mono    { font-family: "JetBrains Mono", ui-monospace, monospace; }
+.display { font-family: "Fraunces", serif; font-optical-sizing: auto; letter-spacing: -.025em; line-height: .96; font-weight: 500; text-wrap: balance; }
+.kicker  { font-size: 10px; text-transform: uppercase; letter-spacing: .2em; font-weight: 500; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; }
+.muted   { color: var(--muted); }
+.ember   { color: var(--ember); }
+
+/* Layout primitives */
+.container { max-width: 1400px; margin: 0 auto; padding: 0 16px; }
+.rule  { border-top: 1px solid var(--border); }
+.sheet {                                   /* glass content panel — opaque enough for body copy */
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  backdrop-filter: blur(7px);
+  box-shadow: 0 1px 0 rgba(255,255,255,.5) inset, 0 10px 30px -22px rgba(21,18,13,.4);
+}
+
+/* The bodega® wordmark — see wordmark.js for the data-URI. Tints with the page. */
+.logo { display: inline-block; background: var(--logo) left center / contain no-repeat; height: 26px; width: 96px; }
+.logo.white { filter: invert(1); }         /* on dark/ink sections                */
+
+/* Signature motion easing */
+:root { --bodega-ease: cubic-bezier(.32, .72, 0, 1); }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition-duration: .01ms !important; } }

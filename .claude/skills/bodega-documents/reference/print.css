@@ -1,0 +1,105 @@
+/* ───────────────────────────────────────────────────────────────────────────
+   Bodega — print-perfect document CSS (contracts & invoices).
+   Turns an on-screen React document into a real A4 PDF: a Bodega letterhead that
+   REPEATS on every printed page, clean page breaks, light "paper" ink regardless
+   of the app theme, and identical output on phone and desktop.
+
+   Markup contract:
+   - Wrap the document in <table class="doc-table"> so the letterhead/footer can
+     repeat via native table header/footer groups.
+       <table class="doc-table">
+         <thead class="print-head"><tr><td><div class="print-letterhead">
+           <img class="ll-logo" src={WORDMARK}/> <div class="ll-meta">…studio meta…</div>
+         </div></td></tr></thead>
+         <tfoot class="print-foot"><tr><td><div class="print-footer">…page note…</div></td></tr></tfoot>
+         <tbody><tr><td>
+           <div class="print-area"><div class="doc-body"> …clauses / line items… </div></div>
+         </td></tr></tbody>
+       </table>
+   - The wordmark is a real <img> (data-URI), NOT a CSS background — backgrounds
+     are unreliable in print; an <img> always renders.
+   - Each unbreakable unit (a clause, the signature block) gets class
+     `avoid-break` / `sig-section`.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* On screen the repeating head/foot are hidden; table-layout:fixed keeps the
+   document exactly page-width in print (intrinsic min-width would clip the right edge). */
+.doc-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.doc-table > thead > tr > td,
+.doc-table > tbody > tr > td,
+.doc-table > tfoot > tr > td { padding: 0; }
+.print-head, .print-foot { display: none; }
+
+@media print {
+  @page { size: A4; margin: 13mm; }
+
+  aside, header.sticky, .no-print { display: none !important; }
+  /* CRITICAL: the screen view clips main's x-overflow; in print that cuts the
+     right side of the document. Force it visible. */
+  main { padding: 0 !important; max-width: none !important; margin: 0 !important; overflow: visible !important; }
+  .brand-bg, .brand-grain { display: none !important; }
+  body { background: #fff !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  /* Force the document onto light "paper" tokens, whatever the app theme is. */
+  .print-area {
+    --bg: #ffffff; --text: #15120f; --muted: #534d45; --faint: #6b655c;
+    --card: #ffffff; --card-2: #f7f4ef; --line: rgba(0,0,0,0.14); --line-2: rgba(0,0,0,0.22); --accent: #b4540f;
+    /* Just fill the @page content box — a fixed mm width overflows the container
+       and the right edge gets clipped. @page margins handle the borders. */
+    width: auto !important; max-width: 100% !important; margin: 0 !important;
+    box-shadow: none !important; border: 0 !important; background: #fff !important; border-radius: 0 !important;
+  }
+
+  /* Flex paginates unreliably in Chrome (break-inside:avoid is ignored on flex
+     items → clauses split across pages). Block-flow the document column and its
+     sections, and space children with margins instead of flex gap. */
+  .print-area .doc-body { padding: 0 !important; display: block !important; }
+  .print-area .doc-body > * { margin: 0 0 13px 0 !important; }
+  .print-area .doc-body > *:last-child { margin-bottom: 0 !important; }
+  .print-area .doc-body > section { display: block !important; }
+  .print-area .doc-body > section > * { margin: 0 0 9px 0 !important; }
+  .print-area .doc-body > section > *:last-child { margin-bottom: 0 !important; }
+
+  .print-area, .print-area * { color: #15120f !important; }
+  .print-area .text-muted, .print-area [class*="text-muted"] { color: #534d45 !important; }
+  .print-area .text-faint, .print-area .eyebrow, .print-area [class*="text-faint"] { color: #6b655c !important; }
+  .print-area .glass-2 { background: #f7f4ef !important; }
+  .print-area .chip { background: #f7f4ef !important; border-color: #ddd6ca !important; }
+
+  /* Device parity: mobile browsers evaluate sm:/lg: breakpoints against the phone
+     screen and print the single-column mobile layout. Force the full A4 layout so
+     the PDF is identical on phone and desktop. Add overrides for any responsive
+     utility the document actually uses. */
+  .print-area .sm\:hidden { display: none !important; }
+  .print-area .hidden.sm\:grid { display: grid !important; }
+  .print-area .sm\:grid-cols-2 { grid-template-columns: 1fr 1fr !important; }
+  .print-area .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr) !important; }
+  .print-area .sm\:text-right { text-align: right !important; }
+  .print-area .sm\:w-72 { width: 18rem !important; }
+  .print-area .sm\:contents { display: contents !important; }
+
+  /* Repeat the letterhead / footer on every page. */
+  .print-head { display: table-header-group !important; }
+  .print-foot { display: table-footer-group !important; }
+
+  .print-letterhead {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    padding-bottom: 5mm; margin-bottom: 7mm; border-bottom: 1.5px solid #15120f;
+  }
+  .print-letterhead .ll-logo { height: 9mm; width: auto; display: block; flex: none; }
+  .print-letterhead .ll-meta { font-size: 8pt; line-height: 1.45; text-align: right; color: #6b655c !important; max-width: 70mm; overflow-wrap: anywhere; }
+
+  /* Belt-and-braces: nothing may exceed the page width. */
+  .print-area .doc-body, .doc-table > tbody > tr > td { max-width: 100% !important; }
+  .print-area .doc-body > * { min-width: 0; }
+
+  .print-footer {
+    padding-top: 4mm; margin-top: 7mm; border-top: 1px solid #d8d2c6;
+    font-size: 7.5pt; text-align: center; color: #8a8478 !important; letter-spacing: 0.04em;
+  }
+
+  /* Page-break discipline. */
+  .avoid-break, .sig-section { break-inside: avoid; page-break-inside: avoid; }
+  .print-area h2, .print-area h3, .print-area .eyebrow { break-after: avoid; }
+}

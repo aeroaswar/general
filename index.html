@@ -1,1118 +1,1484 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-
-<title>Composites — Architecture of New Possibilities</title>
-<meta name="description" content="An immersive, scroll-driven WebGL showcase of composite materials in architecture — strength and lightness reconciled. Built with Three.js, GSAP & Lenis." />
-
-<!-- Open Graph / social -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Bodega Creative Studio — Credentials 2026</title>
+<meta name="description" content="Bodega Creative is a studio for brand-first social media ecosystems — from content strategy to daily execution, built to strengthen brand presence and drive measurable growth. A scroll-driven Three.js + GSAP experience." />
+<meta name="theme-color" content="#F2E400" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Composites — Architecture of New Possibilities" />
-<meta property="og:description" content="Strength and lightness, reconciled. A scroll-driven WebGL study of composite materials in architecture." />
-<meta name="theme-color" content="#0a0a0b" />
-
-<!-- Inline SVG favicon (a woven-lattice mark) — keeps the page self-contained -->
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0a0b'/%3E%3Cg stroke='%23C9A15F' stroke-width='1.4' fill='none'%3E%3Cpath d='M4 10h24M4 16h24M4 22h24M10 4v24M16 4v24M22 4v24'/%3E%3C/g%3E%3C/svg%3E" />
-
-<!-- Fonts: Inter (architectural neo-grotesque). Preconnect + display:swap = no render-block. -->
+<meta property="og:title" content="Bodega Creative Studio — Credentials 2026" />
+<meta property="og:description" content="Great brands don't just speak — they shape culture. A creative studio for brand-first social media ecosystems." />
+<meta property="og:site_name" content="Bodega Creative Studio" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://general-chi-sandy.vercel.app/" />
+<meta property="og:image" content="https://general-chi-sandy.vercel.app/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Bodega Creative Studio — they shape culture." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Bodega Creative Studio — Credentials 2026" />
+<meta name="twitter:description" content="Great brands don't just speak — they shape culture. A creative studio for brand-first social media ecosystems." />
+<meta name="twitter:image" content="https://general-chi-sandy.vercel.app/og.png" />
+<link rel="canonical" href="https://general-chi-sandy.vercel.app/" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"Bodega Creative Studio","description":"A creative studio for brand-first social media ecosystems — from content strategy to daily execution, built to strengthen brand presence and drive measurable growth.","url":"https://general-chi-sandy.vercel.app/","image":"https://general-chi-sandy.vercel.app/og.png","email":"creativestudiolabodega@gmail.com","telephone":"+62-817-0247-666","address":{"@type":"PostalAddress","streetAddress":"Jl. Otista Raya No.80, RT.2/RW.5","addressLocality":"Jakarta Timur","addressRegion":"DKI Jakarta","postalCode":"13330","addressCountry":"ID"},"areaServed":"ID","openingHoursSpecification":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"09:00","closes":"18:00"},"knowsAbout":["Branding & Identity","Marketing Strategy","Brand Activation","Web & App Development","Digital Marketing","Social Media Management"]}
+</script>
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARwAAABiCAYAAACCq2zlAAAGlUlEQVR4nO2d2ZLbIBREUSr//8vKQ0opjSLZLHdp0DmPMza0L9CsQtu+7wUAIIJf2QIA4D1gOAAQBoYDAGFgOAAQBoYDAGFgOAAQBoYDAGH8zsh027Yfh3/2fd8ydIAdlOnaXMv3oLWct+iDf1bCQYenMi2Fcl2BT+VbSlsZh45wPgnftm2ncgJocbTZp7a5bdve0nZTplSwDt96P5iXs9nclfO+79vxv1rTCVs0pmICrEVPm5bZpWI6NR90IuvyNJU6RjXXv52/84mQKRUVcz1qypROZD1G27L7CIeK+U4oU7gjfUpFxZwPRqzv4e581bXNftvJOuNqOFTMd0InMj9eZeh68M/ywBBowBT5XdScw/n0/ytui8aMbt4JZrMmVu057eAfFXM+6ETex7ct79Z27GI4PRVT/XkcZX0RU9eRqZT61Fq5bM9k6rRK33wNp7Zi9vaWURVAWd/ISKNXX4tpZOhrQV3fwSw6W0gxHAs8AmqpfSV93p3IU3pWaR2o6yvFvv2oGY+p4WTM8aOmC72soC9r7WaF2NUyi85RpjecUvymCVbMrE9hoXjm+NUQoVPFdMwMJ7tiNt88FqzXegpjTe+CbxTK8VM3xAMF0zE5aaxQKWs1HHd3eOu5y9fyc9bc5atQrq0ol+3od0ZRKM/0Z6ks+RZQhYB/QkmfkpZS6vRkam7JexadLvmPTqlGf0DtMK82H+upwVv1WVVM60XpjPhZ6GtNpyXd1vQzp1ZphuM57316mrWFHn29h+Na9XnHLqoTuaJctrV5WRpihk5vhgwnMogt+Y4cQovYcejV94Zt4pb4RZdtTZ6ZHUpLnlmGE/YsVcYPjG7MRzoeC8QZ+lrTtUpnZn3b5TLxjDKu4U5XyCnv3hFOdiDVT41GroG08pbYlZKjr8dwVOLobTpdu1TZZmPF3e1lSnhps+ztLdLxSjdb3wyLuNG4bosrB1JZWynoGyV1J6bhrJenTsUyajYchUCOpq9YEGfQN4a6voNZdFriMsJ5YyCtUI8d+myYRac1TYajvL9fi7o+ZdRjp67vQFVnhC7TEY5qIA/QB9m8vYyrz+FkP4NxJeMwlSfq+krRvu5hhvgpExU/sxEOBQ5WrNaZHETrVNngOVNlOKrHpGtBH1iiNtqfiaWup1BBvUKq62thFrNW1Rmta0rDWeWkcyn6+mBOVDuVr4Yz+3QKfqJaEWdB8fmkXjJ0TTfCUW8w6vpWQrUhZ6N8Xm46w1kJ1V0LuIf4jTN0H456g1HXp072CGK1eEagPLopZaIRjnrlQ9/aED8bpjEc6IfGMob35edWqI9uSpnEcNQbjLo+6GeWsp1FZ9idxr2oBxJ9Y1z1ZffAZyxid73j2APFRxieGBrheFfm2RqLGsr6nm7FO/8t+9a+ms9lN+JZdB7ITqmsehcLLV5pq+vzQllbKfM0YvU43iFpOMoFrnJf7RMt+mrSskinNU2P1+zU4nGSOFtntjGe+Wo4kcHsaczR+mo/a32zv0daNRoz9KW9FXKCRmzZoWRgMsIZDUBrEFsLO1NfyMvFOiphrWFbMNJIIjoU7/p35NH6HYs0lEY3pTS8CM9jj98qgF4954r67vJS0qcev095qLSRkfy8MTWcg9FC8U73rfo+pa+gzzt+3o3XakprNWVSM5tSGl/1mzl3jF5vaCVj4bCXUcPxQD1+GWtyIyiaTSmiu1RXVIN3UKNP5Tc86cjSt1e+blld3/nznnpmp2mEU0qsg2ctztWiru+K2igxej2jlRHzUC/nLJoNp5SYYKoXtrq+O1SmBSsbzRn1cs6gy3D+fdkhoJbBUtan3oi89KnouMOjoaqXczRDhlOK/or6m/R9SqtXv9euWFTeNUSdRfLOo5QXGM6PxBxOulqifpLUa+vX4rdEl63atM6KkTh++6662ZRibDgAVoyar8chvGw8RrDRTLEtDnDHpy3rWRrg28BwYDpaz8aswgrmKn/jH8CZmRqXB7P/fkY4IMndKGb2xgaMcEAcTGYtGOEAQBgYDgCEgeHAkqxwSG5FMBwACAPDgeVQuQQL/gfDgaVY8ZGGlcBwYBkY2ejDORyQo+d1v+rvvIK/8LQ4SNF6vYb6lSPwEwwHZPCcEmE2GrCGAwBhYDiwPIxudGDRGJYFo9GDEQ7IYGkQmI0mLBqDHF7vJ4d8GOGAHL2mgdnowwgH5Hka8WAw84HhAEAYTKkAIAwMBwDCwHAAIAwMBwDCwHAAIAwMBwDCwHAAIIw/EWF3yBER1B4AAAAASUVORK5CYII=" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
 <style>
-  /* ============================================================
-     DESIGN TOKENS
-     Dark cinematic palette + warm "golden-hour" rim accent.
-     ============================================================ */
-  :root{
-    --bg:        #0a0a0b;   /* near-black, faintly warm */
-    --bg-2:      #121214;
-    --ink:       #ECEAE6;   /* warm white */
-    --muted:     #8d8a82;   /* greige text */
-    --faint:     #5a574f;
-    --line:      rgba(255,255,255,.10);
-    --line-soft: rgba(255,255,255,.06);
-    --accent:    #C9A15F;   /* warm bronze — "sun on material" */
-    --accent-dim:#9c7c44;
-    --glass:     rgba(22,22,25,.55);
-    --maxw:      1320px;
-    --ease:      cubic-bezier(.22,1,.36,1); /* expo-out */
-  }
+/* ───────────────────────────────────────────────────────────────────────────
+   bodega® — editorial-monochrome design system, reinterpreted as a cinematic
+   scroll experience. Light "paper" baseline that grades to "ink" at the close.
+   Fonts: Fraunces (display) · Instrument Sans (body) · JetBrains Mono (labels).
+   Accent: a single warm ember, used sparingly.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root{
+  --paper:#F2E400;          /* live background — set by JS to the current brand colour */
+  --ink:#0d0d0d;            /* live text colour — set by JS (black/white)            */
+  --muted:color-mix(in srgb, var(--ink) 90%, transparent);
+  --border:color-mix(in srgb, var(--ink) 16%, transparent);
+  --line:color-mix(in srgb, var(--ink) 7%, transparent);  /* subtle grid dividers/fills */
+  --card:color-mix(in srgb, var(--paper) 72%, transparent);  /* glassy cards — opaque enough for legible body copy */
+  --ember:var(--ink);
+  --radius:.85rem;
+  --logo:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARwAAABiCAYAAACCq2zlAAAGlUlEQVR4nO2d2ZLbIBREUSr//8vKQ0opjSLZLHdp0DmPMza0L9CsQtu+7wUAIIJf2QIA4D1gOAAQBoYDAGFgOAAQBoYDAGFgOAAQBoYDAGH8zsh027Yfh3/2fd8ydIAdlOnaXMv3oLWct+iDf1bCQYenMi2Fcl2BT+VbSlsZh45wPgnftm2ncgJocbTZp7a5bdve0nZTplSwDt96P5iXs9nclfO+79vxv1rTCVs0pmICrEVPm5bZpWI6NR90IuvyNJU6RjXXv52/84mQKRUVcz1qypROZD1G27L7CIeK+U4oU7gjfUpFxZwPRqzv4e581bXNftvJOuNqOFTMd0InMj9eZeh68M/ywBBowBT5XdScw/n0/ytui8aMbt4JZrMmVu057eAfFXM+6ETex7ct79Z27GI4PRVT/XkcZX0RU9eRqZT61Fq5bM9k6rRK33wNp7Zi9vaWURVAWd/ISKNXX4tpZOhrQV3fwSw6W0gxHAs8AmqpfSV93p3IU3pWaR2o6yvFvv2oGY+p4WTM8aOmC72soC9r7WaF2NUyi85RpjecUvymCVbMrE9hoXjm+NUQoVPFdMwMJ7tiNt88FqzXegpjTe+CbxTK8VM3xAMF0zE5aaxQKWs1HHd3eOu5y9fyc9bc5atQrq0ol+3od0ZRKM/0Z6ks+RZQhYB/QkmfkpZS6vRkam7JexadLvmPTqlGf0DtMK82H+upwVv1WVVM60XpjPhZ6GtNpyXd1vQzp1ZphuM57316mrWFHn29h+Na9XnHLqoTuaJctrV5WRpihk5vhgwnMogt+Y4cQovYcejV94Zt4pb4RZdtTZ6ZHUpLnlmGE/YsVcYPjG7MRzoeC8QZ+lrTtUpnZn3b5TLxjDKu4U5XyCnv3hFOdiDVT41GroG08pbYlZKjr8dwVOLobTpdu1TZZmPF3e1lSnhps+ztLdLxSjdb3wyLuNG4bosrB1JZWynoGyV1J6bhrJenTsUyajYchUCOpq9YEGfQN4a6voNZdFriMsJ5YyCtUI8d+myYRac1TYajvL9fi7o+ZdRjp67vQFVnhC7TEY5qIA/QB9m8vYyrz+FkP4NxJeMwlSfq+krRvu5hhvgpExU/sxEOBQ5WrNaZHETrVNngOVNlOKrHpGtBH1iiNtqfiaWup1BBvUKq62thFrNW1Rmta0rDWeWkcyn6+mBOVDuVr4Yz+3QKfqJaEWdB8fmkXjJ0TTfCUW8w6vpWQrUhZ6N8Xm46w1kJ1V0LuIf4jTN0H456g1HXp072CGK1eEagPLopZaIRjnrlQ9/aED8bpjEc6IfGMob35edWqI9uSpnEcNQbjLo+6GeWsp1FZ9idxr2oBxJ9Y1z1ZffAZyxid73j2APFRxieGBrheFfm2RqLGsr6nm7FO/8t+9a+ms9lN+JZdB7ITqmsehcLLV5pq+vzQllbKfM0YvU43iFpOMoFrnJf7RMt+mrSskinNU2P1+zU4nGSOFtntjGe+Wo4kcHsaczR+mo/a32zv0daNRoz9KW9FXKCRmzZoWRgMsIZDUBrEFsLO1NfyMvFOiphrWFbMNJIIjoU7/p35NH6HYs0lEY3pTS8CM9jj98qgF4954r67vJS0qcev095qLSRkfy8MTWcg9FC8U73rfo+pa+gzzt+3o3XakprNWVSM5tSGl/1mzl3jF5vaCVj4bCXUcPxQD1+GWtyIyiaTSmiu1RXVIN3UKNP5Tc86cjSt1e+blld3/nznnpmp2mEU0qsg2ctztWiru+K2igxej2jlRHzUC/nLJoNp5SYYKoXtrq+O1SmBSsbzRn1cs6gy3D+fdkhoJbBUtan3oi89KnouMOjoaqXczRDhlOK/or6m/R9SqtXv9euWFTeNUSdRfLOo5QXGM6PxBxOulqifpLUa+vX4rdEl63atM6KkTh++6662ZRibDgAVoyar8chvGw8RrDRTLEtDnDHpy3rWRrg28BwYDpaz8aswgrmKn/jH8CZmRqXB7P/fkY4IMndKGb2xgaMcEAcTGYtGOEAQBgYDgCEgeHAkqxwSG5FMBwACAPDgeVQuQQL/gfDgaVY8ZGGlcBwYBkY2ejDORyQo+d1v+rvvIK/8LQ4SNF6vYb6lSPwEwwHZPCcEmE2GrCGAwBhYDiwPIxudGDRGJYFo9GDEQ7IYGkQmI0mLBqDHF7vJ4d8GOGAHL2mgdnowwgH5Hka8WAw84HhAEAYTKkAIAwMBwDCwHAAIAwMBwDCwHAAIAwMBwDCwHAAIIw/EWF3yBER1B4AAAAASUVORK5CYII=");
+}
+*{box-sizing:border-box}
+html{ -webkit-text-size-adjust:100%; }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:'Instrument Sans',ui-sans-serif,system-ui,sans-serif;
+  font-feature-settings:"ss01","cv11"; -webkit-font-smoothing:antialiased;
+  text-rendering:geometricPrecision; line-height:1.5;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{font-family:'Fraunces',ui-serif,Georgia,serif;letter-spacing:-.01em;font-weight:500;margin:0}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+em{font-style:italic}
+.serif{font-family:'Fraunces',ui-serif,Georgia,serif}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
 
-  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+/* fixed WebGL backdrop + film grain — the living "operating surface" */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+#bg canvas{display:block;width:100%!important;height:100%!important}
+/* liquid-blob background — soft brand-colour pools drifting playfully */
+#blobs{position:fixed;inset:-15%;z-index:0;overflow:hidden;pointer-events:none;filter:blur(calc(48px + var(--sv,0px))) saturate(1.12);opacity:.82;animation:blobsIn 1.5s cubic-bezier(.2,.8,.2,1) both}
+.blob{position:absolute;width:48vw;height:48vw;min-width:360px;min-height:360px;border-radius:50%;will-change:transform}
+.b1{background:radial-gradient(circle at 50% 50%,#F2E400 0%,rgba(242,228,0,0) 68%);left:-6%;top:-10%;animation:blobA 19s ease-in-out infinite}
+.b2{background:radial-gradient(circle at 50% 50%,#2FE4A4 0%,rgba(47,228,164,0) 68%);right:-10%;top:-2%;animation:blobB 23s ease-in-out infinite}
+.b3{background:radial-gradient(circle at 50% 50%,#2A46E8 0%,rgba(42,70,232,0) 66%);left:16%;bottom:-16%;animation:blobC 21s ease-in-out infinite}
+.b4{background:radial-gradient(circle at 50% 50%,#FF2E93 0%,rgba(255,46,147,0) 66%);right:4%;bottom:-12%;animation:blobD 26s ease-in-out infinite}
+.b5{background:radial-gradient(circle at 50% 50%,#FF7A2F 0%,rgba(255,122,47,0) 70%);left:32%;top:22%;width:40vw;height:40vw;animation:blobE 17s ease-in-out infinite}
+/* 4-waypoint wander + independent X/Y squash-stretch + rotation = organic liquid morph */
+@keyframes blobA{0%,100%{transform:translate(0,0) scaleX(1) scaleY(1) rotate(0deg)}25%{transform:translate(16vw,12vh) scaleX(1.14) scaleY(.9) rotate(10deg)}50%{transform:translate(26vw,20vh) scaleX(1.22) scaleY(1.12) rotate(-6deg)}75%{transform:translate(9vw,16vh) scaleX(.92) scaleY(1.1) rotate(8deg)}}
+@keyframes blobB{0%,100%{transform:translate(0,0) scaleX(1) scaleY(1) rotate(0deg)}25%{transform:translate(-14vw,14vh) scaleX(.88) scaleY(1.16) rotate(-8deg)}50%{transform:translate(-22vw,24vh) scaleX(1.1) scaleY(.86) rotate(6deg)}75%{transform:translate(-8vw,10vh) scaleX(1.05) scaleY(1.12) rotate(-5deg)}}
+@keyframes blobC{0%,100%{transform:translate(0,0) scaleX(1) scaleY(1) rotate(0deg)}25%{transform:translate(12vw,-12vh) scaleX(1.12) scaleY(1.04) rotate(7deg)}50%{transform:translate(20vw,-22vh) scaleX(.9) scaleY(1.2) rotate(-9deg)}75%{transform:translate(6vw,-9vh) scaleX(1.16) scaleY(.94) rotate(5deg)}}
+@keyframes blobD{0%,100%{transform:translate(0,0) scaleX(1) scaleY(1) rotate(0deg)}25%{transform:translate(-12vw,-10vh) scaleX(.92) scaleY(1.14) rotate(-6deg)}50%{transform:translate(-22vw,-18vh) scaleX(1.18) scaleY(.9) rotate(8deg)}75%{transform:translate(-7vw,-12vh) scaleX(1.04) scaleY(1.1) rotate(-7deg)}}
+@keyframes blobE{0%,100%{transform:translate(0,0) scaleX(1) scaleY(1) rotate(0deg)}25%{transform:translate(10vw,10vh) scaleX(1.16) scaleY(.92) rotate(9deg)}50%{transform:translate(16vw,16vh) scaleX(1.24) scaleY(1.14) rotate(-8deg)}75%{transform:translate(7vw,6vh) scaleX(.9) scaleY(1.12) rotate(6deg)}}
+@media (prefers-reduced-motion: reduce){.blob{animation:none!important}}
+.grain{position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");}
 
-  html{ -webkit-text-size-adjust:100%; }
+/* page chrome sits above the canvas */
+.wrap{position:relative;z-index:1}
+/* hero text sits on the live field, so it keeps a bg-colour halo for legibility;
+   the content panels below are opaque, so they stay crisp with no halo */
+.hero{text-shadow:0 0 3px var(--paper),0 0 3px var(--paper),0 0 7px var(--paper)}
+.hero .btn{text-shadow:none}
+.skip{position:fixed;left:12px;top:12px;z-index:70;background:var(--ink);color:var(--paper);
+  padding:8px 12px;font-size:12px;border-radius:6px;transform:translateY(-150%);transition:transform .36s cubic-bezier(.32,.72,0,1)}
+.skip:focus{transform:none}
 
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:"Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    font-weight:400;
-    line-height:1.6;
-    /* Lenis drives scrolling; keep native overscroll calm. */
-    overscroll-behavior:none;
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-  }
+/* header */
+header.bar{position:sticky;top:0;z-index:40;border-bottom:1px solid var(--border);
+  background:color-mix(in srgb,var(--paper) 86%,transparent);backdrop-filter:blur(10px) saturate(1.1)}
+.bar .row{max-width:1400px;margin:0 auto;padding:0 16px;height:64px;display:flex;align-items:center;gap:16px}
+.logo{display:inline-block;background:var(--logo) left center/contain no-repeat;height:26px;width:96px}
+.logo.white{filter:invert(1)}
+nav.main{margin-left:auto;display:none;align-items:center;gap:2px}
+nav.main a{padding:6px 12px;font-size:13px;border-radius:7px;color:color-mix(in srgb,var(--ink) 70%,transparent);transition:background-color .25s,color .25s}
+nav.main a:hover{background:color-mix(in srgb,var(--ink) 6%,transparent);color:var(--ink)}
+.bar .right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;font-size:12.5px;
+  border-radius:7px;border:1px solid var(--border);cursor:pointer;white-space:nowrap;
+  transition:transform .26s cubic-bezier(.32,.72,0,1),background-color .26s,border-color .26s,color .26s,translate .3s cubic-bezier(.32,.72,0,1);background:transparent;color:inherit}
+.btn:hover{background:color-mix(in srgb,var(--ink) 5%,transparent)}
+.btn:active{transform:scale(.975)}
+.btn.ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn.ink:hover{background:color-mix(in srgb,var(--ink) 88%,var(--ember))}
+.btn.lg{height:42px;padding:0 20px;font-size:13px;border-radius:8px}
+.wa-link{display:inline-flex!important;align-items:center;color:var(--ink);border-color:color-mix(in srgb,#25D366 45%,var(--border))}
+.wa-link::after{content:none!important}
+.wa-link svg{color:#1faa4e;flex:none}
+.wa-link:hover{background:color-mix(in srgb,#25D366 14%,transparent);border-color:#25D366}
+.signin{display:none}
+.theme-toggle{width:34px;height:34px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.theme-toggle svg{width:15px;height:15px}
+.theme-toggle .sun{display:none}
+html.dark .theme-toggle .moon{display:none}
+html.dark .theme-toggle .sun{display:inline}
 
-  /* Lenis sets these while smoothing is active */
-  html.lenis, html.lenis body{ height:auto; }
-  .lenis.lenis-smooth{ scroll-behavior:auto !important; }
-  .lenis.lenis-stopped{ overflow:hidden; }
+/* layout primitives */
+.container{max-width:1400px;margin:0 auto;padding-left:16px;padding-right:16px}
+.kicker{font-size:10px;text-transform:uppercase;letter-spacing:.2em;font-weight:500;
+  color:var(--muted);display:inline-flex;align-items:center;gap:8px}
+.kicker svg{width:12px;height:12px;color:var(--ember)}
+.display{font-family:'Fraunces',serif;font-optical-sizing:auto;letter-spacing:-.025em;line-height:.96;font-weight:500;text-wrap:balance}
+.rule{border-top:1px solid var(--border)}
+.sheet{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  backdrop-filter:blur(7px);box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 10px 30px -22px rgba(21,18,13,.4)}
+.muted{color:var(--muted)}
+.ember{color:var(--ember)}
 
-  ::selection{ background:var(--accent); color:#0a0a0b; }
+/* sections share generous vertical rhythm so each phase has room to breathe */
+section{position:relative}
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:96px}
+.hero .container{padding-bottom:0}
+.hero h1{font-size:clamp(44px,9vw,84px);letter-spacing:-.035em;line-height:1.06;max-width:20ch}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.18em;margin-bottom:-.18em}
+.hero h1 .line>span{display:block}
+.rotw{display:inline-block;transition:opacity .42s ease,transform .42s cubic-bezier(.2,.8,.2,1);will-change:opacity,transform}
+.hero p{margin-top:22px;max-width:42ch;font-size:15px;line-height:1.65;color:var(--muted)}
+.cta-row{margin-top:30px;display:flex;flex-wrap:wrap;gap:12px}
 
-  a{ color:inherit; text-decoration:none; }
+/* hero client stripe */
+.stripe{margin-top:54px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:color-mix(in srgb, var(--paper) 60%, transparent);
+  -webkit-backdrop-filter:blur(16px) saturate(1.3);backdrop-filter:blur(16px) saturate(1.3);
+  box-shadow:inset 0 1px 0 color-mix(in srgb,#ffffff 30%,transparent),0 10px 30px -18px rgba(0,0,0,.35)}
+.stripe .container{display:flex;align-items:center;gap:24px;padding-top:18px;padding-bottom:18px;overflow:hidden}
+.stripe .label{flex:none}
+.marquee{flex:1;min-width:0;overflow:hidden;font-size:13px;color:var(--muted);white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.mq-track{display:flex;width:max-content;animation:mqScroll 42s linear infinite}
+.mq-track:hover{animation-play-state:paused}
+.mq-group{display:flex;align-items:center;gap:28px;padding-right:28px;flex:none}
+.marquee::-webkit-scrollbar{display:none}
+.marquee .who{font-family:'Fraunces',serif;font-style:italic;color:var(--ink)}
+@keyframes mqScroll{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce){.mq-track{animation:none!important}.marquee{overflow-x:auto;scrollbar-width:none}}
+.dot{opacity:.5}
 
-  /* ============================================================
-     THE FIXED WEBGL STAGE
-     One canvas, pinned behind all DOM, isolated on its own GPU
-     layer. pointer-events:none so the page scrolls over it.
-     ============================================================ */
-  #stage{
-    position:fixed; inset:0;
-    width:100vw; height:100svh; /* svh = stable on mobile URL-bar resize */
-    z-index:0;
-    pointer-events:none;
-    /* Promote to its own compositor layer */
-    transform:translateZ(0);
-    contain:strict;
-    /* Fallback gradient shows if WebGL fails or before first frame */
-    background:
-      radial-gradient(120% 80% at 50% 18%, #18181c 0%, #0a0a0b 60%, #060607 100%);
-  }
-  #stage canvas{ display:block; width:100% !important; height:100% !important; }
+/* generic content sections */
+.block{padding:108px 0;background:color-mix(in srgb,var(--paper) 62%,transparent);-webkit-backdrop-filter:blur(30px) saturate(1.7);backdrop-filter:blur(30px) saturate(1.7);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 32%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--ink) 7%,transparent);margin-top:72px}
+.grid12{display:grid;grid-template-columns:repeat(12,1fr);gap:32px}
+.span4{grid-column:span 12}
+.span5{grid-column:span 12}
+.span7{grid-column:span 12}
+.span8{grid-column:span 12}
+h2.big{font-size:clamp(28px,4.4vw,34px);line-height:1.04;margin-top:12px}
+.lead{margin-top:14px;font-size:13.5px;line-height:1.7;color:var(--muted);max-width:46ch}
 
-  /* When WebGL is unavailable we add .no-webgl and dress the stage up */
-  body.no-webgl #stage::after{
-    content:""; position:absolute; inset:0;
-    background:
-      radial-gradient(60% 50% at 70% 30%, rgba(201,161,95,.20), transparent 70%),
-      repeating-linear-gradient(115deg, rgba(255,255,255,.04) 0 2px, transparent 2px 26px);
-  }
+.cards3{display:grid;gap:16px}
+.pcard{border:1px solid var(--border);border-radius:var(--radius);padding:22px;background:var(--card);
+  display:flex;flex-direction:column;gap:12px;min-height:188px;backdrop-filter:blur(6px)}
+.pcard .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.pcard h3{font-family:'Fraunces',serif;font-size:19px;line-height:1.15;font-weight:500}
+.pcard p{font-size:12.5px;line-height:1.6;color:var(--muted)}
 
-  /* ============================================================
-     DOM CONTENT — sits above the canvas
-     ============================================================ */
-  .content{ position:relative; z-index:2; }
+/* strategic rule */
+.spec{display:grid;gap:12px}
+.specgrid{display:grid;gap:12px}
+.scard{border:1px solid var(--border);border-radius:10px;padding:14px;background:color-mix(in srgb,var(--paper) 70%,var(--card))}
+.scard .kicker{margin-bottom:6px}
+.scard .v{font-size:13px;line-height:1.3}
+.codecard{margin-top:6px;border:1px solid var(--border);border-radius:10px;padding:16px;background:color-mix(in srgb,var(--paper) 60%,var(--card))}
+.codecard code{font-family:'JetBrains Mono',monospace;font-size:12px;color:color-mix(in srgb,var(--ink) 82%,transparent)}
+.uline{text-decoration:underline;text-decoration-color:var(--ember);text-decoration-thickness:2px;text-underline-offset:4px}
 
-  /* Most copy must not eat scroll/clicks meant for the canvas… */
-  section{ pointer-events:none; }
-  /* …but interactive things must. */
-  a, button, .interactive{ pointer-events:auto; }
+/* closing — the ink panel */
+.closewrap{padding:96px 0 40px;background:color-mix(in srgb,var(--paper) 62%,transparent);-webkit-backdrop-filter:blur(30px) saturate(1.7);backdrop-filter:blur(30px) saturate(1.7);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 32%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--ink) 7%,transparent);margin-top:72px}
+.panel{border:1px solid var(--border);border-radius:14px;overflow:hidden;display:grid;grid-template-columns:1fr}
+.panel .text{padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.panel .text h2{font-size:clamp(30px,5vw,42px);margin-top:12px}
+.panel .text p{margin-top:16px;font-size:14px;line-height:1.7;color:var(--muted);max-width:40ch}
+.panel .brandbox{position:relative;min-height:300px;display:grid;place-items:center;
+  background:#100d09;color:#efe8dc;overflow:hidden;padding:40px}
+.panel .brandbox .gridpaper,.panel .brandbox .nz{position:absolute;inset:0}
+.panel .brandbox .gridpaper{opacity:.16;background-image:
+  linear-gradient(to right,rgba(255,255,255,.5) 1px,transparent 1px),
+  linear-gradient(to bottom,rgba(255,255,255,.5) 1px,transparent 1px);background-size:32px 32px}
+.panel .brandbox .nz{opacity:.06;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.panel .brandbox .logo{height:64px;width:230px;position:relative;z-index:2}
+.panel .brandbox .tag{position:absolute;right:18px;bottom:14px;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.6}
 
-  .wrap{ width:min(92vw, var(--maxw)); margin-inline:auto; }
+/* footer */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);margin-top:72px;background:color-mix(in srgb,var(--paper) 62%,transparent);-webkit-backdrop-filter:blur(30px) saturate(1.7);backdrop-filter:blur(30px) saturate(1.7);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 32%,transparent),inset 0 -1px 0 color-mix(in srgb,var(--ink) 7%,transparent)}
+footer .container{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;padding-top:44px;padding-bottom:48px}
+footer .col.lead-col{grid-column:span 2}
+footer p.about{margin-top:14px;font-size:13px;line-height:1.65;color:var(--muted);max-width:42ch}
+footer .kicker{margin-bottom:12px;display:block}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13px}
+footer a:hover{text-decoration:none}
 
-  /* ---- Top navigation ---- */
-  header.nav{
-    position:fixed; top:0; left:0; right:0; z-index:6;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:22px clamp(18px,4vw,46px);
-    pointer-events:none;
-    mix-blend-mode:difference; /* stays legible over light or dark frames */
-  }
-  header.nav .brand{
-    pointer-events:auto;
-    font-weight:600; letter-spacing:.22em; font-size:13px; text-transform:uppercase;
-    display:flex; align-items:center; gap:10px;
-  }
-  header.nav .brand .dot{ width:8px; height:8px; background:var(--accent); border-radius:1px;
-    box-shadow:0 0 14px var(--accent); }
-  header.nav nav{ display:flex; gap:30px; pointer-events:auto; }
-  header.nav nav a{
-    font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink);
-    opacity:.78; transition:opacity .3s var(--ease);
-  }
-  header.nav nav a:hover{ opacity:1; }
-  @media (max-width:760px){ header.nav nav{ display:none; } }
+/* scroll cue — CSS-only loop (spares the JS thread), Animista-style */
+.cue{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;
+  display:flex;flex-direction:column;align-items:center;gap:8px;font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted);transition:opacity .5s}
+.cue .bar{width:1px;height:40px;background:linear-gradient(var(--ink),transparent);position:relative;overflow:hidden}
+.cue .bar::after{content:"";position:absolute;left:0;top:-40%;width:1px;height:40%;background:var(--ember);
+  animation:cueRun 2.1s cubic-bezier(.7,0,.3,1) infinite}
+@keyframes cueRun{0%{top:-45%}60%,100%{top:100%}}
 
-  /* ---- Generic section scaffolding ---- */
-  .panel{
-    min-height:108svh;
-    display:flex; align-items:center;
-    padding:14svh clamp(18px,4vw,46px);
-  }
-  .panel.center{ justify-content:center; text-align:center; }
-  .panel.right{ justify-content:flex-end; text-align:right; }
+/* progress index rail (right side) */
+.rail{position:fixed;right:16px;top:50%;transform:translateY(-50%);z-index:50;display:none;
+  flex-direction:column;gap:14px;align-items:flex-end}
+.rail button{appearance:none;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);transition:color .3s}
+.rail button .tick{width:18px;height:1px;background:currentColor;transition:width .3s,background-color .3s}
+.rail button[aria-current="true"]{color:var(--ink)}
+.rail button[aria-current="true"] .tick{width:30px;background:var(--ember)}
 
-  .eyebrow{
-    font-size:12px; letter-spacing:.32em; text-transform:uppercase;
-    color:var(--accent); font-weight:500; margin-bottom:22px;
-    display:flex; align-items:center; gap:12px;
-  }
-  .eyebrow::before{ content:""; width:34px; height:1px; background:var(--accent); opacity:.8; }
-  .panel.right .eyebrow{ flex-direction:row-reverse; }
-  .panel.center .eyebrow{ justify-content:center; }
+/* ── content sections ported from the live site: Services / About / Contact ── */
+.svc-grid,.prin-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:26px}
+.svc-grid{grid-template-columns:1fr}
+.prin-grid{grid-template-columns:repeat(auto-fit,minmax(248px,1fr))}
+.svc{background:var(--card);padding:26px;display:flex;flex-direction:column;backdrop-filter:blur(6px)}
+.svc-head{display:flex;align-items:center;justify-content:space-between}
+.svc-ico{display:inline-flex}
+.svc-ico svg{width:30px;height:30px;display:block;fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.svc .n,.prin .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)}
+.svc h3{font-family:'Fraunces',serif;font-size:clamp(24px,3.2vw,30px);line-height:1.04;margin-top:12px;font-weight:500;text-decoration-thickness:1.5px;text-underline-offset:4px;text-decoration-color:color-mix(in srgb,var(--ink) 35%,transparent)}
+.svc:hover h3{text-decoration-line:underline}
+.svc-sum{margin-top:10px;font-size:13.5px;line-height:1.6;color:var(--muted);max-width:40ch}
+.svc-list{list-style:none;margin:16px 0 0;padding:0;border-top:1px solid var(--border)}
+.svc-list li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.svc-list .dotm{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);width:10px;flex:none}
+.engage{margin-top:26px;padding:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:22px}
+.engage-cta{display:flex;gap:12px;flex-wrap:wrap}
+.about-meta{margin-top:24px}
+.meta-v{font-family:'Fraunces',serif;font-size:20px;margin-top:4px}
+.prin{background:var(--card);padding:24px}
+.prin h4{font-family:'Fraunces',serif;font-size:20px;font-weight:500;margin-top:8px}
+.name-card{margin-top:24px;padding:32px;display:grid;gap:24px;align-items:center}
+.name-logo{display:grid;place-items:center}
+.name-logo .logo{height:60px;width:210px}
+.contact-grid{display:grid;gap:22px;margin-top:26px}
+.contact-form{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:26px}
+.contact-form label{display:flex;flex-direction:column;gap:6px}
+.contact-form .full{grid-column:1/-1}
+.contact-form input,.contact-form textarea{width:100%;padding:10px 12px;font:inherit;font-size:13px;border:1px solid var(--border);background:color-mix(in srgb,var(--paper) 55%,var(--card));color:inherit;border-radius:8px;outline:none;transition:border-color .2s}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--ink)}
+.contact-form textarea{resize:none}
+.form-foot{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.side-list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px;font-size:13px}
 
-  h1,h2{ font-weight:300; letter-spacing:-.02em; line-height:1.02; }
-  h1{ font-size:clamp(42px, 8.2vw, 116px); }
-  h2{ font-size:clamp(32px, 5.4vw, 72px); }
-  h1 .em, h2 .em{ font-style:italic; font-weight:400; color:var(--accent); }
-  .lede{
-    margin-top:26px; max-width:46ch; color:var(--muted);
-    font-size:clamp(15px,1.5vw,19px); font-weight:300;
-  }
-  .panel.right .lede{ margin-left:auto; }
-  .panel.center .lede{ margin-inline:auto; }
+/* credentials content: differentiators / process / selected works / team */
+.diff-grid{display:grid;gap:16px;grid-template-columns:1fr}
+.step{background:var(--card);padding:18px;border:1px solid var(--border);border-radius:10px}
+.step .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ember)}
+.step h4{font-family:'Fraunces',serif;font-size:17px;font-weight:500;margin-top:6px}
+.step p{margin-top:7px;font-size:12.5px;line-height:1.55;color:var(--muted)}
+/* FAQ accordion */
+.faq-list{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color .3s ease}
+.faq-item.open{border-color:color-mix(in srgb,var(--ink) 32%,transparent)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px 22px;background:none;border:0;cursor:pointer;text-align:left;font-family:'Fraunces',serif;font-weight:500;font-size:clamp(16px,1.9vw,19px);color:var(--ink);line-height:1.25}
+.faq-ic{position:relative;flex:none;width:17px;height:17px;margin-top:2px}
+.faq-ic::before,.faq-ic::after{content:"";position:absolute;background:var(--ink);border-radius:2px;transition:transform .35s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
+.faq-ic::before{top:7.5px;left:0;width:17px;height:2px}
+.faq-ic::after{top:0;left:7.5px;width:2px;height:17px}
+.faq-item.open .faq-ic::after{transform:scaleY(0);opacity:0}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .42s cubic-bezier(.2,.8,.2,1)}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a-inner{overflow:hidden}
+.faq-a p{padding:0 22px 22px;font-size:13.5px;line-height:1.7;color:var(--muted);max-width:62ch}
+@media (prefers-reduced-motion: reduce){.faq-a,.faq-ic::before,.faq-ic::after,.faq-item{transition:none}}
+.work-grid{display:grid;gap:16px;grid-template-columns:1fr;margin-top:26px}
+@media(min-width:600px){.work-grid,.diff-grid,.team-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.work-grid,.team-grid{grid-template-columns:repeat(3,1fr)}}
+.work{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;gap:14px;backdrop-filter:blur(6px)}
+.work-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.work h3{font-family:'Fraunces',serif;font-size:25px;font-weight:500;line-height:1.05}
+.work .sub{font-size:12px;color:var(--muted);margin-top:3px}
+.work .cat{font-size:10px;color:var(--muted);text-align:right;text-transform:uppercase;letter-spacing:.09em;line-height:1.5;flex:none;max-width:13ch}
+.work .desc{font-size:12.5px;color:var(--muted);line-height:1.55}
+/* case-study cover — brand-tinted placeholder (drop a real image/video in later) */
+.work-cover{position:relative;height:118px;margin:-24px -24px 4px;overflow:hidden;display:flex;align-items:flex-end;padding:13px 15px}
+.work-cover::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(0,0,0,.10) 1px,transparent 1px);background-size:13px 13px;opacity:.5;pointer-events:none}
+.work-mono{position:absolute;top:-24px;right:4px;font-family:'Fraunces',serif;font-weight:500;font-size:128px;line-height:1;color:rgba(0,0,0,.14);pointer-events:none;user-select:none}
+.work-tag{position:relative;z-index:1;font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(0,0,0,.78);background:rgba(255,255,255,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);padding:5px 10px;border-radius:30px;border:1px solid rgba(255,255,255,.55)}
+.wc-1{background:linear-gradient(135deg,#F2E400,#2FE4A4)}
+.wc-2{background:linear-gradient(135deg,#2A46E8,#2FE4A4)}
+.wc-3{background:linear-gradient(135deg,#2FE4A4,#F2E400)}
+.wc-4{background:linear-gradient(135deg,#FF2E93,#FF7A2F)}
+.wc-5{background:linear-gradient(135deg,#FF7A2F,#F2E400)}
+.work:hover .work-mono{transform:scale(1.06);transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:auto}
+.metric{background:var(--card);padding:13px 15px}
+.metric .v{font-family:'Fraunces',serif;font-size:25px;line-height:1;font-variant-numeric:tabular-nums}
+.metric .v .up{color:var(--ember);font-size:12px;margin-left:3px}
+.metric .l{font-size:10px;color:var(--muted);margin-top:5px;text-transform:uppercase;letter-spacing:.07em}
+.more-clients{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--border);border-radius:999px;padding:5px 12px;font-size:12px;background:var(--card)}
+.team-grid{display:grid;gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:18px}
+.member{background:var(--card);padding:18px 20px;display:flex;align-items:center;gap:14px}
+.member .av{width:42px;height:42px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:18px;color:var(--ink);background:color-mix(in srgb,var(--ink) 9%,transparent);border:1px solid var(--border)}
+.member .nm{font-family:'Fraunces',serif;font-size:17px;text-transform:capitalize;line-height:1}
+.member .rl{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.09em;margin-top:4px}
 
-  /* Hero */
-  #hero{ min-height:100svh; align-items:flex-end; padding-bottom:11svh; }
-  /* Soft halo keeps the thin display type legible over the sunlit canopy */
-  #hero h1{ text-shadow:0 2px 40px rgba(0,0,0,.45); }
-  #hero .lede{ text-shadow:0 1px 24px rgba(0,0,0,.55); }
-  #hero .hero-foot{
-    display:flex; justify-content:space-between; align-items:flex-end;
-    gap:30px; flex-wrap:wrap; width:100%;
-  }
-  #hero h1{ max-width:14ch; }
+/* impact stats + compact work portfolio */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:28px}
+.stat{background:var(--card);padding:38px 24px}
+.stat .sv{font-family:'Fraunces',serif;font-size:clamp(48px,7.4vw,80px);line-height:.9;letter-spacing:-.022em;font-weight:500;font-variant-numeric:tabular-nums}
+.stat .sl{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:14px}
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.mini{background:var(--card);padding:20px;display:flex;flex-direction:column}
+.mini h4{font-family:'Fraunces',serif;font-size:19px;font-weight:500;line-height:1.1}
+.mini .sub{font-size:12px;color:var(--muted);margin-top:3px}
+.mini .tags{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:14px;line-height:1.5}
+/* iOS-26 liquid-glass on the cards: frosted blur + vibrancy + a bright top rim */
+.pcard,.svc,.step,.work,.mini,.stat,.metric,.scard,.sheet{-webkit-backdrop-filter:blur(13px) saturate(1.6);backdrop-filter:blur(13px) saturate(1.6);box-shadow:inset 0 1px 0 color-mix(in srgb,#fff 26%,transparent)}
+/* ── polish: living-glass hover (specular sheen sweep + gentle lift) ── */
+.pcard,.svc,.work,.step,.mini,.stat,.sheet{position:relative;overflow:hidden}
+.pcard::after,.svc::after,.work::after,.step::after,.mini::after,.stat::after,.sheet::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 33%,color-mix(in srgb,#fff 26%,transparent) 48%,transparent 63%);transform:translateX(-130%);transition:transform .85s cubic-bezier(.2,.8,.2,1);pointer-events:none;z-index:3}
+.pcard:hover::after,.svc:hover::after,.work:hover::after,.step:hover::after,.mini:hover::after,.stat:hover::after,.sheet:hover::after{transform:translateX(130%)}
+.pcard,.work,.step,.sheet{transition:transform .55s cubic-bezier(.2,.8,.2,1),box-shadow .55s}
+.pcard:hover,.work:hover,.step:hover,.sheet:hover{transform:translateY(-5px)}
+/* animated link underline (footer + contact) */
+footer ul a,.contact-side a{position:relative;display:inline-block}
+footer ul a::after,.contact-side a::after{content:"";position:absolute;left:0;bottom:-2px;height:1.5px;width:100%;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+footer ul a:hover::after,.contact-side a:hover::after{transform:scaleX(1)}
+/* crisp focus states */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:6px}
+/* custom cursor (fine pointer only; difference blend stays visible on any colour) */
+#cursor{position:fixed;top:0;left:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;mix-blend-mode:difference;pointer-events:none;z-index:95;opacity:0;transition:width .25s,height .25s,margin .25s,opacity .3s,background-color .25s}
+#cursor.big{width:46px;height:46px;margin:-23px 0 0 -23px;background:transparent;border:1.5px solid #fff}
+#cursor.down{width:8px;height:8px;margin:-4px 0 0 -4px}
+html.has-cursor,html.has-cursor a,html.has-cursor button,html.has-cursor .work,html.has-cursor .svc,html.has-cursor .pcard,html.has-cursor .mini,html.has-cursor .step{cursor:none}
+html.has-cursor input,html.has-cursor textarea{cursor:auto}
+/* blob bloom-in on load */
+@keyframes blobsIn{from{opacity:0;transform:scale(1.12)}to{opacity:.9;transform:scale(1)}}
+@media (prefers-reduced-motion: reduce){#blobs{animation:none!important}.pcard::after,.svc::after,.work::after,.step::after,.mini::after,.stat::after,.sheet::after{display:none}}
 
-  /* Stat cards — frosted glass */
-  .stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:46px; max-width:880px; }
-  .panel.right .stats{ margin-left:auto; }
-  .stat{
-    pointer-events:auto;
-    background:var(--glass);
-    border:1px solid var(--line);
-    border-radius:14px; padding:22px 20px;
-    backdrop-filter:blur(10px) saturate(120%);
-    -webkit-backdrop-filter:blur(10px) saturate(120%);
-  }
-  .stat .num{ font-size:clamp(28px,3.4vw,42px); font-weight:300; letter-spacing:-.02em; }
-  .stat .num small{ color:var(--accent); font-size:.55em; vertical-align:.2em; margin-right:2px; }
-  .stat .cap{ margin-top:8px; font-size:12px; letter-spacing:.06em; color:var(--muted); text-transform:uppercase; }
-  @media (max-width:860px){ .stats{ grid-template-columns:repeat(2,1fr); } h1{ max-width:none; } }
+/* responsive */
+@media(min-width:700px){
+  .span4{grid-column:span 4}.span5{grid-column:span 5}.span7{grid-column:span 7}.span8{grid-column:span 8}
+  .cards3{grid-template-columns:repeat(3,1fr)}
+  .specgrid{grid-template-columns:repeat(3,1fr)}
+  .svc-grid{grid-template-columns:repeat(3,1fr)}
+  .panel{grid-template-columns:1fr 1fr}
+  .panel .text{padding:56px}
+  nav.main{display:flex}.signin{display:inline-flex}
+  nav.main + .right{margin-left:12px}
+  footer .container{grid-template-columns:repeat(4,1fr)}
+  footer .col.lead-col{grid-column:span 2}
+  .rail{display:flex}
+  .container{padding-left:40px;padding-right:40px}
+  .hero{padding-top:120px}
+  .name-card{grid-template-columns:1.35fr .85fr}
+  .about-meta{display:flex;flex-direction:column;align-items:flex-end;text-align:right;border-left:1px solid var(--border);padding-left:32px;margin-top:0}
+  .contact-grid{grid-template-columns:1.5fr 1fr;align-items:start}
+  .contact-side{border-left:1px solid var(--border);padding-left:32px}
+}
+@media(min-width:700px) and (max-width:1000px){ .signin{display:none} }
 
-  .foot-note{ font-size:11px; color:var(--faint); letter-spacing:.04em; margin-top:18px; }
+/* entrance states — only applied when JS will animate (html.anim) */
+html.anim [data-reveal]{opacity:0}
+html.anim .hero h1 .line>span{opacity:0}
 
-  /* CTA */
-  .btn{
-    pointer-events:auto;
-    display:inline-flex; align-items:center; gap:12px;
-    padding:16px 30px; border-radius:100px;
-    background:var(--accent); color:#0a0a0b; font-weight:600;
-    letter-spacing:.04em; font-size:15px;
-    transition:transform .4s var(--ease), box-shadow .4s var(--ease), background .3s;
-    box-shadow:0 10px 40px -12px rgba(201,161,95,.6);
-  }
-  .btn:hover{ transform:translateY(-3px); box-shadow:0 18px 50px -12px rgba(201,161,95,.75); }
-  .btn .arr{ transition:transform .4s var(--ease); }
-  .btn:hover .arr{ transform:translate(4px,-0px); }
-  .btn.ghost{ background:transparent; color:var(--ink); border:1px solid var(--line); box-shadow:none; }
-  .btn.ghost:hover{ border-color:var(--accent); color:var(--accent); }
+/* graceful: no webgl → keep a faint grid-paper so the page isn't flat */
+body.no-webgl{background-image:
+  linear-gradient(to right,var(--border) 1px,transparent 1px),
+  linear-gradient(to bottom,var(--border) 1px,transparent 1px);background-size:34px 34px}
 
-  /* Credits / footer */
-  footer.credits{
-    position:relative; z-index:2; pointer-events:auto;
-    border-top:1px solid var(--line-soft);
-    padding:40px clamp(18px,4vw,46px) 60px;
-    display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
-    color:var(--muted); font-size:13px; background:linear-gradient(to bottom, transparent, rgba(6,6,7,.9));
-  }
-  footer.credits a{ color:var(--ink); border-bottom:1px solid var(--line); }
-  footer.credits a:hover{ color:var(--accent); border-color:var(--accent); }
+/* ── contrast flip: JS adds .on-dark when the bg is dark (e.g. the blue) → white text ── */
+.on-dark .logo{filter:invert(1)}               /* black wordmark → white on dark backgrounds */
+.on-dark .grain{mix-blend-mode:screen;opacity:.08}
 
-  /* ---- Scroll progress rail (right edge) ---- */
-  .progress{
-    position:fixed; top:0; right:0; width:2px; height:100svh; z-index:6;
-    background:var(--line-soft); pointer-events:none;
-  }
-  .progress .bar{
-    position:absolute; top:0; left:0; right:0; height:100%;
-    background:linear-gradient(var(--accent), var(--accent-dim));
-    transform:scaleY(0); transform-origin:top; will-change:transform;
-  }
+@media (prefers-reduced-motion: reduce){
+  .cue .bar::after{animation:none;display:none}
+  html.anim [data-reveal]{opacity:1}
+  html.anim .hero h1 .line>span{opacity:1}
+}
 
-  /* ---- Scroll cue (hero) ---- */
-  .cue{
-    position:fixed; bottom:26px; left:50%; translate:-50% 0; z-index:6;
-    font-size:11px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted);
-    display:flex; flex-direction:column; align-items:center; gap:10px;
-    pointer-events:none; transition:opacity .6s var(--ease);
-  }
-  .cue .line{ width:1px; height:42px; background:linear-gradient(var(--accent), transparent);
-    animation:cueDrop 2.2s var(--ease) infinite; transform-origin:top; }
-  @keyframes cueDrop{ 0%{ transform:scaleY(0); opacity:0 } 30%{ opacity:1 } 100%{ transform:scaleY(1); opacity:0 } }
+/* Short / landscape viewports (incl. phones rotated to landscape): the full-height
+   hero would crop the headline reveal-mask, so relax the layout, shrink the headline
+   so it fits, and never clip the lines here. */
+@media (max-height:600px){
+  .hero{min-height:auto;justify-content:flex-start;padding-top:26px;padding-bottom:30px}
+  .hero h1{font-size:clamp(30px,4.6vw,44px);line-height:1.08;max-width:24ch}
+  .hero h1 .line{overflow:visible}
+  .hero h1 .line>span{transform:none!important;opacity:1!important}    /* never offset or hide the headline here — kills the landscape overlap regardless of JS state */
+  .hero p{margin-top:12px;font-size:13.5px;line-height:1.5;max-width:56ch}
+  .cta-row{margin-top:16px}
+  .stripe{margin-top:22px}
+  .cue{display:none}
+}
+/* in short landscape the fixed section rail (shown ≥700px) would overlap the hero text */
+@media (max-height:600px) and (min-width:700px){ .hero>.container{padding-right:108px} }
+/* the scroll cue clutters small touch screens and can overlap the CTAs — hide it there */
+@media (max-width:700px){ .cue{display:none} }
 
-  /* ============================================================
-     REVEAL CHOREOGRAPHY (no-FOUC)
-     Elements start hidden; GSAP reveals them. If JS/motion is
-     off, the reduced-motion block below forces them visible.
-     ============================================================ */
-  [data-reveal]{ opacity:0; transform:translateY(26px); will-change:transform,opacity; }
-  [data-reveal-line]{ display:block; overflow:hidden; }
-  [data-reveal-line] > span{ display:block; transform:translateY(110%); }
-
-  /* ============================================================
-     PRELOADER
-     ============================================================ */
-  #loader{
-    position:fixed; inset:0; z-index:50; background:var(--bg);
-    display:flex; align-items:flex-end; justify-content:space-between;
-    padding:clamp(24px,5vw,60px);
-    transition:opacity .8s var(--ease), visibility .8s;
-  }
-  #loader.done{ opacity:0; visibility:hidden; }
-  #loader .lbl{ font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
-  #loader .pct{ font-size:clamp(58px,16vw,200px); font-weight:300; line-height:.8; letter-spacing:-.03em; }
-  #loader .pct small{ font-size:.3em; color:var(--accent); vertical-align:.9em; }
-  #loader .track{ position:absolute; left:0; bottom:0; height:2px; width:100%; background:var(--line-soft); }
-  #loader .track i{ display:block; height:100%; width:0%; background:var(--accent); }
-
-  /* ============================================================
-     DEBUG OVERLAY (?debug=1)
-     ============================================================ */
-  #hud{
-    position:fixed; top:64px; left:14px; z-index:40; display:none;
-    font:11px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
-    color:#bfeacb; background:rgba(0,0,0,.6); border:1px solid rgba(255,255,255,.12);
-    border-radius:8px; padding:10px 12px; white-space:pre; pointer-events:none;
-    backdrop-filter:blur(4px);
-  }
-  body.debug #hud{ display:block; }
-
-  /* ============================================================
-     ACCESSIBILITY — full static, readable fallback
-     ============================================================ */
-  @media (prefers-reduced-motion: reduce){
-    [data-reveal]{ opacity:1 !important; transform:none !important; }
-    [data-reveal-line] > span{ transform:none !important; }
-    .cue, .cue .line{ animation:none; }
-    html{ scroll-behavior:auto; }
-  }
+/* ── small phones: keep the header tidy and stack the contact form ── */
+@media (max-width:600px){
+  .bar .row{gap:10px;padding:0 14px}
+  .logo{width:82px}
+  .login-btn .lbl{display:none}          /* show just the lock icon on small screens */
+  .login-btn{padding:0 11px}
+  .contact-form{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(34px,11vw,52px)}
+}
+@media (max-width:380px){
+  .bar .btn.ink{padding:0 11px}          /* tighten the primary CTA on very narrow phones */
+}
 </style>
+<script>
+  /* set the entrance-hiding class before first paint (skipped for reduced-motion) */
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anim');
+</script>
 </head>
-
 <body>
-  <!-- ============ FIXED WEBGL STAGE ============ -->
-  <div id="stage" aria-hidden="true"></div>
+<a href="#main" class="skip">Skip to content</a>
 
-  <!-- ============ PRELOADER ============ -->
-  <div id="loader" aria-hidden="true">
-    <div class="lbl">Composites<br>Architecture of new possibilities</div>
-    <div class="pct"><span id="pctNum">0</span><small>%</small></div>
-    <div class="track"><i id="loadBar"></i></div>
-  </div>
+<div id="bg" aria-hidden="true"></div>
+<div id="blobs" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span><span class="blob b5"></span></div>
+<div class="grain" aria-hidden="true"></div>
 
-  <!-- ============ DEBUG HUD ============ -->
-  <pre id="hud"></pre>
-
-  <!-- ============ SCROLL PROGRESS RAIL ============ -->
-  <div class="progress" aria-hidden="true"><div class="bar" id="progBar"></div></div>
-
-  <!-- ============ SCROLL CUE ============ -->
-  <div class="cue" id="cue"><span>Scroll</span><span class="line"></span></div>
-
-  <!-- ============ NAVIGATION ============ -->
-  <header class="nav">
-    <a class="brand" href="#hero"><span class="dot"></span>Composites</a>
-    <nav>
-      <a href="#strength">Material</a>
-      <a href="#facade">Façade</a>
-      <a href="#form">Form</a>
-      <a href="#contact">Contact</a>
-    </nav>
+<div class="wrap">
+  <header class="bar">
+    <div class="row">
+      <a href="#top" class="logo" aria-label="bodega — home"></a>
+      <nav class="main" aria-label="Primary">
+        <a href="#top">Home</a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#about">Studio</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="right">
+        <a href="/portal" class="btn login-btn" aria-label="Client login">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <span class="lbl">Client login</span>
+        </a>
+        <a href="#contact" class="btn ink">Start a project
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+        </a>
+      </div>
+    </div>
   </header>
 
-  <!-- ============ CONTENT ============ -->
-  <main class="content">
-
-    <!-- 0 · HERO -->
-    <section id="hero" class="panel">
-      <div class="wrap">
-        <div class="eyebrow" data-reveal>Composite materials in architecture</div>
+  <main id="main">
+    <!-- ░░ HERO ░░ -->
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="kicker" data-reveal style="font-size:15px;letter-spacing:.14em">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="width:16px;height:16px"><path d="M12 4v16M4 8l16 8M20 8 4 16"/></svg>
+          Bodega Creative Studio · Credentials
+        </div>
         <h1>
-          <span data-reveal-line><span>Architecture of</span></span>
-          <span data-reveal-line><span><span class="em">new possibilities</span></span></span>
+          <span class="line"><span>Brands don't just speak.</span></span>
+          <span class="line"><span>They shape <em class="serif" style="color:var(--ember)" aria-label="culture"><span class="rotw" aria-hidden="true">culture.</span></em></span></span>
         </h1>
-        <div class="hero-foot">
-          <p class="lede" data-reveal>Strength and lightness, reconciled. A new structural language
-            for forms that were, until now, impossible to build.</p>
-          <p class="lede" data-reveal style="max-width:24ch; color:var(--faint)">An interactive study in
-            Three.js, GSAP &amp; Lenis — scroll to explore.</p>
+        <p data-reveal>Bodega Creative is a studio for brand-first social media ecosystems — from content strategy to daily execution, designed to strengthen brand presence and drive measurable growth. We operate as an extension of your team.</p>
+        <div class="cta-row" data-reveal>
+          <a href="#contact" class="btn ink lg">Start a conversation
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+          <a href="#work" class="btn lg">Selected works</a>
+        </div>
+      </div>
+      <div class="stripe" data-reveal>
+        <div class="container">
+          <div class="kicker label">Selected clients</div>
+          <div class="marquee">
+            <div class="mq-track">
+              <div class="mq-group">
+                <span><span class="who">Maktour</span> <span class="dot">·</span> Hajj &amp; Umrah Travel</span>
+                <span><span class="who">Panasonic Indonesia</span> <span class="dot">·</span> Electronics</span>
+                <span><span class="who">Astra Daihatsu</span> <span class="dot">·</span> Automotive</span>
+                <span><span class="who">Kopikalyan</span> <span class="dot">·</span> Specialty Coffee</span>
+                <span><span class="who">Super Padel</span> <span class="dot">·</span> Sports App</span>
+                <span><span class="who">KEMENDAGRI</span> <span class="dot">·</span> Ministry of State</span>
+              </div>
+              <div class="mq-group" aria-hidden="true">
+                <span><span class="who">Maktour</span> <span class="dot">·</span> Hajj &amp; Umrah Travel</span>
+                <span><span class="who">Panasonic Indonesia</span> <span class="dot">·</span> Electronics</span>
+                <span><span class="who">Astra Daihatsu</span> <span class="dot">·</span> Automotive</span>
+                <span><span class="who">Kopikalyan</span> <span class="dot">·</span> Specialty Coffee</span>
+                <span><span class="who">Super Padel</span> <span class="dot">·</span> Sports App</span>
+                <span><span class="who">KEMENDAGRI</span> <span class="dot">·</span> Ministry of State</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 1 · STRENGTH / LIGHTNESS -->
-    <section id="strength" class="panel">
-      <div class="wrap">
-        <div class="eyebrow" data-reveal>01 — Strength &amp; lightness</div>
-        <h2 data-reveal>Stronger. <span class="em">Lighter.</span><br>Both at once.</h2>
-        <p class="lede" data-reveal>Fibre-reinforced composites deliver structural strength at a fraction
-          of the mass of steel or concrete — so spans grow, foundations shrink, and the whole logic of a
-          building can be rethought from the load path up.</p>
-        <div class="stats">
-          <div class="stat" data-reveal><div class="num"><small>−</small>70%</div><div class="cap">Mass vs. steel</div></div>
-          <div class="stat" data-reveal><div class="num">5<small>×</small></div><div class="cap">Strength-to-weight</div></div>
-          <div class="stat" data-reveal><div class="num">0</div><div class="cap">Corrosion</div></div>
-          <div class="stat" data-reveal><div class="num">100<small>yr</small></div><div class="cap">Design life</div></div>
+    <!-- ░░ IMPACT — proof in numbers ░░ -->
+    <section class="block" id="impact" style="border-bottom:1px solid var(--border)">
+      <div class="container">
+        <div class="kicker" data-reveal>Proof</div>
+        <h2 class="display" data-reveal style="font-size:clamp(30px,5vw,44px);margin-top:8px">Growth you can measure.</h2>
+        <div class="stat-grid">
+          <div class="stat" data-reveal><div class="sv">3.5M+</div><div class="sl">Accounts reached</div></div>
+          <div class="stat" data-reveal><div class="sv">100K+</div><div class="sl">Community grown</div></div>
+          <div class="stat" data-reveal><div class="sv">14</div><div class="sl">Brands served</div></div>
+          <div class="stat" data-reveal><div class="sv">8</div><div class="sl">Industries</div></div>
         </div>
-        <p class="foot-note" data-reveal>Representative properties; values vary by composite system and application.</p>
       </div>
     </section>
 
-    <!-- 2 · FAÇADE / MATERIAL -->
-    <section id="facade" class="panel right">
-      <div class="wrap">
-        <div class="eyebrow" data-reveal>02 — The façade, reimagined</div>
-        <h2 data-reveal>A skin that <span class="em">performs</span></h2>
-        <p class="lede" data-reveal>The façade is where composites speak loudest. Woven reinforcement and
-          moulded panels turn the building envelope into a single continuous gesture — self-shading,
-          weather-sealed, and finished in the same pass it is formed.</p>
+    <!-- ░░ WHY BODEGA — what makes us different ░░ -->
+    <section class="block" id="what">
+      <div class="container grid12">
+        <div class="span4">
+          <div class="kicker" data-reveal>What makes us different</div>
+          <h2 class="display big" data-reveal>An extension<br>of your team.</h2>
+          <p class="lead" data-reveal>We combine cultural understanding, creative excellence, and structured workflows built for long-term consistency — authentic to your identity, adaptive to your audience, impactful to your growth.</p>
+        </div>
+        <div class="span8 diff-grid">
+          <div class="pcard" data-reveal>
+            <div class="n">01</div>
+            <h3>Distributed team of specialists</h3>
+            <p>Our team comes from different backgrounds and cities. Each project gets a custom-built team with the expertise it truly needs.</p>
+          </div>
+          <div class="pcard" data-reveal>
+            <div class="n">02</div>
+            <h3>Services you can scale</h3>
+            <p>Every service — content, strategy, production — scales up or down based on your brand's stage, goals, and budget.</p>
+          </div>
+          <div class="pcard" data-reveal>
+            <div class="n">03</div>
+            <h3>Adjustable pricing</h3>
+            <p>You pay for what brings value, not unnecessary add-ons. Flexible, transparent, and cost-efficient for any size of brand.</p>
+          </div>
+          <div class="pcard" data-reveal>
+            <div class="n">04</div>
+            <h3>Research first</h3>
+            <p>Every solution starts with audience behavior, market research, and cultural insight — ideas grounded in reality and built to work.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 3 · FORM FREEDOM -->
-    <section id="form" class="panel">
-      <div class="wrap">
-        <div class="eyebrow" data-reveal>03 — Form without compromise</div>
-        <h2 data-reveal>Double-curved,<br><span class="em">single-piece.</span></h2>
-        <p class="lede" data-reveal>Moulding frees geometry from the straight line. Compound curvature
-          that would demand thousands of bespoke steel nodes is cast as one continuous shell —
-          complex on the outside, constructible on the inside.</p>
+    <!-- ░░ PROJECT FLOW — how we work ░░ -->
+    <section class="block rule" id="rule" style="border-bottom:1px solid var(--border)">
+      <div class="container grid12" style="align-items:center">
+        <div class="span5">
+          <div class="kicker" data-reveal>How we work</div>
+          <h2 class="display" style="font-size:clamp(28px,5vw,34px);margin-top:12px" data-reveal>
+            From real bonding to <em class="serif ember">execution.</em>
+          </h2>
+          <p class="lead" data-reveal>A structured flow that puts understanding before ideas — so the work reflects your voice, not just our imagination.</p>
+        </div>
+        <div class="span7">
+          <div class="specgrid">
+            <div class="step" data-reveal><div class="n">01</div><h4>Real bonding</h4><p>We get to know you — listen, ask the right questions, and build a real working chemistry.</p></div>
+            <div class="step" data-reveal><div class="n">02</div><h4>Research &amp; deep understanding</h4><p>Before ideas, we dig into your audience, competitors, data, culture, and context.</p></div>
+            <div class="step" data-reveal><div class="n">03</div><h4>Strategy development</h4><p>We craft a strategic path that aligns with your goals.</p></div>
+            <div class="step" data-reveal><div class="n">04</div><h4>Review &amp; alignment</h4><p>We make sure the solution reflects your voice, not just our imagination.</p></div>
+            <div class="step" data-reveal><div class="n">05</div><h4>Kick off &amp; execution</h4><p>Once we're aligned, the real work begins.</p></div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 4 · ENDURANCE / SUSTAINABILITY -->
-    <section id="endure" class="panel center">
-      <div class="wrap">
-        <div class="eyebrow" data-reveal>04 — Built to endure</div>
-        <h2 data-reveal>Quiet for <span class="em">decades.</span></h2>
-        <p class="lede" data-reveal>Corrosion-free and dimensionally stable, composite assemblies shrug off
-          salt air, freeze–thaw and fatigue. Less maintenance, longer service life, lighter lifetime
-          footprint — performance measured not in years, but in generations.</p>
+    <!-- ░░ SERVICES — six capabilities ░░ -->
+    <section class="block rule" id="services" style="border-bottom:1px solid var(--border)">
+      <div class="container">
+        <div class="kicker" data-reveal>Our services</div>
+        <h2 class="display" data-reveal style="font-size:clamp(34px,6vw,56px);margin-top:8px">Six ways we build brands.</h2>
+        <p class="lead" data-reveal style="max-width:58ch">From content to strategy to production — every service scales up or down based on your brand's stage, goals, and budget.</p>
+        <div class="svc-grid">
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.4 7.1 7.1 2.4-7.1 2.4L12 21.5l-2.4-7.1L2.5 12l7.1-2.4z"/></svg></span><span class="n">01</span></div><h3>Branding &amp; Identity</h3><p class="svc-sum">We shape brands to speak clearly, stand out visually, and grow strategically.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></svg></span><span class="n">02</span></div><h3>Marketing Strategy</h3><p class="svc-sum">Your brand's goals become actionable, precise, and achievable with a strategy engineered by Bodega.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12z"/></svg></span><span class="n">03</span></div><h3>Brand Activation</h3><p class="svc-sum">Not just another tent, booth, or backdrop — fresh concepts that drive hype, conversation, and authentic engagement.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 8 4 12l4.5 4M15.5 8 20 12l-4.5 4M13.5 6l-3 12"/></svg></span><span class="n">04</span></div><h3>Web &amp; App Development</h3><p class="svc-sum">You set the direction and Bodega turns it into a seamless digital experience.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16.5 9 10.5l4 4 7.5-7.5"/><path d="M16 7h5v5"/></svg></span><span class="n">05</span></div><h3>Digital Marketing</h3><p class="svc-sum">Bodega sets KPIs and drives strategies to deliver the results you're aiming for.</p></article>
+          <article class="svc" data-reveal><div class="svc-head"><span class="svc-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 12a8 8 0 0 1-11.7 7.1L4 20.5l1.4-4.8A8 8 0 1 1 20.5 12z"/></svg></span><span class="n">06</span></div><h3>Social Media Management &amp; Content</h3><p class="svc-sum">Your brand doesn't follow trends — it leads them and shapes conversations.</p></article>
+        </div>
+        <div class="engage sheet" data-reveal>
+          <div>
+            <div class="kicker">Engagement</div>
+            <h3 class="display" style="font-size:clamp(22px,3.4vw,28px);margin-top:8px">Scaled to your brand's stage, goals, and budget.</h3>
+            <p class="muted" style="margin-top:12px;font-size:13.5px;line-height:1.65;max-width:54ch">We work as retainers, project sprints, or in-house enablement — you pay for what brings value, not unnecessary add-ons.</p>
+          </div>
+          <div class="engage-cta">
+            <a href="#contact" class="btn ink">Talk to us</a>
+            <a href="#work" class="btn">See the work</a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 5 · CTA / CONTACT -->
-    <section id="contact" class="panel center">
-      <div class="wrap">
-        <div class="eyebrow" data-reveal>05 — Begin</div>
-        <h2 data-reveal>Build what couldn't<br>be built.</h2>
-        <p class="lede" data-reveal>Bring composites into your next project — from concept geometry to
-          moulded reality.</p>
-        <p data-reveal style="margin-top:36px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap">
-          <a class="btn" href="#hero">Explore the material <span class="arr">→</span></a>
-          <a class="btn ghost" href="#hero">Back to top</a>
-        </p>
+    <!-- ░░ SELECTED WORKS — real case studies + metrics ░░ -->
+    <section class="block" id="work">
+      <div class="container">
+        <div class="kicker" data-reveal>Selected works</div>
+        <h2 class="display" data-reveal style="font-size:clamp(34px,6vw,56px);margin-top:8px">Measurable growth, on the record.</h2>
+        <p class="lead" data-reveal style="max-width:56ch">Research-based content pillars, new visual direction, storytelling captions with clear CTAs — across travel, electronics, sport, and government.</p>
+        <div class="work-grid">
+          <article class="work" data-reveal>
+            <div class="work-cover wc-1"><span class="work-mono">M</span><span class="work-tag">Travel</span></div>
+            <div class="work-top"><div><h3>Maktour</h3><div class="sub">Hajj &amp; Umrah Travel · maktour.id</div></div><div class="cat">Corporate Branding · Social Media</div></div>
+            <p class="desc">Research-based content pillars and a new visual direction over six months.</p>
+            <div class="metrics">
+              <div class="metric"><div class="v">2.9M<span class="up">+</span></div><div class="l">Accounts reached</div></div>
+              <div class="metric"><div class="v">85.4K</div><div class="l">Followers · <span style="color:var(--ember)">+21%</span></div></div>
+              <div class="metric"><div class="v">50.8K</div><div class="l">Engagement</div></div>
+              <div class="metric"><div class="v">183K</div><div class="l">Visits · <span style="color:var(--ember)">+228%</span></div></div>
+            </div>
+          </article>
+          <article class="work" data-reveal>
+            <div class="work-cover wc-2"><span class="work-mono">P</span><span class="work-tag">Electronics</span></div>
+            <div class="work-top"><div><h3>Panasonic Indonesia</h3><div class="sub">Electronics · Multinational</div></div><div class="cat">Social · Community · Activation</div></div>
+            <p class="desc">Community development and digital activation for a global electronics brand.</p>
+            <div class="metrics">
+              <div class="metric"><div class="v">65.8%</div><div class="l">Reach growth</div></div>
+              <div class="metric"><div class="v">205.6%</div><div class="l">Engagement-rate growth</div></div>
+              <div class="metric"><div class="v">27.7%</div><div class="l">Secondary reach growth</div></div>
+              <div class="metric"><div class="v">1 mo</div><div class="l">Time to result</div></div>
+            </div>
+          </article>
+          <article class="work" data-reveal>
+            <div class="work-cover wc-3"><span class="work-mono">S</span><span class="work-tag">Sport</span></div>
+            <div class="work-top"><div><h3>Super Padel</h3><div class="sub">Padel scoring app · superpadel</div></div><div class="cat">Social · Digital Activation</div></div>
+            <p class="desc">New content pillar, refreshed design, and Meta Ads into related communities.</p>
+            <div class="metrics">
+              <div class="metric"><div class="v">579.1K</div><div class="l">Views</div></div>
+              <div class="metric"><div class="v">91.5K</div><div class="l">Reach</div></div>
+              <div class="metric"><div class="v">25.1%</div><div class="l">Content interaction</div></div>
+              <div class="metric"><div class="v">7.2K</div><div class="l">Visits · <span style="color:var(--ember)">+47%</span></div></div>
+            </div>
+          </article>
+          <article class="work" data-reveal>
+            <div class="work-cover wc-4"><span class="work-mono">I</span><span class="work-tag">Human Capital</span></div>
+            <div class="work-top"><div><h3>Insan Hutama</h3><div class="sub">Hutama Karya · Human Capital</div></div><div class="cat">Social Media Handling</div></div>
+            <p class="desc">Reels with strong hooks and CTAs, plus daily Stories to build connection.</p>
+            <div class="metrics">
+              <div class="metric"><div class="v">611.7K<span class="up">+</span></div><div class="l">Accounts reached</div></div>
+              <div class="metric"><div class="v">12.8K</div><div class="l">Followers · <span style="color:var(--ember)">+7.4%</span></div></div>
+              <div class="metric"><div class="v">2.5%</div><div class="l">Engagement rate</div></div>
+              <div class="metric"><div class="v">7K</div><div class="l">Visits · <span style="color:var(--ember)">+73%</span></div></div>
+            </div>
+          </article>
+          <article class="work" data-reveal>
+            <div class="work-cover wc-5"><span class="work-mono">A</span><span class="work-tag">Automotive</span></div>
+            <div class="work-top"><div><h3>Astra Daihatsu</h3><div class="sub">Automotive dealership</div></div><div class="cat">Performance Ads · Marketing</div></div>
+            <p class="desc">Lead-generation campaigns tuned by audience interest and cost-per-result.</p>
+            <div class="metrics">
+              <div class="metric"><div class="v">161</div><div class="l">Leads</div></div>
+              <div class="metric"><div class="v">Rp 8.5K</div><div class="l">Cost per result</div></div>
+              <div class="metric"><div class="v">0.79%</div><div class="l">Click-through rate</div></div>
+              <div class="metric"><div class="v">62.4K</div><div class="l">Reach</div></div>
+            </div>
+          </article>
+        </div>
+        <div class="kicker" data-reveal style="display:block;margin-top:38px;margin-bottom:16px">More selected work</div>
+        <div class="mini-grid">
+          <article class="mini" data-reveal><h4>Kopikalyan</h4><div class="sub">Specialty Coffee · JKT / SBY / Tokyo</div><div class="tags">Brand Design · Communication</div></article>
+          <article class="mini" data-reveal><h4>Kopikalyan Archive</h4><div class="sub">Flagship Coffee Shop · Jakarta</div><div class="tags">Brand Design · Communication · Activation</div></article>
+          <article class="mini" data-reveal><h4>Dans Burgers</h4><div class="sub">F&amp;B · Jakarta</div><div class="tags">Brand Design</div></article>
+          <article class="mini" data-reveal><h4>Airnesia</h4><div class="sub">Airlines</div><div class="tags">Brand Design · Visual Identity</div></article>
+          <article class="mini" data-reveal><h4>KEMENDAGRI</h4><div class="sub">Ministry of State</div><div class="tags">Social Media &amp; Strategy · Media Partnership · Content</div></article>
+          <article class="mini" data-reveal><h4>Dewa Open Tournament</h4><div class="sub">Padel Event</div><div class="tags">Social Media · Brand Design · Activation</div></article>
+          <article class="mini" data-reveal><h4>Merdeka Run 8.0K</h4><div class="sub">Government Public Event</div><div class="tags">Social Media · Visual Identity · Activation</div></article>
+          <article class="mini" data-reveal><h4>Konser Pandangan Pertama</h4><div class="sub">Concert · Tribute to A'rafiq</div><div class="tags">Social Media · Branding · Activation</div></article>
+          <article class="mini" data-reveal><h4>Lacoste Open Tournament</h4><div class="sub">Padel Event</div><div class="tags">Digital Activation · Social Media · Branding</div></article>
+        </div>
+        <div class="kicker" data-reveal style="display:block;margin-top:40px;margin-bottom:14px">Industries we work across</div>
+        <div class="more-clients" data-reveal>
+          <span class="chip">Travel &amp; Hospitality</span>
+          <span class="chip">F&amp;B &amp; Coffee</span>
+          <span class="chip">Automotive</span>
+          <span class="chip">Electronics</span>
+          <span class="chip">Government &amp; Public</span>
+          <span class="chip">Sports &amp; Padel</span>
+          <span class="chip">Music &amp; Events</span>
+          <span class="chip">Airlines</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ STUDIO / TEAM ░░ -->
+    <section class="block" id="about">
+      <div class="container grid12" style="align-items:end">
+        <div class="span7">
+          <div class="kicker" data-reveal>The studio</div>
+          <h2 class="display" data-reveal style="font-size:clamp(34px,6vw,56px);margin-top:8px;line-height:.95">We make brands that shape culture.</h2>
+          <p class="lead" data-reveal style="max-width:50ch;font-size:14.5px">At Bodega Creative, we believe great brands don't just speak — they shape culture and become new lifestyles. We bring cultural understanding, creative excellence, and structured workflows built for long-term consistency.</p>
+        </div>
+        <div class="span5 about-meta" data-reveal>
+          <div><div class="kicker">Based</div><div class="meta-v">Jakarta, Indonesia</div></div>
+          <div style="margin-top:18px"><div class="kicker">Team</div><div class="meta-v">11+ specialists</div></div>
+        </div>
+      </div>
+      <div class="container" style="padding-top:40px">
+        <div class="kicker" data-reveal style="display:block;margin-bottom:18px">The people</div>
+        <div class="team-grid">
+          <div class="member" data-reveal><div class="av">R</div><div><div class="nm">Reno</div><div class="rl">CEO</div></div></div>
+          <div class="member" data-reveal><div class="av">R</div><div><div class="nm">Rizky</div><div class="rl">COO</div></div></div>
+          <div class="member" data-reveal><div class="av">T</div><div><div class="nm">Tya</div><div class="rl">Account Lead</div></div></div>
+          <div class="member" data-reveal><div class="av">S</div><div><div class="nm">Sashil</div><div class="rl">Social Media Analyst</div></div></div>
+          <div class="member" data-reveal><div class="av">B</div><div><div class="nm">Barry</div><div class="rl">Social Media Specialist</div></div></div>
+          <div class="member" data-reveal><div class="av">O</div><div><div class="nm">Omar</div><div class="rl">Account Executive</div></div></div>
+          <div class="member" data-reveal><div class="av">S</div><div><div class="nm">Shaft</div><div class="rl">Graphic Designer</div></div></div>
+          <div class="member" data-reveal><div class="av">A</div><div><div class="nm">Adit</div><div class="rl">Motion &amp; 3D Designer</div></div></div>
+          <div class="member" data-reveal><div class="av">+3</div><div><div class="nm">Creative</div><div class="rl">Production</div></div></div>
+        </div>
+        <div class="name-card sheet" data-reveal>
+          <div>
+            <h3 class="display" style="font-size:clamp(24px,4vw,32px)">The name.</h3>
+            <p class="muted" style="margin-top:12px;font-size:14px;line-height:1.7;max-width:50ch">A <em class="serif">bodega</em> is a corner store — quiet, well-stocked, run by people who recognize you. We liked that as a metaphor for a studio: close, dependable, and always open for your brand.</p>
+          </div>
+          <div class="name-logo"><span class="logo" aria-label="bodega"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ FAQ — answer objections right before the ask ░░ -->
+    <section class="block rule" id="faq" style="border-top:1px solid var(--border)">
+      <div class="container grid12" style="align-items:start">
+        <div class="span5">
+          <div class="kicker" data-reveal>FAQ</div>
+          <h2 class="display" style="font-size:clamp(28px,5vw,40px);margin-top:12px" data-reveal>The questions worth <em class="serif ember">asking.</em></h2>
+          <p class="lead" data-reveal>Straight answers on how we start, what it costs, and what to expect — before you ever fill in a form.</p>
+          <a href="#contact" class="btn ink" data-reveal style="margin-top:22px">Still have a question? Talk to us</a>
+        </div>
+        <div class="span7">
+          <div class="faq-list">
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">How do we start working together?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>It starts with a conversation — tell us about your brand and what you're trying to grow, and we'll come back with a short, honest read on how we can help. From there it's a focused proposal, alignment on scope, then onboarding. Most brands go from first call to live work within two to three weeks.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">How is pricing structured?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>We work on monthly retainers, scaled to your brand's stage, goals, and budget — not a fixed package you have to squeeze into. You'll know exactly what's included and what it costs before anything begins. No surprise line items.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">What's included in a monthly engagement?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>A dedicated team and a complete social ecosystem: strategy and content direction, a planned content calendar, production across graphic, motion and 3D, community management, and clear monthly reporting tied to the metrics that matter to you.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">How quickly will we see results?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>You'll see polished content going live within the first few weeks. Real momentum — reach, community, and engagement — compounds over the first few months as we learn what resonates with your audience and sharpen the strategy around it.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">We already have an in-house team — does that work?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>Perfectly. We're built to operate as an extension of your team, not a replacement. We plug into your existing workflows, fill the gaps — strategy, production, consistency — and hand off cleanly. Many of our engagements run right alongside in-house marketers.</p></div></div>
+            </div>
+            <div class="faq-item" data-reveal>
+              <button class="faq-q" type="button" aria-expanded="false">Do you work with brands outside Jakarta?<span class="faq-ic" aria-hidden="true"></span></button>
+              <div class="faq-a"><div class="faq-a-inner"><p>Yes. We're based in Jakarta, but our team is distributed and we run brand-first ecosystems for clients across industries and regions. Most of the collaboration happens remotely — with the same chemistry and consistency as if we were down the hall.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ CONTACT — two emails, no forms team ░░ -->
+    <section class="block rule" id="contact" style="border-top:1px solid var(--border)">
+      <div class="container">
+        <div class="kicker" data-reveal>Contact</div>
+        <h2 class="display" data-reveal style="font-size:clamp(34px,6vw,56px);margin-top:8px">Let's start a conversation.</h2>
+        <p class="lead" data-reveal style="max-width:52ch">Tell us about your brand and what you're trying to grow — we'll come back with a short, honest read on how Bodega can help.</p>
+        <div class="contact-grid">
+          <form class="contact-form sheet" id="contactForm" data-reveal novalidate action="https://formsubmit.co/creativestudiolabodega@gmail.com" method="POST">
+            <input type="hidden" name="_subject" value="New enquiry · bodega site" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:0;height:0;opacity:0" />
+            <label><span class="kicker">Name</span><input required name="name" autocomplete="name" /></label>
+            <label><span class="kicker">Company</span><input name="company" autocomplete="organization" /></label>
+            <label class="full"><span class="kicker">Email</span><input type="email" required name="email" autocomplete="email" /></label>
+            <label class="full"><span class="kicker">What are you trying to ship?</span><textarea rows="6" required name="message"></textarea></label>
+            <div class="form-foot full">
+              <span class="muted" style="font-size:11px">We reply within one working day.</span>
+              <button type="submit" class="btn ink" id="sendBtn">Send</button>
+            </div>
+          </form>
+          <aside class="contact-side" data-reveal>
+            <div class="kicker">Direct</div>
+            <p class="serif" style="font-size:18px;margin-top:6px;word-break:break-word">creativestudiolabodega@gmail.com</p>
+            <p class="muted" style="font-size:13px;margin-top:8px">Rizkyanda · 0817 0247 666</p>
+            <a class="btn wa-link" href="https://wa.me/628170247666?text=Hi%20Bodega%2C%20I%27d%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener" style="margin-top:14px">
+              <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16 3C9 3 3.5 8.5 3.5 15.5c0 2.5.7 4.8 1.9 6.8L3 29l6.9-2.3c1.9 1 4 1.6 6.1 1.6 7 0 12.5-5.5 12.5-12.5S23 3 16 3zm0 22.7c-1.9 0-3.7-.5-5.3-1.5l-.4-.2-4.1 1.4 1.4-4-.3-.4c-1.1-1.7-1.6-3.6-1.6-5.6C5.8 9.8 10.4 5.3 16 5.3S26.2 9.8 26.2 15.5 21.6 25.7 16 25.7zm5.7-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5 0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.2 3.4 5.3 4.7.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.2-.6-.4z"/></svg>
+              Chat on WhatsApp
+            </a>
+            <div class="kicker" style="display:block;margin-top:28px">Studio</div>
+            <p class="muted" style="font-size:13px;margin-top:6px;line-height:1.6">Jl. Otista Raya No.80, RT.2/RW.5,<br>Jakarta Timur, DKI Jakarta 13330</p>
+            <div class="kicker" style="display:block;margin-top:28px">Hours</div>
+            <p class="muted" style="font-size:13px;margin-top:6px">Mon – Fri · 09–18 WIB</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ CLOSING — a workspace clients actually open ░░ -->
+    <section class="closewrap" id="close">
+      <div class="container">
+        <div class="panel" data-reveal>
+          <div class="text">
+            <div>
+              <div class="kicker">Let's work together</div>
+              <h2 class="display">Let's have a <em class="serif ember">conversation.</em></h2>
+              <p>Bring us your brand and your ambition — we'll bring cultural insight, creative excellence, and the structure to make it consistent.</p>
+            </div>
+            <div class="cta-row" style="margin-top:0">
+              <a href="#contact" class="btn ink lg">Start a project</a>
+              <a href="#work" class="btn lg">See the work</a>
+            </div>
+            <p class="muted" style="margin-top:18px;font-size:13px">
+              Already working with us? <a href="/portal" style="color:inherit;font-weight:600;border-bottom:1px solid currentColor;padding-bottom:1px">Open the client portal →</a>
+            </p>
+          </div>
+          <div class="brandbox">
+            <div class="gridpaper"></div>
+            <div class="nz"></div>
+            <span class="logo white" role="img" aria-label="bodega"></span>
+            <span class="tag">bodega® · creative studio</span>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- ============ CREDITS ============ -->
-  <footer class="credits content">
-    <div>Independent WebGL homage — inspired by <a href="https://www.composites.archi" target="_blank" rel="noopener noreferrer">composites.archi</a> (JEC Group).</div>
-    <div>Three.js · GSAP&nbsp;ScrollTrigger · Lenis — procedural geometry, zero external assets.</div>
+  <footer>
+    <div class="container">
+      <div class="col lead-col">
+        <span class="logo" aria-label="bodega"></span>
+        <p class="about">A creative studio for brand-first social media ecosystems — from content strategy to daily execution, built to strengthen brand presence and drive measurable growth.</p>
+      </div>
+      <div class="col">
+        <span class="kicker">Studio</span>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#work">Selected works</a></li>
+          <li><a href="#about">Team</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <span class="kicker">Contact</span>
+        <ul>
+          <li><a href="#contact">Start a project</a></li>
+          <li><a href="/portal">Client portal</a></li>
+          <li><span class="muted">creativestudiolabodega@gmail.com</span></li>
+          <li><span class="muted">© Bodega Creative · <span id="yr"></span></span></li>
+        </ul>
+      </div>
+    </div>
   </footer>
+</div>
 
-  <!-- ============================================================
-       IMPORT MAP — pin every dependency to a CDN ESM build.
-       three's addons MUST match the core version exactly.
-       ============================================================ -->
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/",
-      "gsap": "https://cdn.jsdelivr.net/npm/gsap@3/index.js",
-      "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3/ScrollTrigger.js",
-      "lenis": "https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.mjs"
+<!-- scroll cue + section rail -->
+<div class="cue" aria-hidden="true"><span>Scroll</span><span class="bar"></span></div>
+<nav class="rail" aria-label="Sections">
+  <button data-go="#top" aria-current="true"><span>Intro</span><span class="tick"></span></button>
+  <button data-go="#services"><span>Services</span><span class="tick"></span></button>
+  <button data-go="#work"><span>Work</span><span class="tick"></span></button>
+  <button data-go="#about"><span>Studio</span><span class="tick"></span></button>
+  <button data-go="#contact"><span>Contact</span><span class="tick"></span></button>
+</nav>
+
+<!-- libraries: GSAP + ScrollTrigger + Lenis (classic globals) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<!-- ░ DOM / UX layer — runs no matter what, independent of the optional 3D module.
+     (Reveals previously lived in the 3D module; if that module failed to load, the
+      html.anim class kept all content hidden. This layer makes that impossible.) ░ -->
+<script>
+(function(){
+  var d = document.documentElement;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var cap = new URLSearchParams(location.search).get('cap');
+  var yr = document.getElementById('yr'); if(yr) yr.textContent = new Date().getFullYear();
+  var g = window.gsap, ST = window.ScrollTrigger;
+
+  // section rail + scroll cue — active section detected from real positions, so it
+  // tracks whatever sections exist (no 3D needed)
+  var railBtns = [].slice.call(document.querySelectorAll('.rail button'));
+  var railTargets = railBtns.map(function(b){ return document.querySelector(b.dataset.go); });
+  var cue = document.querySelector('.cue');
+  function maxScroll(){ return Math.max(1, document.documentElement.scrollHeight - innerHeight); }
+  function updateChrome(){
+    var mark = innerHeight * 0.42, active = 0;
+    for(var i=0;i<railTargets.length;i++){ var el=railTargets[i]; if(el && el.getBoundingClientRect().top <= mark) active = i; }
+    for(var j=0;j<railBtns.length;j++) railBtns[j].setAttribute('aria-current', j===active?'true':'false');
+    if(cue) cue.style.opacity = window.scrollY > 40 ? '0' : '1';
+  }
+
+  // smooth scroll (Lenis) + ScrollTrigger sync — shared with the 3D module via window.__lenis
+  var lenis = null;
+  if(g && ST){
+    g.registerPlugin(ST);
+    if(!reduced && !cap && window.Lenis){
+      lenis = new Lenis({ lerp:0.11, smoothWheel:true });
+      lenis.on('scroll', ST.update);
+      g.ticker.add(function(t){ lenis.raf(t*1000); });
+      g.ticker.lagSmoothing(0);
     }
   }
-  </script>
+  window.__lenis = lenis;
+  addEventListener('scroll', updateChrome, {passive:true});
+  updateChrome();
 
-  <script type="module">
-  /* ================================================================
-     COMPOSITES — Architecture of New Possibilities
-     A scroll-driven WebGL experience. Single source of truth for
-     motion is a GSAP master timeline scrubbed by Lenis-smoothed
-     scroll; Three.js renders in one shared gsap.ticker loop.
-
-     Module map:
-       0. Imports + config + quality detection
-       1. Smooth scroll (Lenis) ↔ ScrollTrigger ↔ ticker
-       2. Renderer / scene / camera / environment
-       3. Lighting
-       4. Hero geometry + materials (procedural composite canopy)
-       5. Async GLTF + DRACO loader utility (drop-in model slot)
-       6. Post-processing (optional bloom)
-       7. Master scroll timeline (camera waypoints + uniforms)
-       8. DOM reveal choreography
-       9. Single render loop + resize
-      10. Reduced-motion / WebGL fallback / capture / debug
-     ================================================================ */
-
-  import * as THREE from 'three';
-  import { RoomEnvironment }   from 'three/addons/environments/RoomEnvironment.js';
-  import { GLTFLoader }        from 'three/addons/loaders/GLTFLoader.js';
-  import { DRACOLoader }       from 'three/addons/loaders/DRACOLoader.js';
-  import { KTX2Loader }        from 'three/addons/loaders/KTX2Loader.js';
-  import { EffectComposer }    from 'three/addons/postprocessing/EffectComposer.js';
-  import { RenderPass }        from 'three/addons/postprocessing/RenderPass.js';
-  import { UnrealBloomPass }   from 'three/addons/postprocessing/UnrealBloomPass.js';
-  import { OutputPass }        from 'three/addons/postprocessing/OutputPass.js';
-  import { gsap }              from 'gsap';
-  import { ScrollTrigger }     from 'gsap/ScrollTrigger';
-  import Lenis                 from 'lenis';
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  /* ---------------------------------------------------------------
-     0 · CONFIG + QUALITY DETECTION
-     A single QUALITY object lets every subsystem degrade together.
-     --------------------------------------------------------------- */
-  const params   = new URLSearchParams(location.search);
-  const DEBUG    = params.has('debug');
-  const CAP      = params.get('cap');                 // ?cap=0.4  |  ?cap=facade
-  const REDUCED  = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const IS_TOUCH = matchMedia('(max-width: 820px)').matches ||
-                   matchMedia('(hover: none)').matches;
-
-  // Optional real model: ?model=/pavilion.glb (else procedural form is used)
-  const HERO_MODEL_URL = params.get('model') || null;
-
-  const QUALITY = {
-    dpr:     Math.min(window.devicePixelRatio || 1, 2), // never exceed 2 (DPR safety)
-    shadows: !IS_TOUCH && !REDUCED,
-    post:    !IS_TOUCH && !REDUCED,                      // bloom only where it's affordable
-    fins:    IS_TOUCH ? 22 : 42,                         // louver grid resolution (n×n)
-    surfaceSeg: IS_TOUCH ? 80 : 130,                     // canopy mesh subdivisions
-    dust:    !REDUCED,
-  };
-
-  if (DEBUG) document.body.classList.add('debug');
-
-  // Brand colors mirrored into 3D space
-  const COL = {
-    bg:     new THREE.Color('#0a0a0b'),
-    surface:new THREE.Color('#b7b0a4'),  // greige composite
-    fins:   new THREE.Color('#6c675e'),
-    ground: new THREE.Color('#0c0c0d'),
-    accent: new THREE.Color('#C9A15F'),  // warm bronze rim
-    keyLt:  new THREE.Color('#fff1dc'),  // golden-hour key
-    rimLt:  new THREE.Color('#9fb4d8'),  // cool counter-rim
-  };
-
-  const stage = document.getElementById('stage');
-
-  /* ---------------------------------------------------------------
-     1 · SMOOTH SCROLL (Lenis) ↔ ScrollTrigger ↔ ticker
-     The canonical integration: Lenis emits scroll → ScrollTrigger
-     updates; gsap.ticker drives Lenis' RAF (so there is ONE loop).
-     --------------------------------------------------------------- */
-  let lenis = null;
-  if (!REDUCED) {
-    lenis = new Lenis({
-      duration: 1.1,
-      lerp: 0.10,
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-    });
-    lenis.on('scroll', ScrollTrigger.update);
-  }
-
-  /* ---------------------------------------------------------------
-     2 · RENDERER / SCENE / CAMERA / ENVIRONMENT
-     --------------------------------------------------------------- */
-  let renderer, scene, camera, composer = null;
-  let envRT = null;
-
-  // Camera is driven through these holders by the timeline; the live
-  // camera = camPos (+ tiny float) looking at camLook every frame.
-  const camPos  = new THREE.Vector3(0, 18, 64);
-  const camLook = new THREE.Vector3(0, 6, 0);
-
-  // Shared uniforms for the hero shader (mutated by GSAP, read on GPU)
-  const heroUniforms = {
-    uTime:    { value: 0 },
-    uReveal:  { value: 0 },                 // 0→1 assembly on load
-    uWeave:   { value: 0 },                 // 0→1 carbon-weave at façade
-    uMorph:   { value: 0 },                 // canopy flex at "form" section
-    uRim:     { value: 0.6 },               // fresnel rim strength
-    uAccent:  { value: COL.accent.clone() },
-  };
-
-  let hero = null;        // group holding canopy + fins
-  let dust = null;
-
-  function initThree() {
-    // --- Renderer: high-DPI-safe, sRGB output, filmic tonemap ---
-    renderer = new THREE.WebGLRenderer({
-      antialias: !IS_TOUCH,                 // MSAA off on mobile (fillrate)
-      powerPreference: 'high-performance',
-      alpha: false,
-      stencil: false,
-    });
-    renderer.setPixelRatio(QUALITY.dpr);
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.outputColorSpace   = THREE.SRGBColorSpace;
-    renderer.toneMapping        = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure= 1.06;
-    if (QUALITY.shadows) {
-      renderer.shadowMap.enabled = true;
-      renderer.shadowMap.type    = THREE.PCFSoftShadowMap;
-    }
-    stage.appendChild(renderer.domElement);
-
-    // --- Scene + depth fog (premium falloff into the dark) ---
-    scene = new THREE.Scene();
-    scene.background = COL.bg;
-    scene.fog = new THREE.FogExp2(COL.bg, 0.0072);
-
-    // --- Camera ---
-    camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 600);
-    camera.position.copy(camPos);
-    camera.lookAt(camLook);
-
-    // --- Image-based lighting from a procedural room (no asset) ---
-    const pmrem = new THREE.PMREMGenerator(renderer);
-    envRT = pmrem.fromScene(new RoomEnvironment(), 0.04);
-    scene.environment = envRT.texture;
-    pmrem.dispose();
-
-    buildLights();
-    buildGround();
-    buildHero();
-    if (QUALITY.dust) buildDust();
-    if (QUALITY.post) initPost();
-  }
-
-  /* ---------------------------------------------------------------
-     3 · LIGHTING — warm key + cool rim + soft fill
-     --------------------------------------------------------------- */
-  function buildLights() {
-    const hemi = new THREE.HemisphereLight(COL.rimLt, COL.ground, 0.35);
-    scene.add(hemi);
-
-    const key = new THREE.DirectionalLight(COL.keyLt, 3.1);
-    key.position.set(46, 54, 26);
-    if (QUALITY.shadows) {
-      key.castShadow = true;
-      key.shadow.mapSize.set(1024, 1024);
-      const d = 60;
-      key.shadow.camera.left = -d; key.shadow.camera.right = d;
-      key.shadow.camera.top  =  d; key.shadow.camera.bottom = -d;
-      key.shadow.camera.near = 10; key.shadow.camera.far = 220;
-      key.shadow.bias = -0.0004;
-      key.shadow.normalBias = 0.6;
-    }
-    scene.add(key);
-
-    const rim = new THREE.DirectionalLight(COL.rimLt, 1.15);
-    rim.position.set(-38, 20, -44);
-    scene.add(rim);
-  }
-
-  /* ---------------------------------------------------------------
-     4 · HERO — procedural composite canopy
-     A doubly-curved shell (PlaneGeometry displaced by layered
-     trig) + an instanced field of louver "fins" following it.
-     The shell material is a StandardMaterial patched via
-     onBeforeCompile to add: assembly reveal + morph (vertex) and
-     carbon-weave + fresnel rim (fragment), all driven by uniforms.
-     --------------------------------------------------------------- */
-
-  // Canopy height field — the single source of the surface shape.
-  function canopyHeight(x, z) {
-    const r = Math.sqrt(x * x + z * z);
-    let y = 0;
-    y += Math.cos(r * 0.10) * 3.0;                          // central swell
-    y += Math.sin(x * 0.17) * Math.cos(z * 0.15) * 2.3;     // cross undulation
-    y += Math.sin((x + z) * 0.08) * 1.6;                    // diagonal wave
-    y -= r * r * 0.0042;                                    // edges droop (canopy)
-    return y + 6.5;                                         // lift above ground
-  }
-
-  function buildHero() {
-    hero = new THREE.Group();
-    scene.add(hero);
-
-    if (HERO_MODEL_URL) {
-      // Real model requested — load it; procedural form is skipped.
-      loadHeroModel(HERO_MODEL_URL);
+  // entrance reveals — the critical fix: this never depends on the 3D module loading
+  try{
+    if(!g){ d.classList.remove('anim'); }
+    else if(cap!==null || reduced){
+      g.set('[data-reveal]', { autoAlpha:1, y:0 });
+      g.set('.hero h1 .line>span', { yPercent:0, opacity:1 });
+      d.classList.remove('anim');
     } else {
-      buildCanopy();
-      buildFins();
-    }
-  }
-
-  // --- 4a · the shell ---
-  function buildCanopy() {
-    const SIZE = 70;
-    const geo = new THREE.PlaneGeometry(SIZE, SIZE, QUALITY.surfaceSeg, QUALITY.surfaceSeg);
-    geo.rotateX(-Math.PI / 2);                              // lie flat in XZ
-    const pos = geo.attributes.position;
-    for (let i = 0; i < pos.count; i++) {
-      pos.setY(i, canopyHeight(pos.getX(i), pos.getZ(i)));
-    }
-    geo.computeVertexNormals();
-
-    const mat = new THREE.MeshStandardMaterial({
-      color: COL.surface, roughness: 0.55, metalness: 0.18,
-      side: THREE.DoubleSide, envMapIntensity: 0.9,
-    });
-    patchHeroMaterial(mat);                                 // inject custom shader
-
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.castShadow = QUALITY.shadows;
-    mesh.receiveShadow = QUALITY.shadows;
-    mesh.name = 'canopy';
-    hero.add(mesh);
-  }
-
-  // --- 4b · instanced louver fins (one draw call) ---
-  function buildFins() {
-    const N = QUALITY.fins;
-    const SPAN = 58, step = SPAN / N;
-    const blade = new THREE.BoxGeometry(0.16, 1, 1.7);     // unit blade (scaled per instance)
-    const mat = new THREE.MeshStandardMaterial({
-      color: COL.fins, roughness: 0.4, metalness: 0.35, envMapIntensity: 1.0,
-    });
-    const inst = new THREE.InstancedMesh(blade, mat, N * N);
-    inst.castShadow = false; inst.receiveShadow = false;   // fins skip shadows (perf)
-    inst.name = 'fins';
-
-    const dummy = new THREE.Object3D();
-    let i = 0;
-    for (let a = 0; a < N; a++) {
-      for (let b = 0; b < N; b++) {
-        const x = -SPAN / 2 + a * step + step / 2;
-        const z = -SPAN / 2 + b * step + step / 2;
-        const r = Math.sqrt(x * x + z * z);
-        if (r > 33) continue;                              // clip to a disc
-        const surfaceY = canopyHeight(x, z);
-        const h = 1.1 + (Math.sin(x * 0.3) * Math.cos(z * 0.3) * 0.5 + 0.5) * 2.6;
-        dummy.position.set(x, surfaceY + h / 2 - 0.2, z);
-        // radial brise-soleil with slight organic jitter (less "comb"-like)
-        dummy.rotation.set(0, Math.atan2(x, z) + (Math.random() - 0.5) * 0.16, 0);
-        dummy.scale.set(0.7 + Math.random() * 0.7, h, 0.8 + Math.random() * 0.5);
-        dummy.updateMatrix();
-        inst.setMatrixAt(i++, dummy.matrix);
+      if(innerHeight <= 600){
+        g.set('.hero h1 .line>span', { yPercent:0, opacity:1 });   // short/landscape: skip the mask so the headline can't crop
+      } else {
+        g.set('.hero h1 .line>span', { yPercent:115, opacity:1 });
+        g.to('.hero h1 .line>span', { yPercent:0, duration:1.1, ease:'expo.out', stagger:0.12, delay:0.15 });
       }
+      g.utils.toArray('[data-reveal]').forEach(function(el){
+        g.set(el, { y:24 });
+        g.to(el, { y:0, autoAlpha:1, duration:0.9, ease:'expo.out',
+          scrollTrigger:{ trigger:el, start:'top 84%', once:true } });
+      });
     }
-    inst.count = i;                                        // only the placed ones
-    inst.instanceMatrix.needsUpdate = true;
-    hero.add(inst);
+  }catch(e){ try{ g.set('[data-reveal]',{autoAlpha:1,y:0}); g.set('.hero h1 .line>span',{yPercent:0,opacity:1}); }catch(_){} d.classList.remove('anim'); }
+
+  // failsafe: the masked headline reveal must never strand or offset the lines — a
+  // stalled tween (seen leaving line 1 hidden), or rotating into a short/landscape
+  // viewport, would otherwise leave them hidden or overlapping the paragraph. Force
+  // the resolved state shortly after load, and again whenever the viewport gets short.
+  if(g){
+    setTimeout(function(){ try{ g.set('.hero h1 .line>span', { yPercent:0, opacity:1 }); }catch(e){} }, 2000);
+    var settleHero = function(){ if(innerHeight <= 600){ try{ g.set('.hero h1 .line>span', { yPercent:0, opacity:1 }); }catch(e){} } };
+    addEventListener('orientationchange', settleHero);
+    addEventListener('resize', settleHero, { passive:true });
   }
 
-  // --- 4c · shader injection: reveal/morph + weave + fresnel ---
-  function patchHeroMaterial(mat) {
-    mat.onBeforeCompile = (shader) => {
-      Object.assign(shader.uniforms, heroUniforms);
-
-      // ---- VERTEX ----
-      shader.vertexShader = shader.vertexShader
-        .replace('#include <common>', /* glsl */`
-          #include <common>
-          uniform float uTime; uniform float uReveal; uniform float uMorph;
-          varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vUvC;
-          float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898,78.233))) * 43758.5453); }
-        `)
-        .replace('#include <beginnormal_vertex>', /* glsl */`
-          #include <beginnormal_vertex>
-          vWNrm = normalize(mat3(modelMatrix) * objectNormal);
-        `)
-        .replace('#include <begin_vertex>', /* glsl */`
-          #include <begin_vertex>
-          vUvC = uv;
-          // morph: animated flex layered on at the "form" section
-          float m = sin(position.x * 0.20 + uTime * 0.5) * cos(position.z * 0.18 - uTime * 0.4);
-          transformed.y += m * uMorph * 2.0;
-          // reveal: vertices start scattered downward, then settle (assembly)
-          float h = hash(floor(position.xz * 0.6));
-          transformed.y -= (1.0 - uReveal) * (8.0 + h * 14.0);
-          vWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
-        `);
-
-      // ---- FRAGMENT ----
-      shader.fragmentShader = shader.fragmentShader
-        .replace('#include <common>', /* glsl */`
-          #include <common>
-          uniform float uWeave; uniform float uRim; uniform vec3 uAccent;
-          varying vec3 vWPos; varying vec3 vWNrm; varying vec2 vUvC;
-        `)
-        .replace('#include <color_fragment>', /* glsl */`
-          #include <color_fragment>
-          // procedural carbon-fibre twill: two crossing high-freq bands
-          float s1 = abs(sin((vUvC.x + vUvC.y) * 220.0));
-          float s2 = abs(sin((vUvC.x - vUvC.y) * 220.0));
-          float weave = smoothstep(0.85, 1.0, max(s1, s2));
-          vec3 dark = diffuseColor.rgb * 0.35;
-          diffuseColor.rgb = mix(diffuseColor.rgb, mix(diffuseColor.rgb, dark, weave), uWeave);
-        `)
-        .replace('#include <dithering_fragment>', /* glsl */`
-          #include <dithering_fragment>
-          // fresnel rim — warm accent grazing the silhouette
-          vec3 V = normalize(cameraPosition - vWPos);
-          float fres = pow(1.0 - max(dot(normalize(vWNrm), V), 0.0), 3.0);
-          gl_FragColor.rgb += fres * uAccent * uRim;
-        `);
-
-      mat.userData.shader = shader;
-    };
+  // in-page anchor + rail navigation
+  function go(hash){
+    var el = document.querySelector(hash); if(!el) return;
+    var y = hash==='#top' ? 0 : el.getBoundingClientRect().top + window.pageYOffset - 40;
+    if(lenis) lenis.scrollTo(y); else window.scrollTo({ top:y, behavior:reduced?'auto':'smooth' });
   }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){ var h=a.getAttribute('href'); if(h.length>1){ e.preventDefault(); go(h); } });
+  });
+  railBtns.forEach(function(b){ b.addEventListener('click', function(){ go(b.dataset.go); }); });
 
-  // --- 4d · atmospheric dust motes ---
-  function buildDust() {
-    const COUNT = 600;
-    const g = new THREE.BufferGeometry();
-    const p = new Float32Array(COUNT * 3);
-    for (let i = 0; i < COUNT; i++) {
-      p[i*3+0] = (Math.random() - 0.5) * 120;
-      p[i*3+1] = Math.random() * 50;
-      p[i*3+2] = (Math.random() - 0.5) * 120;
-    }
-    g.setAttribute('position', new THREE.BufferAttribute(p, 3));
-    const m = new THREE.PointsMaterial({
-      color: COL.accent, size: 0.13, transparent: true, opacity: 0.5,
-      depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true,
+  // theme toggle — flips DOM tokens; repaints the live 3D scene if present
+  var btn = document.getElementById('themeBtn');
+  if(btn) btn.addEventListener('click', function(){
+    var dark = d.classList.toggle('dark');
+    try{ localStorage.setItem('bodega-theme', dark?'dark':'light'); }catch(e){}
+    var m = document.querySelector('meta[name="theme-color"]'); if(m) m.setAttribute('content', dark?'#0f0f0f':'#f5f2ec');
+    if(window.__bodegaApplyTheme) window.__bodegaApplyTheme(dark);
+  });
+
+  // contact form — posts to FormSubmit over AJAX so the visitor stays on the page;
+  // falls back to a normal POST (the form's action) if fetch isn't available.
+  var cf = document.getElementById('contactForm');
+  if(cf) cf.addEventListener('submit', function(e){
+    if(!cf.checkValidity()){ if(cf.reportValidity) cf.reportValidity(); e.preventDefault(); return; }
+    if(!window.fetch) return;                       // no fetch → let the native POST happen
+    e.preventDefault();
+    var b = document.getElementById('sendBtn');
+    if(b){ b.dataset.label = b.textContent; b.textContent = 'Sending…'; b.disabled = true; b.style.opacity = '.7'; }
+    fetch(cf.action, { method:'POST', headers:{ 'Accept':'application/json' }, body:new FormData(cf) })
+      .then(function(r){ if(!r.ok) throw new Error('bad status'); return r.json(); })
+      .then(function(){ if(b){ b.textContent = 'Sent · we’ll be in touch'; } cf.reset(); })
+      .catch(function(){ if(b){ b.textContent = 'Couldn’t send — email us instead'; b.disabled = false; b.style.opacity = '1'; } });
+  });
+
+  if(ST && document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ ST.refresh(); });
+
+  // ── signature micro-interactions: custom cursor (fine pointers only) ──
+  if(matchMedia('(pointer:fine)').matches && !reduced){
+    d.classList.add('has-cursor');
+    var cur = document.createElement('div'); cur.id = 'cursor'; document.body.appendChild(cur);
+    var cx = -100, cy = -100, tx = -100, ty = -100, curSeen = false;
+    addEventListener('pointermove', function(e){
+      if(!curSeen){ curSeen = true; cx = tx = e.clientX; cy = ty = e.clientY; cur.style.opacity = '1'; }  // snap to the pointer on first move — never a lone dot at centre
+      else { tx = e.clientX; ty = e.clientY; }
+    }, {passive:true});
+    addEventListener('pointerdown', function(){ cur.classList.add('down'); }, {passive:true});
+    addEventListener('pointerup',   function(){ cur.classList.remove('down'); }, {passive:true});
+    var HIT = 'a,button,.work,.svc,.pcard,.mini,.step,.scard';
+    document.addEventListener('pointerover', function(e){ if(e.target.closest && e.target.closest(HIT)) cur.classList.add('big'); });
+    document.addEventListener('pointerout',  function(e){ if(e.target.closest && e.target.closest(HIT)) cur.classList.remove('big'); });
+    // pointer parallax on the liquid blobs — uses the independent `translate` property
+    // so it composes with the blobs' own transform-based bloom/float animations
+    var blobsP = document.getElementById('blobs'), bxp = 0, byp = 0;
+    (function curLoop(){ requestAnimationFrame(curLoop);
+      cx += (tx-cx)*0.22; cy += (ty-cy)*0.22;
+      cur.style.transform = 'translate(' + cx + 'px,' + cy + 'px)';
+      if(blobsP){
+        bxp += ((tx/innerWidth  - 0.5)*28 - bxp)*0.06;
+        byp += ((ty/innerHeight - 0.5)*28 - byp)*0.06;
+        blobsP.style.translate = bxp.toFixed(2) + 'px ' + byp.toFixed(2) + 'px';
+      }
+    })();
+
+    // magnetic large CTAs — the button eases toward the pointer, springs back on leave
+    [].slice.call(document.querySelectorAll('.btn.lg')).forEach(function(b){
+      b.addEventListener('pointermove', function(e){
+        var r = b.getBoundingClientRect();
+        b.style.translate = ((e.clientX-(r.left+r.width/2))*0.28).toFixed(1) + 'px ' + ((e.clientY-(r.top+r.height/2))*0.45).toFixed(1) + 'px';
+      });
+      b.addEventListener('pointerleave', function(){ b.style.translate = '0 0'; });
     });
-    dust = new THREE.Points(g, m);
-    scene.add(dust);
   }
 
-  // --- 4e · ground (catches the key-light shadow) ---
-  function buildGround() {
-    const g = new THREE.CircleGeometry(150, 64).rotateX(-Math.PI / 2);
-    const m = new THREE.MeshStandardMaterial({ color: COL.ground, roughness: 0.95, metalness: 0.0 });
-    const mesh = new THREE.Mesh(g, m);
-    mesh.position.y = -0.4;
-    mesh.receiveShadow = QUALITY.shadows;
-    scene.add(mesh);
-  }
+  // ── cinematic touch: scroll velocity softens the liquid blobs (extra blur on fast scroll) ──
+  (function(){
+    var blobsEl = document.getElementById('blobs'); if(!blobsEl) return;
+    var lastY = window.scrollY, sv = 0, lastSet = -1;
+    (function svLoop(){ requestAnimationFrame(svLoop);
+      var y = window.scrollY, v = Math.abs(y - lastY); lastY = y;
+      var target = reduced ? 0 : Math.min(22, v*0.35); sv += (target - sv)*0.15;
+      var val = Math.round(sv*10)/10;
+      if(val !== lastSet){ blobsEl.style.setProperty('--sv', val + 'px'); lastSet = val; }
+    })();
+  })();
 
-  /* ---------------------------------------------------------------
-     5 · ASYNC GLTF + DRACO + KTX2 LOADER UTILITY
-     Off-main-thread decode via the Draco worker; reports progress
-     to the preloader. Drop in a real model with ?model=URL.
-     --------------------------------------------------------------- */
-  function makeGLTFLoader() {
-    const draco = new DRACOLoader()
-      .setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
-    const ktx2 = new KTX2Loader()
-      .setTranscoderPath('https://unpkg.com/three@0.160.0/examples/jsm/libs/basis/')
-      .detectSupport(renderer);
-    return new GLTFLoader()
-      .setDRACOLoader(draco)
-      .setKTX2Loader(ktx2);
-  }
+  // ── kinetic hero headline — the closing word cross-fades through a short list.
+  //    Fade + tiny rise (no clip mask) so it stays readable at every width, incl. mobile
+  //    where the line wraps; under reduced-motion it's an opacity-only fade (no movement). ──
+  (function(){
+    var rotw = document.querySelector('.rotw'); if(!rotw) return;
+    var words = ['culture.','trends.','stories.','demand.'], i = 0, rise = reduced ? '0' : '-0.32em';
+    setInterval(function(){
+      rotw.style.opacity = '0'; rotw.style.transform = 'translateY(' + rise + ')';
+      setTimeout(function(){
+        i = (i + 1) % words.length; rotw.textContent = words[i];
+        rotw.style.transition = 'none';
+        rotw.style.transform = reduced ? 'none' : 'translateY(0.32em)';
+        void rotw.offsetWidth;                       // reflow so the fade-in transitions
+        rotw.style.transition = '';
+        rotw.style.opacity = '1'; rotw.style.transform = 'translateY(0)';
+      }, 430);
+    }, 2800);
+  })();
 
-  function loadHeroModel(url) {
-    const loader = makeGLTFLoader();
-    setProgress(0.05);
-    loader.load(
-      url,
-      (gltf) => {
-        const model = gltf.scene;
-        model.traverse((o) => {
-          if (o.isMesh) {
-            o.castShadow = QUALITY.shadows;
-            o.receiveShadow = QUALITY.shadows;
-            if (o.material) { o.material.envMapIntensity = 1.0; patchHeroMaterial(o.material); o.material.needsUpdate = true; }
-          }
+  // ── proof stats count up when they scroll into view (the numbers are the pitch) ──
+  (function(){
+    var els = [].slice.call(document.querySelectorAll('.stat .sv'));
+    if(!els.length || !('IntersectionObserver' in window) || reduced) return;
+    function parse(t){ var m = t.match(/^([\d.]+)(.*)$/); return m ? { target:parseFloat(m[1]), suffix:m[2], dec:(m[1].split('.')[1]||'').length } : null; }
+    function run(el){
+      var info = parse(el.dataset.cv || el.textContent.trim()); if(!info) return;
+      var start = performance.now(), dur = 1500;
+      requestAnimationFrame(function frame(now){
+        var p = Math.max(0, Math.min(1, (now-start)/dur)), e = 1 - Math.pow(1-p, 3);
+        el.textContent = (info.target*e).toFixed(info.dec) + info.suffix;
+        if(p < 1) requestAnimationFrame(frame);
+        else el.textContent = info.target.toFixed(info.dec) + info.suffix;
+      });
+    }
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(en){ if(en.isIntersecting){ run(en.target); io.unobserve(en.target); } });
+    }, { threshold:0.6 });
+    els.forEach(function(el){
+      var info = parse(el.textContent.trim());
+      if(info){ el.dataset.cv = el.textContent.trim(); el.textContent = (0).toFixed(info.dec) + info.suffix; }  // pre-zero (below the fold) so there's no flash of the answer
+      io.observe(el);
+    });
+  })();
+
+  // ── palette fallback — if the 3D scene never takes over (WebGL off, or the CDN
+  //    libs fail), drive the same paper→ink grade straight from scroll so the page
+  //    never gets stuck on one colour. The scene sets __bodegaColorOwned and this
+  //    immediately stands down (no double-driving). ──
+  (function(){
+    var BG = ['#F2E400','#2FE4A4','#2A46E8','#FF2E93'];
+    function rgb(h){ return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]; }
+    function lp(a,b,t){ return Math.round(a+(b-a)*t); }
+    function smooth(x){ return x*x*(3-2*x); }
+    function lin(c){ c/=255; return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); }
+    var last = -1;
+    function tick(){
+      if(window.__bodegaColorOwned) return;                    // scene is driving — do nothing
+      var p = Math.max(0, Math.min(1, window.scrollY / maxScroll())) * 3;
+      if(Math.abs(p - last) < 0.004) return; last = p;
+      var seg = Math.min(2, Math.floor(p)), rf = p - seg;
+      var fc = smooth(Math.max(0, Math.min(1, (rf - 0.46) / 0.08)));
+      var a = rgb(BG[seg]), b = rgb(BG[seg+1]);
+      var r = lp(a[0],b[0],fc), g = lp(a[1],b[1],fc), bl = lp(a[2],b[2],fc);
+      var L = 0.2126*lin(r) + 0.7152*lin(g) + 0.0722*lin(bl);
+      var ink = (1.05/(L+0.05)) > ((L+0.05)/0.05) ? '#ffffff' : '#0d0d0d';
+      d.style.setProperty('--paper', 'rgb('+r+','+g+','+bl+')');
+      d.style.setProperty('--ink', ink);
+      d.classList.toggle('on-dark', ink === '#ffffff');
+    }
+    addEventListener('scroll', tick, {passive:true});
+    addEventListener('resize', tick, {passive:true});
+    tick(); setTimeout(tick, 500); setTimeout(tick, 1500);     // cover the window before the scene either loads or fails
+  })();
+
+  /* FAQ accordion — single-open, keyboard + AT friendly */
+  (function(){
+    var items = Array.prototype.slice.call(document.querySelectorAll('.faq-item'));
+    items.forEach(function(it){
+      var btn = it.querySelector('.faq-q');
+      if(!btn) return;
+      btn.addEventListener('click', function(){
+        var willOpen = !it.classList.contains('open');
+        items.forEach(function(o){
+          o.classList.remove('open');
+          var b = o.querySelector('.faq-q'); if(b) b.setAttribute('aria-expanded','false');
         });
-        // Normalize: center + scale to a consistent ~40-unit footprint
-        const box = new THREE.Box3().setFromObject(model);
-        const size = box.getSize(new THREE.Vector3());
-        const center = box.getCenter(new THREE.Vector3());
-        const s = 40 / Math.max(size.x, size.y, size.z);
-        model.scale.setScalar(s);
-        model.position.sub(center.multiplyScalar(s)).add(new THREE.Vector3(0, 7, 0));
-        hero.add(model);
-        finishLoad();
-      },
-      (e) => { if (e.total) setProgress(0.05 + 0.9 * (e.loaded / e.total)); },
-      (err) => { console.error('[composites] model load failed, using procedural form', err);
-        buildCanopy(); buildFins(); finishLoad(); }
-    );
+        if(willOpen){ it.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+      });
+    });
+  })();
+})();
+</script>
+
+<!-- ░ Optional 3D enhancement — three loaded via a catchable dynamic import, so any
+     failure here degrades to the clean static document above (never a blank page). ░ -->
+<script type="module">
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const capParam = new URLSearchParams(location.search).get('cap'); // ?cap=<0..1 | section-id>
+
+/* WebGL capability check — if it fails, the page stays a clean static document. */
+function webglOK(){
+  try{ const c=document.createElement('canvas');
+    return !!(window.WebGLRenderingContext && (c.getContext('webgl')||c.getContext('experimental-webgl'))); }
+  catch(e){ return false; }
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+   PHASE KEYFRAMES — one master progress p∈[0..3] drives camera + palette.
+   0 Hero · 1 Three loops · 2 Pillars · 3 Closing surface (grades to ink).
+   ──────────────────────────────────────────────────────────────────────── */
+/* The brand's four credential colours — the scroll grades the whole canvas through
+   them (yellow → mint → electric blue → magenta). Camera/geometry keyframes ride along. */
+const BRAND = [
+  { cam:[0.0,0.6,13.0], tgt:[0,0.0,0], bg:'#F2E400' }, // yellow  · Intro
+  { cam:[0.4,1.7, 9.4], tgt:[0,0.2,0], bg:'#2FE4A4' }, // mint    · What makes us different
+  { cam:[0.0,4.3,11.0], tgt:[0,0.7,0], bg:'#2A46E8' }, // blue    · Our services
+  { cam:[0.0,7.6,10.4], tgt:[0,0.2,0], bg:'#FF2E93' }  // magenta · Project flow
+];
+let PH = BRAND;
+
+/* pick black or white text for maximum WCAG contrast against the live background */
+function _lin(c){ return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); }
+function inkForHex(hex){
+  const r=parseInt(hex.slice(1,3),16)/255, g=parseInt(hex.slice(3,5),16)/255, b=parseInt(hex.slice(5,7),16)/255;
+  const L=0.2126*_lin(r)+0.7152*_lin(g)+0.0722*_lin(b);
+  return (1.05/(L+0.05)) > ((L+0.05)/0.05) ? '#ffffff' : '#0d0d0d';
+}
+
+/* colour spreads evenly across the scroll; geometry morph is unchanged */
+function progToPhase(prog){ return Math.max(0, Math.min(1, prog)) * 3; }
+
+let api = { snap(){}, prog(){return 0} }; // becomes the window.__bodega handle
+/* Load three only if WebGL is available; a failed import just leaves the clean
+   static page intact (the DOM/UX layer already rendered everything). */
+if (webglOK()) {
+  import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js')
+    .then(THREE => startScene(THREE))
+    .catch(err => { console.warn('[bodega] 3D scene unavailable — static page shown:', err); document.body.classList.add('no-webgl'); });
+} else {
+  document.body.classList.add('no-webgl');
+}
+
+/* ───────────────────────────── THREE.JS SCENE ───────────────────────────── */
+function startScene(THREE){
+  const host = document.getElementById('bg');
+  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:false, powerPreference:'high-performance' });
+  const PIX = Math.min(window.devicePixelRatio||1, 2);
+  renderer.setPixelRatio(PIX);
+  renderer.setSize(innerWidth, innerHeight);
+  host.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(PH[0].bg);
+
+  const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, 0.1, 100);
+  camera.position.set(...PH[0].cam);
+
+  /* particle budget scales with screen — keeps mobile light (§ perf) */
+  const COUNT = innerWidth < 700 ? 2600 : (innerWidth < 1200 ? 4600 : 6400);
+
+  const { geo, mat } = buildField(THREE, COUNT, PIX);
+  const points = new THREE.Points(geo, mat);
+  points.frustumCulled = false; // positions morph on the GPU; skip CPU culling
+  points.visible = false;       // kinetic-typography background is used instead of particles
+  scene.add(points);
+
+  /* signature ember "thread" — strategy → approved content out. Draws in on scroll. */
+  const thread = buildThread(THREE);
+  thread.mesh.visible = false;
+  scene.add(thread.mesh);
+
+  /* subtle pointer parallax for life (desktop, non-reduced only) */
+  let px=0, py=0, tpx=0, tpy=0;
+  const finePointer = matchMedia('(pointer:fine)').matches;
+  if (finePointer && !reduced && !capParam){
+    addEventListener('pointermove', e=>{
+      tpx = (e.clientX/innerWidth - .5);
+      tpy = (e.clientY/innerHeight - .5);
+    }, {passive:true});
   }
 
-  /* ---------------------------------------------------------------
-     6 · POST-PROCESSING — restrained bloom on the rim highlights
-     Wrapped in try/catch; any failure falls back to direct render.
-     --------------------------------------------------------------- */
-  function initPost() {
-    try {
-      composer = new EffectComposer(renderer);
-      composer.setPixelRatio(QUALITY.dpr);
-      composer.setSize(window.innerWidth, window.innerHeight);
-      composer.addPass(new RenderPass(scene, camera));
-      const bloom = new UnrealBloomPass(
-        new THREE.Vector2(window.innerWidth, window.innerHeight),
-        0.42,   // strength (subtle)
-        0.85,   // radius
-        0.85    // threshold (only bright rim/accents bloom)
-      );
-      composer.addPass(bloom);
-      composer.addPass(new OutputPass());
-    } catch (err) {
-      console.warn('[composites] post-processing unavailable, direct render', err);
-      composer = null; QUALITY.post = false;
+  /* colour scratch objects (avoid per-frame allocation) */
+  const cBg=new THREE.Color(), cBgA=new THREE.Color(), cBgB=new THREE.Color();
+  const cPtA=new THREE.Color(), cPtB=new THREE.Color();
+  const cEmA=new THREE.Color(), cEmB=new THREE.Color();
+  const camA=new THREE.Vector3(), camB=new THREE.Vector3(), tgA=new THREE.Vector3(), tgB=new THREE.Vector3();
+  const curTgt=new THREE.Vector3();
+  let curP = 0, curScroll = 0;
+
+  function smooth(t){ return t*t*(3-2*t); }
+
+  /* The single source of truth: set everything from p∈[0..3] + scroll s∈[0..1]. */
+  const docEl = document.documentElement;
+  let lastPaper = null;
+  /* the liquid blobs lean toward the active brand phase, so the background grades
+     with the scroll: the blob whose colour matches the current section brightens,
+     the others recede (anchors: yellow 0 · mint 1 · blue 2 · magenta 3 · orange 1.5) */
+  const _blobEls = ['b1','b2','b3','b4','b5'].map(c => document.querySelector('.' + c));
+  const _blobAnchor = [0, 1, 2, 3, 1.5];
+  let _lastBlobP = -1;
+  function gradeBlobs(p){
+    if (Math.abs(p - _lastBlobP) < 0.02) return; _lastBlobP = p;
+    for (let i=0; i<_blobEls.length; i++){ const el=_blobEls[i]; if(!el) continue;
+      const o = Math.max(0.4, Math.min(1, 0.45 + 0.62*(1 - Math.abs(p - _blobAnchor[i])/1.5)));
+      el.style.opacity = o.toFixed(3);
     }
   }
 
-  /* ---------------------------------------------------------------
-     7 · MASTER SCROLL TIMELINE — the core engine
-     Camera waypoints (x,y,z + lookAt) and shader uniforms are tweened
-     along ONE scrubbed timeline whose progress === scroll progress.
-     --------------------------------------------------------------- */
-  // Waypoints keyed by normalized scroll progress p∈[0,1].
-  const WAYPOINTS = [
-    { p: 0.00, cam: [  0, 18, 64], look: [ 0, 6,  0] }, // hero — far, high
-    { p: 0.20, cam: [-26,  9, 34], look: [-4, 5,  2] }, // strength — push in low
-    { p: 0.40, cam: [ 19,  6, 19], look: [ 3, 7, -2] }, // façade — close orbit
-    { p: 0.62, cam: [  2, 33, 30], look: [ 0, 8,  0] }, // form — rise above
-    { p: 0.82, cam: [ 36, 13, 44], look: [ 2, 6,  0] }, // endure — wide
-    { p: 1.00, cam: [  0, 15, 54], look: [ 0, 7,  0] }, // cta — resolve
-  ];
+  function setProgress(p, s){
+    window.__bodegaColorOwned = true;   // 3D scene is live and driving the palette — the CSS-only fallback stands down
+    p = Math.max(0, Math.min(3, p));
+    curP = p; curScroll = s;
+    const seg = Math.min(2, Math.floor(p));
+    const rf = p - seg;
+    const f = smooth(rf);                          // camera / geometry
+    const A = PH[seg], B = PH[seg+1];
 
-  let scrollProgress = 0;
+    camA.set(...A.cam); camB.set(...B.cam);
+    tgA.set(...A.tgt); tgB.set(...B.tgt);
+    camera.position.lerpVectors(camA, camB, f);
+    curTgt.lerpVectors(tgA, tgB, f);
 
-  function buildTimeline() {
-    // Seat the camera holders at waypoint 0 before tweening.
-    camPos.set(...WAYPOINTS[0].cam);
-    camLook.set(...WAYPOINTS[0].look);
+    // pointer parallax (tiny) — applied as an offset, never fights the scrub
+    camera.position.x += px*0.9;
+    camera.position.y += -py*0.5;
+    camera.lookAt(curTgt);
 
-    const tl = gsap.timeline({
-      defaults: { ease: 'none' },                 // linear; smoothing comes from scrub
-      scrollTrigger: {
-        start: 0, end: 'max', scrub: 1,           // 1s catch-up = buttery
-        onUpdate: (self) => { scrollProgress = self.progress; },
-      },
-    });
+    // colour holds each brand colour, then snaps quickly mid-band (deck-like blocks)
+    let fc = (rf - 0.46) / 0.08; fc = smooth(Math.max(0, Math.min(1, fc)));
+    cBgA.set(A.bg); cBgB.set(B.bg); cBg.lerpColors(cBgA, cBgB, fc);
+    scene.background.copy(cBg);
 
-    // Camera path: chain segment-to-segment using absolute time = p.
-    for (let i = 1; i < WAYPOINTS.length; i++) {
-      const a = WAYPOINTS[i - 1], b = WAYPOINTS[i], d = b.p - a.p;
-      tl.to(camPos,  { x: b.cam[0],  y: b.cam[1],  z: b.cam[2],  duration: d }, a.p);
-      tl.to(camLook, { x: b.look[0], y: b.look[1], z: b.look[2], duration: d }, a.p);
+    const paperHex = '#' + cBg.getHexString();
+    const inkHex = inkForHex(paperHex);
+    mat.uniforms.uPoint.value.set(inkHex);
+    mat.uniforms.uEmber.value.set(inkHex);
+    mat.uniforms.uEmberMix.value = 0;
+    mat.uniforms.uProg.value = p;
+    thread.mesh.material.color.set(inkHex);
+    thread.mesh.material.opacity = 0.12 + 0.55*s;
+    thread.setDraw(s);
+
+    // drive the DOM palette from the same colours (only when it actually changes)
+    if (paperHex !== lastPaper){
+      lastPaper = paperHex;
+      docEl.style.setProperty('--paper', paperHex);
+      docEl.style.setProperty('--ink', inkHex);
+      docEl.classList.toggle('on-dark', inkHex === '#ffffff');
     }
-
-    // Slow signature rotation of the whole structure across the scroll.
-    tl.to(hero.rotation, { y: Math.PI * 0.55, duration: 1 }, 0);
-
-    // Carbon-weave fades in approaching the façade, eases back after.
-    tl.to(heroUniforms.uWeave, { value: 1, duration: 0.16 }, 0.30);
-    tl.to(heroUniforms.uWeave, { value: 0.25, duration: 0.20 }, 0.52);
-
-    // Canopy flex pulses through the "form" section.
-    tl.to(heroUniforms.uMorph, { value: 1, duration: 0.14 }, 0.50)
-      .to(heroUniforms.uMorph, { value: 0, duration: 0.18 }, 0.68);
-
-    // Rim glow swells at the close.
-    tl.to(heroUniforms.uRim, { value: 1.15, duration: 0.3 }, 0.7);
+    gradeBlobs(p);
   }
 
-  /* ---------------------------------------------------------------
-     8 · DOM REVEAL CHOREOGRAPHY
-     Per-element entrances via ScrollTrigger.batch (cheap, batched).
-     Hero headline does a line-mask reveal once at start.
-     --------------------------------------------------------------- */
-  function buildDomReveals() {
-    if (REDUCED) return;                           // CSS already shows everything
-
-    // Generic [data-reveal] entrances
-    ScrollTrigger.batch('[data-reveal]', {
-      start: 'top 88%',
-      onEnter: (els) => gsap.to(els, {
-        opacity: 1, y: 0, duration: 1.0, ease: 'power3.out', stagger: 0.08, overwrite: true,
-      }),
-      onLeaveBack: (els) => gsap.to(els, { opacity: 0, y: 26, duration: 0.4, overwrite: true }),
-    });
-
-    // Hero headline line-mask reveal (runs after the intro)
-    gsap.set('[data-reveal-line] > span', { y: '110%' });
-  }
-
-  function revealHero() {
-    gsap.to('[data-reveal-line] > span', {
-      y: '0%', duration: 1.2, ease: 'power4.out', stagger: 0.12, delay: 0.15,
-    });
-    // Fade the hero's own [data-reveal] bits in immediately (they're above the fold)
-    gsap.to('#hero [data-reveal]', {
-      opacity: 1, y: 0, duration: 1.1, ease: 'power3.out', stagger: 0.1, delay: 0.4,
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     9 · RENDER LOOP (single) + RESIZE
-     One gsap.ticker callback advances Lenis, updates uniforms, floats
-     the camera, and renders. lagSmoothing(0) keeps scrub in lockstep.
-     --------------------------------------------------------------- */
-  const progBar = document.getElementById('progBar');
-  const cue     = document.getElementById('cue');
-  const hud     = document.getElementById('hud');
-  let   running = true;
-  let   lastLog = 0;
-
-  function frame(time) {                            // time is in seconds
-    if (lenis) lenis.raf(time * 1000);
-
-    const t = running ? time : heroUniforms.uTime.value; // pause() freezes anim time
-    heroUniforms.uTime.value = t;
-
-    // Live camera = tweened holder + a tiny handheld float (life).
-    const fx = REDUCED ? 0 : Math.sin(t * 0.35) * 0.6;
-    const fy = REDUCED ? 0 : Math.cos(t * 0.27) * 0.4;
-    camera.position.set(camPos.x + fx, camPos.y + fy, camPos.z);
-    camera.lookAt(camLook);
-
-    if (hero && running) hero.rotation.z = Math.sin(t * 0.18) * 0.012; // gentle sway
-    if (dust && running) { dust.rotation.y = t * 0.018; }
-
-    // Render (composer when bloom is on, else straight to screen).
-    if (QUALITY.post && composer) composer.render();
-    else renderer.render(scene, camera);
-
-    // Progress rail + scroll cue
-    progBar.style.transform = `scaleY(${scrollProgress})`;
-    cue.style.opacity = scrollProgress > 0.02 ? '0' : '1';
-
-    // Debug HUD + throttled camera log (for fine-tuning waypoints)
-    if (DEBUG && time - lastLog > 0.25) {
-      lastLog = time;
-      const c = camera.position, r = camera.rotation;
-      const txt =
-        `progress  ${scrollProgress.toFixed(3)}\n` +
-        `cam.pos   ${c.x.toFixed(1)}, ${c.y.toFixed(1)}, ${c.z.toFixed(1)}\n` +
-        `cam.rot   ${r.x.toFixed(2)}, ${r.y.toFixed(2)}, ${r.z.toFixed(2)}\n` +
-        `lookAt    ${camLook.x.toFixed(1)}, ${camLook.y.toFixed(1)}, ${camLook.z.toFixed(1)}\n` +
-        `fps       ${(1 / (time - (frame._p || time) || 1)).toFixed(0)}`;
-      hud.textContent = txt;
-      // eslint-disable-next-line no-console
-      console.log(`[composites] p=${scrollProgress.toFixed(3)} cam=(${c.x.toFixed(1)}, ${c.y.toFixed(1)}, ${c.z.toFixed(1)}) look=(${camLook.x.toFixed(1)}, ${camLook.y.toFixed(1)}, ${camLook.z.toFixed(1)})`);
+  /* render loop — single rAF; pauses when the tab is hidden */
+  const clock = new THREE.Clock();
+  let raf = 0, running = false;
+  function tick(){
+    raf = requestAnimationFrame(tick);
+    // ease pointer parallax
+    px += (tpx-px)*0.04; py += (tpy-py)*0.04;
+    if (finePointer && !reduced) { // keep camera offset live even between scroll events
+      setProgress(curP, curScroll);
     }
-    frame._p = time;
+    mat.uniforms.uTime.value = reduced ? 0 : clock.getElapsedTime();
+    renderer.render(scene, camera);
   }
+  function play(){ if(!running){ running=true; clock.start(); tick(); } }
+  function pause(){ running=false; cancelAnimationFrame(raf); }
+  document.addEventListener('visibilitychange', ()=> document.hidden ? pause() : play());
 
-  function onResize() {
-    const w = window.innerWidth, h = window.innerHeight;
-    camera.aspect = w / h;
-    camera.updateProjectionMatrix();
-    renderer.setPixelRatio(QUALITY.dpr);
-    renderer.setSize(w, h);
-    if (composer) { composer.setPixelRatio(QUALITY.dpr); composer.setSize(w, h); }
-  }
-  // Debounced refresh so ScrollTrigger recomputes after layout settles.
-  let rT;
-  window.addEventListener('resize', () => {
-    onResize();
-    clearTimeout(rT); rT = setTimeout(() => ScrollTrigger.refresh(), 180);
-  });
+  /* resize */
+  addEventListener('resize', ()=>{
+    camera.aspect = innerWidth/innerHeight; camera.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+    const pr = Math.min(window.devicePixelRatio||1, 2);
+    renderer.setPixelRatio(pr); mat.uniforms.uPix.value = pr;
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  }, {passive:true});
 
-  /* ---------------------------------------------------------------
-     10 · PRELOADER, CAPTURE, DEBUG HANDLE, BOOT
-     --------------------------------------------------------------- */
-  const loaderEl = document.getElementById('loader');
-  const pctNum   = document.getElementById('pctNum');
-  const loadBar  = document.getElementById('loadBar');
-  let   shownPct = 0;
+  setProgress(0,0);
+  play();
 
-  function setProgress(p) {                         // p ∈ [0,1]
-    shownPct = Math.max(shownPct, Math.round(p * 100));
-    pctNum.textContent = shownPct;
-    loadBar.style.width = shownPct + '%';
-  }
-
-  function finishLoad() {
-    setProgress(1);
-    gsap.delayedCall(0.25, () => {
-      loaderEl.classList.add('done');
-      revealHero();
-      ScrollTrigger.refresh();                      // heights are final now
+  /* master timeline: map page scroll 0..1 → phase progress 0..3 (drives the scene).
+     Uses the global ScrollTrigger registered by the DOM/UX layer; Lenis is shared. */
+  if (window.gsap && window.ScrollTrigger && capParam===null){
+    window.ScrollTrigger.create({
+      trigger:'#main', start:'top top', end:'bottom bottom', scrub: reduced?false:0.5,
+      onUpdate(self){ setProgress(progToPhase(self.progress), self.progress); },
+      onRefresh(self){ setProgress(progToPhase(self.progress), self.progress); }
     });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(()=> window.ScrollTrigger.refresh());
   }
 
-  // Anchor links route through Lenis for smooth in-page nav.
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      const el = document.querySelector(a.getAttribute('href'));
-      if (!el) return;
-      e.preventDefault();
-      if (lenis) lenis.scrollTo(el, { offset: 0, duration: 1.4 });
-      else el.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
-    });
-  });
+  /* public debug handle (house-style snap interface) */
+  api = {
+    snap(p){ const y=p*maxScroll(); doScrollTo(y); setProgress(progToPhase(p), p); },
+    play, pause,
+    prog(){ return curScroll; },
+    setProgress, scene, camera, renderer
+  };
+  window.__bodega = api;
 
-  // ?cap=<id|0..1> — jump to a deterministic frame for static capture.
-  function applyCapture() {
-    if (!CAP) return;
-    const limit = () => document.documentElement.scrollHeight - window.innerHeight;
-    let y;
-    if (/^[0-9.]+$/.test(CAP)) y = parseFloat(CAP) * limit();
-    else { const el = document.getElementById(CAP); y = el ? el.offsetTop : 0; }
-    if (lenis) { lenis.scrollTo(y, { immediate: true }); ScrollTrigger.update(); }
-    else window.scrollTo(0, y);
+  /* colour is fully scroll-driven now; kept as a harmless repaint hook */
+  window.__bodegaApplyTheme = ()=>{ setProgress(curP, curScroll); };
+
+  /* capture mode for deterministic screenshots: ?cap=0.5  or  ?cap=close */
+  if (capParam!==null){
+    const map = { top:0, hero:0, what:0.34, loops:0.34, rule:0.66, pillars:0.66, close:1, closing:1 };
+    let v = parseFloat(capParam);
+    if (Number.isNaN(v)) v = map[capParam] ?? 0;
+    v = Math.max(0, Math.min(1, v));
+    requestAnimationFrame(()=>{ doScrollTo(v*maxScroll()); setProgress(progToPhase(v), v); });
+  }
+}
+
+/* ── build the morphing particle field: 4 target shapes per particle ── */
+function buildField(THREE, N, PIX){
+  const p0=new Float32Array(N*3), p1=new Float32Array(N*3), p2=new Float32Array(N*3), p3=new Float32Array(N*3);
+  const rnd=new Float32Array(N), emb=new Float32Array(N);
+  const TAU=Math.PI*2;
+
+  for (let i=0;i<N;i++){
+    const i3=i*3, r=Math.random();
+    rnd[i]=r;
+
+    // PHASE 0 — loose drifting editorial field (a hint of a calendar grid)
+    const gx=Math.round((Math.random()-.5)*18), gy=Math.round((Math.random()-.5)*9);
+    p0[i3  ]= gx*0.9 + (Math.random()-.5)*1.4;
+    p0[i3+1]= gy*0.7 + (Math.random()-.5)*1.2;
+    p0[i3+2]= (Math.random()-.5)*7 - 1;
+
+    // PHASE 1 — three loops side by side (the third = "approved out" → ember)
+    const g=i%3, cx=(g-1)*4.6, a=(i/ N)*TAU*9 + r*TAU, rad=2.05+(Math.random()-.5)*0.5;
+    const tilt=(g-1)*0.28;
+    let lx=Math.cos(a)*rad, ly=Math.sin(a)*rad, lz=(Math.random()-.5)*0.7;
+    p1[i3  ]= cx + lx;
+    p1[i3+1]= ly*Math.cos(tilt) - lz*Math.sin(tilt) + 0.2;
+    p1[i3+2]= ly*Math.sin(tilt) + lz*Math.cos(tilt);
+    emb[i] = g===2 ? (Math.random()<0.8?1:0) : (Math.random()<0.05?1:0);
+
+    // PHASE 2 — structured pillar lattice (columns over a phased baseline)
+    const cols=14, c=i%cols, rowsPer=Math.ceil(N/cols), rIdx=Math.floor(i/cols);
+    const colX=(c-(cols-1)/2)*1.18;
+    const hMax=1.4 + ((c*53)%7)/7*4.2;             // varied pillar heights
+    const hy=(rIdx/rowsPer)*hMax;
+    p2[i3  ]= colX + (Math.random()-.5)*0.18;
+    p2[i3+1]= hy - 0.4;
+    p2[i3+2]= ((rIdx%5)-2)*0.7 + (Math.random()-.5)*0.2;
+
+    // PHASE 3 — one calm ordered surface (a gentle grid plane)
+    const sCols=Math.ceil(Math.sqrt(N)*1.4), sx=i%sCols, sz=Math.floor(i/sCols);
+    const X=(sx/sCols-0.5)*20, Z=(sz/(N/sCols)-0.5)*13;
+    p3[i3  ]= X;
+    p3[i3+1]= Math.sin(X*0.5)*0.18 + Math.cos(Z*0.6)*0.18;
+    p3[i3+2]= Z;
   }
 
-  // Public debug handle (house convention: window.__<name>)
-  function exposeHandle() {
-    const limit = () => document.documentElement.scrollHeight - window.innerHeight;
-    window.__composites = {
-      snap(p) {                                     // jump to scroll progress 0..1
-        const y = p * limit();
-        if (lenis) { lenis.scrollTo(y, { immediate: true }); ScrollTrigger.update(); }
-        else window.scrollTo(0, y);
-      },
-      play()  { running = true;  if (lenis) lenis.start(); },
-      pause() { running = false; if (lenis) lenis.stop(); },
-      uniforms: heroUniforms,
-      get three() { return { scene, camera, renderer, hero }; },
-    };
-  }
+  const geo=new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(p0.slice(),3)); // placeholder; shader uses aP*
+  geo.setAttribute('aP0', new THREE.BufferAttribute(p0,3));
+  geo.setAttribute('aP1', new THREE.BufferAttribute(p1,3));
+  geo.setAttribute('aP2', new THREE.BufferAttribute(p2,3));
+  geo.setAttribute('aP3', new THREE.BufferAttribute(p3,3));
+  geo.setAttribute('aRand', new THREE.BufferAttribute(rnd,1));
+  geo.setAttribute('aEmber', new THREE.BufferAttribute(emb,1));
 
-  /* ---- WebGL capability gate + boot ---- */
-  function boot() {
-    // Probe WebGL before committing to the full pipeline.
-    try {
-      const test = document.createElement('canvas');
-      if (!(test.getContext('webgl2') || test.getContext('webgl'))) throw new Error('no webgl');
-    } catch (err) {
-      document.body.classList.add('no-webgl');
-      loaderEl.classList.add('done');
-      // CSS fallback hero + readable content remain; reveal text statically.
-      gsap.set('[data-reveal],[data-reveal-line] > span', { clearProps: 'all', opacity: 1, y: 0 });
-      console.warn('[composites] WebGL unavailable — static fallback', err);
-      return;
-    }
-
-    initThree();
-    buildTimeline();
-    buildDomReveals();
-    exposeHandle();
-
-    // Drive everything from one ticker; disable lag smoothing for scrub fidelity.
-    gsap.ticker.add(frame);
-    gsap.ticker.lagSmoothing(0);
-
-    if (REDUCED) {
-      // Static, readable: seat camera at a flattering frame, fully assembled.
-      camPos.set(-18, 11, 40); camLook.set(0, 6, 0);
-      heroUniforms.uReveal.value = 1; heroUniforms.uWeave.value = 0.4;
-      setProgress(1); loaderEl.classList.add('done');
-      ScrollTrigger.refresh();
-    } else {
-      // Procedural form needs no network — simulate a brief load, then
-      // play the cinematic assembly (uReveal 0→1) and reveal the hero.
-      if (!HERO_MODEL_URL) {
-        const fake = { v: 0 };
-        gsap.to(fake, { v: 1, duration: 1.1, ease: 'power1.inOut',
-          onUpdate: () => setProgress(fake.v * 0.95), onComplete: finishLoad });
+  const mat=new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false,
+    uniforms:{
+      uProg:{value:0}, uTime:{value:0}, uPix:{value:PIX},
+      uSize:{value: innerWidth<700?150:185},
+      uPoint:{value:new THREE.Color('#0d0d0d')},
+      uEmber:{value:new THREE.Color('#0d0d0d')},
+      uEmberMix:{value:0},
+      uAlpha:{value:0.34}
+    },
+    vertexShader:`
+      attribute vec3 aP0; attribute vec3 aP1; attribute vec3 aP2; attribute vec3 aP3;
+      attribute float aRand; attribute float aEmber;
+      uniform float uProg, uTime, uPix, uSize;
+      varying float vEmber, vFade;
+      vec3 phasePos(float p){
+        float seg=clamp(floor(p),0.0,2.0);
+        float f=clamp(p-seg,0.0,1.0); f=f*f*(3.0-2.0*f);
+        vec3 a,b;
+        if(seg<0.5){a=aP0;b=aP1;} else if(seg<1.5){a=aP1;b=aP2;} else {a=aP2;b=aP3;}
+        return mix(a,b,f);
       }
-      gsap.to(heroUniforms.uReveal, { value: 1, duration: 2.2, ease: 'power3.out', delay: 0.35 });
-    }
+      void main(){
+        vec3 pos=phasePos(uProg);
+        float t=uTime;
+        pos.x+=0.07*sin(t*0.5 + aRand*6.2831);
+        pos.y+=0.07*cos(t*0.45+ aRand*5.137);
+        pos.z+=0.05*sin(t*0.4 + aRand*4.071);
+        vec4 mv=modelViewMatrix*vec4(pos,1.0);
+        gl_Position=projectionMatrix*mv;
+        float s=uSize*(1.0/max(0.1,-mv.z));
+        gl_PointSize=clamp(s*uPix,1.0,16.0*uPix);
+        vEmber=aEmber;
+        vFade=clamp(1.0-(-mv.z-4.0)/24.0,0.12,1.0);
+      }`,
+    fragmentShader:`
+      precision mediump float;
+      uniform vec3 uPoint, uEmber; uniform float uEmberMix, uAlpha;
+      varying float vEmber, vFade;
+      void main(){
+        vec2 c=gl_PointCoord-0.5; float d=dot(c,c);
+        if(d>0.25) discard;
+        float a=smoothstep(0.25,0.03,d);
+        float em=vEmber*uEmberMix;
+        vec3 col=mix(uPoint,uEmber,em);
+        float alpha=a*uAlpha*vFade*(0.55+0.45*vEmber);
+        gl_FragColor=vec4(col,alpha);
+      }`
+  });
+  return { geo, mat };
+}
 
-    // Re-measure once fonts are in (prevents reveal trigger drift).
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => ScrollTrigger.refresh());
-    }
-
-    applyCapture();
+/* ── the ember thread: a flowing tube that "draws" itself across the scroll ── */
+function buildThread(THREE){
+  const pts=[];
+  for(let i=0;i<=10;i++){
+    const t=i/10;
+    pts.push(new THREE.Vector3(
+      (t-0.5)*15,
+      Math.sin(t*7.0)*1.4 + (t-0.5)*1.5,
+      Math.cos(t*5.0)*1.6 - 1.0
+    ));
   }
+  const curve=new THREE.CatmullRomCurve3(pts);
+  const TUBE=520;
+  const geo=new THREE.TubeGeometry(curve, TUBE, 0.03, 6, false);
+  const total=geo.index.count;
+  const mat=new THREE.MeshBasicMaterial({ color:'#0d0d0d', transparent:true, opacity:0.1, depthWrite:false });
+  const mesh=new THREE.Mesh(geo, mat);
+  mesh.frustumCulled=false;
+  return { mesh, setDraw(s){ geo.setDrawRange(0, Math.floor(total*Math.max(0,Math.min(1,s)))); } };
+}
 
-  boot();
-  </script>
+/* ── scroll helpers used by the debug snap handle (Lenis lives in the UX layer) ── */
+function maxScroll(){ return Math.max(1, document.documentElement.scrollHeight - innerHeight); }
+function doScrollTo(y){ const L=window.__lenis; if(L) L.scrollTo(y,{immediate:true}); else window.scrollTo(0,y); if(window.ScrollTrigger) window.ScrollTrigger.update(); }
+</script>
 </body>
 </html>

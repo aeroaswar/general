@@ -1,2 +1,8 @@
-/*
-!/index.html
+# Combined Bodega site builds on Vercel (marketing landing + /portal SPA),
+# so the source tree must be uploaded. Only skip generated / local artefacts.
+node_modules
+**/node_modules
+dist
+bodega-portal/dist
+.git
+.DS_Store
