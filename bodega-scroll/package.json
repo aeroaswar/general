@@ -1,0 +1,26 @@
+{
+  "name": "bodega-scroll",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Bodega-inspired scroll-activated Three.js + GSAP experience — 'Find the door'.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4199",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "dependencies": {
+    "@iconify/react": "^5.0.2",
+    "framer-motion": "^11.5.4",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.14",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.8"
+  }
+}
