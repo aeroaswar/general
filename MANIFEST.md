@@ -90,3 +90,20 @@ AI root and are best pulled directly from Drive.
 - `billion-dollar-board/` (MMI nickel deal) — https://drive.google.com/drive/folders/1ibJVkQqfdtKJoycPDyTolNpo_IXbd6ly
 - `mmi-equipment-lease-model.html`
 - `files all/mmi/`, `files all/ijba/`, `mmi.zip`, `ijba.zip`
+
+## SKILL.md import (all 511, mirrored under `skills/`)
+
+Every `SKILL.md` in the Drive AI workspace was imported under `skills/`, mirroring each
+file's Drive folder path (top branches: `skills/AI/…` live folder, `skills/My-Mac-1/com-apple-CloudDocs/AI/…`
+iCloud-backup copy, plus `skills/MMI/…` and `skills/Branding-Design/…`). 16 files under
+vendored `node_modules/` were force-added (otherwise `.gitignore` would drop them).
+
+**Fidelity note — 2 files need an `rclone` top-up.** The Drive content tool returns a *text*
+representation that drops bytes from astral-plane emoji, so a few skills came back with mangled
+emoji glyphs. Repaired in-repo: `gstack/retro`, `caveman-review`, `mcp-builder`. Two remain with
+~2 decorative emoji glyphs each (all prose/Chinese intact) — too large to re-pull byte-perfect
+through the model:
+- `skills/**/agents/skills/humanizer-zh/SKILL.md`
+- `skills/**/ui-ux-pro-max-skill-main/claude/skills/ui-ux-pro-max/SKILL.md`
+
+For byte-perfect copies, re-sync just those two from Drive directly (e.g. `rclone copy`).
