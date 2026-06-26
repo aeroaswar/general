@@ -1554,10 +1554,10 @@ team/project breakdown below. The personal card is designed to be screenshot-fri
   
 \*\*Tweetable summary\*\* (first line, before everything else):  
 \`\`\`  
-Week of Mar 14: 5 projects, 138 commits, 250k LOC across 5 repos | 48 AI sessions | Streak: 52d ð¥  
+Week of Mar 14: 5 projects, 138 commits, 250k LOC across 5 repos | 48 AI sessions | Streak: 52d 🔥  
 \`\`\`  
   
-\#\# ð Your Week: \[user name\] — \[date range\]  
+\#\# 🚀 Your Week: \[user name\] — \[date range\]  
   
 This section is the \*\*shareable personal card\*\*. It contains ONLY the current user's  
 stats — no team data, no project breakdowns. Designed to screenshot and post.  
@@ -1577,7 +1577,7 @@ align cleanly. Never truncate project names.
 ║ \[N\] commits across \[M\] projects  
 ║ +\[X\]k LOC added · \[Y\]k LOC deleted · \[Z\]k net  
 ║ \[N\] AI coding sessions (CC: X, Codex: Y, Gemini: Z)  
-║ \[N\]-day shipping streak ð¥  
+║ \[N\]-day shipping streak 🔥  
 ║  
 ║ PROJECTS  
 ║ ─────────────────────────────────────────────────────────  
