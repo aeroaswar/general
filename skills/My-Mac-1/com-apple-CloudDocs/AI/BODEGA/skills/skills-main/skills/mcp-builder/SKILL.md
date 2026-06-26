@@ -50,7 +50,7 @@ Key pages to review:
 \#\#\#\# 1.3 Study Framework Documentation  
   
 \*\*Recommended stack:\*\*  
-\- \*\*Language\*\*: TypeScript (high-quality SDK support and good compatibility in many execution environments e.g. MCPB. Plus AI models are good at generating TypeScript code, beneting from its broad usage, static typing and good linting tools)  
+\- \*\*Language\*\*: TypeScript (high-quality SDK support and good compatibility in many execution environments e.g. MCPB. Plus AI models are good at generating TypeScript code, benefiting from its broad usage, static typing and good linting tools)  
 \- \*\*Transport\*\*: Streamable HTTP for remote servers, using stateless JSON (simpler to scale and maintain, as opposed to stateful sessions and streaming responses). stdio for local servers.  
   
 \*\*Load framework documentation:\*\*  
