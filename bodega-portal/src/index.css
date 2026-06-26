@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────── Bodega — Studio OS (dark editorial) ─────────────── */
+:root {
+  /* light variant */
+  --bg: #faf8f5;
+  --text: #1a1714;
+  --muted: rgba(26, 23, 20, 0.62);
+  --faint: rgba(26, 23, 20, 0.42);
+  --card: #ffffff;
+  --card-2: #f3efe9;
+  --line: rgba(26, 23, 20, 0.12);
+  --line-2: rgba(26, 23, 20, 0.2);
+  --accent: #d8602a;
+  --shadow: 0 18px 50px -24px rgba(26, 23, 20, 0.18);
+  --shadow-lg: 0 40px 90px -40px rgba(26, 23, 20, 0.32);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dark {
+  --bg: #0b0a09;
+  --text: #f3f0ea;
+  --muted: rgba(243, 240, 234, 0.6);
+  --faint: rgba(243, 240, 234, 0.38);
+  --card: #15120f;
+  --card-2: #1f1a16;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --accent: #e8743b;
+  --shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 50px 100px -45px rgba(0, 0, 0, 0.85);
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  font-family: theme("fontFamily.sans");
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+em { font-style: italic; }
+::selection { background: color-mix(in srgb, var(--accent) 35%, transparent); color: var(--text); }
+
+/* backdrop — warm near-black with a faint top glow + grain */
+.brand-bg {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(55% 45% at 88% -8%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    var(--bg);
+}
+.brand-grain {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@layer components {
+  .glass {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+  .glass-2 { background: var(--card-2); }
+  .hairline { border-color: var(--line); }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500;
+    padding: 4px 10px; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--card-2); white-space: nowrap; font-family: theme("fontFamily.mono");
+    letter-spacing: 0.02em;
+  }
+  .input-glass {
+    width: 100%; background: var(--card-2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 13px; color: var(--text); font-size: 14px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input-glass:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+  .input-glass::placeholder { color: var(--faint); }
+}
+
+@layer utilities {
+  .text-muted { color: var(--muted); }
+  .text-faint { color: var(--faint); }
+  .text-accent { color: var(--accent); }
+  .grad-text { color: var(--text); }
+  .display { font-family: theme("fontFamily.display"); letter-spacing: -0.01em; }
+  .mono { font-family: theme("fontFamily.mono"); }
+  .eyebrow { font-family: theme("fontFamily.mono"); text-transform: uppercase; letter-spacing: 0.18em; color: var(--faint); font-size: 11px; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 99px; border: 3px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0.01ms !important; } }
+
+
+/* ─── bodega® wordmark — the exact mark from the marketing site ─── */
+:root { --logo: url("data:image/png;base64,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"); }
+.brand-logo {
+  display: inline-block;
+  background: var(--logo) left center / contain no-repeat;
+  height: 22px; width: 84px;
+}
+/* black wordmark → white on the dark canvas */
+.dark .brand-logo { filter: invert(1); }
+
+/* The contract document is wrapped in a table so the letterhead (thead) and
+   footer (tfoot) repeat on every printed page. On screen those rows are hidden. */
+/* table-layout:fixed keeps the document exactly page-width in print (no overflow
+   from content's intrinsic min-width, which would clip the right edge) */
+.doc-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.doc-table > thead > tr > td, .doc-table > tbody > tr > td, .doc-table > tfoot > tr > td { padding: 0; }
+.print-head, .print-foot { display: none; }
+
+/* Print — render the contract as a real document: a Bodega letterhead on every
+   page, clean page breaks, and light ink on white. */
+@media print {
+  @page { size: A4; margin: 13mm; }
+
+  aside, header.sticky, .no-print { display: none !important; }
+  /* overflow:visible — the screen view clips main's x-overflow, but in print that
+     would cut the right side of the document */
+  main { padding: 0 !important; max-width: none !important; margin: 0 !important; overflow: visible !important; }
+  .brand-bg, .brand-grain { display: none !important; }
+  body { background: #fff !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  /* force the whole document onto light "paper" tokens, whatever the app theme is */
+  .print-area {
+    --bg: #ffffff; --text: #15120f; --muted: #534d45; --faint: #6b655c;
+    --card: #ffffff; --card-2: #f7f4ef; --line: rgba(0,0,0,0.14); --line-2: rgba(0,0,0,0.22); --accent: #b4540f;
+    /* Simply fill the @page content box — no fixed mm width (that overflowed the
+       container and the right edge got clipped). @page margins handle the borders. */
+    width: auto !important; max-width: 100% !important; margin: 0 !important;
+    box-shadow: none !important; border: 0 !important; background: #fff !important; border-radius: 0 !important;
+  }
+  /* Flex containers paginate unreliably in Chrome (break-inside:avoid is ignored
+     on flex items), which splits clauses across pages. Block-flow the document
+     column and its sections in print, and space children with margins instead
+     of flex gap, so every clause/block stays whole. */
+  .print-area .doc-body { padding: 0 !important; display: block !important; }
+  .print-area .doc-body > * { margin: 0 0 13px 0 !important; }
+  .print-area .doc-body > *:last-child { margin-bottom: 0 !important; }
+  .print-area .doc-body > section { display: block !important; }
+  .print-area .doc-body > section > * { margin: 0 0 9px 0 !important; }
+  .print-area .doc-body > section > *:last-child { margin-bottom: 0 !important; }
+  .print-area, .print-area * { color: #15120f !important; }
+  .print-area .text-muted, .print-area [class*="text-muted"] { color: #534d45 !important; }
+  .print-area .text-faint, .print-area .eyebrow, .print-area [class*="text-faint"] { color: #6b655c !important; }
+  .print-area .glass-2 { background: #f7f4ef !important; }
+  /* chips / platform tags / badges → light pill on white (colored dots keep their colour) */
+  .print-area .chip { background: #f7f4ef !important; border-color: #ddd6ca !important; }
+
+  /* Force the document to its full A4 layout regardless of device width — mobile
+     browsers otherwise evaluate sm:/lg: breakpoints against the phone screen and
+     print the single-column mobile layout. This keeps the PDF identical on phone
+     and desktop. */
+  .print-area .sm\:hidden { display: none !important; }
+  .print-area .hidden.sm\:grid { display: grid !important; }
+  .print-area .sm\:grid-cols-2 { grid-template-columns: 1fr 1fr !important; }
+  .print-area .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr) !important; }
+  .print-area .sm\:text-right { text-align: right !important; }
+  .print-area .sm\:w-72 { width: 18rem !important; }
+  .print-area .sm\:contents { display: contents !important; }
+
+  /* repeat the letterhead / footer on every page */
+  .print-head { display: table-header-group !important; }
+  .print-foot { display: table-footer-group !important; }
+
+  .print-letterhead {
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
+    padding-bottom: 5mm; margin-bottom: 7mm; border-bottom: 1.5px solid #15120f;
+  }
+  /* the Bodega wordmark as a real <img> so it always prints (black on white) */
+  .print-letterhead { flex-wrap: wrap; }
+  .print-letterhead .ll-logo { height: 9mm; width: auto; display: block; flex: none; }
+  .print-letterhead .ll-meta { font-size: 8pt; line-height: 1.45; text-align: right; color: #6b655c !important; max-width: 70mm; overflow-wrap: anywhere; }
+
+  /* belt-and-braces: nothing in the document may exceed the page width */
+  .print-area .doc-body, .doc-table > tbody > tr > td { max-width: 100% !important; }
+  .print-area .doc-body > * { min-width: 0; }
+
+  .print-footer {
+    padding-top: 4mm; margin-top: 7mm; border-top: 1px solid #d8d2c6;
+    font-size: 7.5pt; text-align: center; color: #8a8478 !important; letter-spacing: 0.04em;
+  }
+
+  /* page-break discipline — never split these across pages */
+  .avoid-break, .sig-section { break-inside: avoid; page-break-inside: avoid; }
+  .print-area h2, .print-area h3, .print-area .eyebrow { break-after: avoid; }
+}
