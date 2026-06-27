@@ -7,7 +7,6 @@
 <meta name="description" content="Research-grade peptides for performance, recovery and longevity science. Third-party HPLC verified, ≥98% purity. For laboratory research use only." />
 <meta name="theme-color" content="#050505" />
 <meta name="robots" content="index,follow" />
-<link rel="canonical" href="https://axiompeptides.example/" />
 <!-- Favicon — onyx tile + bone split-X mark -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23050505'/%3E%3Cg stroke='%23ECE9E3' stroke-width='6' stroke-linecap='round'%3E%3Cline x1='30' y1='28' x2='44' y2='46'/%3E%3Cline x1='70' y1='28' x2='56' y2='46'/%3E%3Cline x1='30' y1='72' x2='44' y2='54'/%3E%3Cline x1='70' y1='72' x2='56' y2='54'/%3E%3C/g%3E%3C/svg%3E" />
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23050505'/%3E%3Cg stroke='%23ECE9E3' stroke-width='6' stroke-linecap='round'%3E%3Cline x1='30' y1='28' x2='44' y2='46'/%3E%3Cline x1='70' y1='28' x2='56' y2='46'/%3E%3Cline x1='30' y1='72' x2='44' y2='54'/%3E%3Cline x1='70' y1='72' x2='56' y2='54'/%3E%3C/g%3E%3C/svg%3E" />
@@ -16,7 +15,6 @@
 <meta property="og:site_name" content="AXIOM — Human Performance" />
 <meta property="og:title" content="AXIOM — Human Performance · Research Peptides" />
 <meta property="og:description" content="Research-grade peptides — third-party HPLC verified, ≥98% purity. For research use only." />
-<meta property="og:url" content="https://axiompeptides.example/" />
 <meta property="og:image" content="og.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
@@ -31,8 +29,7 @@
   "@type":"Organization",
   "name":"AXIOM — Human Performance",
   "description":"Research-grade peptides for laboratory research use only.",
-  "url":"https://axiompeptides.example/",
-  "logo":"https://axiompeptides.example/og.png",
+  "logo":"og.png",
   "address":{"@type":"PostalAddress","addressLocality":"Jakarta","addressCountry":"ID"},
   "contactPoint":{"@type":"ContactPoint","contactType":"sales","availableLanguage":["en","id"]}
 }
@@ -79,6 +76,8 @@ img{max-width:100%}
 :where(a,button,input,select,summary,[tabindex]):focus-visible{outline:2px solid var(--bone);outline-offset:3px}
 .skip-link{position:absolute;left:8px;top:-64px;z-index:100;background:var(--bone);color:var(--onyx);padding:11px 18px;font-size:13px;font-weight:500;transition:top .2s}
 .skip-link:focus{top:8px}
+.noscript-note{margin-top:20px;padding:18px 22px;border:1px solid rgba(236,233,227,.16);border-radius:12px;background:rgba(236,233,227,.04);color:var(--titanium);font-size:14px;line-height:1.6}
+.noscript-note a{color:var(--bone);text-decoration:underline}
 h1,h2,h3,h4{font-weight:400}
 .mono{font-family:var(--mono)}
 
@@ -472,6 +471,9 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
     </div>
 
     <div id="catList"></div>
+    <noscript>
+      <div class="noscript-note">JavaScript is required to search and filter the full catalogue. For the current compound list, live stock and pricing, message us on <a href="https://wa.me/18038573396" target="_blank" rel="noopener">WhatsApp</a>.</div>
+    </noscript>
     <div class="empty" id="empty">No compounds match your search.</div>
   </div>
 </section>
@@ -566,7 +568,6 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
       <p>Tell us which compounds and quantities you need. Quotes are returned within 24 hours with live stock and pricing.</p>
       <div class="cta-row">
         <a href="https://wa.me/18038573396?text=Hello%20AXIOM%2C%20I%27d%20like%20a%20research%20peptide%20quote." target="_blank" rel="noopener" class="btn btn-solid"><i class="ph-light ph-whatsapp-logo"></i> WhatsApp Us</a>
-        <a href="mailto:research@axiompeptides.example?subject=Research%20Quote%20Request" class="btn"><i class="ph-light ph-envelope-simple"></i> Email Enquiry</a>
       </div>
     </div>
   </div>
@@ -651,7 +652,7 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
   <div class="wrap">
     <div class="foot-grid">
       <div class="col-brand">
-        <a href="#top" class="brand"><img class="flogo" src="assets/axiom-logo.png" alt="AXIOM — Human Performance" width="170" height="49" /></a>
+        <a href="#top" class="brand"><img class="flogo" src="assets/axiom-logo.png" alt="AXIOM — Human Performance" width="170" height="49" loading="lazy" decoding="async" /></a>
         <p>Research-grade peptides for performance, recovery and longevity science. Independently tested, documented, and dispatched with care.</p>
       </div>
       <div class="col">
@@ -666,7 +667,6 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
       <div class="col">
         <h5>Contact</h5>
         <a href="https://wa.me/18038573396" target="_blank" rel="noopener">WhatsApp Order Line</a>
-        <a href="mailto:research@axiompeptides.example">research@axiompeptides.example</a>
         <p>Mon–Sat · 09:00–18:00 WIB</p>
         <p>Jakarta, Indonesia</p>
       </div>
