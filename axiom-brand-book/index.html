@@ -1030,19 +1030,84 @@
   /* ─── RESPONSIVE ──────────────────────────────── */
   @media (max-width: 1024px) {
     :root { --gutter: 40px; }
-    .two-col, .three-col { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr 1fr; }
+    .three-col { grid-template-columns: 1fr 1fr; }
     .four-col { grid-template-columns: 1fr 1fr; }
     .footer-grid { grid-template-columns: 1fr 1fr; }
   }
+
   @media (max-width: 768px) {
-    :root { --gutter: 24px; }
-    .two-col, .three-col, .four-col { grid-template-columns: 1fr; }
+    :root { --gutter: 20px; }
+
+    /* ── Nav ─────────────────────────────────── */
+    .site-nav { padding: 0 20px; }
+    .site-nav__links { display: none; }
+
+    /* ── Cover ───────────────────────────────── */
+    .cover { padding: 80px 20px 48px; }
+    .cover__corner-mark { display: none; }
+    .cover__wordmark { margin-bottom: 32px; }
+    .cover__logo-img { width: min(320px, 88vw); }
+    .cover__tagline { margin-bottom: 48px; }
+    .cover__meta { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .cover__version { text-align: left; }
+
+    /* ── Section covers ──────────────────────── */
+    .section-cover { min-height: 60vh; padding: 80px 20px 48px; }
+    .section-cover__number { font-size: 72px; top: 24px; right: 20px; }
+    .section-cover__title { margin-bottom: 32px; }
+    .section-cover__desc { margin-bottom: 40px; }
+
+    /* ── Content pages ───────────────────────── */
+    .page, .page--dark, .page--mid, .page--grey { padding: 64px 20px; }
+
+    /* ── Named grid layouts ──────────────────── */
+    .two-col, .three-col, .four-col { grid-template-columns: 1fr; gap: 32px; }
     .toc-grid { grid-template-columns: 1fr; }
     .toc-item:nth-child(odd) { padding-right: 0; border-right: none; }
     .toc-item:nth-child(even) { padding-left: 0; }
-    .site-nav__links { display: none; }
     .do-dont-grid { grid-template-columns: 1fr; }
     .icon-grid { grid-template-columns: repeat(4,1fr); }
+    .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+    .page-header { flex-direction: column; gap: 24px; }
+
+    /* ── Inline grids → 1 column ─────────────── */
+    /* Catches all display:grid inline styles with multiple columns */
+    [style*="grid-template-columns:1fr 1fr"],
+    [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:1fr 1fr 1fr"],
+    [style*="grid-template-columns: 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:1fr 1fr 1fr 1fr"],
+    [style*="grid-template-columns: 1fr 1fr 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:2fr 1fr"],
+    [style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:3fr 2fr"],
+    [style*="grid-template-columns: 3fr 2fr"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:repeat(2"],
+    [style*="grid-template-columns: repeat(2"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:repeat(3"],
+    [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
+    [style*="grid-template-columns:repeat(4"],
+    [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr !important; }
+
+    /* ── Inline flex layouts ─────────────────── */
+    /* Swatch rows wrap on mobile */
+    .swatch-row { flex-wrap: wrap; }
+    .swatch { min-width: calc(50% - 1px); min-height: 120px; aspect-ratio: auto; }
+
+    /* Pull quote */
+    .pull-quote { min-height: auto; padding: 64px 20px; }
+
+    /* ── UI frame: horizontal scroll ─────────── */
+    .ui-frame { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .ui-frame__content { min-width: 600px; }
+
+    /* ── Logo section boxes ──────────────────── */
+    .logo-box { padding: 48px 24px; }
+
+    /* ── Misc ───────────────────────────────── */
+    .container { padding: 0 20px; }
+    .section-cover__rule { margin-top: auto; }
   }
 </style>
 </head>
