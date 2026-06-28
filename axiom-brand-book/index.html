@@ -1059,7 +1059,7 @@
     .section-cover__desc { margin-bottom: 40px; }
 
     /* ── Content pages ───────────────────────── */
-    .page, .page--dark, .page--mid, .page--grey { padding: 64px 20px; }
+    .page, .page--dark, .page--mid, .page--grey { padding: 64px 20px; overflow-x: hidden; }
 
     /* ── Named grid layouts ──────────────────── */
     .two-col, .three-col, .four-col { grid-template-columns: 1fr; gap: 32px; }
@@ -1087,8 +1087,7 @@
     [style*="grid-template-columns: repeat(2"] { grid-template-columns: 1fr !important; }
     [style*="grid-template-columns:repeat(3"],
     [style*="grid-template-columns: repeat(3"] { grid-template-columns: 1fr !important; }
-    [style*="grid-template-columns:repeat(4"],
-    [style*="grid-template-columns: repeat(4"] { grid-template-columns: 1fr !important; }
+    /* keep repeat(4) as-is — used by icon grid which needs 4 cols */
 
     /* ── Inline flex layouts ─────────────────── */
     /* Swatch rows wrap on mobile */
@@ -2475,7 +2474,7 @@
     <div class="three-col">
       <div>
         <div style="background:var(--bone);border:1px solid var(--light-grey);aspect-ratio:85/55;display:flex;flex-direction:column;justify-content:space-between;padding:20px;margin-bottom:12px;">
-          <img src="logo.png" alt="AXIOM" style="width:48px;height:auto;display:block;"/>
+          <img src="logo.png" alt="AXIOM" style="width:90px;height:auto;display:block;"/>
           <div style="display:flex;justify-content:space-between;align-items:flex-end;">
             <div>
               <div style="font-size:7px;font-weight:400;letter-spacing:0.18em;color:var(--titanium);">DR LENA HARTMANN</div>
@@ -2490,7 +2489,7 @@
       <div>
         <div style="background:var(--bone);border:1px solid var(--light-grey);aspect-ratio:210/297;display:flex;flex-direction:column;justify-content:space-between;padding:24px;margin-bottom:12px;min-height:200px;">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-            <img src="logo.png" alt="AXIOM" style="width:40px;height:auto;display:block;"/>
+            <img src="logo.png" alt="AXIOM" style="width:72px;height:auto;display:block;"/>
             <div style="width:20px;height:1px;background:var(--light-grey);margin-top:6px;"></div>
           </div>
           <div style="font-size:7px;font-weight:300;color:var(--titanium);line-height:1.8;">
