@@ -162,10 +162,12 @@
     z-index: 1;
     margin-bottom: 60px;
   }
-  .cover__wordmark svg {
-    width: min(900px, 90vw);
+  .cover__logo-img {
+    width: min(560px, 80vw);
     height: auto;
     display: block;
+    filter: invert(1);
+    mix-blend-mode: screen;
   }
   .cover__tagline {
     font-size: 10px;
@@ -1078,20 +1080,7 @@
   </div>
 
   <div class="cover__wordmark">
-    <!-- AXIOM SVG Wordmark — traced from brand identity -->
-    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" aria-label="AXIOM">
-      <!-- A — apex only, no crossbar -->
-      <polyline points="148,140 195,20 242,140" fill="none" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt" stroke-linejoin="miter"/>
-      <!-- X -->
-      <line x1="282" y1="20" x2="376" y2="140" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt"/>
-      <line x1="376" y1="20" x2="282" y2="140" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt"/>
-      <!-- I -->
-      <line x1="422" y1="20" x2="422" y2="140" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt"/>
-      <!-- O — geometric oval, taller than wide -->
-      <ellipse cx="511" cy="80" rx="43" ry="54" fill="none" stroke="#F5F5F3" stroke-width="13"/>
-      <!-- M — outer verticals, inner V to mid-height -->
-      <polyline points="600,140 600,20 674,82 748,20 748,140" fill="none" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt" stroke-linejoin="miter"/>
-    </svg>
+    <img src="logo.png" alt="AXIOM Human Performance" class="cover__logo-img"/>
   </div>
 
   <div class="cover__tagline">Human Performance</div>
