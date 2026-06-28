@@ -1067,7 +1067,12 @@
     .toc-item:nth-child(odd) { padding-right: 0; border-right: none; }
     .toc-item:nth-child(even) { padding-left: 0; }
     .do-dont-grid { grid-template-columns: 1fr; }
-    .icon-grid { grid-template-columns: repeat(4,1fr); }
+    .icon-grid {
+      grid-template-columns: repeat(4, 1fr);
+      margin-left: calc(-1 * var(--gutter));
+      margin-right: calc(-1 * var(--gutter));
+      width: calc(100% + 2 * var(--gutter));
+    }
     .footer-grid { grid-template-columns: 1fr; gap: 40px; }
     .page-header { flex-direction: column; gap: 24px; }
 
