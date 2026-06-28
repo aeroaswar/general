@@ -130,9 +130,9 @@
     background: var(--onyx);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: flex-start;
     padding: var(--gutter);
-    padding-top: 0;
     position: relative;
     overflow: hidden;
   }
@@ -1079,20 +1079,18 @@
 
   <div class="cover__wordmark">
     <!-- AXIOM SVG Wordmark — traced from brand identity -->
-    <svg viewBox="0 0 900 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="AXIOM">
-      <g stroke="#F5F5F3" stroke-width="11" stroke-linecap="butt" fill="none">
-        <!-- A — apex only, no crossbar -->
-        <polyline points="148,140 195,20 242,140" stroke-linejoin="miter"/>
-        <!-- X -->
-        <line x1="282" y1="20" x2="376" y2="140"/>
-        <line x1="376" y1="20" x2="282" y2="140"/>
-        <!-- I -->
-        <line x1="422" y1="20" x2="422" y2="140"/>
-        <!-- O — geometric oval, taller than wide -->
-        <ellipse cx="511" cy="80" rx="43" ry="54"/>
-        <!-- M — outer verticals, inner V to mid-height -->
-        <polyline points="600,140 600,20 674,82 748,20 748,140" stroke-linejoin="miter"/>
-      </g>
+    <svg viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" aria-label="AXIOM">
+      <!-- A — apex only, no crossbar -->
+      <polyline points="148,140 195,20 242,140" fill="none" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt" stroke-linejoin="miter"/>
+      <!-- X -->
+      <line x1="282" y1="20" x2="376" y2="140" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt"/>
+      <line x1="376" y1="20" x2="282" y2="140" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt"/>
+      <!-- I -->
+      <line x1="422" y1="20" x2="422" y2="140" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt"/>
+      <!-- O — geometric oval, taller than wide -->
+      <ellipse cx="511" cy="80" rx="43" ry="54" fill="none" stroke="#F5F5F3" stroke-width="13"/>
+      <!-- M — outer verticals, inner V to mid-height -->
+      <polyline points="600,140 600,20 674,82 748,20 748,140" fill="none" stroke="#F5F5F3" stroke-width="13" stroke-linecap="butt" stroke-linejoin="miter"/>
     </svg>
   </div>
 
