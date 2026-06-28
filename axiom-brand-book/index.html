@@ -963,6 +963,287 @@
     text-align: center;
   }
 
+  /* ─── HAMBURGER NAV ──────────────────────────── */
+  .site-nav__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin-right: -8px;
+  }
+  .site-nav__hamburger span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: var(--platinum);
+    transition: all 0.25s ease;
+  }
+  .site-nav__hamburger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .site-nav__hamburger.is-open span:nth-child(2) { opacity: 0; }
+  .site-nav__hamburger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* ─── VOICE TOGGLE ────────────────────────────── */
+  .voice-toggle-bar {
+    display: inline-flex;
+    gap: 0;
+    margin-bottom: 40px;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .voice-tab {
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    background: none;
+    border: none;
+    color: var(--titanium);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .voice-tab.active {
+    background: var(--bone);
+    color: var(--onyx);
+  }
+  .voice-panel { display: none; }
+  .voice-panel.active { display: block; }
+  .voice-example {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 0;
+    margin-bottom: 2px;
+  }
+  .voice-example__context {
+    padding: 24px;
+    background: #0D0D0D;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid rgba(255,255,255,0.04);
+  }
+  .voice-example__context-label {
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--titanium);
+    margin-bottom: 6px;
+  }
+  .voice-example__context-title {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--bone);
+  }
+  .voice-example__copy {
+    padding: 24px 32px;
+    background: #0D0D0D;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--bone);
+    font-style: italic;
+  }
+  .voice-example--out .voice-example__copy {
+    color: rgba(245,245,243,0.4);
+    text-decoration: line-through;
+    text-decoration-color: rgba(139,58,58,0.5);
+  }
+  .voice-example__verdict {
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    font-style: normal;
+    display: block;
+  }
+  .voice-example--in .voice-example__verdict { color: #4A7C59; }
+  .voice-example--out .voice-example__verdict { color: #8B3A3A; }
+
+  /* ─── MOTION SYSTEM ───────────────────────────── */
+  .motion-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    margin-bottom: 48px;
+  }
+  .motion-cell {
+    padding: 32px 24px;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .motion-cell__label {
+    font-size: 8px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--titanium);
+  }
+  .motion-cell__value {
+    font-size: 28px;
+    font-weight: 100;
+    letter-spacing: -0.02em;
+    color: var(--bone);
+  }
+  .motion-cell__desc {
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--titanium);
+  }
+  .motion-bar {
+    height: 1px;
+    background: rgba(196,168,130,0.4);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .motion-bar__fill {
+    position: absolute;
+    left: -100%;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    background: var(--warm-metal);
+    transition: none;
+  }
+  .motion-bar.demo-running .motion-bar__fill {
+    left: 0;
+    transition: left var(--dur, 240ms) var(--ease, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+  .easing-row {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: center;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .easing-row__name { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--bone); }
+  .easing-row__value { font-size: 11px; font-weight: 300; color: var(--titanium); font-family: monospace; }
+  .easing-row__use { font-size: 9px; letter-spacing: 0.12em; color: var(--warm-metal); }
+
+  /* ─── WAYFINDING SYSTEM ───────────────────────── */
+  .wayfinding-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+  }
+  .wayfinding-cell {
+    background: #111;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .wayfinding-cell__number {
+    font-size: 48px;
+    font-weight: 100;
+    letter-spacing: -0.04em;
+    color: var(--bone);
+    line-height: 1;
+  }
+  .wayfinding-cell__label {
+    font-size: 8px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--warm-metal);
+  }
+  .wayfinding-cell__name {
+    font-size: 14px;
+    font-weight: 200;
+    color: var(--bone);
+    letter-spacing: 0.06em;
+  }
+  .wayfinding-cell__desc {
+    font-size: 11px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--titanium);
+  }
+  .floor-plan {
+    background: var(--onyx);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 48px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, 80px);
+    gap: 1px;
+  }
+  .fp-cell {
+    border: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 8px;
+  }
+  .fp-cell__num { font-size: 7px; letter-spacing: 0.18em; color: var(--warm-metal); }
+  .fp-cell__name { font-size: 7px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--titanium); margin-top: 2px; }
+  .fp-cell--entry { grid-column: span 2; background: rgba(255,255,255,0.02); }
+  .fp-cell--large { grid-column: span 2; background: rgba(255,255,255,0.015); }
+
+  /* ─── PHOTO FRAME ─────────────────────────────── */
+  .photo-frame {
+    position: relative;
+    overflow: hidden;
+    background: #111;
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: grayscale(20%) brightness(0.9);
+    transition: filter 0.4s;
+  }
+  .photo-frame:hover img { filter: grayscale(0%) brightness(0.95); }
+  .photo-frame__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .photo-frame__caption {
+    position: absolute;
+    bottom: 20px;
+    left: 24px;
+    right: 24px;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(245,245,243,0.7);
+    z-index: 1;
+  }
+
+  /* ─── BRAND-IN-USE ────────────────────────────── */
+  .biu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    margin-bottom: 1px;
+  }
+  .biu-mockup {
+    aspect-ratio: 4/3;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .biu-mockup--tall { aspect-ratio: 3/4; }
+  .biu-mockup__label {
+    position: absolute;
+    bottom: 20px;
+    left: 24px;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,245,243,0.5);
+    z-index: 2;
+  }
+
   /* ─── FOOTER ──────────────────────────────────── */
   .site-footer {
     background: var(--onyx);
@@ -1041,7 +1322,21 @@
 
     /* ── Nav ─────────────────────────────────── */
     .site-nav { padding: 0 20px; }
-    .site-nav__links { display: none; }
+    .site-nav__hamburger { display: flex; }
+    .site-nav__links {
+      display: none;
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      background: rgba(10,10,10,0.97);
+      backdrop-filter: blur(16px);
+      flex-direction: column;
+      padding: 16px 0 24px;
+      z-index: 99;
+      border-bottom: 1px solid rgba(245,245,243,0.06);
+    }
+    .site-nav__links.is-open { display: flex; }
+    .site-nav__links li { border-bottom: 1px solid rgba(245,245,243,0.04); }
+    .site-nav__links a { padding: 14px 24px; display: block; font-size: 10px; letter-spacing: 0.2em; }
 
     /* ── Cover ───────────────────────────────── */
     .cover { padding: 80px 20px 48px; }
@@ -1061,6 +1356,14 @@
     /* ── Content pages ───────────────────────── */
     .page, .page--dark, .page--mid, .page--grey { padding: 64px 20px; overflow-x: hidden; }
 
+    /* ── Voice examples ─────────────────────── */
+    .voice-example { grid-template-columns: 1fr; }
+    .voice-example__context { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    /* ── Motion + wayfinding grids ──────────── */
+    .motion-grid { grid-template-columns: 1fr 1fr; }
+    .wayfinding-grid { grid-template-columns: 1fr; }
+    .floor-plan { display: none; }
+    .easing-row { grid-template-columns: 1fr; gap: 8px; }
     /* ── Named grid layouts ──────────────────── */
     .two-col, .three-col, .four-col { grid-template-columns: 1fr; gap: 32px; }
     .toc-grid { grid-template-columns: 1fr; }
@@ -1122,6 +1425,9 @@
 ════════════════════════════════════════════════ -->
 <nav class="site-nav">
   <a class="site-nav__logo" href="#cover">AXIOM — Brand Guidelines</a>
+  <button class="site-nav__hamburger" aria-label="Menu" onclick="this.classList.toggle('is-open');document.querySelector('.site-nav__links').classList.toggle('is-open')">
+    <span></span><span></span><span></span>
+  </button>
   <ul class="site-nav__links">
     <li><a href="#brand-foundation">Foundation</a></li>
     <li><a href="#personality">Personality</a></li>
@@ -1133,6 +1439,7 @@
     <li><a href="#clinic">Clinic</a></li>
     <li><a href="#digital">Digital</a></li>
     <li><a href="#extensions">Extensions</a></li>
+    <li><a href="#brand-in-use">In Use</a></li>
   </ul>
 </nav>
 <div class="nav-spacer"></div>
@@ -1253,6 +1560,11 @@
         <span class="toc-item__num">14</span>
         <span class="toc-item__title">Future Extensions</span>
         <span class="toc-item__page">Labs · Clinics · Diagnostics</span>
+      </a>
+      <a class="toc-item" href="#brand-in-use">
+        <span class="toc-item__num">15</span>
+        <span class="toc-item__title">Brand In Use</span>
+        <span class="toc-item__page">Social · Email · Space · Digital</span>
       </a>
     </div>
   </div>
@@ -1622,6 +1934,67 @@
       <div class="dont-box" style="background:#0D0D0D;"><div class="dont-box__label">Use: "hack," "biohack," "supercharge," "game-changer," "next-level," "boost."</div></div>
       <div class="do-box" style="background:#0D0D0D;"><div class="do-box__label">Cite peer-reviewed studies with DOI references in technical communications.</div></div>
       <div class="dont-box" style="background:#0D0D0D;"><div class="dont-box__label">Write "studies show" without specifying the study, journal, or sample size.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Voice in Practice -->
+<section class="page">
+  <div class="container">
+    <span class="label">02.3 — Voice in Practice</span>
+    <div class="page-header" style="margin-bottom:40px;">
+      <div class="page-header__left">
+        <h3 class="page-title">The Voice,<br>Applied</h3>
+        <p class="page-subtitle">Five real-world scenarios. Toggle between how AXIOM writes and how it does not.</p>
+      </div>
+    </div>
+    <div class="voice-toggle-bar">
+      <button class="voice-tab active" onclick="setVoiceTab('in')">In Voice</button>
+      <button class="voice-tab" onclick="setVoiceTab('out')">Out of Voice</button>
+    </div>
+    <div class="voice-panel active" id="voice-in">
+      <div class="voice-example voice-example--in">
+        <div class="voice-example__context"><div class="voice-example__context-label">Product Description</div><div class="voice-example__context-title">BPC-157</div></div>
+        <div class="voice-example__copy">BPC-157 is a synthetic pentadecapeptide derived from a gastric protein. At 250mcg administered twice daily, peer-reviewed trials demonstrate measurable improvement in tendon-to-bone healing rates within 18–24 days. No additives. No fillers. 98.4% minimum purity, certificate of analysis supplied.<span class="voice-example__verdict">Precise · Clinical · Evidence-cited</span></div>
+      </div>
+      <div class="voice-example voice-example--in">
+        <div class="voice-example__context"><div class="voice-example__context-label">Email Subject Line</div><div class="voice-example__context-title">Protocol Update</div></div>
+        <div class="voice-example__copy">Week 8 of 12 — BPC-157 protocol: biomarker update available<span class="voice-example__verdict">Sentence case · Factual · No clickbait</span></div>
+      </div>
+      <div class="voice-example voice-example--in">
+        <div class="voice-example__context"><div class="voice-example__context-label">Error State</div><div class="voice-example__context-title">Form Validation</div></div>
+        <div class="voice-example__copy">Your date of birth does not match our records. Please contact your clinician directly at the number on your membership card.<span class="voice-example__verdict">Calm · Actionable · No apology-spam</span></div>
+      </div>
+      <div class="voice-example voice-example--in">
+        <div class="voice-example__context"><div class="voice-example__context-label">Social Caption</div><div class="voice-example__context-title">Instagram</div></div>
+        <div class="voice-example__copy">Recovery is not rest. It is a protocol.<span class="voice-example__verdict">Brief · Declarative · No hashtag clusters</span></div>
+      </div>
+      <div class="voice-example voice-example--in">
+        <div class="voice-example__context"><div class="voice-example__context-label">Consent Form</div><div class="voice-example__context-title">Clinical Language</div></div>
+        <div class="voice-example__copy">By proceeding you confirm that the clinical information provided is accurate to the best of your knowledge and that you understand the protocol's mechanism, dosage schedule, and contra-indications as outlined in the attached summary.<span class="voice-example__verdict">Legal-grade · No ambiguity · Respects intelligence</span></div>
+      </div>
+    </div>
+    <div class="voice-panel" id="voice-out">
+      <div class="voice-example voice-example--out">
+        <div class="voice-example__context"><div class="voice-example__context-label">Product Description</div><div class="voice-example__context-title">BPC-157</div></div>
+        <div class="voice-example__copy">Our AMAZING BPC-157 is the #1 peptide for SUPERCHARGING your recovery! Feel the difference in just days! 🔥🔥🔥 Used by top athletes worldwide!!<span class="voice-example__verdict">Exclamatory · Unsubstantiated · Never</span></div>
+      </div>
+      <div class="voice-example voice-example--out">
+        <div class="voice-example__context"><div class="voice-example__context-label">Email Subject Line</div><div class="voice-example__context-title">Protocol Update</div></div>
+        <div class="voice-example__copy">🚨 Don't miss your results — big news inside!!!<span class="voice-example__verdict">Emoji-led · Alarm-tone · Never</span></div>
+      </div>
+      <div class="voice-example voice-example--out">
+        <div class="voice-example__context"><div class="voice-example__context-label">Error State</div><div class="voice-example__context-title">Form Validation</div></div>
+        <div class="voice-example__copy">Oops! Something went wrong 😅 We're SO sorry about this! Please try again and if it still doesn't work, maybe check your details?<span class="voice-example__verdict">Infantilising · Vague · Never</span></div>
+      </div>
+      <div class="voice-example voice-example--out">
+        <div class="voice-example__context"><div class="voice-example__context-label">Social Caption</div><div class="voice-example__context-title">Instagram</div></div>
+        <div class="voice-example__copy">Ready to LEVEL UP your recovery game? 💪 We've got the ULTIMATE solution for serious athletes! Drop a 🔥 if you're ready to go NEXT LEVEL! #gains #biohacking #peptides #recovery #performance<span class="voice-example__verdict">Hashtag-heavy · Aggressive · Never</span></div>
+      </div>
+      <div class="voice-example voice-example--out">
+        <div class="voice-example__context"><div class="voice-example__context-label">Consent Form</div><div class="voice-example__context-title">Clinical Language</div></div>
+        <div class="voice-example__copy">I agree to stuff lol. (Results may vary. We're not responsible for anything that happens. You're doing this at your own risk btw.)<span class="voice-example__verdict">Legally negligent · Disrespectful · Never</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -2462,6 +2835,92 @@
   </div>
 </section>
 
+<!-- Motion Principles -->
+<section class="page--dark" id="motion">
+  <div class="container">
+    <span class="label label--light">09.4 — Motion &amp; Animation</span>
+    <div class="page-header" style="margin-bottom:64px;">
+      <div class="page-header__left">
+        <h3 class="page-title" style="color:var(--bone);">Motion<br>Principles</h3>
+        <p class="page-subtitle page-subtitle--light">AXIOM motion is precise and unhurried. No bounce. No overshooting. Animation is information — it communicates state, not personality.</p>
+      </div>
+    </div>
+    <div class="motion-grid">
+      <div class="motion-cell">
+        <div class="motion-cell__label">Fast Transition</div>
+        <div class="motion-cell__value">120ms</div>
+        <div class="motion-cell__desc">Hover states. Toggle switches. Button press feedback. Anything requiring immediate response.</div>
+        <div class="motion-bar" onclick="demoBar(this, 120, 'cubic-bezier(0.4,0,0.2,1)')" style="--dur:120ms;--ease:cubic-bezier(0.4,0,0.2,1)"><div class="motion-bar__fill"></div></div>
+      </div>
+      <div class="motion-cell">
+        <div class="motion-cell__label">Base Transition</div>
+        <div class="motion-cell__value">240ms</div>
+        <div class="motion-cell__desc">Panel opens. Navigation reveals. Modal entrance. The default for most UI transitions.</div>
+        <div class="motion-bar" onclick="demoBar(this, 240, 'cubic-bezier(0.22,1,0.36,1)')" style="--dur:240ms;--ease:cubic-bezier(0.22,1,0.36,1)"><div class="motion-bar__fill"></div></div>
+      </div>
+      <div class="motion-cell">
+        <div class="motion-cell__label">Slow Transition</div>
+        <div class="motion-cell__value">480ms</div>
+        <div class="motion-cell__desc">Page-level fades. Section entrance animations. Hero elements that arrive with weight.</div>
+        <div class="motion-bar" onclick="demoBar(this, 480, 'cubic-bezier(0.22,1,0.36,1)')" style="--dur:480ms;--ease:cubic-bezier(0.22,1,0.36,1)"><div class="motion-bar__fill"></div></div>
+      </div>
+      <div class="motion-cell">
+        <div class="motion-cell__label">Loading State</div>
+        <div class="motion-cell__value">1200ms</div>
+        <div class="motion-cell__desc">Progress indicators. Data fetch states. Sustained animations that loop until resolution.</div>
+        <div class="motion-bar" onclick="demoBar(this, 1200, 'linear')" style="--dur:1200ms;--ease:linear"><div class="motion-bar__fill"></div></div>
+      </div>
+    </div>
+    <div style="margin-bottom:64px;">
+      <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--titanium);margin-bottom:24px;">Easing Curves — click bar to demo</div>
+      <div class="easing-row">
+        <div class="easing-row__name">Expo Out</div>
+        <div class="easing-row__value">cubic-bezier(0.22, 1, 0.36, 1)</div>
+        <div class="easing-row__use">Entrances · Reveals · Default</div>
+      </div>
+      <div class="easing-row">
+        <div class="easing-row__name">Ease</div>
+        <div class="easing-row__value">cubic-bezier(0.4, 0, 0.2, 1)</div>
+        <div class="easing-row__use">Micro-interactions · Hover states</div>
+      </div>
+      <div class="easing-row">
+        <div class="easing-row__name">Ease In</div>
+        <div class="easing-row__value">cubic-bezier(0.4, 0, 1, 1)</div>
+        <div class="easing-row__use">Exits · Dismissals only</div>
+      </div>
+      <div class="easing-row">
+        <div class="easing-row__name">Linear</div>
+        <div class="easing-row__value">linear</div>
+        <div class="easing-row__use">Progress bars · Loading loops</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;">
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:16px;">Never</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:12px;font-weight:300;color:var(--titanium);padding-left:12px;border-left:1px solid rgba(139,58,58,0.4);">Spring physics with visible bounce</li>
+          <li style="font-size:12px;font-weight:300;color:var(--titanium);padding-left:12px;border-left:1px solid rgba(139,58,58,0.4);">Transitions exceeding 600ms (unless loading)</li>
+          <li style="font-size:12px;font-weight:300;color:var(--titanium);padding-left:12px;border-left:1px solid rgba(139,58,58,0.4);">Looping decorative animations</li>
+          <li style="font-size:12px;font-weight:300;color:var(--titanium);padding-left:12px;border-left:1px solid rgba(139,58,58,0.4);">Parallax on typography</li>
+        </ul>
+      </div>
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:16px;">Always</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;">
+          <li style="font-size:12px;font-weight:300;color:var(--titanium);padding-left:12px;border-left:1px solid rgba(74,124,89,0.4);">Respect prefers-reduced-motion</li>
+          <li style="font-size:12px;font-weight:300;color:var(--titanium);padding-left:12px;border-left:1px solid rgba(74,124,89,0.4);">Ease out on entrance, ease in on exit</li>
+          <li style="font-size:12px;font-weight:300;color:var(--titanium);padding-left:12px;border-left:1px solid rgba(74,124,89,0.4);">Animate transform/opacity only</li>
+          <li style="font-size:12px;font-weight:300;color:var(--titanium);padding-left:12px;border-left:1px solid rgba(74,124,89,0.4);">GPU-composited properties first</li>
+        </ul>
+      </div>
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:16px;">Stagger Rule</div>
+        <p style="font-size:12px;font-weight:300;color:var(--titanium);line-height:1.8;">When animating list items or cards, stagger by 40ms per item. Maximum stagger offset: 240ms total (6 items). Beyond that, collapse to simultaneous.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════════════════════
      10 · MARKETING ASSETS
 ════════════════════════════════════════════════ -->
@@ -2607,15 +3066,124 @@
   </div>
 </section>
 
+<!-- Interior Wayfinding -->
+<section class="page--mid">
+  <div class="container">
+    <span class="label label--light">11.2 — Interior Wayfinding</span>
+    <h3 class="page-title" style="color:var(--bone);margin-bottom:64px;">Navigating<br>the Space</h3>
+    <div class="wayfinding-grid" style="margin-bottom:2px;">
+      <div class="wayfinding-cell">
+        <div class="wayfinding-cell__label">Room Plate</div>
+        <div class="wayfinding-cell__number">01</div>
+        <div class="wayfinding-cell__name">Consultation</div>
+        <div class="wayfinding-cell__desc">Brushed 316 stainless. 200×60mm. Room number in Inter Light 48px. Room name in Inter ExtraLight 12px, tracking 0.28em. Flush-mount to wall at 1500mm centre height.</div>
+      </div>
+      <div class="wayfinding-cell">
+        <div class="wayfinding-cell__label">Zone Marker</div>
+        <div class="wayfinding-cell__number">A</div>
+        <div class="wayfinding-cell__name">Assessment Wing</div>
+        <div class="wayfinding-cell__desc">Single letter designation. Floor-applied directional tape: 2mm Onyx vinyl, 60mm wide. No adhesive footprints. No fluorescent borders. Typography is the only wayfinding device.</div>
+      </div>
+      <div class="wayfinding-cell">
+        <div class="wayfinding-cell__label">Hanging Blade</div>
+        <div class="wayfinding-cell__number">→</div>
+        <div class="wayfinding-cell__name">Directional</div>
+        <div class="wayfinding-cell__desc">Suspended 200×400mm blades in brushed stainless. Arrow: 3mm machined groove, not printed. Text: Inter Thin 10px, uppercase, 0.32em tracking. Single destination per blade only.</div>
+      </div>
+    </div>
+    <div class="floor-plan" style="margin-bottom:48px;">
+      <div class="fp-cell fp-cell--entry"><div class="fp-cell__num">—</div><div class="fp-cell__name">Entry / Reception</div></div>
+      <div class="fp-cell fp-cell--large"><div class="fp-cell__num">01</div><div class="fp-cell__name">Consultation A</div></div>
+      <div class="fp-cell"><div class="fp-cell__num">05</div><div class="fp-cell__name">Lab</div></div>
+      <div class="fp-cell"><div class="fp-cell__num">02</div><div class="fp-cell__name">Consultation B</div></div>
+      <div class="fp-cell fp-cell--large"><div class="fp-cell__num">03</div><div class="fp-cell__name">IV Bay</div></div>
+      <div class="fp-cell"><div class="fp-cell__num">06</div><div class="fp-cell__name">Dispensary</div></div>
+      <div class="fp-cell"><div class="fp-cell__num">04</div><div class="fp-cell__name">Recovery</div></div>
+      <div class="fp-cell fp-cell--large"><div class="fp-cell__num">07</div><div class="fp-cell__name">Diagnostic Suite</div></div>
+      <div class="fp-cell"><div class="fp-cell__num">—</div><div class="fp-cell__name">Staff</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;">
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--titanium);margin-bottom:20px;">Material Hierarchy</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:16px;align-items:center;">
+            <div style="width:32px;height:32px;background:rgba(196,168,130,0.2);border:1px solid rgba(196,168,130,0.4);flex-shrink:0;"></div>
+            <div style="font-size:12px;font-weight:300;color:var(--platinum);">Stainless steel — primary wayfinding (room plates, blades)</div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:center;">
+            <div style="width:32px;height:32px;background:rgba(245,245,243,0.05);border:1px solid rgba(245,245,243,0.1);flex-shrink:0;"></div>
+            <div style="font-size:12px;font-weight:300;color:var(--platinum);">Frosted glass — privacy panels, room ID at consultation doors</div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:center;">
+            <div style="width:32px;height:32px;background:rgba(10,10,10,0.8);border:1px solid rgba(255,255,255,0.06);flex-shrink:0;"></div>
+            <div style="font-size:12px;font-weight:300;color:var(--platinum);">Vinyl decal — floor tape, secondary direction, 2mm only</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--titanium);margin-bottom:20px;">Typography Spec</div>
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div>
+            <div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:6px;">Room Number</div>
+            <div style="font-size:13px;font-weight:300;color:var(--bone);">Inter Thin (100) · 48px · Tracking −0.02em</div>
+          </div>
+          <div>
+            <div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:6px;">Room Name</div>
+            <div style="font-size:13px;font-weight:300;color:var(--bone);">Inter ExtraLight (200) · 12px · Tracking 0.28em · Uppercase</div>
+          </div>
+          <div>
+            <div style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:6px;">Directional Arrow</div>
+            <div style="font-size:13px;font-weight:300;color:var(--bone);">Machined groove — never printed. 3mm depth minimum.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Interior Atmosphere -->
+<section class="page--dark">
+  <div class="container">
+    <span class="label label--light">11.3 — Interior Atmosphere</span>
+    <h3 class="page-title" style="color:var(--bone);margin-bottom:48px;">The Physical<br>Experience</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;margin-bottom:2px;">
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:16px;">Walls</div>
+        <div style="font-size:13px;font-weight:300;color:var(--bone);line-height:1.8;">Poured micro-cement, 3–5mm textured finish. Colour: warm neutral, equivalent to RAL 7044. No paint. No wallpaper. No feature walls.</div>
+      </div>
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:16px;">Floors</div>
+        <div style="font-size:13px;font-weight:300;color:var(--bone);line-height:1.8;">Honed Bianco Carrara marble or dark basalt, 600×600mm minimum tile. Joints: 1.5mm grey grout only. No patterns, no borders.</div>
+      </div>
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:16px;">Lighting</div>
+        <div style="font-size:13px;font-weight:300;color:var(--bone);line-height:1.8;">2700–3000K warm white throughout. No cool fluorescent. Recessed only. Treatment rooms: adjustable 2700–4000K for clinical work. CRI 95+ mandatory.</div>
+      </div>
+      <div style="padding:32px;background:#111;">
+        <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:16px;">Scent</div>
+        <div style="font-size:13px;font-weight:300;color:var(--bone);line-height:1.8;">Proprietary AXIOM ambient blend. Cedar, white mineral, trace vetiver. Diffused at 0.3 bar. Applied in reception and corridor only — never in treatment rooms.</div>
+      </div>
+    </div>
+    <div style="background:rgba(196,168,130,0.06);border:1px solid rgba(196,168,130,0.15);padding:32px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;">
+      <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);white-space:nowrap;">Design Rule</div>
+      <p style="font-size:14px;font-weight:100;color:var(--bone);line-height:1.7;letter-spacing:-0.005em;">If the interior would not be photographed for an architectural review without modification, it is not ready. Every AXIOM clinic interior is a photographic subject first, a functional space second.</p>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════════════════════
      12 · PHOTOGRAPHY DIRECTION
 ════════════════════════════════════════════════ -->
-<section class="section-cover section-cover--light" id="photography">
-  <div class="section-cover__number" style="color:var(--onyx);">12</div>
-  <div class="section-cover__chapter" style="color:var(--titanium);">Chapter Twelve</div>
-  <h2 class="section-cover__title" style="color:var(--onyx);">Photography<br>Direction</h2>
-  <p class="section-cover__desc" style="color:var(--mid-grey);">AXIOM photography is editorial, controlled, and never aspirational in the traditional sense. We photograph truth, precisely lit.</p>
-  <div class="section-cover__rule" style="background:var(--onyx);"></div>
+<section class="section-cover section-cover--dark" id="photography" style="position:relative;">
+  <div style="position:absolute;inset:0;overflow:hidden;z-index:0;">
+    <img src="https://images.unsplash.com/mwZfep5-G9M?w=1600&q=70&auto=format&fit=crop" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.35;filter:grayscale(40%);"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.9) 0%,rgba(10,10,10,0.4) 100%);"></div>
+  </div>
+  <div class="section-cover__number" style="position:relative;z-index:1;">12</div>
+  <div class="section-cover__chapter" style="position:relative;z-index:1;">Chapter Twelve</div>
+  <h2 class="section-cover__title" style="position:relative;z-index:1;">Photography<br>Direction</h2>
+  <p class="section-cover__desc" style="position:relative;z-index:1;">AXIOM photography is editorial, controlled, and never aspirational in the traditional sense. We photograph truth, precisely lit.</p>
+  <div class="section-cover__rule" style="position:relative;z-index:1;"></div>
 </section>
 
 <section class="page">
@@ -2623,27 +3191,28 @@
     <span class="label">12.1 — Photography Principles</span>
     <div class="three-col">
       <div>
-        <div style="background:var(--onyx);aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;margin-bottom:16px;position:relative;overflow:hidden;">
-          <div style="position:absolute;top:0;left:40%;bottom:0;right:0;background:radial-gradient(ellipse at 20% 60%,rgba(255,255,255,0.03) 0%,transparent 60%);"></div>
-          <div style="font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--titanium);position:relative;z-index:1;">Elite Athlete — At Rest</div>
+        <div class="photo-frame" style="aspect-ratio:3/4;margin-bottom:16px;">
+          <img src="https://images.unsplash.com/Wy9ZjpVUMHY?w=800&q=80&auto=format&fit=crop" alt="Athlete at rest after training" loading="lazy"/>
+          <div class="photo-frame__overlay"></div>
+          <div class="photo-frame__caption">Elite Athlete — At Rest</div>
         </div>
         <div style="font-size:11px;font-weight:400;letter-spacing:0.12em;margin-bottom:8px;">Athletes</div>
         <p style="font-size:12px;font-weight:300;line-height:1.75;color:var(--titanium);">Elite performers photographed in recovery, in concentration, in the moment after peak effort — not during it. Calm confidence, not aggression. Sweat and exhaustion are honest; grimacing is performance.</p>
       </div>
       <div>
-        <div style="background:#111;aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;margin-bottom:16px;position:relative;overflow:hidden;">
-          <div style="position:absolute;top:20%;left:0;right:60%;bottom:0;background:radial-gradient(ellipse at 80% 30%,rgba(196,168,130,0.04) 0%,transparent 70%);"></div>
-          <div style="font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--titanium);position:relative;z-index:1;">Laboratory — Still Life</div>
+        <div class="photo-frame" style="aspect-ratio:3/4;margin-bottom:16px;">
+          <img src="https://images.unsplash.com/uyXNXIhisrU?w=800&q=80&auto=format&fit=crop" alt="Clinical laboratory" loading="lazy"/>
+          <div class="photo-frame__overlay"></div>
+          <div class="photo-frame__caption">Laboratory — Clinical Still Life</div>
         </div>
         <div style="font-size:11px;font-weight:400;letter-spacing:0.12em;margin-bottom:8px;">Product &amp; Laboratory</div>
         <p style="font-size:12px;font-weight:300;line-height:1.75;color:var(--titanium);">Product photography is clinical still life. Controlled raking light. Clean backgrounds. A single vial is a complete composition. No props, no lifestyle context.</p>
       </div>
       <div>
-        <div style="background:#0D0D0D;aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;margin-bottom:16px;position:relative;overflow:hidden;">
-          <div style="position:absolute;inset:0;background:linear-gradient(160deg,#1A1A1A 0%,#0A0A0A 100%);"></div>
-          <div style="position:absolute;top:30px;left:30px;right:30px;height:1px;background:rgba(255,255,255,0.04);"></div>
-          <div style="position:absolute;top:60px;left:30px;right:60px;height:1px;background:rgba(255,255,255,0.02);"></div>
-          <div style="font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--titanium);position:relative;z-index:1;">Clinic Interior — Architectural</div>
+        <div class="photo-frame" style="aspect-ratio:3/4;margin-bottom:16px;">
+          <img src="https://images.unsplash.com/Nmr7gGlfOXg?w=800&q=80&auto=format&fit=crop" alt="Concrete hallway with dramatic light" loading="lazy"/>
+          <div class="photo-frame__overlay"></div>
+          <div class="photo-frame__caption">Clinic Interior — Architectural</div>
         </div>
         <div style="font-size:11px;font-weight:400;letter-spacing:0.12em;margin-bottom:8px;">Architecture &amp; Space</div>
         <p style="font-size:12px;font-weight:300;line-height:1.75;color:var(--titanium);">Architectural photography treats the clinic as a subject of precision craft. Long exposures. Perfect geometry. Human presence is implied, not explicit — a lab coat, a chair, a door ajar.</p>
@@ -2866,6 +3435,138 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════
+     15 · BRAND IN USE
+════════════════════════════════════════════════ -->
+<section class="section-cover section-cover--dark" id="brand-in-use">
+  <div class="section-cover__number">15</div>
+  <div class="section-cover__chapter">Chapter Fifteen</div>
+  <h2 class="section-cover__title">Brand<br>In Use</h2>
+  <p class="section-cover__desc">The system assembled. Real contexts — social media, email, clinic environments, product moments — showing how every chapter in this document converges into a single, coherent world.</p>
+  <div class="section-cover__rule"></div>
+</section>
+
+<section class="page--dark">
+  <div class="container">
+    <span class="label label--light">15.1 — Digital Touchpoints</span>
+    <h3 class="page-title" style="color:var(--bone);margin-bottom:48px;">The Brand<br>Online</h3>
+    <div class="biu-grid" style="margin-bottom:2px;">
+      <!-- Instagram post mockup -->
+      <div style="background:#111;padding:1px;">
+        <div style="background:#0D0D0D;border:1px solid #1A1A1A;">
+          <div style="padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #1A1A1A;">
+            <div style="width:32px;height:32px;border-radius:50%;border:1px solid rgba(196,168,130,0.4);display:flex;align-items:center;justify-content:center;">
+              <img src="logo.png" alt="" style="width:18px;height:auto;filter:invert(1);"/>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:400;letter-spacing:0.08em;color:var(--bone);">axiomperformance</div>
+              <div style="font-size:9px;color:var(--titanium);">Human Performance</div>
+            </div>
+            <div style="margin-left:auto;font-size:9px;color:var(--titanium);">···</div>
+          </div>
+          <div class="photo-frame" style="aspect-ratio:1/1;">
+            <img src="https://images.unsplash.com/JizhZBRBKWg?w=800&q=80&auto=format&fit=crop" alt="Concrete architecture" loading="lazy"/>
+            <div class="photo-frame__overlay" style="background:linear-gradient(to top,rgba(10,10,10,0.5) 0%,transparent 60%);"></div>
+          </div>
+          <div style="padding:20px;">
+            <div style="font-size:12px;font-weight:300;color:var(--bone);line-height:1.75;margin-bottom:10px;"><span style="font-weight:400;">axiomperformance</span> Recovery is not rest. It is a protocol.</div>
+            <div style="font-size:10px;color:var(--titanium);">2 hours ago</div>
+          </div>
+        </div>
+        <div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--titanium);padding:16px 20px;">Instagram — Single-image post · No filter · No hashtags</div>
+      </div>
+      <!-- Email dark mode -->
+      <div style="background:#111;padding:1px;">
+        <div style="background:#0A0A0A;border:1px solid #1A1A1A;max-width:100%;overflow:hidden;">
+          <div style="padding:20px 28px;border-bottom:1px solid #1A1A1A;display:flex;justify-content:space-between;align-items:center;">
+            <img src="logo.png" alt="AXIOM" style="width:72px;height:auto;display:block;filter:invert(1);"/>
+            <div style="font-size:9px;letter-spacing:0.14em;color:var(--titanium);">Secure · Confidential</div>
+          </div>
+          <div style="padding:32px 28px;">
+            <div style="font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:20px;">Protocol Update — Week 4 of 12</div>
+            <div style="font-size:20px;font-weight:100;color:var(--bone);margin-bottom:16px;line-height:1.3;">TB-500 cycle progressing within expected parameters.</div>
+            <div style="font-size:12px;font-weight:300;line-height:1.85;color:var(--titanium);margin-bottom:24px;">Your inflammatory markers are down 18% from baseline. Recovery window shortening as anticipated. Your next biomarker draw is scheduled in 14 days — no action required from you.</div>
+            <div style="border-top:1px solid #1A1A1A;padding-top:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;">
+              <div style="padding:16px;background:#111;text-align:center;">
+                <div style="font-size:18px;font-weight:100;color:var(--bone);">−18%</div>
+                <div style="font-size:8px;letter-spacing:0.14em;color:var(--titanium);text-transform:uppercase;margin-top:4px;">Inflammation</div>
+              </div>
+              <div style="padding:16px;background:#111;text-align:center;">
+                <div style="font-size:18px;font-weight:100;color:var(--bone);">4/12</div>
+                <div style="font-size:8px;letter-spacing:0.14em;color:var(--titanium);text-transform:uppercase;margin-top:4px;">Week</div>
+              </div>
+              <div style="padding:16px;background:#111;text-align:center;">
+                <div style="font-size:18px;font-weight:100;color:var(--bone);">On Track</div>
+                <div style="font-size:8px;letter-spacing:0.14em;color:var(--titanium);text-transform:uppercase;margin-top:4px;">Status</div>
+              </div>
+            </div>
+            <div style="margin-top:20px;display:inline-block;padding:12px 24px;background:var(--bone);font-size:8px;letter-spacing:0.22em;text-transform:uppercase;color:var(--onyx);">View Full Report</div>
+          </div>
+        </div>
+        <div style="font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--titanium);padding:16px 20px;">Transactional email — Dark mode · 600px max · Single CTA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page--mid">
+  <div class="container">
+    <span class="label label--light">15.2 — Physical Touchpoints</span>
+    <h3 class="page-title" style="color:var(--bone);margin-bottom:48px;">The Brand<br>In Space</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;margin-bottom:2px;">
+      <!-- Clinic entry -->
+      <div>
+        <div class="photo-frame" style="aspect-ratio:3/4;margin-bottom:16px;">
+          <img src="https://images.unsplash.com/raMejfP1E4o?w=800&q=80&auto=format&fit=crop" alt="Dark minimalist interior" loading="lazy"/>
+          <div class="photo-frame__overlay"></div>
+          <div style="position:absolute;top:20px;left:20px;z-index:2;">
+            <img src="logo.png" alt="AXIOM" style="width:60px;height:auto;display:block;filter:invert(1);opacity:0.9;"/>
+          </div>
+          <div class="photo-frame__caption">Clinic Entry — Stainless on dark concrete</div>
+        </div>
+        <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--titanium);">Exterior Signage in Context</div>
+      </div>
+      <!-- Product in hand -->
+      <div>
+        <div class="photo-frame" style="aspect-ratio:3/4;margin-bottom:16px;">
+          <img src="https://images.unsplash.com/V_R98FQdqD8?w=800&q=80&auto=format&fit=crop" alt="Dark architectural interior" loading="lazy"/>
+          <div class="photo-frame__overlay"></div>
+          <div class="photo-frame__caption">Treatment Room — 2700K warm light</div>
+        </div>
+        <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--titanium);">Clinic Interior Atmosphere</div>
+      </div>
+      <!-- Architecture -->
+      <div>
+        <div class="photo-frame" style="aspect-ratio:3/4;margin-bottom:16px;">
+          <img src="https://images.unsplash.com/HzJd0GAdukc?w=800&q=80&auto=format&fit=crop" alt="Concrete building interior" loading="lazy"/>
+          <div class="photo-frame__overlay"></div>
+          <div class="photo-frame__caption">Architectural Space — Precision geometry</div>
+        </div>
+        <div style="font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--titanium);">Space as Brand Expression</div>
+      </div>
+    </div>
+    <div style="padding:48px;background:rgba(196,168,130,0.05);border:1px solid rgba(196,168,130,0.1);">
+      <div style="font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--warm-metal);margin-bottom:20px;">The Standard</div>
+      <p style="font-size:16px;font-weight:100;color:var(--bone);line-height:1.75;letter-spacing:-0.005em;max-width:700px;">Every physical interaction with AXIOM — the texture of a business card, the scent of a reception, the weight of a door handle — should communicate the same thing: that this organisation takes precision seriously at every scale.</p>
+    </div>
+  </div>
+</section>
+
+<section class="page--dark">
+  <div class="container">
+    <span class="label label--light">15.3 — Brand Misuse: Digital</span>
+    <h3 class="page-title" style="color:var(--bone);margin-bottom:48px;">What AXIOM<br>Does Not Do Online</h3>
+    <div class="do-dont-grid">
+      <div class="do-box" style="background:#0D0D0D;"><div class="do-box__label">Use the logo as a profile image on a clean black background, centred, no border or glow.</div></div>
+      <div class="dont-box" style="background:#0D0D0D;"><div class="dont-box__label">Apply a coloured gradient ring, Spotify green border, or any platform-native decoration around the logo.</div></div>
+      <div class="do-box" style="background:#0D0D0D;"><div class="do-box__label">Post a single image per social post. One idea, one image, one caption. No carousels of generic motivational quotes.</div></div>
+      <div class="dont-box" style="background:#0D0D0D;"><div class="dont-box__label">Use stock imagery of smiling people in a clinic, or photos with visible watermarks, colour casts, or warm Instagram filters.</div></div>
+      <div class="do-box" style="background:#0D0D0D;"><div class="do-box__label">Caption style: short, declarative, sentence case. "Recovery is not rest. It is a protocol." No emojis.</div></div>
+      <div class="dont-box" style="background:#0D0D0D;"><div class="dont-box__label">Caption with hashtag clusters (#gains #performance #peptides #longevity #biohacking #results) or calls to action ("Drop a 🔥 below").</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
      CLOSING STATEMENT
 ════════════════════════════════════════════════ -->
 <section class="pull-quote" style="min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;">
@@ -2907,6 +3608,7 @@
         <li>12 — Photography</li>
         <li>13 — Applications</li>
         <li>14 — Extensions</li>
+        <li>15 — Brand In Use</li>
       </ul>
     </div>
     <div>
@@ -2927,5 +3629,38 @@
   </div>
 </footer>
 
+<script>
+  // Voice toggle
+  function setVoiceTab(tab) {
+    document.querySelectorAll('.voice-tab').forEach(function(t) { t.classList.remove('active'); });
+    document.querySelectorAll('.voice-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelector('[onclick="setVoiceTab(\'' + tab + '\')"]').classList.add('active');
+    document.getElementById('voice-' + tab).classList.add('active');
+  }
+
+  // Motion bar demo
+  function demoBar(bar, dur, ease) {
+    var fill = bar.querySelector('.motion-bar__fill');
+    bar.classList.remove('demo-running');
+    fill.style.transition = 'none';
+    fill.style.left = '-100%';
+    bar.style.setProperty('--dur', dur + 'ms');
+    bar.style.setProperty('--ease', ease);
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        bar.classList.add('demo-running');
+        setTimeout(function() { bar.classList.remove('demo-running'); }, dur + 100);
+      });
+    });
+  }
+
+  // Close mobile nav when a link is clicked
+  document.querySelectorAll('.site-nav__links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      document.querySelector('.site-nav__links').classList.remove('is-open');
+      document.querySelector('.site-nav__hamburger').classList.remove('is-open');
+    });
+  });
+</script>
 </body>
 </html>
