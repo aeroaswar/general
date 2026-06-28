@@ -420,7 +420,7 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
     <dl class="spec-rail reveal">
       <div><dt>Purity</dt><dd>≥ 98%</dd></div>
       <div><dt>Verification</dt><dd>HPLC · MS</dd></div>
-      <div><dt>Catalogue</dt><dd><span data-count="49">49</span> Compounds</dd></div>
+      <div><dt>Catalogue</dt><dd><span id="heroCount">49</span> Compounds</dd></div>
       <div><dt>Logistics</dt><dd>Cold-chain</dd></div>
     </dl>
   </div>
@@ -536,6 +536,8 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
       <details class="faq-item reveal"><summary class="faq-q"><span class="num">03</span> What purity standard do you guarantee?<i class="ph-light ph-plus qi"></i></summary><div class="faq-a">Every lot is independently analysed by HPLC and mass spectrometry to confirm identity and a minimum of 98% purity (most lots exceed 99%). A Certificate of Analysis accompanies each lot.</div></details>
       <details class="faq-item reveal"><summary class="faq-q"><span class="num">04</span> What payment methods are accepted?<i class="ph-light ph-plus qi"></i></summary><div class="faq-a">Bank transfer and major e-wallets in IDR. After you send your compound list we return an itemised quote; payment is settled before dispatch. Prices are indicative and confirmed at quotation.</div></details>
       <details class="faq-item reveal"><summary class="faq-q"><span class="num">05</span> Are these products for human use?<i class="ph-light ph-plus qi"></i></summary><div class="faq-a"><b>No.</b> All compounds are sold strictly for in-vitro laboratory and research use. They are not drugs, supplements, food or cosmetics, and are not intended for human or veterinary consumption, diagnostic, or therapeutic use. By ordering you confirm you are a qualified researcher or institution.</div></details>
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">06</span> What is the typical lead time?<i class="ph-light ph-plus qi"></i></summary><div class="faq-a">Most in-stock compounds ship within 1–2 business days of payment confirmation. You will receive batch and tracking details at dispatch. Complex or high-volume orders may require additional preparation time — confirm availability when submitting your quote request.</div></details>
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">07</span> Is there a minimum order?<i class="ph-light ph-plus qi"></i></summary><div class="faq-a">There is no minimum order value. Individual compounds can be ordered as single units. For bulk institutional orders or recurring protocols requiring multiple lots, contact us via WhatsApp for volume pricing.</div></details>
     </div>
   </div>
 </section>
@@ -657,12 +659,12 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
       </div>
       <div class="col">
         <h5>Catalogue</h5>
-        <a href="#catalogue">Metabolic &amp; Weight</a>
-        <a href="#catalogue">Tissue Repair</a>
-        <a href="#catalogue">Growth Factors</a>
-        <a href="#catalogue">Neuropeptides</a>
-        <a href="#catalogue">Hormonal Research</a>
-        <a href="#catalogue">Longevity &amp; Cosmetic</a>
+        <a href="#cat-metabolic">Metabolic &amp; Weight</a>
+        <a href="#cat-tissue">Tissue Repair</a>
+        <a href="#cat-growth">Growth Factors</a>
+        <a href="#cat-neuro">Neuropeptides</a>
+        <a href="#cat-reproductive">Hormonal Research</a>
+        <a href="#cat-longevity">Longevity &amp; Cosmetic</a>
       </div>
       <div class="col">
         <h5>Contact</h5>
@@ -708,6 +710,7 @@ const ITEMS={};
 const TOTAL=CAT.reduce((n,c)=>n+c.items.length,0);
 const PRICES=CAT.flatMap(c=>c.items.map(i=>i.price)).filter(p=>p!=null);
 const PMIN=Math.min(...PRICES),PMAX=Math.max(...PRICES);
+document.getElementById("heroCount").textContent=TOTAL;
 
 /* Catalogue */
 const list=document.getElementById("catList");
@@ -858,6 +861,18 @@ renderQuote();
 const navToggle=document.getElementById("navToggle"),navLinks=document.getElementById("navLinks");
 navToggle.addEventListener("click",()=>navLinks.classList.toggle("open"));
 navLinks.addEventListener("click",e=>{if(e.target.tagName==="A")navLinks.classList.remove("open")});
+document.addEventListener("click",e=>{if(navLinks.classList.contains("open")&&!navLinks.contains(e.target)&&!navToggle.contains(e.target))navLinks.classList.remove("open");});
+
+/* / to focus search */
+document.addEventListener("keydown",e=>{
+  const tag=document.activeElement?.tagName;
+  if(e.key==="/"&&tag!=="INPUT"&&tag!=="TEXTAREA"&&tag!=="SELECT"){
+    e.preventDefault();
+    const s=document.getElementById("search");
+    s.focus();s.select();
+    document.getElementById("catalogue").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+});
 
 /* Year */
 document.getElementById("yr").textContent=new Date().getFullYear();
