@@ -211,9 +211,41 @@ nav{position:sticky;top:0;z-index:50;background:rgba(5,5,5,.72);backdrop-filter:
 .empty{text-align:center;color:var(--titanium);padding:60px;font-family:var(--display);font-weight:300;font-size:20px;text-transform:uppercase;letter-spacing:.04em;display:none}
 @media(max-width:560px){.pgrid{grid-template-columns:1fr 1fr}.pcard{min-height:0;padding:16px;gap:13px}.pcard-name{font-size:17px}}
 
-.add-btn,.ref-btn{width:36px;height:36px;border:1px solid var(--line-2);background:transparent;color:var(--titanium);cursor:pointer;display:inline-grid;place-items:center;font-size:16px;transition:.16s}
-.add-btn:hover,.ref-btn:hover{border-color:var(--bone);color:var(--bone)}
-.add-btn.added{background:var(--bone);border-color:var(--bone);color:var(--onyx)}
+.add-btn,.ref-btn,.cmp-btn{width:36px;height:36px;border:1px solid var(--line-2);background:transparent;color:var(--titanium);cursor:pointer;display:inline-grid;place-items:center;font-size:16px;transition:.16s}
+.add-btn:hover,.ref-btn:hover,.cmp-btn:hover{border-color:var(--bone);color:var(--bone)}
+.add-btn.added,.cmp-btn.active{background:var(--bone);border-color:var(--bone);color:var(--onyx)}
+
+/* ---------- Compare ---------- */
+.cmp-fab{position:fixed;right:20px;bottom:20px;z-index:58;display:flex;align-items:center;gap:11px;
+  padding:14px 20px;background:var(--bone);color:var(--onyx);border:1px solid var(--bone);cursor:pointer;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  transition:bottom .32s cubic-bezier(.16,1,.3,1),transform .16s}
+.cmp-fab:hover{transform:translateY(-2px)}
+.cmp-fab[hidden]{display:none}
+.cmp-fab.lifted{bottom:104px}
+.cmp-fab-count{width:22px;height:22px;background:var(--onyx);color:var(--bone);display:grid;place-items:center;font-size:11px}
+.cmp-ov{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.6);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .3s}
+.cmp-ov.show{opacity:1;pointer-events:auto}
+.cmp-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%);z-index:81;width:min(920px,94vw);
+  max-height:84vh;background:var(--onyx-3);border:1px solid var(--line-2);opacity:0;pointer-events:none;
+  transition:opacity .3s,transform .3s;display:flex;flex-direction:column}
+.cmp-modal.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.cmp-modal-h{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:26px 26px 22px;border-bottom:1px solid var(--line);flex-shrink:0}
+.cmp-modal-h h3{font-family:var(--display);font-weight:400;font-size:24px;text-transform:uppercase;letter-spacing:.02em;color:var(--bone);margin-top:8px}
+.cmp-modal-b{overflow:auto;flex:1}
+.cmp-grid{display:grid;border-top:1px solid var(--line)}
+.cmp-cell{min-width:0;padding:16px 18px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);font-size:13px;color:var(--bone-dim);line-height:1.6}
+.cmp-cell.cmp-last{border-right:none}
+.cmp-cell.cmp-label{position:sticky;left:0;background:var(--onyx-3);font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--titanium-2);display:flex;align-items:center}
+.cmp-cell.cmp-head{display:flex;flex-direction:column;gap:8px;align-items:flex-start;background:var(--onyx-2)}
+.cmp-name{font-family:var(--display);font-weight:400;font-size:16px;line-height:1.2;color:var(--bone);text-transform:uppercase;letter-spacing:.01em}
+.cmp-dose{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--titanium)}
+.cmp-head-top{display:flex;align-items:center;justify-content:space-between;width:100%;gap:8px}
+.cmp-remove{width:24px;height:24px;border:1px solid var(--line-2);background:transparent;color:var(--titanium);cursor:pointer;display:grid;place-items:center;font-size:12px;flex-shrink:0}
+.cmp-remove:hover{border-color:var(--bone);color:var(--bone)}
+.cmp-head .add-btn{width:24px;height:24px;font-size:12px}
+.cmp-empty{padding:50px 26px;text-align:center;color:var(--titanium);font-family:var(--mono);font-size:12.5px;letter-spacing:.06em}
+@media(max-width:560px){.cmp-modal-h{padding:20px 20px 18px}.cmp-cell{padding:13px 14px}}
 
 /* ---------- Quality / features ---------- */
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
@@ -614,6 +646,24 @@ footer{border-top:1px solid var(--line-2);padding:clamp(44px,6vw,72px) 0 40px;ma
   </div>
 </aside>
 
+<!-- ===== COMPARE ===== -->
+<button class="cmp-fab" id="cmpFab" hidden aria-label="Open comparison">
+  <span class="cmp-fab-count" id="cmpCount">0</span>
+  Compare
+  <i class="ph-light ph-arrows-left-right"></i>
+</button>
+<div class="cmp-ov" id="cmpOv"></div>
+<div class="cmp-modal" id="cmpModal" role="dialog" aria-modal="true" aria-labelledby="cmpTitle" aria-hidden="true">
+  <div class="cmp-modal-h">
+    <div>
+      <div class="kicker">Side-by-side</div>
+      <h3 id="cmpTitle">Compare Compounds</h3>
+    </div>
+    <button class="drawer-close" id="cmpClose" aria-label="Close"><i class="ph-light ph-x"></i></button>
+  </div>
+  <div class="cmp-modal-b" id="cmpBody"></div>
+</div>
+
 <!-- ===== ACKNOWLEDGEMENT GATE ===== -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle" hidden>
   <div class="gate-card">
@@ -735,6 +785,7 @@ CAT.forEach(c=>{
         ${priceHtml}
         <div class="pcard-actions">
           <button class="ref-btn" data-ref="${it.name}" aria-label="Research info" title="Research info"><i class="ph-light ph-info"></i></button>
+          <button class="cmp-btn" data-cmp="${id}" aria-label="Add to compare" title="Compare"><i class="ph-light ph-scales"></i></button>
           ${it.price==null?'':`<button class="add-btn" data-add="${id}" aria-label="Add to cart" title="Add to cart"><i class="ph-light ph-plus"></i></button>`}
         </div>
       </div>
@@ -910,6 +961,68 @@ list.addEventListener("click",e=>{const b=e.target.closest("[data-ref]");if(b)op
 drawerOv.addEventListener("click",closeRef);
 document.getElementById("drawerClose").addEventListener("click",closeRef);
 addEventListener("keydown",e=>{if(e.key==="Escape")closeRef();});
+
+/* ---- Compare ---- */
+const CMP_MAX=4;
+const compareSet=new Map();
+const CATNAME={};CAT.forEach(c=>CATNAME[c.id]=c.name.split(" & ")[0].split(",")[0]);
+const cmpFab=document.getElementById("cmpFab"),cmpCount=document.getElementById("cmpCount");
+const cmpOv=document.getElementById("cmpOv"),cmpModal=document.getElementById("cmpModal"),cmpBody=document.getElementById("cmpBody");
+function syncCmpFabLift(){cmpFab.classList.toggle("lifted",qBar.classList.contains("show"));}
+new MutationObserver(syncCmpFabLift).observe(qBar,{attributes:true,attributeFilter:["class"]});
+function renderCompareFab(){
+  cmpCount.textContent=compareSet.size;
+  cmpFab.hidden=compareSet.size===0;
+  syncCmpFabLift();
+  document.querySelectorAll(".cmp-btn").forEach(b=>b.classList.toggle("active",compareSet.has(b.dataset.cmp)));
+}
+function renderCompareBody(){
+  const items=[...compareSet.values()];
+  if(items.length===0){cmpBody.innerHTML='<div class="cmp-empty">No compounds selected. Close this panel and tap the scales icon on any compound to add it here.</div>';return;}
+  const rows=[
+    {k:"Category",get:it=>CATNAME[it.cat]||it.cat},
+    {k:"Dose",get:it=>it.dose||"—"},
+    {k:"Price",get:it=>it.price==null?"Price on request":"Rp "+fmt(it.price)},
+    {k:"Half-life",get:it=>(REF[it.name]||{}).half||"—"},
+    {k:"Studied for",get:it=>(REF[it.name]||{}).mech||"—"},
+    {k:"Storage",get:it=>HANDLING||"—"},
+  ];
+  const cell=(html,cls="")=>`<div class="cmp-cell ${cls}">${html}</div>`;
+  let html=`<div class="cmp-grid" style="grid-template-columns:150px repeat(${items.length},minmax(170px,1fr))">`;
+  html+=cell("","cmp-label");
+  items.forEach((it,i)=>{
+    const last=i===items.length-1;
+    html+=cell(`<div class="cmp-head-top">
+        <button class="cmp-remove" data-cmp-rm="${it.id}" aria-label="Remove ${it.name}"><i class="ph-light ph-x"></i></button>
+        ${it.price==null?'':`<button class="add-btn${quote.has(it.id)?' added':''}" data-add="${it.id}" aria-label="Add to cart" title="Add to cart"><i class="ph-light ph-plus"></i></button>`}
+      </div>
+      <div class="cmp-name">${it.name}</div>
+      ${it.dose?`<div class="cmp-dose">${it.dose}</div>`:''}`,"cmp-head"+(last?" cmp-last":""));
+  });
+  rows.forEach(r=>{
+    html+=cell(r.k,"cmp-label");
+    items.forEach((it,i)=>{const last=i===items.length-1;html+=cell(r.get(it),last?"cmp-last":"");});
+  });
+  html+="</div>";
+  cmpBody.innerHTML=html;
+}
+function toggleCompare(id){
+  if(compareSet.has(id))compareSet.delete(id);
+  else{if(compareSet.size>=CMP_MAX)return;compareSet.set(id,ITEMS[id]);}
+  renderCompareFab();
+  if(cmpModal.classList.contains("show"))renderCompareBody();
+}
+function openCompare(){renderCompareBody();cmpModal.classList.add("show");cmpOv.classList.add("show");cmpModal.setAttribute("aria-hidden","false");}
+function closeCompare(){cmpModal.classList.remove("show");cmpOv.classList.remove("show");cmpModal.setAttribute("aria-hidden","true");}
+list.addEventListener("click",e=>{const b=e.target.closest("[data-cmp]");if(b)toggleCompare(b.dataset.cmp);});
+cmpFab.addEventListener("click",openCompare);
+cmpOv.addEventListener("click",closeCompare);
+document.getElementById("cmpClose").addEventListener("click",closeCompare);
+addEventListener("keydown",e=>{if(e.key==="Escape")closeCompare();});
+cmpBody.addEventListener("click",e=>{
+  const rm=e.target.closest("[data-cmp-rm]");if(rm){compareSet.delete(rm.dataset.cmpRm);renderCompareFab();renderCompareBody();return;}
+  const add=e.target.closest("[data-add]");if(add)addItem(add.dataset.add);
+});
 
 /* ---- Acknowledgement gate ---- */
 (function(){

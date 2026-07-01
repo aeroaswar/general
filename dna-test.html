@@ -10,12 +10,16 @@ html,body{margin:0;padding:0;background:#000;overflow-x:hidden}
 #scroll-host{height:300vh}
 .hint{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
   color:rgba(255,255,255,.35);font:13px/1 sans-serif;pointer-events:none;letter-spacing:.06em}
+#fallback[hidden]{display:none}
+#fallback{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:24px;text-align:center;color:rgba(255,255,255,.7);
+  font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 </style>
 <script type="importmap">
 {
   "imports": {
-    "three":          "https://unpkg.com/three@0.143.0/build/three.module.js",
-    "three/addons/":  "https://unpkg.com/three@0.143.0/examples/jsm/"
+    "three":          "https://cdn.jsdelivr.net/npm/three@0.143.0/build/three.module.js",
+    "three/addons/":  "https://cdn.jsdelivr.net/npm/three@0.143.0/examples/jsm/"
   }
 }
 </script>
@@ -24,14 +28,16 @@ html,body{margin:0;padding:0;background:#000;overflow-x:hidden}
 <canvas id="scene"></canvas>
 <div id="scroll-host"></div>
 <div class="hint">scroll ↓</div>
+<div id="fallback" hidden>DNA hero failed to load — check the browser console for details.</div>
 <script type="module">
-import * as THREE from 'three';
-import { EffectComposer }       from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass }           from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass }      from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { ShaderPass }           from 'three/addons/postprocessing/ShaderPass.js';
-import { GammaCorrectionShader} from 'three/addons/shaders/GammaCorrectionShader.js';
-import { CopyShader }           from 'three/addons/shaders/CopyShader.js';
+async function boot(){
+const THREE = await import('three');
+const { EffectComposer }       = await import('three/addons/postprocessing/EffectComposer.js');
+const { RenderPass }           = await import('three/addons/postprocessing/RenderPass.js');
+const { UnrealBloomPass }      = await import('three/addons/postprocessing/UnrealBloomPass.js');
+const { ShaderPass }           = await import('three/addons/postprocessing/ShaderPass.js');
+const { GammaCorrectionShader} = await import('three/addons/shaders/GammaCorrectionShader.js');
+const { CopyShader }           = await import('three/addons/shaders/CopyShader.js');
 
 /* ── Fixed parameters ─────────────────────────────────────────────────── */
 const bgColor         = '#03142e';
@@ -439,6 +445,19 @@ window.addEventListener('resize', ()=>{
 });
 
 requestAnimationFrame(animate);
+}
+
+function showFallback(err){
+  console.error('DNA hero failed to load:', err);
+  const el = document.getElementById('fallback');
+  if(el) el.hidden = false;
+}
+
+if(!window.WebGLRenderingContext){
+  showFallback(new Error('WebGL is not supported in this browser'));
+} else {
+  boot().catch(showFallback);
+}
 </script>
 </body>
 </html>
