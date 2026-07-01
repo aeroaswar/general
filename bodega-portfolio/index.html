@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>New Era</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Assistant:wght@400;500;600&display=swap" rel="stylesheet" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { background: #030305; }
+  body {
+    background: #030305;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  canvas#webgl-canvas {
+    position: fixed;
+    inset: 0;
+    z-index: -10;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #glow {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    border-radius: 9999px;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    z-index: 10;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 80%);
+  }
+
+  .scroll-spacer { height: 1400vh; }
+
+  /* ---------- Animated gradient ring ---------- */
+  .ring {
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background-size: 200% 100%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+  .ring-eyebrow {
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.35), rgba(255,255,255,0.08));
+    animation: ring-shimmer 3000ms linear infinite;
+  }
+  .ring-btn {
+    background-image: linear-gradient(90deg, #ffa091, #8da9fc, #ffa091);
+    animation: ring-shimmer 4000ms linear infinite;
+  }
+  .ring-badge {
+    background-image: linear-gradient(135deg, #ffa091, #8da9fc);
+  }
+  @keyframes ring-shimmer {
+    from { background-position: 0% 0%; }
+    to { background-position: 200% 0%; }
+  }
+
+  /* ---------- Eyebrow pill ---------- */
+  .top-label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.04);
+    padding: 10px 20px;
+    font-size: clamp(13px, 0.95vw, 14px);
+    font-weight: 500;
+    color: #fff;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+  .layers-icon {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    flex-shrink: 0;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary, .btn-secondary {
+    position: relative;
+    height: 56px;
+    border-radius: 9999px;
+    font-size: clamp(15px, 1.1vw, 16px);
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    transition: all 0.2s;
+    pointer-events: auto;
+  }
+  .btn-primary:hover, .btn-secondary:hover { transform: translateY(-2px); }
+
+  .btn-primary {
+    padding: 0 16px 0 32px;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    background: rgba(20,25,35,0.4);
+    box-shadow:
+      inset 0 2px 10px rgba(255,255,255,0.35),
+      inset 0 -6px 16px rgba(0,0,0,0.75),
+      inset 0 0 0 1px rgba(255,255,255,0.05),
+      0 8px 24px rgba(0,0,0,0.4);
+  }
+  .btn-primary:hover {
+    background: rgba(30,35,50,0.5);
+    box-shadow:
+      inset 0 2px 12px rgba(255,255,255,0.45),
+      inset 0 -6px 18px rgba(0,0,0,0.85),
+      inset 0 0 0 1px rgba(255,255,255,0.08),
+      0 10px 28px rgba(0,0,0,0.5);
+  }
+  .btn-primary .label { position: relative; z-index: 1; }
+
+  .arrow-badge {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.02);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .arrow-icon {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-secondary {
+    padding: 0 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.04);
+    color: rgba(255,255,255,0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border-color: rgba(255,255,255,0.15);
+  }
+
+  /* ---------- Headings / letter cascade ---------- */
+  .display-title {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 0.08em;
+    column-gap: 0.28em;
+    font-family: 'Assistant', sans-serif;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.2) 100%);
+    mask-image: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.2) 100%);
+  }
+  .display-title.center {
+    justify-content: center;
+    font-size: clamp(34px, 5.4vw, 80px);
+    text-align: center;
+  }
+  .display-title.wave-title {
+    justify-content: flex-start;
+    font-size: clamp(30px, 4.6vw, 64px);
+    text-align: left;
+  }
+  .word { display: inline-flex; }
+  .char {
+    display: inline-block;
+    transform: translateY(40px);
+    opacity: 0;
+    filter: blur(16px);
+    transition: transform 1200ms cubic-bezier(0.165, 0.84, 0.44, 1),
+                opacity 1200ms cubic-bezier(0.165, 0.84, 0.44, 1),
+                filter 1200ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .char.in {
+    transform: translateY(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  /* ---------- Content reveal (eyebrow / subtitle / buttons) ---------- */
+  .reveal {
+    transition: opacity 1.2s cubic-bezier(0.2, 1, 0.2, 1),
+                transform 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+  }
+  .reveal.state-before { opacity: 0; transform: translateY(30px); }
+  .reveal.state-visible { opacity: 1; transform: translateY(0); }
+  .reveal.state-after { opacity: 0; transform: translateY(-30px); }
+
+  .subtitle {
+    font-size: clamp(15px, 1.25vw, 18px);
+    line-height: 1.5;
+    color: #a0a0a0;
+  }
+
+  /* ---------- Overlays ---------- */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  .hero-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    text-align: center;
+  }
+  .hero-overlay .top-label { margin-bottom: 40px; }
+  .hero-overlay .display-title { max-width: 1000px; margin-bottom: 24px; }
+  .hero-overlay .subtitle { max-width: 600px; margin-bottom: 48px; }
+
+  .wave-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    padding: 0 10vw;
+    text-align: left;
+  }
+  .wave-col-left { max-width: 800px; }
+  .wave-col-right { max-width: 500px; }
+  .wave-overlay .top-label { margin-bottom: 24px; }
+  .wave-overlay .subtitle { margin-bottom: 40px; }
+  @media (max-width: 1024px) {
+    .wave-overlay { flex-direction: column; text-align: center; gap: 40px; }
+    .wave-col-left, .wave-col-right { max-width: 100%; }
+    .wave-overlay .display-title.wave-title { justify-content: center; text-align: center; }
+    .wave-overlay .btn-row { justify-content: center; }
+  }
+
+  .galaxy-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15vh 20px;
+    text-align: center;
+  }
+  .galaxy-top { display: flex; flex-direction: column; align-items: center; }
+  .galaxy-top .top-label { margin-bottom: 40px; }
+  .galaxy-top .display-title { max-width: 1000px; }
+  .galaxy-bottom { display: flex; flex-direction: column; align-items: center; }
+  .galaxy-bottom .subtitle { max-width: 600px; margin-bottom: 32px; }
+
+  /* ---------- DNA stat cards ---------- */
+  .dna-container {
+    position: fixed;
+    inset: 0;
+    z-index: 5;
+    perspective: 1200px;
+    pointer-events: none;
+    opacity: 0;
+  }
+  .dna-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    will-change: transform;
+    width: clamp(220px, 74vw, 400px);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(12,14,22,0.55);
+    padding: 40px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  .dna-card .kicker {
+    font-family: 'Assistant', sans-serif;
+    font-size: clamp(12px, 0.9vw, 13px);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 32px;
+  }
+  .dna-card .stat-number {
+    font-family: 'Assistant', sans-serif;
+    font-size: clamp(44px, 4.8vw, 72px);
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 24px;
+    background: linear-gradient(90deg, #ffa091, #8da9fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .dna-card .stat-desc {
+    font-size: clamp(15px, 1.25vw, 18px);
+    line-height: 1.5;
+    color: #a0a0a0;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="webgl-canvas" aria-hidden="true"></canvas>
+<div id="glow" aria-hidden="true"></div>
+
+<main>
+
+  <section class="overlay hero-overlay" aria-label="Introduction">
+    <span class="top-label reveal" data-section="hero">
+      <span class="ring ring-eyebrow" aria-hidden="true"></span>
+      <svg class="layers-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <span>Welcome to a new era</span>
+    </span>
+    <h1 class="display-title center" data-cascade>Technology that redefines the nature of interaction</h1>
+    <p class="subtitle reveal" data-section="hero">We build systems at the intersection of data, energy, and intelligence — where something fundamentally new comes to life.</p>
+    <div class="btn-row reveal" data-section="hero">
+      <a class="btn-primary" href="#get-started">
+        <span class="ring ring-btn" aria-hidden="true"></span>
+        <span class="label">Get started</span>
+        <span class="arrow-badge">
+          <span class="ring ring-badge" aria-hidden="true"></span>
+          <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        </span>
+      </a>
+      <a class="btn-secondary" href="#how-it-works">See how it works</a>
+    </div>
+  </section>
+
+  <div class="dna-container" aria-hidden="true">
+    <div class="dna-card" data-card="0">
+      <p class="kicker">Faster deployment</p>
+      <p class="stat-number">3&times;</p>
+      <p class="stat-desc">From concept to production in a fraction of the time — without sacrificing quality.</p>
+    </div>
+    <div class="dna-card" data-card="1">
+      <p class="kicker">Teams worldwide</p>
+      <p class="stat-number">2,400+</p>
+      <p class="stat-desc">Trusted by teams across 40 countries to power their most critical workflows.</p>
+    </div>
+    <div class="dna-card" data-card="2">
+      <p class="kicker">Average efficiency gain</p>
+      <p class="stat-number">68%</p>
+      <p class="stat-desc">Measured across industries. Real numbers from real deployments.</p>
+    </div>
+  </div>
+
+  <section class="overlay wave-overlay" aria-label="The pull of results">
+    <div class="wave-col-left">
+      <span class="top-label reveal" data-section="wave">
+        <span class="ring ring-eyebrow" aria-hidden="true"></span>
+        <svg class="layers-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <span>The pull of results</span>
+      </span>
+      <h2 class="display-title wave-title" data-cascade>Everything revolves around one thing — your growth</h2>
+    </div>
+    <div class="wave-col-right">
+      <p class="subtitle reveal" data-section="wave">Thousands of data points. One centre of gravity. We turn the noise of information into a focused point of energy for your business.</p>
+      <div class="btn-row reveal" data-section="wave">
+        <a class="btn-primary" href="#trial">
+          <span class="ring ring-btn" aria-hidden="true"></span>
+          <span class="label">Start your free trial</span>
+          <span class="arrow-badge">
+            <span class="ring ring-badge" aria-hidden="true"></span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </span>
+        </a>
+        <a class="btn-secondary" href="#demo">Book a demo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlay galaxy-overlay" aria-label="Our product ecosystem">
+    <div class="galaxy-top">
+      <span class="top-label reveal" data-section="galaxy">
+        <span class="ring ring-eyebrow" aria-hidden="true"></span>
+        <svg class="layers-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        <span>Our product ecosystem</span>
+      </span>
+      <h2 class="display-title center" data-cascade>A universe of possibilities — already in motion</h2>
+    </div>
+    <div class="galaxy-bottom">
+      <p class="subtitle reveal" data-section="galaxy">Our platform is not a single tool. It's a living ecosystem with your business at its core, surrounded by services, partners, and data orbiting around you.</p>
+      <div class="btn-row reveal" data-section="galaxy">
+        <a class="btn-primary" href="#ecosystem">
+          <span class="ring ring-btn" aria-hidden="true"></span>
+          <span class="label">Explore the ecosystem</span>
+          <span class="arrow-badge">
+            <span class="ring ring-badge" aria-hidden="true"></span>
+            <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+          </span>
+        </a>
+        <a class="btn-secondary" href="#integrations">View integrations</a>
+      </div>
+    </div>
+  </section>
+
+  <div aria-hidden="true" class="scroll-spacer"></div>
+</main>
+
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import Lenis from 'https://unpkg.com/lenis@1.3.19/dist/lenis.mjs';
+
+window.scrollTo(0, 0);
+
+/* ============================================================
+   Letter-cascade titles
+   ============================================================ */
+function buildLetters(el) {
+  const text = el.textContent.trim();
+  el.setAttribute('aria-label', text);
+  el.textContent = '';
+  const words = text.split(' ');
+  const chars = [];
+  words.forEach((word) => {
+    const wordSpan = document.createElement('span');
+    wordSpan.className = 'word';
+    for (const ch of word) {
+      const charSpan = document.createElement('span');
+      charSpan.className = 'char';
+      charSpan.textContent = ch;
+      wordSpan.appendChild(charSpan);
+      chars.push(charSpan);
+    }
+    el.appendChild(wordSpan);
+  });
+  return chars;
+}
+
+function playCascade(chars) {
+  chars.forEach((c, i) => { c.style.transitionDelay = (i * 15) + 'ms'; });
+  requestAnimationFrame(() => chars.forEach((c) => c.classList.add('in')));
+}
+
+const sectionWindows = {
+  hero: [0, 0.02],
+  wave: [0.48, 0.62],
+  galaxy: [0.93, 1.0001],
+};
+const played = { hero: false, wave: false, galaxy: false };
+const titleEls = {
+  hero: document.querySelector('.hero-overlay [data-cascade]'),
+  wave: document.querySelector('.wave-overlay [data-cascade]'),
+  galaxy: document.querySelector('.galaxy-overlay [data-cascade]'),
+};
+const revealEls = {
+  hero: document.querySelectorAll('[data-section="hero"]'),
+  wave: document.querySelectorAll('[data-section="wave"]'),
+  galaxy: document.querySelectorAll('[data-section="galaxy"]'),
+};
+const charsBySection = {};
+Object.keys(titleEls).forEach((key) => { charsBySection[key] = buildLetters(titleEls[key]); });
+
+function updateOverlays(scroll) {
+  Object.keys(sectionWindows).forEach((key) => {
+    const [start, end] = sectionWindows[key];
+    let state;
+    if (scroll < start) state = 'before';
+    else if (scroll > end) state = 'after';
+    else state = 'visible';
+
+    revealEls[key].forEach((el) => {
+      el.classList.remove('state-before', 'state-visible', 'state-after');
+      el.classList.add('state-' + state);
+    });
+
+    if (state === 'visible' && !played[key]) {
+      playCascade(charsBySection[key]);
+      played[key] = true;
+    }
+  });
+}
+
+/* ============================================================
+   DNA stat cards
+   ============================================================ */
+const dnaContainer = document.querySelector('.dna-container');
+const dnaCards = Array.from(document.querySelectorAll('.dna-card'));
+const ANGLE_OFFSETS = [0, (2 * Math.PI) / 3, (4 * Math.PI) / 3];
+const Y_OFFSETS = [-150, 0, 150];
+
+function updateDnaCards(cs) {
+  let dnaOpacity = 0;
+  if (cs > 0.15 && cs < 0.38) {
+    dnaOpacity = Math.min((cs - 0.15) / 0.03, 1);
+    if (cs > 0.35) dnaOpacity = Math.max(1 - (cs - 0.35) / 0.03, 0);
+  }
+  dnaContainer.style.opacity = dnaOpacity;
+  if (dnaOpacity <= 0) return;
+
+  const dnaProgress = (cs - 0.15) / 0.23;
+  const globalYOffset = 600 - dnaProgress * 1200;
+  const baseAngle = dnaProgress * Math.PI * 2;
+  const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+  const rx = Math.min(window.innerWidth * 0.35, 400), ry = 80;
+
+  dnaCards.forEach((el, i) => {
+    const angle = baseAngle + ANGLE_OFFSETS[i];
+    const x = cx + Math.cos(angle) * rx;
+    const y = cy + Math.sin(angle) * ry + globalYOffset + Y_OFFSETS[i];
+    const scale = 0.8 + 0.2 * Math.sin(angle);
+    const opacity = 0.4 + 0.6 * Math.sin(angle);
+    el.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0) scale(${scale}) rotateY(${angle - Math.PI / 2}rad)`;
+    el.style.opacity = opacity;
+    el.style.zIndex = Math.round(scale * 100);
+  });
+}
+
+/* ============================================================
+   Three.js scene
+   ============================================================ */
+const canvas = document.getElementById('webgl-canvas');
+const glow = document.getElementById('glow');
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x000000);
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 8;
+
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.autoClear = false;
+
+/* ---------- Aurora background ---------- */
+const backgroundVertexShader = `
+varying vec2 vUv;
+void main() {
+    vUv = uv;
+    gl_Position = vec4(position, 1.0);
+}
+`;
+
+const backgroundFragmentShader = `
+uniform float uTime;
+uniform float uScroll;
+uniform vec2 uResolution;
+uniform vec3 color1;
+uniform vec3 color2;
+varying vec2 vUv;
+
+float hash(float n) { return fract(sin(n) * 1e4); }
+float hash(vec2 p) { return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs(sin(p.y * 13.0 + p.x)))); }
+float noise(vec2 x) {
+    vec2 i = floor(x);
+    vec2 f = fract(x);
+    float a = hash(i);
+    float b = hash(i + vec2(1.0, 0.0));
+    float c = hash(i + vec2(0.0, 1.0));
+    float d = hash(i + vec2(1.0, 1.0));
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+#define OCTAVES 4
+float fbm(vec2 x) {
+    float v = 0.0;
+    float a = 0.5;
+    vec2 shift = vec2(100);
+    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
+    for (int i = 0; i < OCTAVES; ++i) {
+        v += a * noise(x);
+        x = rot * x * 2.0 + shift;
+        a *= 0.5;
+    }
+    return v;
+}
+
+void main() {
+    vec2 st = vUv;
+    st.x *= uResolution.x / uResolution.y;
+
+    float t = uTime * 6.0 + uScroll * 150.0;
+
+    vec2 st1 = st * 1.2;
+    vec2 st2 = st * 1.6;
+
+    float f1 = fbm(st1 + vec2(t * 0.15, t * 0.1));
+    float mask1 = pow(fbm(st1 + f1 * 2.5 - vec2(t * 0.25, 0.0)), 2.0) * 3.5;
+
+    float f2 = fbm(st2 - vec2(t * 0.1, t * 0.2));
+    float mask2 = pow(fbm(st2 + f2 * 2.0 + vec2(0.0, t * 0.2)), 2.5) * 4.0;
+
+    vec3 finalColor = color2 * mask1 + color1 * mask2;
+
+    vec2 aspectUv = vUv - 0.5;
+    aspectUv.x *= uResolution.x / uResolution.y;
+    float centerDist = length(aspectUv);
+
+    float angle = atan(aspectUv.y, aspectUv.x) + uScroll * 15.0;
+    float maskOffset = sin(angle * 3.0 + t * 0.4) * 0.05
+                     + sin(angle * 5.0 - t * 0.6) * 0.03;
+    float dynamicDist = centerDist + maskOffset;
+
+    float cornerFade = smoothstep(0.7, 1.15, dynamicDist);
+    cornerFade = pow(cornerFade, 1.6);
+
+    finalColor *= cornerFade * 0.9;
+
+    vec3 baseBg = vec3(0.012, 0.012, 0.02);
+
+    gl_FragColor = vec4(baseBg + finalColor, 1.0);
+}
+`;
+
+const bgScene = new THREE.Scene();
+const bgCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
+const bgGeometry = new THREE.PlaneGeometry(2, 2);
+const bgMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 }, uScroll: { value: 0 },
+    uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+    color1: { value: new THREE.Color('#ff4c33') },
+    color2: { value: new THREE.Color('#3366ff') },
+  },
+  vertexShader: backgroundVertexShader,
+  fragmentShader: backgroundFragmentShader,
+  depthWrite: false,
+});
+bgScene.add(new THREE.Mesh(bgGeometry, bgMaterial));
+
+/* ---------- Particle cloud ---------- */
+const particleVertexShader = `
+uniform float uTime;
+uniform float uScroll;
+uniform float uIntro;
+varying float vEdgeFade;
+varying vec3 vColor;
+
+vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
+vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+float snoise(vec3 v){
+  const vec2 C = vec2(1.0/6.0, 1.0/3.0); const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+  vec3 i = floor(v + dot(v, C.yyy)); vec3 x0 = v - i + dot(i, C.xxx);
+  vec3 g = step(x0.yzx, x0.xyz); vec3 l = 1.0 - g;
+  vec3 i1 = min(g.xyz, l.zxy); vec3 i2 = max(g.xyz, l.zxy);
+  vec3 x1 = x0 - i1 + 1.0 * C.xxx; vec3 x2 = x0 - i2 + 2.0 * C.xxx; vec3 x3 = x0 - 1.0 + 3.0 * C.xxx;
+  i = mod(i, 289.0);
+  vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+  float n_ = 1.0/7.0; vec3 ns = n_ * D.wyz - D.xzx;
+  vec4 j = p - 49.0 * floor(p * ns.z *ns.z);
+  vec4 x_ = floor(j * ns.z); vec4 y_ = floor(j - 7.0 * x_);
+  vec4 x = x_ *ns.x + ns.yyyy; vec4 y = y_ *ns.x + ns.yyyy; vec4 h = 1.0 - abs(x) - abs(y);
+  vec4 b0 = vec4(x.xy, y.xy); vec4 b1 = vec4(x.zw, y.zw);
+  vec4 s0 = floor(b0)*2.0 + 1.0; vec4 s1 = floor(b1)*2.0 + 1.0; vec4 sh = -step(h, vec4(0.0));
+  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy; vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+  vec3 p0 = vec3(a0.xy,h.x); vec3 p1 = vec3(a0.zw,h.y); vec3 p2 = vec3(a1.xy,h.z); vec3 p3 = vec3(a1.zw,h.w);
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+  p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); m = m * m;
+  return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+}
+
+float random(vec3 p) {
+    return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+}
+
+void main() {
+    vec3 normalVec = normalize(position);
+
+    float noiseVal = snoise(position * 0.5 + uTime * 0.8);
+    noiseVal += 0.5 * snoise(position * 1.5 - uTime * 1.2);
+    vec3 spherePos = position + normalVec * (noiseVal * 0.5);
+
+    float stretchedY = position.y * 7.0 - 8.0;
+
+    float funnelRadius = 1.0 + smoothstep(-32.0, 16.0, stretchedY) * 5.0;
+    float angle = atan(position.z, position.x) + stretchedY * 0.3;
+    vec3 funnelPos = vec3(funnelRadius * cos(angle), stretchedY, funnelRadius * sin(angle));
+    funnelPos += normalVec * (snoise(funnelPos * 0.3 + uTime * 3.0) * 1.0);
+
+    float rnd1 = random(position);
+    float rnd2 = random(position + vec3(1.0));
+    float rnd3 = random(position + vec3(2.0));
+
+    float t = stretchedY;
+    float twistMultiplier = 0.65;
+    float twist = t * twistMultiplier;
+    float dnaRadius = 1.0;
+    float strandThickness = 0.35;
+
+    vec3 dnaPos;
+    if (rnd1 < 0.40) {
+        vec3 core = vec3(dnaRadius * cos(twist), t, dnaRadius * sin(twist));
+        vec3 offset = vec3(rnd1 - 0.2, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * strandThickness;
+        dnaPos = core + offset;
+    } else if (rnd1 < 0.80) {
+        vec3 core = vec3(dnaRadius * cos(twist + 3.14159), t, dnaRadius * sin(twist + 3.14159));
+        vec3 offset = vec3(rnd1 - 0.6, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * strandThickness;
+        dnaPos = core + offset;
+    } else {
+        float rungT = (rnd1 - 0.80) * 5.0;
+        float discreteT = floor(t * 2.5) / 2.5;
+        float discreteTwist = discreteT * twistMultiplier;
+        vec3 p1 = vec3(dnaRadius * cos(discreteTwist), discreteT, dnaRadius * sin(discreteTwist));
+        vec3 p2 = vec3(dnaRadius * cos(discreteTwist + 3.14159), discreteT, dnaRadius * sin(discreteTwist + 3.14159));
+
+        vec3 core = mix(p1, p2, rungT);
+        vec3 offset = vec3(rnd1 - 0.9, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * 0.10;
+        dnaPos = core + offset;
+    }
+
+    dnaPos.x += snoise(vec3(0.0, t * 0.2, uTime * 0.2)) * 0.5;
+    dnaPos.z += snoise(vec3(t * 0.2, 0.0, uTime * 0.2)) * 0.5;
+
+    float phase1 = smoothstep(0.0, 0.15, uScroll);
+    float phase2 = smoothstep(0.15, 0.30, uScroll);
+
+    vec3 step1Pos = mix(spherePos, funnelPos, phase1);
+    vec3 step2Pos = mix(step1Pos, dnaPos, phase2);
+
+    float meltProgress = smoothstep(0.30, 0.50, uScroll);
+
+    float meltY = mix(-50.0, 90.0, meltProgress);
+
+    float depthBelowMeltLine = meltY - stretchedY;
+    float localMelt = smoothstep(0.0, 45.0, depthBelowMeltLine);
+
+    vec3 targetWavePos = vec3(position.x * 7.0, -45.0, position.z * 25.0);
+
+    targetWavePos.x += position.y * 6.0;
+
+    float waveNoise = snoise(vec3(targetWavePos.x * 0.08, targetWavePos.z * 0.08, uTime * 0.15)) * 2.0;
+    waveNoise += snoise(vec3(targetWavePos.x * 0.16, targetWavePos.z * 0.16, uTime * 0.3)) * 0.8;
+    targetWavePos.y += waveNoise;
+
+    float tunnelProgress = smoothstep(0.65, 0.80, uScroll);
+
+    float blackHoleLinear = clamp((uScroll - 0.80) / 0.12, 0.0, 1.0);
+    float blackHoleProgress = pow(blackHoleLinear, 2.0);
+
+    float tunnelR = 12.0;
+
+    float pinchFactor = clamp((targetWavePos.z + 80.0) / 100.0, 0.0, 1.0);
+    tunnelR = mix(tunnelR, tunnelR * pinchFactor, blackHoleProgress);
+
+    float tunnelCy = -33.0;
+
+    float currentSliceRadius = sqrt(max(0.0, 17.64 - position.z * position.z));
+    float maxSliceWidth = 9.2195 * currentSliceRadius;
+    float normalizedX = targetWavePos.x / (maxSliceWidth + 0.001);
+    float tunnelAngle = normalizedX * 3.14159265;
+
+    float tunnelLinear = clamp((uScroll - 0.70) / 0.22, 0.0, 1.0);
+    float tunnelEnd = pow(tunnelLinear, 3.0);
+
+    float jitterAngle = snoise(vec3(position.x * 15.0, position.y * 15.0, uTime * 0.1)) * 0.35;
+    float jitterZ = snoise(vec3(position.y * 15.0, position.z * 15.0, uTime * 0.1)) * 4.0;
+
+    float ambientSwirl = snoise(vec3(position.x * 5.0, position.y * 5.0, uTime * 0.2)) * 3.0;
+    float diveTwist = snoise(vec3(position.x * 5.0, position.y * 5.0, 0.0)) * 30.0 * tunnelEnd;
+    float vortexSpeed = (ambientSwirl + diveTwist) * tunnelLinear;
+
+    tunnelAngle += jitterAngle + vortexSpeed;
+    float tunnelZ = targetWavePos.z + jitterZ;
+
+    float dynamicR = tunnelR - waveNoise;
+    vec3 tunnelPos = vec3(dynamicR * sin(tunnelAngle), tunnelCy - dynamicR * cos(tunnelAngle), tunnelZ);
+
+    vec3 morphedWave = mix(targetWavePos, tunnelPos, tunnelProgress);
+
+    vec3 tunnelFinalPos = mix(step2Pos, morphedWave, localMelt);
+
+    float galaxyPhase = step(0.93, uScroll);
+
+    float gRnd1 = fract(sin(dot(position.xyz, vec3(12.989, 78.233, 45.164))) * 43758.545);
+    float gRnd2 = fract(sin(dot(position.xyz, vec3(93.989, 67.345, 54.256))) * 24634.634);
+    float gRnd3 = fract(sin(dot(position.xyz, vec3(43.332, 11.235, 89.234))) * 56475.234);
+    float gRnd4 = fract(sin(dot(position.xyz, vec3(75.321, 32.123, 23.456))) * 35432.123);
+
+    float galaxyR = pow(gRnd1, 2.0) * 60.0 + pow(gRnd2, 3.0) * 30.0;
+
+    float swirl = pow(galaxyR, 1.1) * 0.08;
+
+    float armIndex = floor(gRnd2 * 2.0);
+    float baseAngle = armIndex * 3.14159265;
+
+    float uniformTheta = gRnd3 * 2.0 - 1.0;
+    float dTheta = pow(uniformTheta, 5.0) * 3.14159;
+
+    float theta = baseAngle + swirl + dTheta + (uTime * 0.4);
+
+    float gx = galaxyR * cos(theta);
+    float gz = galaxyR * sin(theta);
+
+    float gyDisc = pow(gRnd4 * 2.0 - 1.0, 3.0) * 1.5;
+    vec3 basePos = vec3(gx, gyDisc, gz);
+
+    float bulgeStrength = smoothstep(25.0, 0.0, galaxyR);
+
+    float gRnd5 = fract(sin(gRnd1 * 44.44 + gRnd2) * 555.55);
+    float gRnd6 = fract(sin(gRnd3 * 66.66 + gRnd4) * 777.77);
+    float gRnd7 = fract(sin(gRnd5 * 88.88 + gRnd6) * 999.99);
+
+    float phi = acos(gRnd5 * 2.0 - 1.0);
+    float thetaSphere = gRnd6 * 6.2831853 + (uTime * 0.8);
+    float rSphere = pow(gRnd7, 2.0) * 18.0;
+
+    vec3 bulgeOffset = vec3(
+        rSphere * sin(phi) * cos(thetaSphere),
+        rSphere * cos(phi),
+        rSphere * sin(phi) * sin(thetaSphere)
+    );
+
+    vec3 galaxyPos = mix(basePos, bulgeOffset, bulgeStrength);
+
+    galaxyPos.y -= 33.0;
+    galaxyPos.z -= 120.0;
+
+    vec3 finalPos = mix(tunnelFinalPos, galaxyPos, galaxyPhase);
+
+    vec4 mvPosition = modelViewMatrix * vec4(finalPos, 1.0);
+
+    vec3 viewDir = normalize(-mvPosition.xyz);
+    vec3 worldNormal = normalize(normalMatrix * normalVec);
+
+    float rim = 1.0 - abs(dot(viewDir, worldNormal));
+
+    float edgeFadeSphere = smoothstep(0.4, 0.9, rim);
+    float edgeFadeDNA = 1.0;
+
+    float morph = smoothstep(0.0, 0.30, uScroll);
+
+    float opacityMultiplier = 0.8;
+    float sizeMultiplier = 1.5;
+
+    float dnaPhase = smoothstep(0.15, 0.30, uScroll);
+    opacityMultiplier = mix(opacityMultiplier, 0.25, dnaPhase);
+    sizeMultiplier = mix(sizeMultiplier, 4.0, dnaPhase);
+
+    float wavePhase = smoothstep(0.30, 0.50, uScroll);
+    opacityMultiplier = mix(opacityMultiplier, 0.35, wavePhase);
+    sizeMultiplier = mix(sizeMultiplier, 4.0, wavePhase);
+
+    float tunnelPhase = smoothstep(0.65, 0.80, uScroll);
+    opacityMultiplier = mix(opacityMultiplier, 0.6, tunnelPhase);
+    sizeMultiplier = mix(sizeMultiplier, 10.0, tunnelPhase);
+
+    float isOrb = step(0.98, fract(gRnd1 * 77.77));
+    float starSize = mix(5.0, 16.0, isOrb);
+
+    opacityMultiplier = mix(opacityMultiplier, 0.25, galaxyPhase);
+    sizeMultiplier = mix(sizeMultiplier, starSize, galaxyPhase);
+
+    float introSphere = mix(1.0, edgeFadeSphere, uIntro);
+    vEdgeFade = mix(introSphere, edgeFadeDNA, morph) * opacityMultiplier;
+    vEdgeFade *= smoothstep(0.0, 0.2, uIntro);
+
+    vec3 cBottom = vec3(0.2, 0.4, 1.0);
+    vec3 cTop = vec3(1.0, 0.3, 0.2);
+
+    float baseColorMix = smoothstep(-3.0, 3.0, position.y + position.x * 0.5);
+    vec3 normalColor = mix(cBottom, cTop, clamp(baseColorMix, 0.0, 1.0));
+
+    float orangeMix = smoothstep(80.0, 0.0, galaxyR);
+    vec3 galaxyColor = mix(cBottom, cTop, clamp(orangeMix, 0.0, 1.0));
+
+    vColor = mix(normalColor, galaxyColor, galaxyPhase);
+
+    gl_PointSize = sizeMultiplier * (10.0 / -mvPosition.z);
+
+    gl_PointSize = max(gl_PointSize, 1.5);
+
+    gl_Position = projectionMatrix * mvPosition;
+}
+`;
+
+const particleFragmentShader = `
+varying float vEdgeFade;
+varying vec3 vColor;
+
+void main() {
+    vec2 xy = gl_PointCoord.xy - vec2(0.5);
+    float ll = length(xy);
+    if(ll > 0.5) discard;
+
+    float pointAlpha = smoothstep(0.5, 0.1, ll);
+
+    gl_FragColor = vec4(vColor, vEdgeFade * pointAlpha * 0.9);
+}
+`;
+
+const geometry = new THREE.SphereGeometry(4.2, 200, 600);
+const material = new THREE.ShaderMaterial({
+  uniforms: { uTime: { value: 0 }, uScroll: { value: 0 }, uIntro: { value: 0 } },
+  vertexShader: particleVertexShader,
+  fragmentShader: particleFragmentShader,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const particles = new THREE.Points(geometry, material);
+particles.frustumCulled = false;
+scene.add(particles);
+
+/* ---------- Post-processing ---------- */
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(bgScene, bgCamera));
+const renderFg = new RenderPass(scene, camera);
+renderFg.clear = false;
+renderFg.clearDepth = true;
+composer.addPass(renderFg);
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.5, 0.05));
+
+/* ============================================================
+   Lenis smooth scroll
+   ============================================================ */
+const lenis = new Lenis({ smoothWheel: true });
+
+/* ============================================================
+   Render loop
+   ============================================================ */
+let time = 0;
+const INTRO_MS = 2600;
+let introStart = 0;
+
+function render(now) {
+  lenis.raf(now);
+
+  time += 0.005;
+
+  if (introStart === 0) introStart = now;
+  const introRaw = Math.min((now - introStart) / INTRO_MS, 1);
+  const introEased = 1 - Math.pow(1 - introRaw, 3);
+  material.uniforms.uIntro.value = introEased;
+
+  const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  const currentScroll = maxScroll > 0 ? scrollTop / maxScroll : 0;
+
+  material.uniforms.uTime.value = time;
+  material.uniforms.uScroll.value = currentScroll;
+  bgMaterial.uniforms.uTime.value = time;
+  bgMaterial.uniforms.uScroll.value = currentScroll;
+
+  const panProgress = Math.min(currentScroll / 0.5, 1);
+  const smoothPan = panProgress * panProgress * (3 - 2 * panProgress);
+  const flyPhase = currentScroll < 0.5 ? 0 : Math.min((currentScroll - 0.5) / 0.35, 1);
+  const blackHoleDive = currentScroll < 0.8 ? 0 : Math.min((currentScroll - 0.8) / 0.12, 1);
+
+  camera.position.y = -38 * smoothPan + 5 * Math.pow(blackHoleDive, 2);
+  camera.position.z = 8 - 4 * smoothPan - 55 * flyPhase;
+
+  const galaxyPullback = currentScroll < 0.93 ? 0 : Math.min((currentScroll - 0.93) / 0.07, 1);
+  const smoothPullback = galaxyPullback * galaxyPullback * (3 - 2 * galaxyPullback);
+  camera.position.z += 75 * smoothPullback;
+  camera.position.y += 35 * smoothPullback;
+
+  const lookX = 0;
+  let waveTilt = 0;
+  if (currentScroll > 0.3 && currentScroll < 0.7) {
+    const tiltProgress = (currentScroll - 0.3) / 0.4;
+    waveTilt = Math.sin(tiltProgress * Math.PI) * 15;
+  }
+  const lookY = THREE.MathUtils.lerp(camera.position.y + waveTilt, -33, smoothPullback);
+  const lookZ = THREE.MathUtils.lerp(camera.position.z - 100, -120, smoothPullback);
+
+  const introZoom = (1 - introEased) * -3 * (1 - Math.min(currentScroll / 0.05, 1));
+  camera.position.z += introZoom;
+  camera.lookAt(new THREE.Vector3(lookX, lookY, lookZ));
+
+  particles.rotation.y = smoothPan * Math.PI * 2;
+  particles.rotation.x = Math.sin(smoothPan * Math.PI) * 0.15;
+  camera.rotation.z = 0;
+
+  const glowScaleProgress = currentScroll < 0.9 ? 0 : Math.min((currentScroll - 0.9) / 0.03, 1);
+  const glowScale = Math.pow(glowScaleProgress, 4) * 400;
+  const hideGlow = currentScroll < 0.93 ? 0 : Math.min((currentScroll - 0.93) / 0.02, 1);
+  glow.style.transform = `translate(-50%,-50%) scale(${glowScale})`;
+  glow.style.opacity = 1 - hideGlow;
+
+  updateOverlays(currentScroll);
+  updateDnaCards(currentScroll);
+
+  composer.render();
+
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+
+/* ============================================================
+   Resize
+   ============================================================ */
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight);
+  bgMaterial.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+});
+</script>
+</body>
+</html>
