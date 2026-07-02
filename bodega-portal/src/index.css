@@ -1,0 +1,91 @@
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/jetbrains-mono";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────
+   Bodega — Studio OS tokens (warm editorial glass UI, dark + light).
+   From the bodega-portal skill's reference/tokens.css.
+   ───────────────────────────────────────────────────────── */
+:root {
+  /* light variant */
+  --bg: #faf8f5;
+  --text: #1a1714;
+  --muted: rgba(26, 23, 20, 0.62);
+  --faint: rgba(26, 23, 20, 0.42);
+  --card: #ffffff;
+  --card-2: #f3efe9;
+  --line: rgba(26, 23, 20, 0.12);
+  --line-2: rgba(26, 23, 20, 0.2);
+  --accent: #d8602a; /* ember — light */
+  --shadow: 0 18px 50px -24px rgba(26, 23, 20, 0.18);
+  --shadow-lg: 0 40px 90px -40px rgba(26, 23, 20, 0.32);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dark {
+  --bg: #0b0a09;
+  --text: #f3f0ea;
+  --muted: rgba(243, 240, 234, 0.6);
+  --faint: rgba(243, 240, 234, 0.38);
+  --card: #15120f;
+  --card-2: #1f1a16;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --accent: #e8743b; /* ember — dark */
+  --shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 50px 100px -45px rgba(0, 0, 0, 0.85);
+}
+
+html, body, #root { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: theme("fontFamily.sans");
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Warm backdrop — near-black/paper with a faint ember top-glow + grain. */
+.brand-bg {
+  position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(55% 45% at 88% -8%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    var(--bg);
+}
+.brand-grain {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@layer components {
+  .glass   { background: var(--card); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+  .glass-2 { background: var(--card-2); }
+  .hairline { border-color: var(--line); }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500;
+    padding: 4px 10px; border-radius: 8px; border: 1px solid var(--line);
+    background: var(--card-2); white-space: nowrap; font-family: theme("fontFamily.mono");
+    letter-spacing: 0.02em;
+  }
+  .input-glass {
+    width: 100%; background: var(--card-2); border: 1px solid var(--line); border-radius: 10px;
+    padding: 10px 13px; color: var(--text); font-size: 14px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input-glass:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
+  .input-glass::placeholder { color: var(--faint); }
+}
+
+@layer utilities {
+  .text-muted { color: var(--muted); }
+  .text-faint { color: var(--faint); }
+  .text-accent { color: var(--accent); }
+  .display { font-family: theme("fontFamily.display"); letter-spacing: -0.01em; }
+  .mono   { font-family: theme("fontFamily.mono"); }
+  .eyebrow { font-family: theme("fontFamily.mono"); text-transform: uppercase; letter-spacing: 0.18em; color: var(--faint); font-size: 11px; }
+  .grad-text { background: linear-gradient(120deg, var(--text), color-mix(in srgb, var(--text) 55%, var(--accent))); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
