@@ -7,7 +7,7 @@
 <meta name="description" content="Bodega Creative Studio, Jakarta — brand-first social ecosystems. Strategy, content, and activation, executed daily. A scroll-driven WebGL particle experience." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Pacifico&display=swap" rel="stylesheet" />
 <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%23030305"/><text x="7" y="23" font-family="sans-serif" font-weight="700" font-size="20" fill="%23fff">b</text><circle cx="24" cy="21" r="3.5" fill="%2301dcb4"/></svg>' />
 <style>
 * { margin:0; padding:0; box-sizing:border-box }
@@ -38,24 +38,41 @@ body {
   background:radial-gradient(circle, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 80%);
 }
 
-/* ---------- Brand wordmark (the logo: lowercase bodega + live accent dot) ---------- */
+/* ---------- Brand nav (the logo: cursive bodega wordmark + live accent dot) ---------- */
+#brand-nav {
+  position:fixed; top:0; left:0; right:0; z-index:20;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px clamp(20px,4vw,52px);
+  pointer-events:none;
+}
 .brand {
-  position:fixed; top:0; left:0; z-index:20;
-  display:inline-flex; align-items:baseline; gap:3px;
-  padding:26px 36px;
-  font-family:'Bricolage Grotesque', sans-serif;
-  font-weight:700; font-size:clamp(20px,1.7vw,24px);
-  letter-spacing:-0.03em; line-height:1;
+  display:inline-flex; align-items:flex-end; gap:5px;
+  font-family:'Pacifico', cursive;
+  font-size:clamp(28px,2.6vw,40px); line-height:1;
   color:#fff; text-decoration:none;
   pointer-events:auto; cursor:pointer;
+  text-shadow:0 2px 26px rgba(0,0,0,0.6);
+  transition:opacity 0.3s;
 }
+.brand:hover { opacity:0.82 }
 .brand-dot {
-  width:7px; height:7px; border-radius:9999px; flex:none;
+  width:8px; height:8px; border-radius:9999px; flex:none;
+  margin-bottom:9px;
   background:var(--mint);
-  box-shadow:0 0 10px currentColor;
-  transform:translateY(-1px);
+  box-shadow:0 0 12px currentColor;
 }
-@media (max-width:640px) { .brand { padding:20px 22px } }
+.nav-cta {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:Inter, sans-serif; font-size:14px; font-weight:500;
+  color:rgba(255,255,255,0.82); text-decoration:none;
+  padding:9px 18px; border-radius:9999px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+  pointer-events:auto; transition:all 0.2s;
+}
+.nav-cta:hover { background:rgba(255,255,255,0.09); color:#fff; border-color:rgba(255,255,255,0.18) }
+@media (max-width:640px) { .nav-cta { display:none } }
 
 /* ---------- Eyebrow pill ---------- */
 .top-label {
@@ -399,7 +416,10 @@ section.overlay {
 <canvas id="webgl" aria-hidden="true"></canvas>
 <div id="glow" aria-hidden="true"></div>
 
-<a class="brand" id="brand" href="#" aria-label="Bodega Creative Studio — back to top">bodega<span class="brand-dot" id="brand-dot" aria-hidden="true"></span></a>
+<nav id="brand-nav" aria-label="Primary">
+  <a class="brand" id="brand" href="#" aria-label="Bodega Creative Studio — back to top">bodega<span class="brand-dot" id="brand-dot" aria-hidden="true"></span></a>
+  <a class="nav-cta" href="mailto:creativestudiolabodega@gmail.com">Brief us</a>
+</nav>
 
 <main>
 
