@@ -391,7 +391,61 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
   .reveal{opacity:1!important;transform:none!important;transition:none!important}
   html{scroll-behavior:auto}
   .scroll-hint .bar{animation:none}
+  .stagger>*{opacity:1!important;transform:none!important;transition:none!important}
+  .rule-draw{transform:none!important;transition:none!important}
+  #preloader img,#preloader .pl-line::after,#preloader .pl-cap{animation:none!important;opacity:1!important;transform:none!important}
+  #cursor,#cursorDot{display:none!important}
 }
+
+/* ---------- Staggered reveal children ---------- */
+.stagger>*{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0)*65ms)}
+.stagger.in>*{opacity:1;transform:none}
+/* Hairline draw-in */
+.rule-draw{transform:scaleX(0);transform-origin:left;transition:transform .95s cubic-bezier(.65,0,.35,1)}
+.rule-draw.in{transform:scaleX(1)}
+
+/* ---------- Intro preloader ---------- */
+#preloader{position:fixed;inset:0;z-index:120;background:#000;display:grid;place-items:center;transition:opacity .8s ease,visibility .8s}
+#preloader.done{opacity:0;visibility:hidden;pointer-events:none}
+#preloader .pl-in{display:flex;flex-direction:column;align-items:center;gap:24px}
+#preloader img{width:min(300px,62vw);height:auto;opacity:0;transform:translateY(10px);animation:plLogo 1s cubic-bezier(.16,1,.3,1) .12s forwards}
+#preloader .pl-line{width:190px;max-width:52vw;height:1px;background:var(--line);position:relative;overflow:hidden}
+#preloader .pl-line::after{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleX(0);transform-origin:left;animation:plLine 1.05s cubic-bezier(.65,0,.35,1) .18s forwards}
+#preloader .pl-cap{font-family:var(--sans);font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted-2);font-weight:500;opacity:0;animation:plCap .7s ease .55s forwards}
+@keyframes plLogo{to{opacity:1;transform:none}}
+@keyframes plLine{to{transform:scaleX(1)}}
+@keyframes plCap{to{opacity:1}}
+
+/* ---------- Custom cursor ---------- */
+#cursorRing,#cursorDot{position:fixed;top:0;left:0;z-index:200;pointer-events:none;border-radius:50%;mix-blend-mode:difference;will-change:transform;opacity:0;transition:opacity .3s ease}
+#cursorRing{width:32px;height:32px;border:1px solid #fff;margin:-16px 0 0 -16px;transition:width .22s ease,height .22s ease,margin .22s ease,background .22s ease,opacity .3s ease}
+#cursorDot{width:5px;height:5px;background:#fff;margin:-2.5px 0 0 -2.5px}
+body.cursor-on #cursorRing,body.cursor-on #cursorDot{opacity:1}
+body.cursor-on,body.cursor-on a,body.cursor-on button,body.cursor-on input,body.cursor-on select,body.cursor-on summary,body.cursor-on label,body.cursor-on .tlink,body.cursor-on .pcard{cursor:none}
+#cursorRing.hover{width:56px;height:56px;margin:-28px 0 0 -28px;background:rgba(255,255,255,.14)}
+@media(pointer:coarse){#cursorRing,#cursorDot{display:none}}
+
+/* ---------- Scroll progress + nav hide ---------- */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--ink);z-index:60;transition:width .12s linear;pointer-events:none}
+nav{transition:transform .45s cubic-bezier(.16,1,.3,1),background .3s}
+nav.nav-hidden{transform:translateY(-100%)}
+
+/* ---------- Integrity / vial section ---------- */
+.integrity{padding:120px 0}
+.integrity .grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.vial-stage{position:relative;aspect-ratio:3/4;width:100%;max-width:440px;margin:0 auto}
+.vial-stage canvas{width:100%;height:100%;display:block}
+.integrity .co-head .no{font-family:var(--sans);font-size:11px;letter-spacing:.28em;color:var(--muted);font-weight:500}
+.integrity .co-head .eyebrow{margin-top:14px}
+.integrity .co-head h2{font-family:var(--display);font-weight:300;font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-.01em;margin-top:18px}
+.integrity .co-head h2 em{font-style:normal;color:var(--muted)}
+.integrity .callouts{margin-top:38px}
+.integrity .co{padding:22px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:34px 1fr;gap:18px}
+.integrity .co:last-child{border-bottom:1px solid var(--line)}
+.integrity .co .idx{font-family:var(--sans);font-size:11px;letter-spacing:.06em;color:var(--muted-2);font-weight:400;font-variant-numeric:tabular-nums;padding-top:5px}
+.integrity .co h4{font-family:var(--display);font-weight:400;font-size:19px;letter-spacing:-.005em}
+.integrity .co p{color:var(--muted);font-size:13.5px;line-height:1.7;font-weight:300;margin-top:7px;max-width:400px}
+@media(max-width:820px){.integrity .grid{grid-template-columns:1fr;gap:44px}.vial-stage{max-width:280px}}
 
 /* ---------- Responsive ---------- */
 @media(max-width:960px){
@@ -423,6 +477,20 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
 </head>
 <body>
 
+<!-- ===== Intro preloader ===== -->
+<div id="preloader" aria-hidden="true">
+  <div class="pl-in">
+    <img src="assets/axiom-logo-white.png" alt="" width="663" height="172" />
+    <div class="pl-line"></div>
+    <div class="pl-cap">Human Performance</div>
+  </div>
+</div>
+
+<!-- ===== Custom cursor + scroll progress ===== -->
+<div id="progress"></div>
+<div id="cursorRing"></div>
+<div id="cursorDot"></div>
+
 <!-- ===== Three.js DNA helix hero ===== -->
 <div id="sceneWrap"><canvas id="scene"></canvas><div class="scene-scrim"></div></div>
 <div class="scroll-hint" id="scrollHint"><span>Scroll</span><span class="bar"></span></div>
@@ -431,7 +499,7 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
 
 <div class="ribbon">For <b>Research &amp; Laboratory Use Only</b> · Not for human or veterinary consumption · Prices in IDR</div>
 
-<nav>
+<nav id="nav">
   <div class="wrap nav-in">
     <a href="#top" class="brand" aria-label="AXIOM — Human Performance">
       <img class="brand-logo" src="assets/axiom-wordmark-white.png" alt="AXIOM" width="659" height="126" />
@@ -464,7 +532,7 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
     </div>
   </div>
   <div class="hero-meta">
-    <div class="wrap">
+    <div class="wrap stagger reveal">
       <div class="m"><div class="k">Purity</div><div class="v">≥ 98%</div></div>
       <div class="m"><div class="k">Verification</div><div class="v">HPLC / MS</div></div>
       <div class="m"><div class="k">Compounds</div><div class="v" id="metaCount">49</div></div>
@@ -494,12 +562,36 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
 <!-- ===== SOLID CONTENT ===== -->
 <div class="content">
 
+<!-- ===== INTEGRITY / VIAL ===== -->
+<section class="section integrity" id="integrity">
+  <div class="wrap">
+    <div class="grid">
+      <div class="vial-stage reveal">
+        <canvas id="vial"></canvas>
+      </div>
+      <div class="co-body">
+        <div class="co-head reveal">
+          <div class="no">01 / Integrity</div>
+          <span class="eyebrow">Anatomy of a Lot</span>
+          <h2>Every vial is<br><em>the same promise.</em></h2>
+        </div>
+        <div class="callouts stagger reveal">
+          <div class="co"><span class="idx">01</span><div><h4>Lyophilised cake</h4><p>Freeze-dried under controlled vacuum for a stable, uniform cake — reconstituted only at the bench, exactly as your protocol specifies.</p></div></div>
+          <div class="co"><span class="idx">02</span><div><h4>Sealed under inert gas</h4><p>Crimp-sealed in an inert atmosphere to protect the peptide from oxidation and moisture through storage and transit.</p></div></div>
+          <div class="co"><span class="idx">03</span><div><h4>Lot-stamped &amp; traceable</h4><p>Each unit carries its lot identifier, tying the vial in your hand back to its Certificate of Analysis.</p></div></div>
+          <div class="co"><span class="idx">04</span><div><h4>≥ 98% assayed</h4><p>No lot is released until independent HPLC and mass spectrometry confirm identity, mass and a minimum of 98% purity.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===== CATALOGUE ===== -->
 <section class="section" id="catalogue">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="lead-col">
-        <div class="no">01 / Catalogue</div>
+        <div class="no">02 / Catalogue</div>
         <span class="kicker">Price List</span>
       </div>
       <div>
@@ -547,7 +639,7 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="lead-col">
-        <div class="no">02 / Standards</div>
+        <div class="no">03 / Standards</div>
         <span class="kicker">Verification</span>
       </div>
       <div>
@@ -592,7 +684,7 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="lead-col">
-        <div class="no">03 / Reference</div>
+        <div class="no">04 / Reference</div>
         <span class="kicker">Essentials</span>
       </div>
       <div>
@@ -616,7 +708,7 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="lead-col">
-        <div class="no">04 / Order</div>
+        <div class="no">05 / Order</div>
         <span class="kicker">How to Order</span>
       </div>
       <div>
@@ -652,7 +744,7 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="lead-col">
-        <div class="no">05 / Notice</div>
+        <div class="no">06 / Notice</div>
         <span class="kicker">Compliance &amp; Safety</span>
       </div>
       <div>
@@ -1137,6 +1229,162 @@ if(reduceMotion){
 }
 </script>
 
+<!-- ===== Procedural 3D vial — "Anatomy of a Lot" (Three.js r0.143.0) ===== -->
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+const canvas = document.getElementById('vial');
+if (canvas) {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const renderer = new THREE.WebGL1Renderer({ canvas, antialias:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 1);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(38, 3/4, 0.1, 100);
+  camera.position.set(0, 0.2, 9.0);
+  camera.lookAt(0, 0.1, 0);
+
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), 0.34, 0.5, 0.3);
+  composer.addPass(bloom);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  /* Fresnel line-art glass shell — white rim, transparent core, additive (helix language) */
+  const fresnelMat = new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending, side:THREE.DoubleSide,
+    uniforms:{ uColor:{value:new THREE.Color(0xffffff)}, uPower:{value:2.35}, uBright:{value:1.3} },
+    vertexShader:`
+      varying vec3 vN; varying vec3 vView;
+      void main(){
+        vec4 mv = modelViewMatrix * vec4(position,1.0);
+        vN = normalize(normalMatrix * normal);
+        vView = normalize(-mv.xyz);
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader:`
+      uniform vec3 uColor; uniform float uPower; uniform float uBright;
+      varying vec3 vN; varying vec3 vView;
+      void main(){
+        float f = pow(1.0 - abs(dot(normalize(vN), normalize(vView))), uPower);
+        gl_FragColor = vec4(uColor * uBright, f);
+      }`
+  });
+
+  /* Vial profile (LatheGeometry): base -> body -> shoulder -> neck -> crimp lip */
+  const P = [
+    [0.00, -1.85],[0.94, -1.85],[0.96, -1.78],[0.96, 0.62],[0.90, 1.02],
+    [0.52, 1.30],[0.50, 1.52],[0.60, 1.56],[0.60, 1.74],[0.50, 1.80],[0.00, 1.80]
+  ].map(p=>new THREE.Vector2(p[0], p[1]));
+  const glass = new THREE.Mesh(new THREE.LatheGeometry(P, 96), fresnelMat);
+  group.add(glass);
+
+  /* Crimp cap + stopper as thin edge-lit rings */
+  const capMat = fresnelMat.clone(); capMat.uniforms.uBright.value = 1.5;
+  const cap = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.62, 0.30, 72, 1, true), capMat);
+  cap.position.y = 1.60; group.add(cap);
+  const collar = new THREE.Mesh(new THREE.TorusGeometry(0.55, 0.045, 10, 60), capMat);
+  collar.rotation.x = Math.PI/2; collar.position.y = 1.30; group.add(collar);
+
+  /* Lyophilised cake — additive point cloud settled at the base (same family as helix motes) */
+  const N = 190;
+  const pos = new Float32Array(N*3), sz = new Float32Array(N);
+  for (let i=0;i<N;i++){
+    const r = 0.72 * Math.sqrt(Math.random());
+    const a = Math.random()*Math.PI*2;
+    const h = -1.74 + Math.pow(Math.random(),2.0) * 0.34;     // shallow cake, dense low
+    pos[i*3]=Math.cos(a)*r; pos[i*3+1]=h; pos[i*3+2]=Math.sin(a)*r;
+    sz[i]=1.1 + Math.random()*1.7;
+  }
+  const cakeGeo = new THREE.BufferGeometry();
+  cakeGeo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  cakeGeo.setAttribute('size', new THREE.BufferAttribute(sz,1));
+  const cakeMat = new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+    uniforms:{ uColor:{value:new THREE.Color(0xffffff)}, uT:{value:0} },
+    vertexShader:`
+      attribute float size; uniform float uT; varying float vF;
+      void main(){
+        vec3 p = position;
+        p.y += sin(uT*0.8 + position.x*4.0)*0.02;
+        vec4 mv = modelViewMatrix * vec4(p,1.0);
+        vF = 0.5 + 0.5*sin(uT + position.z*6.0);
+        gl_PointSize = size * (300.0 / -mv.z);
+        gl_Position = projectionMatrix * mv;
+      }`,
+    fragmentShader:`
+      uniform vec3 uColor; varying float vF;
+      void main(){ vec2 d = gl_PointCoord-0.5; float l=length(d); if(l>0.5) discard;
+        float a = smoothstep(0.5,0.05,l); gl_FragColor = vec4(uColor, a*(0.12+0.18*vF)); }`
+  });
+  group.add(new THREE.Points(cakeGeo, cakeMat));
+
+  group.rotation.z = 0.06;
+  group.position.y = 0.12;
+  let baseTilt = 0.5, targetTilt = 0.5, spin = 0, running = false, hidden = false;
+
+  function size(){
+    const r = canvas.getBoundingClientRect();
+    const w = Math.max(1, r.width), h = Math.max(1, r.height);
+    const dpr = Math.min(window.devicePixelRatio,2);
+    renderer.setPixelRatio(dpr); renderer.setSize(w, h, false);
+    composer.setPixelRatio(dpr); composer.setSize(w, h);
+    bloom.resolution.set(w, h);
+    camera.aspect = w/h; camera.updateProjectionMatrix();
+  }
+  size(); addEventListener('resize', size);
+
+  canvas.parentElement.addEventListener('mousemove', e=>{
+    const r = canvas.getBoundingClientRect();
+    targetTilt = 0.5 + ((e.clientX - r.left)/r.width - 0.5) * 0.9;
+  });
+  canvas.parentElement.addEventListener('mouseleave', ()=>{ targetTilt = 0.5; });
+
+  function draw(dt){
+    spin += dt * 0.28;
+    baseTilt += (targetTilt - baseTilt) * 0.05;
+    group.rotation.y = spin + baseTilt;
+    cakeMat.uniforms.uT.value += dt;
+    composer.render();
+  }
+
+  let last = performance.now();
+  function loop(now){
+    if (!running) return;
+    const dt = Math.min((now-last)/1000, 0.05); last = now;
+    draw(dt);
+    requestAnimationFrame(loop);
+  }
+  function start(){ if(running||hidden) return; running = true; last = performance.now(); requestAnimationFrame(loop); }
+  function stop(){ running = false; }
+
+  document.addEventListener('visibilitychange', ()=>{ hidden = document.hidden; if(hidden) stop(); else if(inView) start(); });
+
+  let inView = false;
+  const io = new IntersectionObserver(es=>es.forEach(en=>{
+    inView = en.isIntersecting;
+    if(reduce){ size(); draw(0); return; }
+    if(inView) start(); else stop();
+  }), {threshold:0.05});
+  io.observe(canvas);
+
+  // initial paint so the canvas is never blank before it scrolls into view
+  size(); group.rotation.y = 0.5; draw(0);
+
+  window.__vial = {
+    snap(angle){ size(); spin = angle; baseTilt = 0; targetTilt = 0; group.rotation.y = angle; cakeMat.uniforms.uT.value = angle; composer.render(); },
+    frame(){ draw(0); },
+    get running(){ return running; }, group
+  };
+}
+</script>
+
 <!-- ===== Catalogue / cart / drawer / gate logic ===== -->
 <script src="data.js"></script>
 <script>
@@ -1300,9 +1548,10 @@ navLinks.addEventListener("click",e=>{if(e.target.tagName==="A")navLinks.classLi
 document.getElementById("yr").textContent=new Date().getFullYear();
 const mc=document.getElementById("metaCount");if(mc)mc.textContent=TOTAL;
 
-/* Reveal */
+/* Reveal (with auto-stagger indices) */
+document.querySelectorAll(".stagger").forEach(s=>[...s.children].forEach((c,i)=>c.style.setProperty("--i",i)));
 const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}}),{threshold:.12});
-document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+document.querySelectorAll(".reveal, .rule-draw").forEach(el=>io.observe(el));
 
 /* ---- Reference drawer ---- */
 const NAME2DOSES={};
@@ -1339,6 +1588,73 @@ addEventListener("keydown",e=>{if(e.key==="Escape")closeRef();});
     try{localStorage.setItem("axiom_ack","1");}catch(e){}
   }
   document.getElementById("gateAccept").addEventListener("click",enter);
+})();
+
+/* ===== Motion & craft polish ===== */
+(function(){
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const coarse = matchMedia("(pointer: coarse)").matches;
+
+  /* ---- Intro preloader (once per session) ---- */
+  (function(){
+    const pl = document.getElementById("preloader"); if(!pl) return;
+    let seen=false; try{ seen = sessionStorage.getItem("axiom_intro")==="1"; }catch(e){}
+    if(reduce || seen){ pl.classList.add("done"); return; }
+    try{ sessionStorage.setItem("axiom_intro","1"); }catch(e){}
+    setTimeout(()=>pl.classList.add("done"), 1650);
+  })();
+
+  /* ---- Custom cursor (fine pointers only) ---- */
+  if(!coarse && !reduce){
+    const ring=document.getElementById("cursorRing"), dot=document.getElementById("cursorDot");
+    let rx=innerWidth/2, ry=innerHeight/2, dx=rx, dy=ry, tx=rx, ty=ry, on=false;
+    const hoverSel="a,button,input,select,textarea,summary,label,.tlink,.chip,.pcard,[data-add],[data-ref],.faq-q";
+    addEventListener("mousemove",e=>{
+      tx=e.clientX; ty=e.clientY;
+      if(!on){ on=true; document.body.classList.add("cursor-on"); }
+      const t=e.target.closest?.(hoverSel);
+      ring.classList.toggle("hover", !!t);
+    });
+    addEventListener("mouseleave",()=>{ on=false; document.body.classList.remove("cursor-on"); });
+    addEventListener("mousedown",()=>ring.style.transform=(ring.style.transform||"")); // noop keeps GPU layer warm
+    (function tick(){
+      dx+=(tx-dx)*0.35; dy+=(ty-dy)*0.35;       // dot: snappy
+      rx+=(tx-rx)*0.16; ry+=(ty-ry)*0.16;       // ring: trailing
+      dot.style.transform=`translate(${dx}px,${dy}px)`;
+      ring.style.transform=`translate(${rx}px,${ry}px)`;
+      requestAnimationFrame(tick);
+    })();
+  }
+
+  /* ---- Magnetic hover (fine pointers only) ---- */
+  if(!coarse && !reduce){
+    const strength=0.32;
+    document.querySelectorAll(".tlink, nav .navcart, .btn, .gate-actions a, .gate-actions button").forEach(el=>{
+      el.addEventListener("mousemove",e=>{
+        const r=el.getBoundingClientRect();
+        const mx=e.clientX-(r.left+r.width/2), my=e.clientY-(r.top+r.height/2);
+        el.style.transform=`translate(${mx*strength}px,${my*strength}px)`;
+      });
+      el.addEventListener("mouseleave",()=>{ el.style.transform=""; el.style.transition="transform .4s cubic-bezier(.16,1,.3,1)"; setTimeout(()=>el.style.transition="",400); });
+    });
+  }
+
+  /* ---- Scroll progress bar + hide-on-scroll nav ---- */
+  const bar=document.getElementById("progress"), nav=document.getElementById("nav");
+  let lastY=scrollY, ticking=false;
+  function onScroll(){
+    if(ticking) return; ticking=true;
+    requestAnimationFrame(()=>{
+      const y=scrollY, h=document.documentElement.scrollHeight-innerHeight;
+      if(bar) bar.style.width=(h>0 ? (y/h*100) : 0)+"%";
+      if(nav){
+        if(y>lastY && y>240) nav.classList.add("nav-hidden");
+        else nav.classList.remove("nav-hidden");
+      }
+      lastY=y; ticking=false;
+    });
+  }
+  addEventListener("scroll", onScroll, {passive:true}); onScroll();
 })();
 </script>
 </body>
