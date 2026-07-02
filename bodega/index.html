@@ -55,6 +55,11 @@ body {
   transition:opacity 0.3s;
 }
 .brand:hover { opacity:0.82 }
+.brand-img {
+  height:clamp(30px,3vw,44px); width:auto; display:block;
+  filter:drop-shadow(0 2px 26px rgba(0,0,0,0.6));
+}
+.brand-text { display:inline-flex; align-items:flex-end; gap:5px }
 .brand-dot {
   width:8px; height:8px; border-radius:9999px; flex:none;
   margin-bottom:9px;
@@ -417,7 +422,7 @@ section.overlay {
 <div id="glow" aria-hidden="true"></div>
 
 <nav id="brand-nav" aria-label="Primary">
-  <a class="brand" id="brand" href="#" aria-label="Bodega Creative Studio — back to top">bodega<span class="brand-dot" id="brand-dot" aria-hidden="true"></span></a>
+  <a class="brand" id="brand" href="#" aria-label="Bodega Creative Studio — back to top"><img class="brand-img" src="logo.svg" alt="bodega" onload="document.getElementById('brand-text').style.display='none'" onerror="this.style.display='none'" /><span class="brand-text" id="brand-text">bodega<span class="brand-dot" id="brand-dot" aria-hidden="true"></span></span></a>
   <a class="nav-cta" href="mailto:creativestudiolabodega@gmail.com">Brief us</a>
 </nav>
 
