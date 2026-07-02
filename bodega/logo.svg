@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1360 560" fill="none" role="img" aria-label="bodega">
+  <g stroke="#fff" stroke-width="46" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- b : bowl + curved ascender stem with top hook -->
+    <path d="M150 300 C144 236 144 174 168 140 C186 116 226 122 214 156"/>
+    <ellipse cx="212" cy="304" rx="62" ry="70"/>
+    <!-- connector b->o -->
+    <path d="M270 344 C300 372 336 372 366 350"/>
+    <!-- o -->
+    <ellipse cx="386" cy="304" rx="62" ry="70"/>
+    <!-- connector o->d -->
+    <path d="M446 344 C476 372 512 372 542 350"/>
+    <!-- d : bowl + ascender stem on right with top hook -->
+    <ellipse cx="560" cy="304" rx="62" ry="70"/>
+    <path d="M622 304 C628 232 628 172 652 140 C670 116 704 126 694 158"/>
+    <!-- connector d->e -->
+    <path d="M614 352 C644 374 678 372 706 352"/>
+    <!-- e : crossbar loop -->
+    <path d="M672 312 L784 312 C800 300 792 246 750 236 C706 226 668 260 670 306 C672 356 712 380 762 362 C782 354 794 340 800 324"/>
+    <!-- connector e->g -->
+    <path d="M804 336 C834 360 866 360 894 340"/>
+    <!-- g : bowl + curled descender tail -->
+    <ellipse cx="906" cy="304" rx="62" ry="70"/>
+    <path d="M968 300 C974 384 972 452 930 486 C896 512 848 498 856 462 C862 436 900 436 916 460"/>
+    <!-- connector g->a -->
+    <path d="M968 344 C998 372 1036 372 1066 350"/>
+    <!-- a : single-story bowl + right stem -->
+    <ellipse cx="1088" cy="304" rx="62" ry="70"/>
+    <path d="M1150 250 C1150 316 1150 356 1156 372 C1160 384 1170 388 1182 384"/>
+  </g>
+  <!-- registered trademark -->
+  <circle cx="1272" cy="182" r="34" stroke="#fff" stroke-width="16" fill="none"/>
+  <text x="1272" y="199" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700" fill="#fff" text-anchor="middle">R</text>
+</svg>
