@@ -11,6 +11,12 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box }
 html { scroll-behavior:auto }
+:root {
+  /* Bodega accent cycle: blue → mint → pink → yellow → blue */
+  --blue:#2562e7; --mint:#01dcb4; --pink:#fa1e88; --yellow:#fae902;
+  /* pastel tints for 1px rings and clipped text on the near-black canvas */
+  --blue-t:#7da4f8; --mint-t:#5ff0d4; --pink-t:#ff8ac6; --yellow-t:#f8ef7e;
+}
 body {
   background:#030305;
   color:#fff;
@@ -45,6 +51,13 @@ body {
   box-shadow:0 4px 20px rgba(0,0,0,0.2);
 }
 .top-label svg { width:14px; height:14px; flex:none }
+.dot {
+  width:6px; height:6px; border-radius:9999px; flex:none;
+  background:var(--acc, var(--mint));
+  box-shadow:0 0 8px var(--acc, var(--mint));
+  animation:dot-pulse 2.4s ease-in-out infinite;
+}
+@keyframes dot-pulse { 0%,100%{opacity:1} 50%{opacity:.45} }
 
 /* Animated 1px gradient ring (mask-composite trick) */
 .grad-ring {
@@ -99,7 +112,7 @@ body {
     0 12px 32px rgba(0,0,0,0.5);
 }
 .btn-primary .grad-ring {
-  background-image:linear-gradient(90deg, #ff9ed1, #9db8f8, #ff9ed1);
+  background-image:linear-gradient(90deg, var(--blue-t), var(--mint-t), var(--pink-t), var(--yellow-t), var(--blue-t));
   animation-duration:4000ms;
 }
 .arrow-badge {
@@ -110,7 +123,7 @@ body {
 }
 .arrow-badge::before {
   content:""; position:absolute; inset:0; padding:1px; border-radius:inherit;
-  background:linear-gradient(135deg, #ff9ed1, #9db8f8);
+  background:linear-gradient(135deg, var(--pink-t), var(--blue-t));
   -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite:xor;
   mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -143,6 +156,7 @@ body {
   transition:opacity 1.2s cubic-bezier(0.2, 1, 0.2, 1), transform 1.2s cubic-bezier(0.2, 1, 0.2, 1);
 }
 .display-title.is-leaving { opacity:0; transform:translateY(-30px) }
+.display-title.is-hidden { opacity:0; transform:translateY(30px) } /* returned above its window (scrolling back up) */
 .display-title.center { justify-content:center; text-align:center }
 .display-title.left { justify-content:flex-start; text-align:left }
 .title-xl { font-size:clamp(34px,5.4vw,80px) }
@@ -203,6 +217,7 @@ section.overlay {
   box-shadow:0 8px 32px rgba(0,0,0,0.2);
 }
 .dna-card .kicker {
+  display:flex; align-items:center; gap:8px;
   font-family:'Bricolage Grotesque', sans-serif;
   font-size:clamp(12px,0.9vw,13px); font-weight:600;
   text-transform:uppercase; letter-spacing:0.05em;
@@ -213,11 +228,19 @@ section.overlay {
   font-family:'Bricolage Grotesque', sans-serif;
   font-size:clamp(44px,4.8vw,72px); font-weight:700; line-height:1;
   margin-bottom:24px;
-  background:linear-gradient(90deg, #9db8f8, #ff9ed1, #7ff0d9);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
 }
+/* Each card's stat gradient starts at its accent and flows to the next in the cycle */
+.acc-blue   { --acc:var(--blue-t) }
+.acc-mint   { --acc:var(--mint-t) }
+.acc-pink   { --acc:var(--pink-t) }
+.acc-yellow { --acc:var(--yellow-t) }
+.acc-blue .stat   { background-image:linear-gradient(90deg, var(--blue-t), var(--mint-t)) }
+.acc-mint .stat   { background-image:linear-gradient(90deg, var(--mint-t), var(--pink-t)) }
+.acc-pink .stat   { background-image:linear-gradient(90deg, var(--pink-t), var(--yellow-t)) }
+.acc-yellow .stat { background-image:linear-gradient(90deg, var(--yellow-t), var(--blue-t)) }
 .dna-card .desc {
   font-size:clamp(15px,1.25vw,18px); line-height:1.5; color:#a0a0a0;
 }
@@ -246,9 +269,108 @@ section.overlay {
 #galaxy .grp-bottom { display:flex; flex-direction:column; align-items:center }
 #galaxy .grp-bottom .subtitle { max-width:600px; margin-bottom:32px }
 
+/* Services (funnel chapter) */
+#services {
+  display:flex; align-items:center; justify-content:center;
+  gap:60px; padding:0 10vw; text-align:left;
+}
+#services .col-left { max-width:520px }
+#services .col-left .top-label { margin-bottom:24px }
+#services .svc-list { max-width:560px; width:100% }
+.svc-row {
+  display:flex; align-items:baseline; gap:20px;
+  padding:15px 0; border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.svc-row:first-child { border-top:1px solid rgba(255,255,255,0.08) }
+.svc-num {
+  font-family:'Bricolage Grotesque', sans-serif; font-weight:700;
+  font-size:clamp(12px,0.9vw,13px); color:var(--acc, var(--blue-t)); flex:none;
+}
+.svc-name {
+  font-family:'Bricolage Grotesque', sans-serif; font-weight:600;
+  font-size:clamp(16px,1.4vw,20px); letter-spacing:-0.02em;
+}
+.svc-tag { margin-left:auto; text-align:right; font-size:clamp(12px,0.95vw,14px); color:#a0a0a0 }
+@media (max-width:1024px) {
+  #services { flex-direction:column; align-items:flex-start; gap:28px }
+  .svc-tag { display:none }
+}
+
+/* Clients (melt chapter) */
+#clients {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:0 20px; text-align:center;
+}
+#clients .top-label { margin-bottom:32px }
+#clients h2 { max-width:900px; margin-bottom:40px }
+.pill-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; max-width:820px }
+.pill {
+  display:inline-flex; align-items:center; gap:8px;
+  border-radius:9999px; padding:10px 18px;
+  font-size:clamp(13px,0.95vw,14px); font-weight:500;
+  color:rgba(255,255,255,0.85);
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.pill .dot { width:5px; height:5px; animation:none }
+
+/* Why-Bodega differentiator chips (wave section) */
+.why-chips { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px }
+
+/* Process (tunnel chapter) */
+#process {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:0 20px; text-align:center;
+}
+#process .top-label { margin-bottom:32px }
+#process h2 { max-width:900px; margin-bottom:48px }
+.steps { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; max-width:1040px }
+.step-chip {
+  display:flex; flex-direction:column; align-items:flex-start; gap:10px;
+  min-width:172px; text-align:left;
+  border-radius:18px; padding:20px 22px;
+  background:rgba(12,14,22,0.55);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.step-num {
+  font-family:'Bricolage Grotesque', sans-serif; font-weight:700;
+  font-size:clamp(12px,0.9vw,13px); color:var(--acc, var(--blue-t));
+}
+.step-name {
+  font-family:'Bricolage Grotesque', sans-serif; font-weight:600;
+  font-size:clamp(14px,1.15vw,17px); letter-spacing:-0.02em;
+}
+
+/* Roblox (black-hole dive chapter) */
+#roblox {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:0 20px; text-align:center;
+}
+#roblox::before {
+  /* soft vignette so the copy stays readable over the brightest part of the dive */
+  content:""; position:absolute; left:50%; top:50%; width:min(90vw,980px); height:70vh;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(ellipse, rgba(3,3,5,0.6) 0%, rgba(3,3,5,0.35) 45%, rgba(3,3,5,0) 72%);
+  opacity:0; transition:opacity 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+  pointer-events:none;
+}
+#roblox[data-state="visible"]::before { opacity:1 }
+#roblox .top-label { margin-bottom:32px }
+#roblox h2 { max-width:900px; margin-bottom:24px }
+#roblox .subtitle { max-width:640px; margin-bottom:32px }
+
+/* Contact line (galaxy section) */
+.contact-line { font-size:clamp(12px,0.95vw,14px); line-height:1.7; color:#7c7c84; margin-top:24px }
+.contact-line a { color:#a0a0a0; text-decoration:none; pointer-events:auto }
+.contact-line a:hover { color:#fff }
+
 @media (prefers-reduced-motion: reduce) {
   .char, .reveal { transition:none }
-  .grad-ring { animation:none }
+  .grad-ring, .dot { animation:none }
 }
 </style>
 </head>
@@ -263,6 +385,7 @@ section.overlay {
   <section class="overlay" id="hero" aria-label="Introduction">
     <span class="top-label reveal">
       <span class="grad-ring" aria-hidden="true"></span>
+      <span class="dot" style="--acc:var(--mint)" aria-hidden="true"></span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       Bodega Creative Studio — Jakarta
     </span>
@@ -278,37 +401,103 @@ section.overlay {
     </div>
   </section>
 
-  <!-- 2 · DNA stat cards (proof metrics) -->
+  <!-- 2 · Services (during the funnel) -->
+  <section class="overlay" id="services" aria-label="What we do">
+    <div class="col-left">
+      <span class="top-label reveal">
+        <span class="grad-ring" aria-hidden="true"></span>
+        <span class="dot" style="--acc:var(--blue)" aria-hidden="true"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        What we do
+      </span>
+      <h2 class="display-title left title-lg" data-cascade data-em="ecosystem">Six services, one ecosystem</h2>
+    </div>
+    <div class="svc-list reveal">
+      <div class="svc-row" style="--acc:var(--blue-t)"><span class="svc-num">01</span><span class="svc-name">Branding &amp; Identity</span><span class="svc-tag">logo &amp; identity · visual system · guidelines</span></div>
+      <div class="svc-row" style="--acc:var(--mint-t)"><span class="svc-num">02</span><span class="svc-name">Marketing Strategy</span><span class="svc-tag">positioning · go-to-market · funnels</span></div>
+      <div class="svc-row" style="--acc:var(--pink-t)"><span class="svc-num">03</span><span class="svc-name">Brand Activation</span><span class="svc-tag">events · experiential · partnerships</span></div>
+      <div class="svc-row" style="--acc:var(--yellow-t)"><span class="svc-num">04</span><span class="svc-name">Web &amp; App Development</span><span class="svc-tag">web · app · Roblox</span></div>
+      <div class="svc-row" style="--acc:var(--blue-t)"><span class="svc-num">05</span><span class="svc-name">Digital Marketing</span><span class="svc-tag">paid media · SEO · analytics</span></div>
+      <div class="svc-row" style="--acc:var(--mint-t)"><span class="svc-num">06</span><span class="svc-name">Social Media &amp; Content</span><span class="svc-tag">content · community · production</span></div>
+    </div>
+  </section>
+
+  <!-- 3 · DNA stat cards (proof metrics — all five, exact numbers) -->
   <div id="dna-cards" aria-label="Proof metrics">
-    <div class="dna-card">
-      <p class="kicker">Accounts reached</p>
+    <div class="dna-card acc-blue">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Accounts reached</p>
       <p class="stat">2.9M+</p>
       <p class="desc">Maktour, in six months — brand-first social that finds its audience and keeps it.</p>
     </div>
-    <div class="dna-card">
-      <p class="kicker">Engagement growth</p>
+    <div class="dna-card acc-mint">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Engagement growth</p>
       <p class="stat">205.6%</p>
       <p class="desc">Panasonic — engagement-rate growth built on research, strategy, and daily execution.</p>
     </div>
-    <div class="dna-card">
-      <p class="kicker">Views in 4 months</p>
+    <div class="dna-card acc-pink">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Views in 4 months</p>
       <p class="stat">579.1K</p>
       <p class="desc">SuperPadel — a new community brought to court by content people actually watch.</p>
     </div>
+    <div class="dna-card acc-yellow">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Accounts reached</p>
+      <p class="stat">611.7K</p>
+      <p class="desc">Insan Hutama, in six months — a research-first social presence that compounds.</p>
+    </div>
+    <div class="dna-card acc-blue">
+      <p class="kicker"><span class="dot" aria-hidden="true"></span>Industries served</p>
+      <p class="stat">14+</p>
+      <p class="desc">From automotive and government to F&amp;B and sport — and counting.</p>
+    </div>
   </div>
 
-  <!-- 3 · Wave -->
+  <!-- 4 · Clients (during the melt) -->
+  <section class="overlay" id="clients" aria-label="Clients">
+    <span class="top-label reveal">
+      <span class="grad-ring" aria-hidden="true"></span>
+      <span class="dot" style="--acc:var(--mint)" aria-hidden="true"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      In good company
+    </span>
+    <h2 class="display-title center title-lg" data-cascade>Trusted across 14+ industries</h2>
+    <div class="pill-grid reveal">
+      <span class="pill"><span class="dot" style="--acc:var(--blue-t)" aria-hidden="true"></span>Panasonic</span>
+      <span class="pill"><span class="dot" style="--acc:var(--mint-t)" aria-hidden="true"></span>Kemendagri</span>
+      <span class="pill"><span class="dot" style="--acc:var(--pink-t)" aria-hidden="true"></span>Astra Daihatsu</span>
+      <span class="pill"><span class="dot" style="--acc:var(--yellow-t)" aria-hidden="true"></span>Hutama Karya</span>
+      <span class="pill"><span class="dot" style="--acc:var(--blue-t)" aria-hidden="true"></span>Maktour</span>
+      <span class="pill"><span class="dot" style="--acc:var(--mint-t)" aria-hidden="true"></span>SuperPadel</span>
+      <span class="pill"><span class="dot" style="--acc:var(--pink-t)" aria-hidden="true"></span>Lacoste Open</span>
+      <span class="pill"><span class="dot" style="--acc:var(--yellow-t)" aria-hidden="true"></span>Kopikalyan</span>
+      <span class="pill"><span class="dot" style="--acc:var(--blue-t)" aria-hidden="true"></span>Dans Burgers</span>
+      <span class="pill"><span class="dot" style="--acc:var(--mint-t)" aria-hidden="true"></span>Hanau</span>
+      <span class="pill"><span class="dot" style="--acc:var(--pink-t)" aria-hidden="true"></span>Citra Borneo Utama</span>
+      <span class="pill"><span class="dot" style="--acc:var(--yellow-t)" aria-hidden="true"></span>Airnesia</span>
+      <span class="pill"><span class="dot" style="--acc:var(--blue-t)" aria-hidden="true"></span>World</span>
+      <span class="pill"><span class="dot" style="--acc:var(--mint-t)" aria-hidden="true"></span>Merdeka Run</span>
+      <span class="pill"><span class="dot" style="--acc:var(--pink-t)" aria-hidden="true"></span>Konser Pandangan Pertama</span>
+    </div>
+  </section>
+
+  <!-- 5 · Wave (Why Bodega) -->
   <section class="overlay" id="wave" aria-label="Why Bodega">
     <div class="col-left">
       <span class="top-label reveal">
         <span class="grad-ring" aria-hidden="true"></span>
+        <span class="dot" style="--acc:var(--pink)" aria-hidden="true"></span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         Why Bodega
       </span>
-      <h2 class="display-title left title-lg" data-cascade>Everything we make orbits one thing — your brand</h2>
+      <h2 class="display-title left title-lg" data-cascade data-em="brand">Everything we make orbits one thing — your brand</h2>
     </div>
     <div class="col-right">
-      <p class="subtitle reveal">Trusted by teams across 14+ industries. One centre of gravity. A distributed team of specialists turns research into strategy — and strategy into work that ships every single day.</p>
+      <p class="subtitle reveal" style="margin-bottom:24px">One centre of gravity. We research before anything ships, then execute daily — turning the noise of culture into momentum for your brand.</p>
+      <div class="why-chips reveal">
+        <span class="pill"><span class="dot" style="--acc:var(--blue-t)" aria-hidden="true"></span>Distributed team of specialists</span>
+        <span class="pill"><span class="dot" style="--acc:var(--mint-t)" aria-hidden="true"></span>Services you can scale</span>
+        <span class="pill"><span class="dot" style="--acc:var(--pink-t)" aria-hidden="true"></span>Adjustable pricing — pay for value</span>
+        <span class="pill"><span class="dot" style="--acc:var(--yellow-t)" aria-hidden="true"></span>Research first</span>
+      </div>
       <div class="btn-row reveal">
         <a class="btn-primary" href="mailto:creativestudiolabodega@gmail.com">
           <span class="grad-ring" aria-hidden="true"></span>
@@ -320,11 +509,47 @@ section.overlay {
     </div>
   </section>
 
-  <!-- 4 · Galaxy -->
+  <!-- 6 · Process (inside the tunnel) -->
+  <section class="overlay" id="process" aria-label="Our process">
+    <span class="top-label reveal">
+      <span class="grad-ring" aria-hidden="true"></span>
+      <span class="dot" style="--acc:var(--yellow)" aria-hidden="true"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Our process
+    </span>
+    <h2 class="display-title center title-lg" data-cascade>Five steps, zero guesswork</h2>
+    <div class="steps reveal">
+      <div class="step-chip" style="--acc:var(--blue-t)"><span class="step-num">01</span><span class="step-name">Real Bonding</span></div>
+      <div class="step-chip" style="--acc:var(--mint-t)"><span class="step-num">02</span><span class="step-name">Research &amp; Deep Understanding</span></div>
+      <div class="step-chip" style="--acc:var(--pink-t)"><span class="step-num">03</span><span class="step-name">Strategy Development</span></div>
+      <div class="step-chip" style="--acc:var(--yellow-t)"><span class="step-num">04</span><span class="step-name">Review &amp; Alignment</span></div>
+      <div class="step-chip" style="--acc:var(--blue-t)"><span class="step-num">05</span><span class="step-name">Kick Off &amp; Execution</span></div>
+    </div>
+  </section>
+
+  <!-- 7 · Roblox (the dive into the singularity) -->
+  <section class="overlay" id="roblox" aria-label="Roblox in-game brand worlds">
+    <span class="top-label reveal">
+      <span class="grad-ring" aria-hidden="true"></span>
+      <span class="dot" style="--acc:var(--pink)" aria-hidden="true"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Roblox in-game worlds
+    </span>
+    <h2 class="display-title center title-lg" data-cascade data-em="playable">Brand worlds that are playable</h2>
+    <p class="subtitle reveal"><em style="font-style:normal;color:var(--mint-t)">SEREUPNA Journey</em> (horror) and <em style="font-style:normal;color:var(--yellow-t)">Kilometer Berdendang</em> (a Gen-Z hangout) — playable brand worlds Gen-Z actually shows up for.</p>
+    <div class="pill-grid reveal">
+      <span class="pill"><span class="dot" style="--acc:var(--blue-t)" aria-hidden="true"></span>21 stages</span>
+      <span class="pill"><span class="dot" style="--acc:var(--pink-t)" aria-hidden="true"></span>AI ghost mechanics</span>
+      <span class="pill"><span class="dot" style="--acc:var(--mint-t)" aria-hidden="true"></span>Custom leaderboard</span>
+    </div>
+  </section>
+
+  <!-- 8 · Galaxy -->
   <section class="overlay" id="galaxy" aria-label="Our ecosystem">
     <div class="grp-top">
       <span class="top-label reveal">
         <span class="grad-ring" aria-hidden="true"></span>
+        <span class="dot" style="--acc:var(--blue)" aria-hidden="true"></span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         Our ecosystem
       </span>
@@ -340,6 +565,10 @@ section.overlay {
         </a>
         <a class="btn-secondary" href="https://wa.me/628170247666" target="_blank" rel="noopener">WhatsApp the studio</a>
       </div>
+      <p class="contact-line reveal">
+        <a href="mailto:creativestudiolabodega@gmail.com">creativestudiolabodega@gmail.com</a> · <a href="https://wa.me/628170247666" target="_blank" rel="noopener">+62 817-024-7666 (Rizkyanda)</a><br>
+        Jl. Otista Raya No.80, RT.2/RW.5, Jakarta Timur 13330
+      </p>
     </div>
   </section>
 
@@ -799,18 +1028,28 @@ void main() {
     vEdgeFade *= smoothstep(0.0, 0.2, uIntro);
 
     // --- COLORS ---
-    // Bodega gradient: deep blue (#2562e7) to hot pink (#fa1e88), on the wave and sphere
+    // Bodega accent cycle: blue #2562e7 · mint #01dcb4 · pink #fa1e88 · yellow #fae902.
+    // Each chapter leans on the next accent in the cycle — the brand fingerprint.
     vec3 cBottom = vec3(0.145, 0.384, 0.906); // Bodega Blue
     vec3 cTop = vec3(0.980, 0.118, 0.533);    // Bodega Pink
+    vec3 aMint = vec3(0.004, 0.863, 0.706);   // Bodega Mint
+    vec3 aYellow = vec3(0.980, 0.914, 0.008); // Bodega Yellow
 
     // 1. Base color mix (used for sphere, DNA, wave)
     float baseColorMix = smoothstep(-3.0, 3.0, position.y + position.x * 0.5);
     vec3 normalColor = mix(cBottom, cTop, clamp(baseColorMix, 0.0, 1.0));
 
+    // Chapter grading: the wave rolls blue-to-mint, the tunnel burns pink-to-yellow
+    vec3 waveColor = mix(cBottom, aMint, clamp(baseColorMix, 0.0, 1.0));
+    normalColor = mix(normalColor, waveColor, wavePhase * 0.6);
+    vec3 tunnelColor = mix(cTop, aYellow, clamp(baseColorMix, 0.0, 1.0));
+    normalColor = mix(normalColor, tunnelColor, tunnelPhase * 0.5);
+
     // 2. Galaxy color mix: mapped geometrically to the galaxy radius!
-    // Hot Pink core fading into Deep Blue edges, EXACTLY matching the first sphere's colors!
+    // Yellow-hot core through pink into deep blue edges — the full accent cycle at rest.
     float orangeMix = smoothstep(80.0, 0.0, galaxyR);
     vec3 galaxyColor = mix(cBottom, cTop, clamp(orangeMix, 0.0, 1.0));
+    galaxyColor = mix(galaxyColor, aYellow, smoothstep(15.0, 0.0, galaxyR) * 0.8);
 
     vColor = mix(normalColor, galaxyColor, galaxyPhase);
 
@@ -898,14 +1137,23 @@ composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight),
    Overlays — state machine + DNA card orbit
    ============================================================ */
 const glow = document.getElementById('glow');
-const heroSection = document.getElementById('hero');
-const waveSection = document.getElementById('wave');
-const galaxySection = document.getElementById('galaxy');
 const dnaContainer = document.getElementById('dna-cards');
 const dnaCards = Array.from(dnaContainer.querySelectorAll('.dna-card'));
 
-const ANGLE_OFFSETS = [0, (2 * Math.PI) / 3, (4 * Math.PI) / 3];
-const Y_OFFSETS = [-150, 0, 150];
+// Each overlay owns a scroll window: before < start, visible in [start, end], after > end.
+const SECTION_WINDOWS = [
+  { el: document.getElementById('hero'),     start: -1,    end: 0.02 },
+  { el: document.getElementById('services'), start: 0.045, end: 0.13 },
+  { el: document.getElementById('clients'),  start: 0.395, end: 0.465 },
+  { el: document.getElementById('wave'),     start: 0.48,  end: 0.62 },
+  { el: document.getElementById('process'),  start: 0.65,  end: 0.78 },
+  { el: document.getElementById('roblox'),   start: 0.80,  end: 0.895 },
+  { el: document.getElementById('galaxy'),   start: 0.93,  end: 2 },
+];
+
+// Five proof cards spaced evenly around the helix orbit
+const ANGLE_OFFSETS = dnaCards.map((_, i) => (i * 2 * Math.PI) / dnaCards.length);
+const Y_OFFSETS = [-160, -80, 0, 80, 160];
 
 function setSectionState(section, state) {
   if (section.dataset.state === state) return;
@@ -914,6 +1162,7 @@ function setSectionState(section, state) {
   if (title) {
     if (state !== 'before' && !title.classList.contains('play')) title.classList.add('play');
     title.classList.toggle('is-leaving', state === 'after');
+    title.classList.toggle('is-hidden', state === 'before');
   }
   section.querySelectorAll('.reveal').forEach((el) => {
     el.classList.toggle('is-visible', state === 'visible');
@@ -922,14 +1171,9 @@ function setSectionState(section, state) {
 }
 
 function updateOverlays(cs) {
-  // Hero: visible while cs < 0.02, then fades up & out (no "before" state).
-  setSectionState(heroSection, cs < 0.02 ? 'visible' : 'after');
-
-  // Wave: active window 0.48–0.62.
-  setSectionState(waveSection, cs < 0.48 ? 'before' : (cs <= 0.62 ? 'visible' : 'after'));
-
-  // Galaxy: active once cs >= 0.93.
-  setSectionState(galaxySection, cs < 0.93 ? 'before' : 'visible');
+  SECTION_WINDOWS.forEach(({ el, start, end }) => {
+    setSectionState(el, cs < start ? 'before' : (cs <= end ? 'visible' : 'after'));
+  });
 
   // DNA stat cards: orbit the helix during 0.15 < cs < 0.38.
   let dnaOpacity = 0;
@@ -962,6 +1206,17 @@ function updateOverlays(cs) {
    ============================================================ */
 const lenis = new Lenis({ smoothWheel: true });
 
+// Aurora palette grade — the brand fingerprint: blue → mint → pink → yellow → blue,
+// cycled once over the full scroll; the hot blob runs half a cycle ahead of the cool one.
+const ACCENT_CYCLE = ['#2562e7', '#01dcb4', '#fa1e88', '#fae902'].map((c) => new THREE.Color(c));
+function cycleColor(t, out) {
+  const f = (((t % 1) + 1) % 1) * ACCENT_CYCLE.length;
+  const i = Math.floor(f) % ACCENT_CYCLE.length;
+  const k = f - Math.floor(f);
+  const s = k * k * (3 - 2 * k);
+  return out.copy(ACCENT_CYCLE[i]).lerp(ACCENT_CYCLE[(i + 1) % ACCENT_CYCLE.length], s);
+}
+
 let time = 0;
 const INTRO_MS = 2600;          // on-load intro dolly, wall-clock driven
 let introStart = 0;
@@ -983,6 +1238,8 @@ function render(now) {
   material.uniforms.uScroll.value = currentScroll;
   bgMaterial.uniforms.uTime.value = time;
   bgMaterial.uniforms.uScroll.value = currentScroll;
+  cycleColor(currentScroll, bgMaterial.uniforms.color2.value);        // cool blob
+  cycleColor(currentScroll + 0.5, bgMaterial.uniforms.color1.value);  // hot blob, half a cycle ahead
 
   // Camera + rotation
   const panProgress = Math.min(currentScroll / 0.5, 1);
