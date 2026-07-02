@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 150" fill="none" role="img" aria-label="AXIOM — Human Performance">
-  <g stroke="#ECE9E3" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+  <g stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
     <!-- A (chevron) -->
     <polyline points="20,104 51,16 82,104"/>
     <!-- X -->
@@ -13,5 +13,5 @@
     <polyline points="392,104 392,16 434,74 476,16 476,104"/>
   </g>
   <text x="270" y="138" text-anchor="middle" font-family="Jost, 'Century Gothic', system-ui, sans-serif"
-        font-size="15" font-weight="400" letter-spacing="9" fill="#9a958b">HUMAN PERFORMANCE</text>
+        font-size="15" font-weight="400" letter-spacing="9" fill="#8f8f8f">HUMAN PERFORMANCE</text>
 </svg>
