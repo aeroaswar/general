@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap" rel="stylesheet" />
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="%23030305"/><text x="7" y="23" font-family="sans-serif" font-weight="700" font-size="20" fill="%23fff">b</text><circle cx="24" cy="21" r="3.5" fill="%2301dcb4"/></svg>' />
 <style>
 * { margin:0; padding:0; box-sizing:border-box }
 html { scroll-behavior:auto }
@@ -36,6 +37,25 @@ body {
   opacity:0; z-index:10; pointer-events:none;
   background:radial-gradient(circle, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 80%);
 }
+
+/* ---------- Brand wordmark (the logo: lowercase bodega + live accent dot) ---------- */
+.brand {
+  position:fixed; top:0; left:0; z-index:20;
+  display:inline-flex; align-items:baseline; gap:3px;
+  padding:26px 36px;
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-weight:700; font-size:clamp(20px,1.7vw,24px);
+  letter-spacing:-0.03em; line-height:1;
+  color:#fff; text-decoration:none;
+  pointer-events:auto; cursor:pointer;
+}
+.brand-dot {
+  width:7px; height:7px; border-radius:9999px; flex:none;
+  background:var(--mint);
+  box-shadow:0 0 10px currentColor;
+  transform:translateY(-1px);
+}
+@media (max-width:640px) { .brand { padding:20px 22px } }
 
 /* ---------- Eyebrow pill ---------- */
 .top-label {
@@ -378,6 +398,8 @@ section.overlay {
 
 <canvas id="webgl" aria-hidden="true"></canvas>
 <div id="glow" aria-hidden="true"></div>
+
+<a class="brand" id="brand" href="#" aria-label="Bodega Creative Studio — back to top">bodega<span class="brand-dot" id="brand-dot" aria-hidden="true"></span></a>
 
 <main>
 
@@ -1217,6 +1239,15 @@ function cycleColor(t, out) {
   return out.copy(ACCENT_CYCLE[i]).lerp(ACCENT_CYCLE[(i + 1) % ACCENT_CYCLE.length], s);
 }
 
+// Brand dot: the wordmark's dot live-grades through the accent cycle with scroll
+const brandDot = document.getElementById('brand-dot');
+const brandDotColor = new THREE.Color();
+let brandDotHex = '';
+document.getElementById('brand').addEventListener('click', (e) => {
+  e.preventDefault();
+  lenis.scrollTo(0);
+});
+
 let time = 0;
 const INTRO_MS = 2600;          // on-load intro dolly, wall-clock driven
 let introStart = 0;
@@ -1240,6 +1271,13 @@ function render(now) {
   bgMaterial.uniforms.uScroll.value = currentScroll;
   cycleColor(currentScroll, bgMaterial.uniforms.color2.value);        // cool blob
   cycleColor(currentScroll + 0.5, bgMaterial.uniforms.color1.value);  // hot blob, half a cycle ahead
+
+  const dotHex = '#' + cycleColor(currentScroll, brandDotColor).getHexString();
+  if (dotHex !== brandDotHex) {
+    brandDotHex = dotHex;
+    brandDot.style.background = dotHex;
+    brandDot.style.color = dotHex;   // drives the currentColor glow
+  }
 
   // Camera + rotation
   const panProgress = Math.min(currentScroll / 0.5, 1);
