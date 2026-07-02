@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bodega Creative Studio — We turn brands into culture</title>
+<meta name="description" content="Bodega Creative Studio, Jakarta — brand-first social ecosystems. Strategy, content, and activation, executed daily. A scroll-driven WebGL particle experience." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&display=swap" rel="stylesheet" />
+<style>
+* { margin:0; padding:0; box-sizing:border-box }
+html { scroll-behavior:auto }
+body {
+  background:#030305;
+  color:#fff;
+  font-family:Inter, sans-serif;
+  overflow-x:hidden;
+}
+
+/* ---------- Canvas & glow ---------- */
+#webgl {
+  position:fixed; inset:0; width:100%; height:100%;
+  z-index:-10; display:block;
+}
+#glow {
+  position:fixed; left:50%; top:50%;
+  width:100px; height:100px; border-radius:9999px;
+  transform:translate(-50%,-50%) scale(0);
+  opacity:0; z-index:10; pointer-events:none;
+  background:radial-gradient(circle, rgba(255,255,255,1) 40%, rgba(255,255,255,0) 80%);
+}
+
+/* ---------- Eyebrow pill ---------- */
+.top-label {
+  position:relative;
+  display:inline-flex; align-items:center; gap:8px;
+  border-radius:9999px;
+  background:rgba(255,255,255,0.04);
+  padding:10px 20px;
+  font-size:clamp(13px,0.95vw,14px);
+  font-weight:500; color:#fff;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+}
+.top-label svg { width:14px; height:14px; flex:none }
+
+/* Animated 1px gradient ring (mask-composite trick) */
+.grad-ring {
+  position:absolute; inset:0; padding:1px; border-radius:inherit;
+  background-size:200% 100%;
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+  pointer-events:none;
+  animation:ring-slide linear infinite;
+}
+@keyframes ring-slide {
+  from { background-position:0% 0% }
+  to   { background-position:200% 0% }
+}
+.top-label .grad-ring {
+  background-image:linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.35), rgba(255,255,255,0.08));
+  animation-duration:3000ms;
+}
+
+/* ---------- Buttons ---------- */
+.btn-primary, .btn-secondary {
+  position:relative;
+  height:56px; border-radius:9999px;
+  font-family:Inter, sans-serif;
+  font-size:clamp(15px,1.1vw,16px); font-weight:500;
+  cursor:pointer; border:none; text-decoration:none;
+  transition:all 0.2s;
+  pointer-events:auto;
+}
+.btn-primary:hover, .btn-secondary:hover { transform:translateY(-2px) }
+
+.btn-primary {
+  padding:0 16px 0 32px; color:#fff;
+  display:inline-flex; align-items:center; gap:12px;
+  background:rgba(20,25,35,0.4);
+  backdrop-filter:blur(24px) saturate(1.5);
+  -webkit-backdrop-filter:blur(24px) saturate(1.5);
+  box-shadow:
+    inset 0 2px 10px rgba(255,255,255,0.35),
+    inset 0 -6px 16px rgba(0,0,0,0.75),
+    inset 0 0 0 1px rgba(255,255,255,0.05),
+    0 8px 24px rgba(0,0,0,0.4);
+}
+.btn-primary:hover {
+  background:rgba(30,35,50,0.5);
+  box-shadow:
+    inset 0 2px 12px rgba(255,255,255,0.45),
+    inset 0 -8px 20px rgba(0,0,0,0.85),
+    inset 0 0 0 1px rgba(255,255,255,0.08),
+    0 12px 32px rgba(0,0,0,0.5);
+}
+.btn-primary .grad-ring {
+  background-image:linear-gradient(90deg, #ff9ed1, #9db8f8, #ff9ed1);
+  animation-duration:4000ms;
+}
+.arrow-badge {
+  position:relative;
+  width:32px; height:32px; border-radius:9999px; flex:none;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:rgba(255,255,255,0.02);
+}
+.arrow-badge::before {
+  content:""; position:absolute; inset:0; padding:1px; border-radius:inherit;
+  background:linear-gradient(135deg, #ff9ed1, #9db8f8);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite:exclude;
+}
+.arrow-badge svg { width:12px; height:12px }
+
+.btn-secondary {
+  display:inline-flex; align-items:center;
+  padding:0 32px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);
+  color:rgba(255,255,255,0.75);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.btn-secondary:hover {
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+  border-color:rgba(255,255,255,0.15);
+}
+
+/* ---------- Headings & letter cascade ---------- */
+.display-title {
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-weight:600; line-height:1.2; letter-spacing:-0.03em;
+  mask-image:linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.2) 100%);
+  -webkit-mask-image:linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 60%, rgba(0,0,0,0.2) 100%);
+  display:flex; flex-wrap:wrap; column-gap:0.26em;
+  transition:opacity 1.2s cubic-bezier(0.2, 1, 0.2, 1), transform 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+}
+.display-title.is-leaving { opacity:0; transform:translateY(-30px) }
+.display-title.center { justify-content:center; text-align:center }
+.display-title.left { justify-content:flex-start; text-align:left }
+.title-xl { font-size:clamp(34px,5.4vw,80px) }
+.title-lg { font-size:clamp(30px,4.6vw,64px) }
+.word { display:inline-block; white-space:nowrap }
+.char {
+  display:inline-block;
+  transform:translateY(40px); opacity:0; filter:blur(16px);
+  transition:
+    transform 1200ms cubic-bezier(0.165, 0.84, 0.44, 1),
+    opacity 1200ms cubic-bezier(0.165, 0.84, 0.44, 1),
+    filter 1200ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.display-title.play .char { transform:translateY(0); opacity:1; filter:blur(0) }
+.char.em { color:#6f9bff } /* Bodega idiom: em recolors, never italic */
+
+/* ---------- Content reveal states ---------- */
+.reveal {
+  opacity:0; transform:translateY(30px);
+  transition:opacity 1.2s cubic-bezier(0.2, 1, 0.2, 1), transform 1.2s cubic-bezier(0.2, 1, 0.2, 1);
+}
+.reveal.is-visible { opacity:1; transform:translateY(0) }
+.reveal.is-leaving { opacity:0; transform:translateY(-30px) }
+
+/* ---------- Overlay sections ---------- */
+section.overlay {
+  position:fixed; inset:0; pointer-events:none; z-index:10;
+}
+.subtitle {
+  font-size:clamp(15px,1.25vw,18px); line-height:1.5; color:#a0a0a0;
+}
+.btn-row { display:flex; gap:16px }
+
+/* Hero */
+#hero {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:0 20px; text-align:center;
+}
+#hero .top-label { margin-bottom:40px }
+#hero h1 { max-width:1000px; margin-bottom:24px }
+#hero .subtitle { max-width:600px; margin-bottom:48px }
+
+/* DNA stat cards */
+#dna-cards {
+  position:fixed; inset:0; z-index:5;
+  perspective:1200px; pointer-events:none;
+  opacity:0;
+}
+.dna-card {
+  position:absolute; left:0; top:0; will-change:transform;
+  width:clamp(220px,74vw,400px);
+  border-radius:24px;
+  border:1px solid rgba(255,255,255,0.15);
+  background:rgba(12,14,22,0.55);
+  padding:40px;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  box-shadow:0 8px 32px rgba(0,0,0,0.2);
+}
+.dna-card .kicker {
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-size:clamp(12px,0.9vw,13px); font-weight:600;
+  text-transform:uppercase; letter-spacing:0.05em;
+  color:rgba(255,255,255,0.9);
+  margin-bottom:32px;
+}
+.dna-card .stat {
+  font-family:'Bricolage Grotesque', sans-serif;
+  font-size:clamp(44px,4.8vw,72px); font-weight:700; line-height:1;
+  margin-bottom:24px;
+  background:linear-gradient(90deg, #9db8f8, #ff9ed1, #7ff0d9);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.dna-card .desc {
+  font-size:clamp(15px,1.25vw,18px); line-height:1.5; color:#a0a0a0;
+}
+
+/* Wave */
+#wave {
+  display:flex; align-items:center; justify-content:center;
+  gap:60px; padding:0 10vw; text-align:left;
+}
+#wave .col-left { max-width:800px }
+#wave .col-left .top-label { margin-bottom:24px }
+#wave .col-right { max-width:500px }
+#wave .col-right .subtitle { margin-bottom:40px }
+@media (max-width:1024px) {
+  #wave { flex-direction:column; align-items:flex-start; justify-content:center; gap:32px }
+}
+
+/* Galaxy */
+#galaxy {
+  display:flex; flex-direction:column; align-items:center; justify-content:space-between;
+  padding:15vh 20px; text-align:center;
+}
+#galaxy .grp-top { display:flex; flex-direction:column; align-items:center }
+#galaxy .grp-top .top-label { margin-bottom:40px }
+#galaxy h2 { max-width:1000px }
+#galaxy .grp-bottom { display:flex; flex-direction:column; align-items:center }
+#galaxy .grp-bottom .subtitle { max-width:600px; margin-bottom:32px }
+
+@media (prefers-reduced-motion: reduce) {
+  .char, .reveal { transition:none }
+  .grad-ring { animation:none }
+}
+</style>
+</head>
+<body>
+
+<canvas id="webgl" aria-hidden="true"></canvas>
+<div id="glow" aria-hidden="true"></div>
+
+<main>
+
+  <!-- 1 · Hero -->
+  <section class="overlay" id="hero" aria-label="Introduction">
+    <span class="top-label reveal">
+      <span class="grad-ring" aria-hidden="true"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      Bodega Creative Studio — Jakarta
+    </span>
+    <h1 class="display-title center title-xl" data-cascade data-em="culture">A creative studio that turns brands into culture</h1>
+    <p class="subtitle reveal">We build brand-first social ecosystems at the intersection of strategy, content, and activation — executed daily, until your brand becomes culture.</p>
+    <div class="btn-row reveal">
+      <a class="btn-primary" href="mailto:creativestudiolabodega@gmail.com">
+        <span class="grad-ring" aria-hidden="true"></span>
+        Brief us
+        <span class="arrow-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+      </a>
+      <button class="btn-secondary" type="button">See how we work</button>
+    </div>
+  </section>
+
+  <!-- 2 · DNA stat cards (proof metrics) -->
+  <div id="dna-cards" aria-label="Proof metrics">
+    <div class="dna-card">
+      <p class="kicker">Accounts reached</p>
+      <p class="stat">2.9M+</p>
+      <p class="desc">Maktour, in six months — brand-first social that finds its audience and keeps it.</p>
+    </div>
+    <div class="dna-card">
+      <p class="kicker">Engagement growth</p>
+      <p class="stat">205.6%</p>
+      <p class="desc">Panasonic — engagement-rate growth built on research, strategy, and daily execution.</p>
+    </div>
+    <div class="dna-card">
+      <p class="kicker">Views in 4 months</p>
+      <p class="stat">579.1K</p>
+      <p class="desc">SuperPadel — a new community brought to court by content people actually watch.</p>
+    </div>
+  </div>
+
+  <!-- 3 · Wave -->
+  <section class="overlay" id="wave" aria-label="Why Bodega">
+    <div class="col-left">
+      <span class="top-label reveal">
+        <span class="grad-ring" aria-hidden="true"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Why Bodega
+      </span>
+      <h2 class="display-title left title-lg" data-cascade>Everything we make orbits one thing — your brand</h2>
+    </div>
+    <div class="col-right">
+      <p class="subtitle reveal">Trusted by teams across 14+ industries. One centre of gravity. A distributed team of specialists turns research into strategy — and strategy into work that ships every single day.</p>
+      <div class="btn-row reveal">
+        <a class="btn-primary" href="mailto:creativestudiolabodega@gmail.com">
+          <span class="grad-ring" aria-hidden="true"></span>
+          Submit a brief
+          <span class="arrow-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+        <button class="btn-secondary" type="button">See the process</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · Galaxy -->
+  <section class="overlay" id="galaxy" aria-label="Our ecosystem">
+    <div class="grp-top">
+      <span class="top-label reveal">
+        <span class="grad-ring" aria-hidden="true"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Our ecosystem
+      </span>
+      <h2 class="display-title center title-xl" data-cascade>A universe of culture — already in motion</h2>
+    </div>
+    <div class="grp-bottom">
+      <p class="subtitle reveal">Bodega isn't a single service. It's a living ecosystem with your brand at its core — strategy, content, activation, and playable Roblox worlds orbiting around you.</p>
+      <div class="btn-row reveal">
+        <a class="btn-primary" href="mailto:creativestudiolabodega@gmail.com">
+          <span class="grad-ring" aria-hidden="true"></span>
+          Brief us
+          <span class="arrow-badge" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+        <a class="btn-secondary" href="https://wa.me/628170247666" target="_blank" rel="noopener">WhatsApp the studio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scroll spacer -->
+  <div aria-hidden="true" style="height:1400vh"></div>
+
+</main>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import Lenis from 'https://unpkg.com/lenis@1.3.19/dist/lenis.mjs';
+
+window.scrollTo(0, 0);
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+/* ============================================================
+   Letter cascade — split [data-cascade] titles into chars
+   ============================================================ */
+document.querySelectorAll('[data-cascade]').forEach((title) => {
+  const emWord = (title.dataset.em || '').toLowerCase();
+  const words = title.textContent.trim().split(/\s+/);
+  title.textContent = '';
+  let charIndex = 0;
+  words.forEach((word) => {
+    const w = document.createElement('span');
+    w.className = 'word';
+    const isEm = word.toLowerCase().replace(/[^\w]/g, '') === emWord && emWord !== '';
+    for (const ch of word) {
+      const c = document.createElement('span');
+      c.className = 'char' + (isEm ? ' em' : '');
+      c.textContent = ch;
+      c.style.transitionDelay = (charIndex * 15) + 'ms';
+      charIndex++;
+      w.appendChild(c);
+    }
+    title.appendChild(w);
+  });
+});
+
+/* ============================================================
+   Shaders
+   ============================================================ */
+const backgroundVertexShader = /* glsl */`
+varying vec2 vUv;
+void main() {
+    vUv = uv;
+    gl_Position = vec4(position, 1.0);
+}
+`;
+
+const backgroundFragmentShader = /* glsl */`
+uniform float uTime;
+uniform float uScroll;
+uniform vec2 uResolution;
+uniform vec3 color1;
+uniform vec3 color2;
+varying vec2 vUv;
+
+// Morgan McGuire noise
+float hash(float n) { return fract(sin(n) * 1e4); }
+float hash(vec2 p) { return fract(1e4 * sin(17.0 * p.x + p.y * 0.1) * (0.1 + abs(sin(p.y * 13.0 + p.x)))); }
+float noise(vec2 x) {
+    vec2 i = floor(x);
+    vec2 f = fract(x);
+    float a = hash(i);
+    float b = hash(i + vec2(1.0, 0.0));
+    float c = hash(i + vec2(0.0, 1.0));
+    float d = hash(i + vec2(1.0, 1.0));
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+#define OCTAVES 4
+float fbm(vec2 x) {
+    float v = 0.0;
+    float a = 0.5;
+    vec2 shift = vec2(100);
+    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
+    for (int i = 0; i < OCTAVES; ++i) {
+        v += a * noise(x);
+        x = rot * x * 2.0 + shift;
+        a *= 0.5;
+    }
+    return v;
+}
+
+void main() {
+    vec2 st = vUv;
+    st.x *= uResolution.x / uResolution.y;
+
+    // Faster animation + massive boost on scroll
+    float t = uTime * 6.0 + uScroll * 150.0;
+
+    // Scale coordinates for large, organic blurs
+    vec2 st1 = st * 1.2;
+    vec2 st2 = st * 1.6;
+
+    // Shape 1: Deep Blue blurs (color2)
+    float f1 = fbm(st1 + vec2(t * 0.15, t * 0.1));
+    float mask1 = pow(fbm(st1 + f1 * 2.5 - vec2(t * 0.25, 0.0)), 2.0) * 3.5;
+
+    // Shape 2: Blazing Orange blurs (color1)
+    float f2 = fbm(st2 - vec2(t * 0.1, t * 0.2));
+    float mask2 = pow(fbm(st2 + f2 * 2.0 + vec2(0.0, t * 0.2)), 2.5) * 4.0;
+
+    // Additive blending for extreme saturation without muddy grays
+    vec3 finalColor = color2 * mask1 + color1 * mask2;
+
+    // Corner mask: hide the aurora in the center to keep focus on the 3D sphere
+    // Using vUv ensures it stays perfectly centered regardless of devicePixelRatio!
+    vec2 aspectUv = vUv - 0.5;
+    aspectUv.x *= uResolution.x / uResolution.y;
+    float centerDist = length(aspectUv);
+
+    // Make the mask dynamic and organic!
+    // Adding uScroll makes the "amoeba" actively spin and morph as you scroll
+    float angle = atan(aspectUv.y, aspectUv.x) + uScroll * 15.0;
+    // Combine a couple of slow sine waves to create an "amoeba" like breathing edge
+    float maskOffset = sin(angle * 3.0 + t * 0.4) * 0.05
+                     + sin(angle * 5.0 - t * 0.6) * 0.03;
+    float dynamicDist = centerDist + maskOffset;
+
+    // Push visibility entirely to the extreme corners
+    float cornerFade = smoothstep(0.7, 1.15, dynamicDist);
+    cornerFade = pow(cornerFade, 1.6);
+
+    // Apply fade and reduce overall intensity to keep it subtle
+    finalColor *= cornerFade * 0.9;
+
+    // Deep dark background base
+    vec3 baseBg = vec3(0.012, 0.012, 0.02);
+
+    gl_FragColor = vec4(baseBg + finalColor, 1.0);
+}
+`;
+
+const particleVertexShader = /* glsl */`
+uniform float uTime;
+uniform float uScroll;
+uniform float uIntro; // 0 = on-load filled/appearing, 1 = settled
+varying float vEdgeFade;
+varying vec3 vColor;
+
+// 3D Simplex Noise
+vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
+vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+float snoise(vec3 v){
+  const vec2 C = vec2(1.0/6.0, 1.0/3.0); const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+  vec3 i = floor(v + dot(v, C.yyy)); vec3 x0 = v - i + dot(i, C.xxx);
+  vec3 g = step(x0.yzx, x0.xyz); vec3 l = 1.0 - g;
+  vec3 i1 = min(g.xyz, l.zxy); vec3 i2 = max(g.xyz, l.zxy);
+  vec3 x1 = x0 - i1 + 1.0 * C.xxx; vec3 x2 = x0 - i2 + 2.0 * C.xxx; vec3 x3 = x0 - 1.0 + 3.0 * C.xxx;
+  i = mod(i, 289.0);
+  vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+  float n_ = 1.0/7.0; vec3 ns = n_ * D.wyz - D.xzx;
+  vec4 j = p - 49.0 * floor(p * ns.z *ns.z);
+  vec4 x_ = floor(j * ns.z); vec4 y_ = floor(j - 7.0 * x_);
+  vec4 x = x_ *ns.x + ns.yyyy; vec4 y = y_ *ns.x + ns.yyyy; vec4 h = 1.0 - abs(x) - abs(y);
+  vec4 b0 = vec4(x.xy, y.xy); vec4 b1 = vec4(x.zw, y.zw);
+  vec4 s0 = floor(b0)*2.0 + 1.0; vec4 s1 = floor(b1)*2.0 + 1.0; vec4 sh = -step(h, vec4(0.0));
+  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy; vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+  vec3 p0 = vec3(a0.xy,h.x); vec3 p1 = vec3(a0.zw,h.y); vec3 p2 = vec3(a1.xy,h.z); vec3 p3 = vec3(a1.zw,h.w);
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+  p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); m = m * m;
+  return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+}
+
+float random(vec3 p) {
+    return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+}
+
+void main() {
+    vec3 normalVec = normalize(position);
+
+    // --- SPHERE POS ---
+    // Increased uTime multipliers to make deformation faster
+    float noiseVal = snoise(position * 0.5 + uTime * 0.8);
+    noiseVal += 0.5 * snoise(position * 1.5 - uTime * 1.2);
+    vec3 spherePos = position + normalVec * (noiseVal * 0.5);
+
+    // --- STRETCHED Y FOR FUNNEL & DNA ---
+    // Original position.y is roughly +4.2 to -4.2.
+    // We stretch it heavily downwards so the camera can pan along it.
+    float stretchedY = position.y * 7.0 - 8.0; // Ranges from +16.5 down to -32.5
+
+    // --- FUNNEL POS ---
+    // Wide at the top, narrow at the bottom
+    float funnelRadius = 1.0 + smoothstep(-32.0, 16.0, stretchedY) * 5.0;
+    float angle = atan(position.z, position.x) + stretchedY * 0.3; // Twist the funnel
+    vec3 funnelPos = vec3(funnelRadius * cos(angle), stretchedY, funnelRadius * sin(angle));
+    // Add organic noise to the funnel walls
+    // Increased uTime multiplier to make funnel deformation faster
+    funnelPos += normalVec * (snoise(funnelPos * 0.3 + uTime * 3.0) * 1.0);
+
+    // --- DNA POS (Volumetric Thick Tubes) ---
+    float rnd1 = random(position);
+    float rnd2 = random(position + vec3(1.0));
+    float rnd3 = random(position + vec3(2.0));
+
+    float t = stretchedY; // Height along helix
+    float twistMultiplier = 0.65;
+    float twist = t * twistMultiplier;
+    float dnaRadius = 1.0; // Scaled down radius
+    float strandThickness = 0.35; // Scaled down strands
+
+    vec3 dnaPos;
+    if (rnd1 < 0.40) { // Strand 1 (40% of particles)
+        vec3 core = vec3(dnaRadius * cos(twist), t, dnaRadius * sin(twist));
+        vec3 offset = vec3(rnd1 - 0.2, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * strandThickness;
+        dnaPos = core + offset;
+    } else if (rnd1 < 0.80) { // Strand 2 (40% of particles)
+        vec3 core = vec3(dnaRadius * cos(twist + 3.14159), t, dnaRadius * sin(twist + 3.14159));
+        vec3 offset = vec3(rnd1 - 0.6, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * strandThickness;
+        dnaPos = core + offset;
+    } else { // Rungs (20% of particles)
+        float rungT = (rnd1 - 0.80) * 5.0;
+        // Dense, distinct rungs
+        float discreteT = floor(t * 2.5) / 2.5;
+        float discreteTwist = discreteT * twistMultiplier;
+        vec3 p1 = vec3(dnaRadius * cos(discreteTwist), discreteT, dnaRadius * sin(discreteTwist));
+        vec3 p2 = vec3(dnaRadius * cos(discreteTwist + 3.14159), discreteT, dnaRadius * sin(discreteTwist + 3.14159));
+
+        vec3 core = mix(p1, p2, rungT);
+        vec3 offset = vec3(rnd1 - 0.9, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * 0.10; // thinner rungs
+        dnaPos = core + offset;
+    }
+
+    // Optional: slight organic waving to the whole structure
+    dnaPos.x += snoise(vec3(0.0, t * 0.2, uTime * 0.2)) * 0.5;
+    dnaPos.z += snoise(vec3(t * 0.2, 0.0, uTime * 0.2)) * 0.5;
+
+    // --- 4-PHASE TIMELINE ---
+    // Phase 1 (0.0 to 0.15): Sphere morphs into Funnel
+    // Phase 2 (0.15 to 0.30): Funnel morphs into DNA
+    float phase1 = smoothstep(0.0, 0.15, uScroll);
+    float phase2 = smoothstep(0.15, 0.30, uScroll);
+
+    vec3 step1Pos = mix(spherePos, funnelPos, phase1);
+    vec3 step2Pos = mix(step1Pos, dnaPos, phase2);
+
+    // Phase 3 (0.30 to 0.50): DNA melts into the Wave
+    // Phase 4 (0.50 to 1.00): 50% of the massive 1200vh scroll is purely flying!
+    float meltProgress = smoothstep(0.30, 0.50, uScroll);
+
+    // meltY must go high enough (max stretchedY is 37.0, plus 45.0 transition = 82.0)
+    // so that EVERY single particle finishes melting!
+    float meltY = mix(-50.0, 90.0, meltProgress);
+
+    // Mathematically safe melt calculation (avoids undefined WebGL behavior)
+    // depth is 0 at the top of the melt line, and 45.0 at the bottom of the transition zone.
+    float depthBelowMeltLine = meltY - stretchedY;
+    float localMelt = smoothstep(0.0, 45.0, depthBelowMeltLine);
+
+    // Wave Pos
+    // Z stretch to create a deeply infinite ocean while preserving density
+    // Reverted back to -45.0 to keep DNA animation alignment perfectly intact
+    vec3 targetWavePos = vec3(position.x * 7.0, -45.0, position.z * 25.0);
+
+    // Offset X to separate orange and blue particles into a gradient
+    targetWavePos.x += position.y * 6.0;
+
+    // Restore beautiful rolling Simplex noise hills (as seen in user's screenshot)
+    float waveNoise = snoise(vec3(targetWavePos.x * 0.08, targetWavePos.z * 0.08, uTime * 0.15)) * 2.0;
+    waveNoise += snoise(vec3(targetWavePos.x * 0.16, targetWavePos.z * 0.16, uTime * 0.3)) * 0.8;
+    targetWavePos.y += waveNoise;
+
+    // Phase 5 (0.65 to 0.80): Flat wave curls up into a massive cylindrical Tunnel
+    float tunnelProgress = smoothstep(0.65, 0.80, uScroll);
+
+    // Phase 6 (0.80 to 0.92): Tunnel pinches into a singularity
+    // Fix: Replaced smoothstep with a pure ease-in (pow) so the collapse accelerates instead of slowing down!
+    float blackHoleLinear = clamp((uScroll - 0.80) / 0.12, 0.0, 1.0);
+    float blackHoleProgress = pow(blackHoleLinear, 2.0);
+
+    float tunnelR = 12.0;
+
+    // Pinch the radius of the tunnel based on Z-depth.
+    // The farthest particles are at Z = -87.5.
+    // We want the far end to mathematically pinch to exactly 0 to create a perfect singularity point!
+    float pinchFactor = clamp((targetWavePos.z + 80.0) / 100.0, 0.0, 1.0);
+    tunnelR = mix(tunnelR, tunnelR * pinchFactor, blackHoleProgress);
+
+    // Reverted back to -33.0 to keep physical center aligned with DNA scatter
+    float tunnelCy = -33.0;
+
+    // Normalize X to close the cylinder perfectly
+    float currentSliceRadius = sqrt(max(0.0, 17.64 - position.z * position.z));
+    float maxSliceWidth = 9.2195 * currentSliceRadius;
+    float normalizedX = targetWavePos.x / (maxSliceWidth + 0.001);
+    float tunnelAngle = normalizedX * 3.14159265;
+
+    // Tunnel Chaos: Particles rip around the walls
+    // Fix: Use linear progress so it doesn't "ease out" and slow down at the end!
+    float tunnelLinear = clamp((uScroll - 0.70) / 0.22, 0.0, 1.0);
+    // Accelerate continuously towards the end (ease-in only, NO ease-out)
+    float tunnelEnd = pow(tunnelLinear, 3.0);
+
+    float jitterAngle = snoise(vec3(position.x * 15.0, position.y * 15.0, uTime * 0.1)) * 0.35;
+    float jitterZ = snoise(vec3(position.y * 15.0, position.z * 15.0, uTime * 0.1)) * 4.0;
+
+    // We now use smooth bounded time noise for ambient swirl, and scroll for the massive twist.
+    float ambientSwirl = snoise(vec3(position.x * 5.0, position.y * 5.0, uTime * 0.2)) * 3.0;
+    float diveTwist = snoise(vec3(position.x * 5.0, position.y * 5.0, 0.0)) * 30.0 * tunnelEnd;
+    float vortexSpeed = (ambientSwirl + diveTwist) * tunnelLinear;
+
+    tunnelAngle += jitterAngle + vortexSpeed;
+    float tunnelZ = targetWavePos.z + jitterZ;
+
+    float dynamicR = tunnelR - waveNoise;
+    vec3 tunnelPos = vec3(dynamicR * sin(tunnelAngle), tunnelCy - dynamicR * cos(tunnelAngle), tunnelZ);
+
+    // Morph the wave into the tunnel
+    vec3 morphedWave = mix(targetWavePos, tunnelPos, tunnelProgress);
+
+    // Interpolate directly
+    vec3 tunnelFinalPos = mix(step2Pos, morphedWave, localMelt);
+
+    // --- PHASE 7: SPIRAL GALAXY ---
+    // Instantly snap the geometry to the galaxy while the screen is 100% white at 0.93
+    float galaxyPhase = step(0.93, uScroll);
+
+    // 1. Density Distribution (No Banding!)
+    // We generate completely independent pseudo-random variables for each particle
+    // to ensure smooth, organic distribution without aliasing/Moiré patterns.
+    float gRnd1 = fract(sin(dot(position.xyz, vec3(12.989, 78.233, 45.164))) * 43758.545);
+    float gRnd2 = fract(sin(dot(position.xyz, vec3(93.989, 67.345, 54.256))) * 24634.634);
+    float gRnd3 = fract(sin(dot(position.xyz, vec3(43.332, 11.235, 89.234))) * 56475.234);
+    float gRnd4 = fract(sin(dot(position.xyz, vec3(75.321, 32.123, 23.456))) * 35432.123);
+
+    // Dense exponential distribution for a bright, organic core, with a soft fuzzy outer edge
+    float galaxyR = pow(gRnd1, 2.0) * 60.0 + pow(gRnd2, 3.0) * 30.0; // Soft edge without a hard wall
+
+    // 2. Spiral Angle
+    // The arms wrap around naturally
+    float swirl = pow(galaxyR, 1.1) * 0.08;
+
+    // 2 main arms
+    float armIndex = floor(gRnd2 * 2.0);
+    float baseAngle = armIndex * 3.14159265;
+
+    // Angle dispersion: Unify the arms and the dust into a smooth continuous distribution!
+    // Instead of a hard cut (Yin-Yang look), we use an exponential cluster around the arm.
+    float uniformTheta = gRnd3 * 2.0 - 1.0;
+    // pow(x, 5) creates a massive dense spike exactly at the arm, and soft falloff for ambient dust
+    float dTheta = pow(uniformTheta, 5.0) * 3.14159;
+
+    // Fix: Reduced rotation speed as requested to make the galaxy feel more majestic and less chaotic
+    float theta = baseAngle + swirl + dTheta + (uTime * 0.4);
+
+    float gx = galaxyR * cos(theta);
+    float gz = galaxyR * sin(theta);
+
+    // 3. Bulge & Thickness (Y axis)
+    // Edges are a flat disc, but the core is completely decoupled to form a perfect random 3D sphere!
+    float gyDisc = pow(gRnd4 * 2.0 - 1.0, 3.0) * 1.5; // Base flat disc height
+    vec3 basePos = vec3(gx, gyDisc, gz);
+
+    // Create a perfectly spherical Bulge in the center
+    // We give particles a random 3D offset that is MASSIVE at the center, and 0 at the edges.
+    float bulgeStrength = smoothstep(25.0, 0.0, galaxyR); // 1.0 at center, 0 at R=25
+
+    // Generate a random vector inside a sphere
+    // Need 3 more independent randoms to prevent any banding
+    float gRnd5 = fract(sin(gRnd1 * 44.44 + gRnd2) * 555.55);
+    float gRnd6 = fract(sin(gRnd3 * 66.66 + gRnd4) * 777.77);
+    float gRnd7 = fract(sin(gRnd5 * 88.88 + gRnd6) * 999.99);
+
+    float phi = acos(gRnd5 * 2.0 - 1.0); // Mathematically uniform spherical distribution
+    // Fix: Slow down the core rotation as well
+    float thetaSphere = gRnd6 * 6.2831853 + (uTime * 0.8);
+    // pow(x, 2.0) makes the core extremely dense in the very middle
+    float rSphere = pow(gRnd7, 2.0) * 18.0;
+
+
+    vec3 bulgeOffset = vec3(
+        rSphere * sin(phi) * cos(thetaSphere),
+        rSphere * cos(phi),
+        rSphere * sin(phi) * sin(thetaSphere)
+    );
+
+    // Pull the disc particles into the spherical bulge near the center!
+    // If bulgeStrength = 1.0 (center), we completely ignore the disc position and use the solid sphere!
+    vec3 galaxyPos = mix(basePos, bulgeOffset, bulgeStrength);
+
+    // Reverted back to -33.0 to match the tunnel singularity center
+    galaxyPos.y -= 33.0; // Place it vertically where the black hole was
+    galaxyPos.z -= 120.0; // Push deep into Z-space
+
+    // Fade from Tunnel to Galaxy during the black screen!
+    vec3 finalPos = mix(tunnelFinalPos, galaxyPos, galaxyPhase);
+
+    vec4 mvPosition = modelViewMatrix * vec4(finalPos, 1.0);
+
+    // Fresnel / Edge fade
+    vec3 viewDir = normalize(-mvPosition.xyz);
+    vec3 worldNormal = normalize(normalMatrix * normalVec); // approximate normal
+
+    float rim = 1.0 - abs(dot(viewDir, worldNormal));
+
+    // Make the center dark and edges glowing for sphere, but fully visible for DNA
+    float edgeFadeSphere = smoothstep(0.4, 0.9, rim);
+    float edgeFadeDNA = 1.0;
+
+    // Morph value from 0 to 1 representing the total transition to DNA/Wave
+    float morph = smoothstep(0.0, 0.30, uScroll);
+
+    // --- DYNAMIC OPACITY & SIZE ---
+    // Because the particle density changes drastically (dense sphere -> dense DNA -> massive wave -> scattered tunnel),
+    // we must dynamically adjust the brightness and size so it never blows out and never gets too dim.
+
+    float opacityMultiplier = 0.8;
+    float sizeMultiplier = 1.5;
+
+    // DNA Phase: Extremely dense, reduce opacity to prevent white-out
+    float dnaPhase = smoothstep(0.15, 0.30, uScroll);
+    opacityMultiplier = mix(opacityMultiplier, 0.25, dnaPhase);
+    sizeMultiplier = mix(sizeMultiplier, 4.0, dnaPhase);
+
+    // Wave Phase: Flat plane has massive overlap at grazing angles. Keep opacity low to preserve rich colors!
+    float wavePhase = smoothstep(0.30, 0.50, uScroll);
+    opacityMultiplier = mix(opacityMultiplier, 0.35, wavePhase);
+    sizeMultiplier = mix(sizeMultiplier, 4.0, wavePhase);
+
+    // Tunnel Phase: Scattered into chaos on the walls.
+    float tunnelPhase = smoothstep(0.65, 0.80, uScroll);
+    opacityMultiplier = mix(opacityMultiplier, 0.6, tunnelPhase);
+    sizeMultiplier = mix(sizeMultiplier, 10.0, tunnelPhase);
+
+    // Phase 7 Spiral Galaxy:
+    // Identify 2% of particles to become massive glowing Supergiant stars!
+    // We use gRnd1 to avoid banding!
+    float isOrb = step(0.98, fract(gRnd1 * 77.77)); // 1.0 if it's an orb, 0.0 otherwise
+    // Slightly increased base particle size (from 3.0 to 5.0) to make dust more visible
+    float starSize = mix(5.0, 16.0, isOrb);
+
+    // Reduced opacity further (from 0.45 to 0.25) to practically eliminate excessive bloom
+    opacityMultiplier = mix(opacityMultiplier, 0.25, galaxyPhase);
+    sizeMultiplier = mix(sizeMultiplier, starSize, galaxyPhase);
+
+    // Intro: at uIntro=0 the sphere is fully filled (whole disc visible);
+    // as uIntro→1 the centre hollows back to the fresnel rim. A short fade
+    // (smoothstep) brings the whole cloud up from nothing on load.
+    float introSphere = mix(1.0, edgeFadeSphere, uIntro);
+    vEdgeFade = mix(introSphere, edgeFadeDNA, morph) * opacityMultiplier;
+    vEdgeFade *= smoothstep(0.0, 0.2, uIntro);
+
+    // --- COLORS ---
+    // Bodega gradient: deep blue (#2562e7) to hot pink (#fa1e88), on the wave and sphere
+    vec3 cBottom = vec3(0.145, 0.384, 0.906); // Bodega Blue
+    vec3 cTop = vec3(0.980, 0.118, 0.533);    // Bodega Pink
+
+    // 1. Base color mix (used for sphere, DNA, wave)
+    float baseColorMix = smoothstep(-3.0, 3.0, position.y + position.x * 0.5);
+    vec3 normalColor = mix(cBottom, cTop, clamp(baseColorMix, 0.0, 1.0));
+
+    // 2. Galaxy color mix: mapped geometrically to the galaxy radius!
+    // Hot Pink core fading into Deep Blue edges, EXACTLY matching the first sphere's colors!
+    float orangeMix = smoothstep(80.0, 0.0, galaxyR);
+    vec3 galaxyColor = mix(cBottom, cTop, clamp(orangeMix, 0.0, 1.0));
+
+    vColor = mix(normalColor, galaxyColor, galaxyPhase);
+
+    // Use the dynamically calculated sizeMultiplier
+    gl_PointSize = sizeMultiplier * (10.0 / -mvPosition.z);
+
+    // Ensure a minimum size so that distant stars in the tunnel don't disappear into subpixel darkness!
+    gl_PointSize = max(gl_PointSize, 1.5);
+
+    gl_Position = projectionMatrix * mvPosition;
+}
+`;
+
+const particleFragmentShader = /* glsl */`
+varying float vEdgeFade;
+varying vec3 vColor;
+
+void main() {
+    vec2 xy = gl_PointCoord.xy - vec2(0.5);
+    float ll = length(xy);
+    if(ll > 0.5) discard;
+
+    // Soft white points
+    float pointAlpha = smoothstep(0.5, 0.1, ll);
+
+    // Color is driven by vertex vColor, opacity driven by edge fade
+    gl_FragColor = vec4(vColor, vEdgeFade * pointAlpha * 0.9);
+}
+`;
+
+/* ============================================================
+   Three.js scene
+   ============================================================ */
+const canvas = document.getElementById('webgl');
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x000000);
+const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 1000);
+camera.position.z = 8;
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setSize(innerWidth, innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.autoClear = false;
+
+// Aurora background: a fullscreen quad rendered first by an orthographic camera.
+const bgScene = new THREE.Scene();
+const bgCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
+const bgGeometry = new THREE.PlaneGeometry(2, 2);
+const bgMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 }, uScroll: { value: 0 },
+    uResolution: { value: new THREE.Vector2(innerWidth, innerHeight) },
+    color1: { value: new THREE.Color('#fa1e88') },   // Bodega pink
+    color2: { value: new THREE.Color('#2562e7') },   // Bodega blue
+  },
+  vertexShader: backgroundVertexShader,
+  fragmentShader: backgroundFragmentShader,
+  depthWrite: false,
+});
+bgScene.add(new THREE.Mesh(bgGeometry, bgMaterial));
+
+// The particle cloud: a dense SphereGeometry rendered as Points (the moiré rings come for free).
+const geometry = new THREE.SphereGeometry(4.2, 200, 600);   // ~120k points
+const material = new THREE.ShaderMaterial({
+  uniforms: { uTime: { value: 0 }, uScroll: { value: 0 }, uIntro: { value: 0 } },
+  vertexShader: particleVertexShader,
+  fragmentShader: particleFragmentShader,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const particles = new THREE.Points(geometry, material);
+particles.frustumCulled = false;     // stays visible when stretched far below its bounding sphere
+scene.add(particles);
+
+// Post-processing: render bg, then fg (without clearing colour), then bloom.
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(bgScene, bgCamera));
+const renderFg = new RenderPass(scene, camera);
+renderFg.clear = false; renderFg.clearDepth = true;
+composer.addPass(renderFg);
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth, innerHeight), 1.5, 0.5, 0.05)); // strength, radius, threshold
+
+/* ============================================================
+   Overlays — state machine + DNA card orbit
+   ============================================================ */
+const glow = document.getElementById('glow');
+const heroSection = document.getElementById('hero');
+const waveSection = document.getElementById('wave');
+const galaxySection = document.getElementById('galaxy');
+const dnaContainer = document.getElementById('dna-cards');
+const dnaCards = Array.from(dnaContainer.querySelectorAll('.dna-card'));
+
+const ANGLE_OFFSETS = [0, (2 * Math.PI) / 3, (4 * Math.PI) / 3];
+const Y_OFFSETS = [-150, 0, 150];
+
+function setSectionState(section, state) {
+  if (section.dataset.state === state) return;
+  section.dataset.state = state;
+  const title = section.querySelector('[data-cascade]');
+  if (title) {
+    if (state !== 'before' && !title.classList.contains('play')) title.classList.add('play');
+    title.classList.toggle('is-leaving', state === 'after');
+  }
+  section.querySelectorAll('.reveal').forEach((el) => {
+    el.classList.toggle('is-visible', state === 'visible');
+    el.classList.toggle('is-leaving', state === 'after');
+  });
+}
+
+function updateOverlays(cs) {
+  // Hero: visible while cs < 0.02, then fades up & out (no "before" state).
+  setSectionState(heroSection, cs < 0.02 ? 'visible' : 'after');
+
+  // Wave: active window 0.48–0.62.
+  setSectionState(waveSection, cs < 0.48 ? 'before' : (cs <= 0.62 ? 'visible' : 'after'));
+
+  // Galaxy: active once cs >= 0.93.
+  setSectionState(galaxySection, cs < 0.93 ? 'before' : 'visible');
+
+  // DNA stat cards: orbit the helix during 0.15 < cs < 0.38.
+  let dnaOpacity = 0;
+  if (cs > 0.15 && cs < 0.38) {
+    dnaOpacity = Math.min((cs - 0.15) / 0.03, 1);
+    if (cs > 0.35) dnaOpacity = Math.max(1 - (cs - 0.35) / 0.03, 0);
+  }
+  dnaContainer.style.opacity = dnaOpacity;
+  if (dnaOpacity <= 0) return;
+
+  const dnaProgress = (cs - 0.15) / 0.23;
+  const globalYOffset = 600 - dnaProgress * 1200;
+  const baseAngle = dnaProgress * Math.PI * 2;
+  const cx = innerWidth / 2, cy = innerHeight / 2;
+  const rx = Math.min(innerWidth * 0.35, 400), ry = 80;
+  dnaCards.forEach((el, i) => {
+    const angle = baseAngle + ANGLE_OFFSETS[i];
+    const x = cx + Math.cos(angle) * rx;
+    const y = cy + Math.sin(angle) * ry + globalYOffset + Y_OFFSETS[i];
+    const scale = 0.8 + 0.2 * Math.sin(angle);
+    const opacity = 0.4 + 0.6 * Math.sin(angle);
+    el.style.transform = `translate(-50%,-50%) translate3d(${x}px,${y}px,0) scale(${scale}) rotateY(${angle - Math.PI / 2}rad)`;
+    el.style.opacity = opacity;
+    el.style.zIndex = Math.round(scale * 100);
+  });
+}
+
+/* ============================================================
+   Render loop (Lenis + WebGL from the same rAF)
+   ============================================================ */
+const lenis = new Lenis({ smoothWheel: true });
+
+let time = 0;
+const INTRO_MS = 2600;          // on-load intro dolly, wall-clock driven
+let introStart = 0;
+
+function render(now) {
+  lenis.raf(now);
+  time += 0.005;
+
+  if (introStart === 0) introStart = now;
+  const introRaw = Math.min((now - introStart) / INTRO_MS, 1);
+  const introEased = 1 - Math.pow(1 - introRaw, 3);    // easeOutCubic
+  material.uniforms.uIntro.value = introEased;
+
+  const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+  const currentScroll = maxScroll > 0 ? scrollTop / maxScroll : 0;
+
+  material.uniforms.uTime.value = time;
+  material.uniforms.uScroll.value = currentScroll;
+  bgMaterial.uniforms.uTime.value = time;
+  bgMaterial.uniforms.uScroll.value = currentScroll;
+
+  // Camera + rotation
+  const panProgress = Math.min(currentScroll / 0.5, 1);
+  const smoothPan = panProgress * panProgress * (3 - 2 * panProgress);
+  const flyPhase = currentScroll < 0.5 ? 0 : Math.min((currentScroll - 0.5) / 0.35, 1);
+  const blackHoleDive = currentScroll < 0.8 ? 0 : Math.min((currentScroll - 0.8) / 0.12, 1);
+
+  camera.position.y = -38 * smoothPan + 5 * Math.pow(blackHoleDive, 2);
+  camera.position.z = 8 - 4 * smoothPan - 55 * flyPhase;
+
+  const galaxyPullback = currentScroll < 0.93 ? 0 : Math.min((currentScroll - 0.93) / 0.07, 1);
+  const smoothPullback = galaxyPullback * galaxyPullback * (3 - 2 * galaxyPullback);
+  camera.position.z += 75 * smoothPullback;
+  camera.position.y += 35 * smoothPullback;
+
+  const lookX = 0;
+  let waveTilt = 0;
+  if (currentScroll > 0.3 && currentScroll < 0.7) {
+    const tiltProgress = (currentScroll - 0.3) / 0.4;
+    waveTilt = Math.sin(tiltProgress * Math.PI) * 15;
+  }
+  const lookY = THREE.MathUtils.lerp(camera.position.y + waveTilt, -33, smoothPullback);
+  const lookZ = THREE.MathUtils.lerp(camera.position.z - 100, -120, smoothPullback);
+
+  const introZoom = (1 - introEased) * -3 * (1 - Math.min(currentScroll / 0.05, 1));
+  camera.position.z += introZoom;                       // intro dolly: ~3 units closer, eased back
+  camera.lookAt(new THREE.Vector3(lookX, lookY, lookZ));
+
+  particles.rotation.y = smoothPan * Math.PI * 2;
+  particles.rotation.x = Math.sin(smoothPan * Math.PI) * 0.15;
+  camera.rotation.z = 0;
+
+  // Big-bang white flash (0.90 → 0.95): scale a radial-gradient div out of the centre.
+  const glowScaleProgress = currentScroll < 0.9 ? 0 : Math.min((currentScroll - 0.9) / 0.03, 1);
+  const glowScale = Math.pow(glowScaleProgress, 4) * 400;
+  const hideGlow = currentScroll < 0.93 ? 0 : Math.min((currentScroll - 0.93) / 0.02, 1);
+  glow.style.transform = `translate(-50%,-50%) scale(${glowScale})`;
+  glow.style.opacity = 1 - hideGlow;
+
+  updateOverlays(currentScroll);
+
+  composer.render();
+  requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+
+/* ============================================================
+   Resize
+   ============================================================ */
+window.addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+  composer.setSize(innerWidth, innerHeight);
+  bgMaterial.uniforms.uResolution.value.set(innerWidth, innerHeight);
+});
+
+// Debug/snap handle (house convention)
+window.__bodega = { scene, camera, particles, material, bgMaterial, composer };
+</script>
+
+</body>
+</html>
