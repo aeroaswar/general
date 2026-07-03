@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Creative Director — Art Director Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Bitcount+Single:wght@250;300;350;400&display=swap" rel="stylesheet" />
+<style>
+  /* ===================== Reset & shell ===================== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #000000;
+    --fg: #ffffff;
+    --glow: #ff4600;
+    --glow-deep: #e62800;
+
+    --fs-display-h2: clamp(3rem, 6vw, 6.5rem);
+    --fs-contact-h2: clamp(4rem, 10vw, 9rem);
+    --fs-hero-desc: clamp(0.8rem, 1.1vw, 1.1rem);
+    --fs-small: clamp(0.8rem, 1vw, 1rem);
+    --fs-lead: clamp(1.2rem, 1.5vw, 1.8rem);
+    --fs-card-h3: clamp(1.5rem, 2.5vw, 3rem);
+    --fs-circle: clamp(1.5rem, 3vw, 2.5rem);
+    --fs-counter: clamp(3rem, 6vw, 6.5rem);
+    --fs-contact-link: clamp(1.25rem, 3.5vw, 2.5rem);
+
+    /* glass recipe */
+    --glass-border: rgba(255,255,255,0.08);
+    --glass-bg: rgba(255,255,255,0.1);
+  }
+
+  /* Adaptive rem grid */
+  html { font-size: 16px; }
+  @media (max-width: 1920px) { html { font-size: 0.833333vw; } }
+  @media (max-width: 1440px) { html { font-size: 1.111111vw; } }
+  @media (max-width: 1024px) { html { font-size: 1.5625vw; } }
+  @media (max-width: 640px)  { html { font-size: 4.444444vw; } }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: Inter, system-ui, sans-serif;
+    scrollbar-width: none;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::-webkit-scrollbar { display: none; }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  .bitcount { font-family: "Bitcount Single", "Inter", monospace; }
+
+  /* ===================== Preloader ===================== */
+  #preloader {
+    position: fixed; inset: 0; z-index: 9999;
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  #preloader-bg {
+    position: absolute; inset: 0; background: #000;
+    z-index: 2;
+  }
+  #preloader-hole {
+    position: absolute; top: 50%; left: 50%;
+    width: 300vmax; height: 300vmax;
+    transform: translate(-50%, -50%) scale(1);
+    background: radial-gradient(circle at center,
+      transparent 0%, transparent 12.5rem,
+      rgb(0 0 0 / 0.8) 21.875rem, black 25rem, black 100%);
+    z-index: 3; pointer-events: none;
+  }
+  #preloader-counter {
+    position: relative; z-index: 4;
+    font-family: "Bitcount Single", monospace;
+    font-weight: 250;
+    font-size: var(--fs-counter);
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  /* ===================== Hero ===================== */
+  .hero {
+    position: relative;
+    height: 100lvh;
+    overflow: hidden;
+    background: #000;
+  }
+  .hero__video {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 1;
+  }
+  .hero__glow {
+    position: absolute; top: 0; left: 0;
+    mix-blend-mode: screen;
+    filter: blur(1.875rem);
+    will-change: transform;
+    z-index: 2; pointer-events: none;
+    background: radial-gradient(circle closest-side,
+      rgb(255 70 0 / 0.9) 0%, rgb(230 40 0 / 0.4) 46%, transparent 100%);
+  }
+  .hero__circle {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 37.5rem; height: 37.5rem;
+    border: 2px solid rgba(255,255,255,0.9);
+    border-radius: 50%;
+    z-index: 2; pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 20%, rgb(0 0 0 / 0.3) 55%, black 85%);
+    mask-image: linear-gradient(to bottom, transparent 20%, rgb(0 0 0 / 0.3) 55%, black 85%);
+  }
+  @media (min-width: 768px) {
+    .hero__circle { width: 50rem; height: 50rem; }
+  }
+  .hero__blur {
+    position: absolute; left: 0; bottom: 0; width: 100%; height: 60%;
+    z-index: 3; pointer-events: none;
+    backdrop-filter: blur(2.5rem);
+    -webkit-backdrop-filter: blur(2.5rem);
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
+    mask-image: linear-gradient(to top, black 0%, transparent 100%);
+  }
+  .hero__bottomgrad {
+    position: absolute; left: 0; bottom: 0; width: 100%; height: 40vh;
+    z-index: 4; pointer-events: none;
+    background: linear-gradient(to top, #000, transparent);
+  }
+  .hero__services {
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 100%; z-index: 5;
+    mix-blend-mode: difference;
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 0 2.5rem;
+  }
+  @media (min-width: 768px) {
+    .hero__services {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+      text-align: unset; align-items: center;
+    }
+    .hero__services span:nth-child(1) { text-align: left; }
+    .hero__services span:nth-child(2) { text-align: center; }
+    .hero__services span:nth-child(3) { text-align: right; }
+  }
+  .hero__titleblock {
+    position: absolute; inset: 0; z-index: 5;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 2.5rem 1rem 7.5rem;
+    pointer-events: none;
+  }
+  @media (min-width: 768px) {
+    .hero__titleblock { padding: 2.5rem 2.5rem 11.875rem; }
+  }
+  .hero__h1 {
+    font-family: "Bitcount Single", monospace;
+    font-weight: 250;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 1.8rem;
+    line-height: 0.75;
+    background: linear-gradient(135deg, rgb(255 255 255 / 1) 0%, rgb(255 255 255 / 0.4) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  @media (min-width: 640px) { .hero__h1 { font-size: 3.75rem; } }
+  @media (min-width: 1024px) { .hero__h1 { font-size: 6.125rem; } }
+  .hero__desc {
+    text-align: center; max-width: 40.625rem; margin: 0 auto;
+    letter-spacing: -0.01em;
+    font-size: var(--fs-hero-desc);
+    line-height: 1.4;
+    transform: translateY(2.5rem);
+  }
+  @media (min-width: 768px) { .hero__desc { transform: translateY(4rem); } }
+
+  /* ===================== Content wrapper ===================== */
+  .content {
+    position: relative;
+    background: #000;
+    overflow: clip;
+  }
+  #lava {
+    position: absolute; left: -5%; top: -5%; width: 110%; height: 110%;
+    z-index: 0; pointer-events: none;
+    filter: blur(2.5rem);
+    -webkit-filter: blur(2.5rem);
+  }
+  .content__seam {
+    position: absolute; top: 0; left: 0; width: 100%; height: 80vh;
+    background: linear-gradient(to bottom, #000, transparent);
+    z-index: 1; pointer-events: none;
+  }
+  .grain {
+    position: sticky; top: 0;
+    height: 100vh; width: 100%;
+    margin-bottom: -100vh;
+    z-index: 2; pointer-events: none;
+    mix-blend-mode: overlay;
+    overflow: hidden;
+  }
+  .grain__tile {
+    position: absolute; inset: -3.125rem;
+    opacity: 0.35;
+    will-change: transform;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 15.625rem 15.625rem;
+    background-repeat: repeat;
+  }
+
+  .section {
+    position: relative; z-index: 1;
+    padding-left: 1rem; padding-right: 1rem;
+    color: #fff;
+  }
+  @media (min-width: 768px) {
+    .section { padding-left: 2.5rem; padding-right: 2.5rem; }
+  }
+
+  /* ---- generic glass card ---- */
+  .glass {
+    border-radius: 1rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(1.25rem);
+    -webkit-backdrop-filter: blur(1.25rem);
+  }
+
+  /* ===================== Portfolio ===================== */
+  .portfolio {
+    padding-top: 10rem; padding-bottom: 5rem;
+    display: flex; flex-direction: column; gap: 2.5rem;
+  }
+  @media (min-width: 768px) {
+    .portfolio { padding-top: 20rem; padding-bottom: 10rem; }
+  }
+  .portfolio__header {
+    display: flex; flex-direction: column; gap: 2.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 3.75rem;
+  }
+  @media (min-width: 1024px) {
+    .portfolio__header { flex-direction: row; justify-content: space-between; }
+  }
+  .display-h2 {
+    font-family: "Bitcount Single", monospace;
+    font-weight: 250;
+    text-transform: uppercase;
+    font-size: var(--fs-display-h2);
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+  }
+  .display-h2 .w400 { font-weight: 400; }
+  .display-h2 .dim70 { opacity: 0.7; }
+  .portfolio__right { display: flex; flex-direction: column; gap: 1.5rem; }
+  @media (min-width: 1024px) {
+    .portfolio__right { width: 18.75rem; flex: none; }
+  }
+  .portfolio__right p { font-size: var(--fs-small); line-height: 1.4; opacity: 0.8; }
+  .pill-btn {
+    align-self: flex-start;
+    background: #fff; color: #000;
+    border-radius: 0.125rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem; font-weight: 600;
+    transition: opacity 0.3s ease;
+  }
+  .pill-btn:hover { opacity: 0.8; }
+
+  .portfolio__filters {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  .tag-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .tag {
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    padding: 0.375rem 0.9375rem;
+  }
+  .filters__center { opacity: 0.5; display: none; }
+  @media (min-width: 1024px) { .filters__center { display: block; } }
+  .filters__right { display: none; white-space: pre; }
+  @media (min-width: 768px) { .filters__right { display: block; } }
+
+  .portfolio__cards {
+    display: flex; flex-direction: column; gap: 0.625rem;
+  }
+  @media (min-width: 768px) {
+    .portfolio__cards { flex-direction: row; }
+  }
+  .case-card {
+    flex: 1;
+    aspect-ratio: 1;
+    padding: 1rem;
+  }
+  @media (min-width: 768px) { .case-card { padding: 1.5rem; } }
+  .case-card__img {
+    position: relative;
+    width: 100%; height: 100%;
+    border-radius: 0.375rem;
+    background-size: cover; background-position: center;
+    padding: 1.5rem;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) { .case-card__img { padding: 2.5rem; } }
+  .case-card__img h3 {
+    position: relative; z-index: 2;
+    font-family: "Bitcount Single", monospace;
+    font-size: var(--fs-card-h3);
+    line-height: 1.1; letter-spacing: -0.03em;
+    font-weight: 350;
+  }
+  .case-card__blurstrip::before {
+    content: "";
+    position: absolute; left: -10%; right: -10%; top: -10%;
+    height: 60%; z-index: 1;
+    background: rgb(0 0 0 / 0.01);
+    backdrop-filter: blur(1.25rem);
+    -webkit-backdrop-filter: blur(1.25rem);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  }
+  .case-card__desc {
+    position: relative; z-index: 2;
+    margin-top: auto;
+    max-width: 80%;
+    color: rgba(255,255,255,0.7);
+    font-size: var(--fs-small);
+    line-height: 1.4;
+  }
+  .case-card__badge {
+    position: relative; z-index: 2;
+    align-self: flex-start;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 999px;
+    padding: 0.375rem 0.9375rem;
+    font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+  }
+  .case-card__h3-bottom {
+    position: relative; z-index: 2; margin-top: auto;
+  }
+
+  /* ---- mask reveal ---- */
+  .mask-reveal {
+    -webkit-mask-image: linear-gradient(black, black);
+    mask-image: linear-gradient(black, black);
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 0%; mask-size: 100% 0%;
+    transition: -webkit-mask-size 1400ms cubic-bezier(0.215,0.61,0.355,1),
+                mask-size 1400ms cubic-bezier(0.215,0.61,0.355,1);
+  }
+  .mask-reveal.from-top { -webkit-mask-position: top; mask-position: top; }
+  .mask-reveal.from-bottom { -webkit-mask-position: bottom; mask-position: bottom; }
+  .mask-reveal.revealed { -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+
+  /* ---- card blur reveal ---- */
+  .blur-reveal {
+    opacity: 0;
+    filter: blur(0.625rem);
+    transform: translateY(1.875rem);
+    transition: opacity 900ms cubic-bezier(0.215,0.61,0.355,1),
+                filter 900ms cubic-bezier(0.215,0.61,0.355,1),
+                transform 900ms cubic-bezier(0.215,0.61,0.355,1);
+  }
+  .blur-reveal.revealed {
+    opacity: 1; filter: blur(0); transform: translateY(0);
+  }
+
+  /* ===================== Features ===================== */
+  .features {
+    padding-top: 5rem; padding-bottom: 10rem;
+  }
+  @media (min-width: 768px) {
+    .features { padding-top: 10rem; padding-bottom: 20rem; }
+  }
+  .features__header {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 3.75rem; margin-bottom: 3.75rem;
+  }
+  .features__mid {
+    display: flex; flex-direction: column; gap: 2.5rem;
+    margin-bottom: 5rem;
+  }
+  @media (min-width: 1024px) {
+    .features__mid { flex-direction: row; }
+    .features__mid > p { flex: 1; }
+    .features__mid > div:last-child { padding-left: 11.875rem; flex: 1; }
+  }
+  .features__lead { font-size: var(--fs-lead); line-height: 1.4; }
+  .feature-row {
+    display: flex; gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .feature-row__label {
+    width: 7.5rem; flex: none; font-size: 0.9rem; opacity: 0.5;
+  }
+  .feature-row__val { font-size: 0.9rem; line-height: 1.6; max-width: 25rem; }
+
+  .features__grid {
+    display: flex; flex-direction: column; gap: 0.625rem;
+    min-height: 31.25rem;
+  }
+  @media (min-width: 1024px) {
+    .features__grid { display: grid; grid-template-columns: 2fr 1fr; }
+  }
+  .feature-card { padding: 1.5rem; }
+  @media (min-width: 768px) { .feature-card { padding: 2.5rem; } }
+
+  .feature-main {
+    display: flex; flex-direction: column; gap: 2.5rem;
+  }
+  @media (min-width: 768px) {
+    .feature-main { flex-direction: row; }
+  }
+  .feature-main__left { display: flex; flex-direction: column; flex: 1; }
+  .feature-main__left h3 {
+    font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 1rem;
+  }
+  @media (min-width: 768px) { .feature-main__left h3 { font-size: 2.5rem; } }
+  .feature-main__left p { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.4; }
+  .spec-list { margin-top: auto; }
+  .spec-row {
+    display: flex; justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+  }
+  .spec-row .k { opacity: 0.6; }
+  .spec-row .v { text-align: right; }
+
+  .feature-main__right { flex: 1; display: flex; align-items: center; justify-content: center; }
+  .circle-cta {
+    position: relative;
+    width: 60%; aspect-ratio: 1;
+    border: 0.125rem dotted rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.02);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: var(--fs-circle); font-weight: 300;
+    text-align: center;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) { .circle-cta { width: 100%; } }
+  .circle-cta__hover {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 0.125rem dotted #fff;
+    background: rgba(255,255,255,0.06);
+    opacity: 0; transition: opacity 0.4s ease;
+  }
+  .circle-cta:hover .circle-cta__hover { opacity: 1; }
+  .circle-cta span { position: relative; z-index: 2; }
+
+  .feature-side {
+    display: flex; flex-direction: column; gap: 0.625rem;
+    min-height: 31.25rem;
+  }
+  .feature-side .feature-card {
+    flex: 1; display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .feature-side h3 { font-size: 1.5rem; letter-spacing: -0.02em; }
+
+  /* ===================== Carousel ===================== */
+  .carousel-sec {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding: 10rem 0;
+  }
+  @media (min-width: 768px) { .carousel-sec { padding: 20rem 0; } }
+  .carousel-sec__inner { padding-left: 1rem; }
+  @media (min-width: 768px) { .carousel-sec__inner { padding-left: 2.5rem; } }
+  .carousel__header {
+    display: flex; flex-direction: column; gap: 2.5rem;
+    margin-bottom: 2.5rem; padding-right: 1rem;
+  }
+  @media (min-width: 768px) { .carousel__header { margin-bottom: 5rem; padding-right: 2.5rem; } }
+  @media (min-width: 1024px) {
+    .carousel__header {
+      display: grid; grid-template-columns: 1fr 3fr 1fr; gap: 2.5rem; align-items: start;
+    }
+  }
+  .carousel__label { opacity: 0.6; color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+  .carousel__intro {
+    font-size: 0.875rem; line-height: 1.4375rem;
+  }
+  @media (min-width: 1024px) {
+    .carousel__intro { transform: translateX(-12.5rem); }
+  }
+  .carousel__row { display: flex; flex-direction: column; gap: 2.5rem; }
+  @media (min-width: 1024px) {
+    .carousel__row {
+      display: grid; grid-template-columns: 1fr 4fr; align-items: end; gap: 2.5rem;
+    }
+  }
+  .carousel__arrows { display: flex; gap: 0.625rem; padding-right: 1rem; }
+  @media (min-width: 768px) { .carousel__arrows { padding-right: 0; } }
+  .arrow-btn {
+    position: relative;
+    height: 3.75rem; width: 5.625rem;
+    border-radius: 0.375rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(1.25rem);
+    -webkit-backdrop-filter: blur(1.25rem);
+    font-size: 1.8rem;
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  .arrow-btn__hover {
+    position: absolute; inset: 0; background: rgba(255,255,255,0.1);
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .arrow-btn:hover .arrow-btn__hover { opacity: 1; }
+  .arrow-btn span { position: relative; z-index: 2; }
+
+  .carousel__track {
+    display: flex; gap: 0.625rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-right: 1rem;
+  }
+  @media (min-width: 768px) { .carousel__track { padding-right: 2.5rem; } }
+  .carousel__track::-webkit-scrollbar { display: none; }
+  .carousel-item {
+    min-width: 85vw; flex: none;
+    padding: 1rem;
+  }
+  @media (min-width: 640px) { .carousel-item { min-width: 28.125rem; } }
+  @media (min-width: 768px) { .carousel-item { padding: 1.5rem; } }
+  @media (min-width: 1024px) { .carousel-item { min-width: 37.5rem; } }
+  .carousel-item__img {
+    position: relative;
+    width: 100%; aspect-ratio: 1;
+    border-radius: 0.375rem;
+    background-size: cover; background-position: center;
+    overflow: hidden;
+    display: grid; place-items: center;
+  }
+  .carousel-item__title {
+    font-family: "Bitcount Single", monospace;
+    font-size: 1.75rem; font-weight: 350;
+    text-align: center;
+  }
+  @media (min-width: 768px) { .carousel-item__title { font-size: 2.5rem; } }
+  .carousel-item__foot {
+    position: absolute; left: 1.5rem; right: 1.5rem; bottom: 1.5rem;
+    display: flex; justify-content: space-between;
+    color: rgba(255,255,255,0.7); font-size: 1rem;
+  }
+  @media (min-width: 768px) {
+    .carousel-item__foot { left: 2.5rem; right: 2.5rem; bottom: 2.5rem; }
+  }
+
+  /* ===================== Contact ===================== */
+  .contact {
+    padding-top: 5rem; padding-bottom: 10rem;
+  }
+  .contact__panel {
+    width: 100%;
+    background: #fff; color: #000;
+    border-radius: 1.5rem;
+    padding: 5rem 2.5rem 2.5rem;
+    mix-blend-mode: screen;
+    margin-bottom: 3.75rem;
+    display: grid; place-items: center;
+  }
+  .contact__panel h2 {
+    font-family: "Bitcount Single", monospace;
+    font-weight: 250;
+    text-transform: uppercase;
+    font-size: var(--fs-contact-h2);
+    line-height: 0.85; letter-spacing: -0.02em;
+    text-align: center;
+  }
+  .panel-reveal {
+    opacity: 0;
+    filter: blur(1.875rem);
+    transform: translateY(3.75rem) scale(0.98);
+    transition: opacity 1400ms cubic-bezier(0.19,1,0.22,1),
+                filter 1400ms cubic-bezier(0.19,1,0.22,1),
+                transform 1400ms cubic-bezier(0.19,1,0.22,1);
+  }
+  .panel-reveal.revealed {
+    opacity: 1; filter: blur(0); transform: translateY(0) scale(1);
+  }
+  .contact__footer {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2.5rem;
+  }
+  .contact__address {
+    display: flex; flex-direction: column; gap: 1.25rem;
+    font-style: normal;
+  }
+  .contact-link {
+    font-size: var(--fs-contact-link);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.375rem;
+    transition: opacity 0.3s ease;
+  }
+  .contact-link:hover { opacity: 0.7; }
+  .contact__socials {
+    display: flex; flex-direction: column; gap: 2rem;
+  }
+  @media (min-width: 768px) {
+    .contact__socials { align-items: flex-end; text-align: right; }
+  }
+  .contact__socials .label { font-size: 0.9rem; opacity: 0.5; }
+
+  /* ===================== Pinned chrome ===================== */
+  .bottom-blur {
+    position: fixed; left: 0; bottom: 0; width: 100%; height: 21.875rem;
+    z-index: 90; pointer-events: none;
+    backdrop-filter: blur(2.5rem);
+    -webkit-backdrop-filter: blur(2.5rem);
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 100%);
+    mask-image: linear-gradient(to top, black 0%, transparent 100%);
+  }
+  .nav-island {
+    position: fixed; bottom: 1.25rem; left: 50%; transform: translateX(-50%);
+    z-index: 100;
+    display: flex; align-items: center; gap: 0.25rem;
+    padding: 0.375rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(1.25rem);
+    -webkit-backdrop-filter: blur(1.25rem);
+  }
+  .nav-island__logo {
+    font-family: "Bitcount Single", monospace;
+    font-weight: 250; font-size: 1.75rem;
+    padding: 0 0.75rem;
+    display: none;
+  }
+  @media (min-width: 640px) { .nav-island__logo { display: block; } }
+  .nav-chip {
+    position: relative;
+    height: 2.5rem; width: 4.5rem;
+    border-radius: 0.125rem;
+    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.1);
+    font-size: 0.75rem; font-weight: 500;
+    display: grid; place-items: center;
+    overflow: hidden;
+  }
+  @media (min-width: 640px) { .nav-chip { height: 2.75rem; } }
+  @media (min-width: 768px) { .nav-chip { width: 6.5rem; font-size: 0.875rem; } }
+  .nav-chip__hover {
+    position: absolute; inset: 0; background: rgba(255,255,255,0.08);
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .nav-chip:hover .nav-chip__hover { opacity: 1; }
+  .nav-chip span { position: relative; z-index: 2; }
+  .nav-cta {
+    height: 2.5rem; width: 4.5rem;
+    border-radius: 0.125rem;
+    background: #fff; color: #000;
+    font-weight: 600; font-size: 0.75rem;
+    display: grid; place-items: center;
+    transition: opacity 0.3s ease;
+  }
+  @media (min-width: 640px) { .nav-cta { height: 2.75rem; } }
+  @media (min-width: 768px) { .nav-cta { width: 6.5rem; font-size: 0.875rem; } }
+  .nav-cta:hover { opacity: 0.8; }
+
+  html.locked { overflow: hidden; height: 100%; }
+</style>
+</head>
+<body>
+
+  <!-- ===================== 1. Preloader ===================== -->
+  <div id="preloader">
+    <div id="preloader-bg"></div>
+    <div id="preloader-hole"></div>
+    <div id="preloader-counter" class="bitcount">0%</div>
+  </div>
+
+  <!-- ===================== 2. Hero ===================== -->
+  <section class="hero">
+    <video class="hero__video" autoplay loop muted playsinline
+      src="https://api.getlayers.ai/storage/v1/object/public/public/assets/creative-director-a6fefb9f54/hero.mp4"></video>
+    <div class="hero__glow" id="glow"></div>
+    <div class="hero__circle"></div>
+    <div class="hero__blur"></div>
+    <div class="hero__bottomgrad"></div>
+    <div class="hero__services">
+      <span>Visual Identity</span>
+      <span>Web &amp; Interactive</span>
+      <span>Brand Strategy</span>
+    </div>
+    <div class="hero__titleblock">
+      <h1 class="hero__h1" id="hero-h1" data-html="Creative Director">Creative Director</h1>
+      <p class="hero__desc">Independent Art Director &amp; Designer specializing<br />in digital experiences and high-end visual solutions.</p>
+    </div>
+  </section>
+
+  <!-- ===================== 3. Content wrapper ===================== -->
+  <div class="content">
+    <canvas id="lava"></canvas>
+    <div class="content__seam"></div>
+    <div class="grain"><div class="grain__tile" id="grain-tile"></div></div>
+
+    <!-- ===================== 4. Portfolio ===================== -->
+    <section class="section portfolio">
+      <div class="portfolio__header">
+        <h2 class="display-h2 scramble" data-scramble
+          data-html='<span class="dim70">Crafting Digital Experiences:</span><br><span class="w400">One Idea, Infinite Possibilities</span>'>Crafting Digital Experiences: One Idea, Infinite Possibilities</h2>
+        <div class="portfolio__right">
+          <p>Partnering with visionary brands to create immersive digital experiences and timeless visual identities.</p>
+          <button class="pill-btn">View projects</button>
+        </div>
+      </div>
+
+      <div class="portfolio__filters">
+        <div class="tag-row">
+          <span class="tag">Web Design</span>
+          <span class="tag">Branding</span>
+          <span class="tag">More +</span>
+        </div>
+        <div class="filters__center">NO COMPROMISES. JUST PURE DESIGN.</div>
+        <div class="filters__right">LATEST CASE STUDIES     VIEW ALL +</div>
+      </div>
+
+      <div class="portfolio__cards">
+        <div class="case-card glass">
+          <div class="case-card__img case-card__blurstrip mask-reveal from-top"
+            style="background-image:url('https://api.getlayers.ai/storage/v1/object/public/public/assets/creative-director-a6fefb9f54/art-direction.webp')">
+            <h3>E-Commerce Experience &amp;<br />Art Direction</h3>
+            <p class="case-card__desc">Redefining digital storefronts with seamless interactions and bold aesthetics.</p>
+          </div>
+        </div>
+        <div class="case-card glass">
+          <div class="case-card__img mask-reveal from-bottom"
+            style="background-image:url('https://api.getlayers.ai/storage/v1/object/public/public/assets/creative-director-a6fefb9f54/packaging.webp')">
+            <span class="case-card__badge">Brand Identity</span>
+            <h3 class="case-card__h3-bottom">Transforming brand visions into<br />compelling digital realities</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 5. Features ===================== -->
+    <section class="section features" id="services">
+      <div class="features__header">
+        <h2 class="display-h2 scramble" data-scramble
+          data-html='<span class="dim70">Comprehensive</span><br><span class="w400">Design Solutions</span>'>Comprehensive Design Solutions</h2>
+      </div>
+
+      <div class="features__mid">
+        <p class="features__lead">We provide a full range of creative services to meet your brand's unique needs. From brand identity and web design to interactive experiences, we ensure high-quality, engaging, and timeless visual solutions.</p>
+        <div>
+          <div class="feature-row">
+            <div class="feature-row__label">Features</div>
+            <div class="feature-row__val">Art Direction &amp; Strategy<br />Brand Identity Design<br />UI/UX &amp; Web Design<br />Motion Graphics<br />3D Visualizations<br />Interactive Experiences</div>
+          </div>
+          <div class="feature-row">
+            <div class="feature-row__label">Optimization</div>
+            <div class="feature-row__val">We combine aesthetic vision with technical expertise to create designs that are not only beautiful but also perform seamlessly across all platforms.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features__grid">
+        <div class="feature-card glass blur-reveal feature-main" data-stagger="0">
+          <div class="feature-main__left">
+            <h3>Digital Branding</h3>
+            <p>We craft compelling brand narratives and visual systems that resonate with your target audience, ensuring a strong and memorable market presence.</p>
+            <div class="spec-list">
+              <div class="spec-row"><span class="k">Core Tools</span><span class="v">Figma / After Effects</span></div>
+              <div class="spec-row"><span class="k">Deliverables</span><span class="v">UI/UX / Brand Guidelines</span></div>
+            </div>
+          </div>
+          <div class="feature-main__right">
+            <div class="circle-cta">
+              <div class="circle-cta__hover"></div>
+              <span>Start Project</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-side">
+          <div class="feature-card glass blur-reveal" data-stagger="150">
+            <h3>Project Timelines</h3>
+            <div class="spec-list">
+              <div class="spec-row"><span class="k">Minimum Duration</span><span class="v">2 weeks</span></div>
+              <div class="spec-row"><span class="k">Average Timeline</span><span class="v">4-8 weeks</span></div>
+            </div>
+          </div>
+          <div class="feature-card glass blur-reveal" data-stagger="300">
+            <h3>Our Impact</h3>
+            <div class="spec-list">
+              <div class="spec-row"><span class="k">Successfully Delivered</span><span class="v">over 50 projects</span></div>
+              <div class="spec-row"><span class="k">Global Clients</span><span class="v">across 15 countries</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 6. Carousel ===================== -->
+    <section class="carousel-sec" id="portfolio">
+      <div class="carousel-sec__inner">
+        <div class="carousel__header">
+          <div class="carousel__label">Portfolio</div>
+          <h2 class="display-h2 scramble" data-scramble
+            data-html='<span class="dim70">EXPLORE</span><br><span class="dim70">OUR LATEST</span><br><span class="w400">CASE STUDIES AND PROJECTS</span>'>EXPLORE OUR LATEST CASE STUDIES AND PROJECTS</h2>
+          <p class="carousel__intro">Make your brand an extension of your unique vision.<br />Choose from a range of high-end design services.<br /><br />Customize every detail to suit your audience's preferences.</p>
+        </div>
+      </div>
+
+      <div class="carousel-sec__inner">
+        <div class="carousel__row">
+          <div class="carousel__arrows">
+            <button class="arrow-btn" id="arrow-prev"><span>&larr;</span><div class="arrow-btn__hover"></div></button>
+            <button class="arrow-btn" id="arrow-next"><span>&rarr;</span><div class="arrow-btn__hover"></div></button>
+          </div>
+          <div class="carousel__track" id="carousel-track">
+            <div class="carousel-item glass">
+              <div class="carousel-item__img mask-reveal from-top" data-cindex="0"
+                style="background-image:url('https://api.getlayers.ai/storage/v1/object/public/public/assets/creative-director-a6fefb9f54/1.webp')">
+                <div class="carousel-item__title">Lumina X-M</div>
+                <div class="carousel-item__foot"><span>Brand Identity</span><span>2026</span></div>
+              </div>
+            </div>
+            <div class="carousel-item glass">
+              <div class="carousel-item__img mask-reveal from-top" data-cindex="1"
+                style="background-image:url('https://api.getlayers.ai/storage/v1/object/public/public/assets/creative-director-a6fefb9f54/2.webp')">
+                <div class="carousel-item__title">Nexus 43-M</div>
+                <div class="carousel-item__foot"><span>E-Commerce</span><span>2026</span></div>
+              </div>
+            </div>
+            <div class="carousel-item glass">
+              <div class="carousel-item__img mask-reveal from-top" data-cindex="2"
+                style="background-image:url('https://api.getlayers.ai/storage/v1/object/public/public/assets/creative-director-a6fefb9f54/1.webp')">
+                <div class="carousel-item__title">MC80 FT-6</div>
+                <div class="carousel-item__foot"><span>Interactive</span><span>2025</span></div>
+              </div>
+            </div>
+            <div class="carousel-item glass">
+              <div class="carousel-item__img mask-reveal from-top" data-cindex="3"
+                style="background-image:url('https://api.getlayers.ai/storage/v1/object/public/public/assets/creative-director-a6fefb9f54/2.webp')">
+                <div class="carousel-item__title">Aero Vision</div>
+                <div class="carousel-item__foot"><span>Art Direction</span><span>2025</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 7. Contact ===================== -->
+    <section class="section contact" id="contact">
+      <div class="contact__panel panel-reveal">
+        <h2 class="scramble" data-scramble data-html="GET IN TOUCH">GET IN TOUCH</h2>
+      </div>
+      <div class="contact__footer">
+        <address class="contact__address">
+          <a class="contact-link" href="tel:+821077228976">+82 10-7722-8976</a>
+          <a class="contact-link" href="mailto:creative@director.com">creative@director.com</a>
+        </address>
+        <div class="contact__socials">
+          <span class="label">Our socials</span>
+          <a class="contact-link" href="#">Instagram</a>
+          <a class="contact-link" href="#">Behance</a>
+          <a class="contact-link" href="#">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===================== 8. Pinned chrome ===================== -->
+  <div class="bottom-blur"></div>
+  <nav class="nav-island">
+    <span class="nav-island__logo">CD</span>
+    <a class="nav-chip" href="#services" data-nav><span>Services</span><div class="nav-chip__hover"></div></a>
+    <a class="nav-chip" href="#portfolio" data-nav><span>Work</span><div class="nav-chip__hover"></div></a>
+    <a class="nav-chip" href="#contact" data-nav><span>About</span><div class="nav-chip__hover"></div></a>
+    <a class="nav-cta" href="#contact" data-nav>Contact Us</a>
+  </nav>
+
+<script type="module">
+import Lenis from "https://unpkg.com/lenis@1.3.19/dist/lenis.mjs";
+
+/* ============================================================
+   Lenis smooth scroll
+============================================================ */
+const lenis = new Lenis({ smoothWheel: true });
+function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+document.querySelectorAll("[data-nav]").forEach((a) => {
+  a.addEventListener("click", (e) => {
+    const href = a.getAttribute("href");
+    if (href && href.startsWith("#")) {
+      e.preventDefault();
+      const el = document.querySelector(href);
+      if (el) lenis.scrollTo(el);
+    }
+  });
+});
+
+/* ============================================================
+   Scramble text utility
+
+   Characters cycle through random glyphs before settling on the
+   real text at ~35ms/frame. Two modes:
+     - "simultaneous": start=0, end=random(25..45)   (hero h1)
+     - "typewriter":   typeIndex resets on C E O P    (headings)
+   Structural markup (<br>, <span>) in data-html is preserved.
+============================================================ */
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+const FRAME_MS = 35;
+
+function escapeChar(c) {
+  if (c === "&") return "&amp;";
+  if (c === "<") return "&lt;";
+  if (c === ">") return "&gt;";
+  return c;
+}
+
+function scrambleElement(el, mode) {
+  const template = el.getAttribute("data-html") || el.textContent;
+
+  // Split into markup chunks (<...>) and text chunks.
+  const tokens = [];
+  const re = /(<[^>]+>)/g;
+  let last = 0, m;
+  while ((m = re.exec(template)) !== null) {
+    if (m.index > last) tokens.push({ markup: false, text: template.slice(last, m.index) });
+    tokens.push({ markup: true, text: m[0] });
+    last = re.lastIndex;
+  }
+  if (last < template.length) tokens.push({ markup: false, text: template.slice(last) });
+
+  // Decode entities per text token and build queues.
+  const decoder = document.createElement("textarea");
+  let typeIndex = 0; // shared across text tokens for typewriter continuity
+  const tokenQueues = tokens.map((tok) => {
+    if (tok.markup) return null;
+    decoder.innerHTML = tok.text;
+    const decoded = decoder.value;
+    const q = [];
+    for (let i = 0; i < decoded.length; i++) {
+      const ch = decoded[i];
+      let start, end;
+      if (mode === "simultaneous") {
+        start = 0;
+        end = 25 + Math.floor(Math.random() * 21); // 25..45
+      } else {
+        if (ch === "C" || ch === "E" || ch === "O" || ch === "P") typeIndex = 0;
+        start = typeIndex * 3 + Math.floor(Math.random() * 2); // +0..1
+        end = start + 8 + Math.floor(Math.random() * 7); // +8..14
+        typeIndex++;
+      }
+      q.push({ char: ch, start, end });
+    }
+    return q;
+  });
+
+  let maxEnd = 1;
+  tokenQueues.forEach((q) => { if (q) q.forEach((it) => { if (it.end > maxEnd) maxEnd = it.end; }); });
+
+  let frame = 0;
+  function draw() {
+    let out = "";
+    let idx = 0;
+    for (let t = 0; t < tokens.length; t++) {
+      const tok = tokens[t];
+      if (tok.markup) { out += tok.text; continue; }
+      const q = tokenQueues[t];
+      for (let i = 0; i < q.length; i++) {
+        const item = q[i];
+        const real = item.char;
+        if (real === " " || real === "\n") { out += real; idx++; continue; }
+        if (frame < item.start) {
+          out += `<span style="visibility:hidden">${escapeChar(real)}</span>`;
+        } else if (frame < item.end) {
+          const g = CHARS[(idx * 31 + frame * 17) % CHARS.length];
+          out += escapeChar(g);
+        } else {
+          out += escapeChar(real);
+        }
+        idx++;
+      }
+    }
+    el.innerHTML = out;
+  }
+  draw();
+  const timer = setInterval(() => {
+    frame++;
+    draw();
+    if (frame > maxEnd) clearInterval(timer);
+  }, FRAME_MS);
+}
+
+/* Section headings: trigger once at threshold 0.3, typewriter mode */
+const headingObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      scrambleElement(e.target, "typewriter");
+      headingObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll("[data-scramble]").forEach((el) => headingObserver.observe(el));
+
+/* Hero h1 scramble (simultaneous), triggered by the preloader */
+function scrambleHeroH1() {
+  scrambleElement(document.getElementById("hero-h1"), "simultaneous");
+}
+
+/* ============================================================
+   Mouse-follow glow (hero)
+============================================================ */
+(function () {
+  const glow = document.getElementById("glow");
+  if (!glow) return;
+  const RADIUS_RATIO = 0.65, FOLLOW = 0.08, FLARE_GAIN = 0.8, FLARE_MAX = 20,
+        FLARE_EASE = 0.05, TIME_SCALE = 0.0015;
+  let size = 0;
+  const mouse = { x: 50, y: 50 };
+  const pos = { x: 50, y: 50 };
+  let flare = 0;
+  let lastX = 50, lastY = 50;
+
+  function computeSize() {
+    const w = window.innerWidth, h = window.innerHeight;
+    const diag = Math.hypot(w, h);
+    size = 2 * RADIUS_RATIO * (diag / 2);
+    glow.style.width = size + "px";
+    glow.style.height = size + "px";
+  }
+  computeSize();
+  window.addEventListener("resize", computeSize);
+
+  window.addEventListener("mousemove", (e) => {
+    mouse.x = (e.clientX / window.innerWidth) * 100;
+    mouse.y = (e.clientY / window.innerHeight) * 100;
+  });
+
+  setInterval(() => {
+    const dx = mouse.x - pos.x, dy = mouse.y - pos.y;
+    pos.x += dx * FOLLOW;
+    pos.y += dy * FOLLOW;
+
+    const mvx = mouse.x - lastX, mvy = mouse.y - lastY;
+    lastX = mouse.x; lastY = mouse.y;
+    const targetFlare = Math.min(Math.hypot(mvx, mvy) * FLARE_GAIN, FLARE_MAX);
+    flare += (targetFlare - flare) * FLARE_EASE;
+
+    const time = Date.now() * TIME_SCALE;
+    const breath = Math.sin(time) * 4;
+    const wobbleX = Math.cos(time * 1.5) * 1.5;
+    const wobbleY = Math.sin(time * 1.8) * 1.5;
+
+    const px = ((pos.x + wobbleX) / 100) * window.innerWidth - size / 2;
+    const py = ((pos.y + wobbleY) / 100) * window.innerHeight - size / 2;
+    const scale = (65 + breath * 1.5 + flare) / 65;
+    glow.style.transform = `translate3d(${px}px, ${py}px, 0) scale(${scale})`;
+  }, 15);
+})();
+
+/* ============================================================
+   Film grain overlay — jump through the 5-step cycle every 80ms
+============================================================ */
+(function () {
+  const tile = document.getElementById("grain-tile");
+  if (!tile) return;
+  const offsets = [
+    [0, 0],
+    [3.125, 3.125],
+    [-3.125, 3.125],
+    [3.125, -3.125],
+    [-3.125, -3.125],
+  ];
+  let i = 0;
+  setInterval(() => {
+    const [x, y] = offsets[i % offsets.length];
+    tile.style.transform = `translate(${x}rem, ${y}rem)`;
+    i++;
+  }, 80);
+})();
+
+/* ============================================================
+   Reveal observers: mask / card-blur / panel-blur
+============================================================ */
+const maskObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add("revealed");
+      maskObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll(".case-card__img.mask-reveal").forEach((el) => maskObserver.observe(el));
+
+const blurObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      const delay = parseInt(e.target.getAttribute("data-stagger") || "0", 10);
+      setTimeout(() => e.target.classList.add("revealed"), delay);
+      blurObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll(".blur-reveal").forEach((el) => blurObserver.observe(el));
+
+const panelObserver = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      e.target.classList.add("revealed");
+      panelObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll(".panel-reveal").forEach((el) => panelObserver.observe(el));
+
+/* Carousel image mask-reveals: staggered i*150 once the track enters view */
+(function () {
+  const track = document.getElementById("carousel-track");
+  if (!track) return;
+  const once = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        track.querySelectorAll(".carousel-item__img.mask-reveal").forEach((img) => {
+          const idx = parseInt(img.getAttribute("data-cindex") || "0", 10);
+          setTimeout(() => img.classList.add("revealed"), idx * 150);
+        });
+        once.unobserve(track);
+      }
+    });
+  }, { threshold: 0.2 });
+  once.observe(track);
+})();
+
+/* ============================================================
+   Carousel arrows — JS-animated scrollLeft (~600ms ease-out cubic)
+============================================================ */
+(function () {
+  const track = document.getElementById("carousel-track");
+  const prev = document.getElementById("arrow-prev");
+  const next = document.getElementById("arrow-next");
+  if (!track || !prev || !next) return;
+
+  function itemStep() {
+    const item = track.querySelector(".carousel-item");
+    if (!item) return 300;
+    const gap = 0.625 * parseFloat(getComputedStyle(document.documentElement).fontSize);
+    return item.getBoundingClientRect().width + gap;
+  }
+
+  let anim = null;
+  function animateTo(target) {
+    if (anim) cancelAnimationFrame(anim);
+    const start = track.scrollLeft;
+    const max = track.scrollWidth - track.clientWidth;
+    target = Math.max(0, Math.min(target, max));
+    const dist = target - start;
+    const dur = 600;
+    let t0 = null;
+    function tick(ts) {
+      if (t0 === null) t0 = ts;
+      const p = Math.min((ts - t0) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+      track.scrollLeft = start + dist * eased;
+      if (p < 1) anim = requestAnimationFrame(tick);
+    }
+    anim = requestAnimationFrame(tick);
+  }
+
+  next.addEventListener("click", () => animateTo(track.scrollLeft + itemStep()));
+  prev.addEventListener("click", () => animateTo(track.scrollLeft - itemStep()));
+})();
+
+/* ============================================================
+   WebGL lava scene — raymarched capsule metaballs, blurred
+============================================================ */
+(function () {
+  const canvas = document.getElementById("lava");
+  const wrapper = document.querySelector(".content");
+  if (!canvas || !wrapper) return;
+
+  const gl = canvas.getContext("webgl", {
+    alpha: false, antialias: false, depth: false, stencil: false,
+    powerPreference: "high-performance",
+  });
+  if (!gl) return;
+
+  const VERT = `
+attribute vec2 position;
+void main() {
+  gl_Position = vec4(position, 0.0, 1.0);
+}`;
+
+  const FRAG = `
+precision highp float;
+uniform vec2 u_resolution;
+uniform float u_time;
+uniform float u_speed;
+uniform float u_blend;
+uniform vec3 u_col1;
+uniform vec3 u_col2;
+uniform vec3 u_col3;
+uniform vec3 u_col4;
+uniform vec3 u_col5;
+
+float smin(float a, float b, float k) {
+    float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0);
+    return mix(b, a, h) - k * h * (1.0 - h);
+}
+
+float sdCapsule( vec3 p, vec3 a, vec3 b, float r ) {
+    vec3 pa = p - a, ba = b - a;
+    float h = clamp( dot(pa,ba)/dot(ba,ba), 0.0, 1.0 );
+    return length( pa - ba*h ) - r;
+}
+
+float map(vec3 p) {
+    float t = u_time * u_speed;
+
+    vec3 q = p;
+    q.x += sin(p.y * 0.5 + t) * 1.0;
+    q.z += cos(p.x * 0.4 + t * 0.8) * 1.0;
+
+    float d = 100.0;
+    float k = u_blend;
+
+    vec3 a0 = vec3(sin(t*0.2)*1.0, -100.0, cos(t*0.3)*1.0);
+    vec3 b0 = vec3(sin(t*0.4)*1.0, 100.0, cos(t*0.5)*1.0);
+    d = smin(d, sdCapsule(q, a0, b0, 2.0), k);
+
+    vec3 a1 = vec3(sin(t*0.5)*3.0, -40.0 + fract(t*0.15 + 0.0)*80.0, sin(t*0.6)*2.0);
+    vec3 b1 = a1 + vec3(cos(t*0.7)*3.0, 6.0, sin(t*0.5)*-2.0);
+    d = smin(d, sdCapsule(q, a1, b1, 1.8), k);
+
+    vec3 a2 = vec3(cos(t*0.6)*-4.0, -40.0 + fract(t*0.17 + 0.3)*80.0, cos(t*0.4)*1.5);
+    vec3 b2 = a2 + vec3(sin(t*0.9)*2.5, 4.5, cos(t*0.8)*2.5);
+    d = smin(d, sdCapsule(q, a2, b2, 1.5), k);
+
+    vec3 a3 = vec3(sin(t*0.4)*-3.5, -40.0 + fract(t*0.16 + 0.6)*80.0, 0.0);
+    vec3 b3 = a3 + vec3(sin(t*0.8)*1.5, 7.0, cos(t*0.5)*-1.5);
+    d = smin(d, sdCapsule(q, a3, b3, 1.0), k);
+
+    vec3 a4 = vec3(cos(t*0.8)*4.5, -40.0 + fract(t*0.18 + 0.8)*80.0, sin(t*0.9)*-2.5);
+    vec3 b4 = a4 + vec3(cos(t*1.1)*-2.0, 3.5, sin(t*1.2)*2.0);
+    d = smin(d, sdCapsule(q, a4, b4, 1.2), k);
+
+    vec3 a5 = vec3(sin(t*1.1)*-1.5, -40.0 + fract(t*0.2 + 0.1)*80.0, cos(t*0.7)*-1.5);
+    vec3 b5 = a5 + vec3(4.0, 1.0 + sin(t)*2.0, 0.0);
+    d = smin(d, sdCapsule(q, a5, b5, 1.3), k);
+
+    vec3 a6 = vec3(cos(t*1.3)*-2.5, -40.0 + fract(t*0.19 + 0.5)*80.0, sin(t*1.2)*1.5);
+    vec3 b6 = a6 + vec3(0.0, 5.0, 0.0);
+    d = smin(d, sdCapsule(q, a6, b6, 2.0), k);
+
+    vec3 a7 = vec3(sin(t*0.9)*2.5, -40.0 + fract(t*0.21 + 0.4)*80.0, cos(t*1.4)*-1.0);
+    vec3 b7 = a7 + vec3(0.0, 3.0, 0.0);
+    d = smin(d, sdCapsule(q, a7, b7, 0.8), k);
+
+    vec3 a8 = vec3(cos(t*0.7)*3.5, -40.0 + fract(t*0.14 + 0.7)*80.0, sin(t*0.5)*1.5);
+    vec3 b8 = a8 + vec3(sin(t*1.5)*-2.0, 4.0, cos(t*0.9)*2.0);
+    d = smin(d, sdCapsule(q, a8, b8, 1.6), k);
+
+    return d * 0.6;
+}
+
+vec3 calcNormal(vec3 p) {
+    vec2 e = vec2(0.01, -0.01);
+    return normalize(
+        e.xyy * map(p + e.xyy) +
+        e.yyx * map(p + e.yyx) +
+        e.yxy * map(p + e.yxy) +
+        e.xxx * map(p + e.xxx)
+    );
+}
+
+void main() {
+    vec2 uv = (gl_FragCoord.xy - 0.5 * u_resolution.xy) / min(u_resolution.y, u_resolution.x);
+
+    vec3 ro = vec3(0.0, 0.0, 9.0);
+    vec3 rd = normalize(vec3(uv, -1.0));
+
+    float dO = 0.0;
+    vec3 p;
+    for(int i = 0; i < 48; i++) {
+        p = ro + rd * dO;
+        float dS = map(p);
+        dO += dS;
+        if(dS < 0.02 || dO > 20.0) break;
+    }
+
+    vec3 col = vec3(0.0);
+
+    if(dO < 20.0) {
+        vec3 n = calcNormal(p);
+
+        vec3 baseColor = mix(u_col1, u_col2, smoothstep(-5.0, 5.0, p.y));
+        baseColor = mix(baseColor, u_col4, smoothstep(-2.0, 4.0, p.x));
+        baseColor = mix(baseColor, u_col5, smoothstep(2.0, 6.0, p.x + p.y));
+        baseColor = mix(baseColor, u_col3, smoothstep(3.0, 6.0, -p.x));
+
+        vec3 lightDir1 = normalize(vec3(1.0, 1.0, 1.0));
+        vec3 lightDir2 = normalize(vec3(-1.0, -1.0, -0.5));
+        vec3 lightDir3 = normalize(vec3(0.0, 1.0, -1.0));
+
+        float diff = max(dot(n, lightDir1), 0.0);
+        float fresnel = pow(1.0 - max(dot(n, -rd), 0.0), 3.0);
+        float ao = clamp(map(p + n * 0.5) / 0.5, 0.0, 1.0);
+
+        col = baseColor * (diff * 0.7 + 0.5) * ao;
+        col += u_col4 * max(dot(n, lightDir2), 0.0) * fresnel * 1.2;
+        col += u_col3 * max(dot(n, lightDir3), 0.0) * fresnel * 1.0;
+    }
+
+    col = pow(col, vec3(1.0/1.8));
+
+    gl_FragColor = vec4(col, 1.0);
+}`;
+
+  function compile(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+    -1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1,
+  ]), gl.STATIC_DRAW);
+  const posLoc = gl.getAttribLocation(prog, "position");
+  gl.enableVertexAttribArray(posLoc);
+  gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+  const U = (n) => gl.getUniformLocation(prog, n);
+  const uRes = U("u_resolution"), uTime = U("u_time");
+
+  function hex(h) {
+    return [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.slice(3, 5), 16) / 255, parseInt(h.slice(5, 7), 16) / 255];
+  }
+  gl.uniform1f(U("u_speed"), 0.15);
+  gl.uniform1f(U("u_blend"), 1.0);
+  gl.uniform3fv(U("u_col1"), hex("#ff1a00"));
+  gl.uniform3fv(U("u_col2"), hex("#ff1a00"));
+  gl.uniform3fv(U("u_col3"), hex("#ff1a00"));
+  gl.uniform3fv(U("u_col4"), hex("#ffefcc"));
+  gl.uniform3fv(U("u_col5"), hex("#0040ff"));
+
+  const MAX_PIXELS = 400000;
+  function resize() {
+    const rect = wrapper.getBoundingClientRect();
+    const w = Math.max(1, rect.width), h = Math.max(1, rect.height);
+    const scale = Math.min(1, Math.sqrt(MAX_PIXELS / (w * h)));
+    canvas.width = Math.max(1, Math.floor(w * scale));
+    canvas.height = Math.max(1, Math.floor(h * scale));
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.uniform2f(uRes, canvas.width, canvas.height);
+  }
+  resize();
+  window.addEventListener("resize", resize);
+  const roObserver = new ResizeObserver(resize);
+  roObserver.observe(wrapper);
+
+  let onScreen = false;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { onScreen = e.isIntersecting; });
+  });
+  io.observe(canvas);
+
+  let startTime = null, lastDraw = 0;
+  function render(ts) {
+    requestAnimationFrame(render);
+    if (!onScreen) return;
+    if (ts - lastDraw < 33) return; // ~30fps
+    lastDraw = ts;
+    if (startTime === null) startTime = ts;
+    gl.uniform1f(uTime, (ts - startTime) / 1000);
+    gl.drawArrays(gl.TRIANGLES, 0, 6);
+  }
+  requestAnimationFrame(render);
+})();
+
+/* ============================================================
+   Preloader / reveal sequence (plays once, scroll locked)
+============================================================ */
+(function () {
+  const preloader = document.getElementById("preloader");
+  const bg = document.getElementById("preloader-bg");
+  const counter = document.getElementById("preloader-counter");
+  const hole = document.getElementById("preloader-hole");
+
+  lenis.stop();
+  document.documentElement.classList.add("locked");
+
+  const COUNT_MS = 2500;
+  const HOLE_MS = 3000;
+  const easeOutQuart = (x) => 1 - Math.pow(1 - x, 4);
+  const easeInOutQuart = (x) => x < 0.5 ? 8 * x * x * x * x : 1 - Math.pow(-2 * x + 2, 4) / 2;
+
+  let t0 = null;
+  function count(ts) {
+    if (t0 === null) t0 = ts;
+    const p = Math.min((ts - t0) / COUNT_MS, 1);
+    counter.textContent = Math.floor(easeOutQuart(p) * 100) + "%";
+    if (p < 1) requestAnimationFrame(count);
+    else reveal();
+  }
+  requestAnimationFrame(count);
+
+  function reveal() {
+    scrambleHeroH1();
+
+    bg.style.transition = "opacity 800ms ease";
+    bg.style.opacity = "0";
+    counter.style.transition = "opacity 1200ms ease";
+    counter.style.opacity = "0";
+
+    let h0 = null;
+    function holeAnim(ts) {
+      if (h0 === null) h0 = ts;
+      const p = Math.min((ts - h0) / HOLE_MS, 1);
+      const s = 1 + easeInOutQuart(p) * 14; // 1 -> 15
+      hole.style.transform = `translate(-50%, -50%) scale(${s})`;
+      if (p < 1) requestAnimationFrame(holeAnim);
+    }
+    requestAnimationFrame(holeAnim);
+
+    setTimeout(() => {
+      lenis.start();
+      document.documentElement.classList.remove("locked");
+      preloader.style.transition = "opacity 1000ms ease";
+      preloader.style.opacity = "0";
+      setTimeout(() => preloader.remove(), 1000);
+    }, 2000);
+  }
+})();
+</script>
+</body>
+</html>
