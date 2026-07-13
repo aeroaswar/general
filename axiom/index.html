@@ -3,33 +3,33 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AXIOM — Human Performance · Research Peptides · For Research Use Only</title>
-<meta name="description" content="Clinical-grade research peptides for performance, recovery and longevity science. Third-party HPLC verified, ≥98% purity. For laboratory research use only." />
-<meta name="theme-color" content="#000000" />
+<title>AXIOM — Human Performance & Longevity · Peptides · Therapy · Wellness</title>
+<meta name="description" content="Human performance & longevity — verified research peptides, clinical red-light therapy, recovery, wellness and apparel under one standard. Engineered for the long run." />
+<meta name="theme-color" content="#070605" />
 <meta name="robots" content="index,follow" />
-<link rel="canonical" href="https://axiompeptides.example/" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23000000'/%3E%3Cg stroke='%23ffffff' stroke-width='6' stroke-linecap='round' fill='none'%3E%3Cpolyline points='24,74 38,26 52,74'/%3E%3Ccircle cx='70' cy='52' r='16'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="canonical" href="https://axiomperformance.example/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070605'/%3E%3Cg stroke='%23C88A4E' stroke-width='6' stroke-linecap='round' fill='none'%3E%3Cpolyline points='24,74 38,26 52,74'/%3E%3Ccircle cx='70' cy='52' r='16'/%3E%3C/g%3E%3C/svg%3E" />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content="AXIOM — Human Performance" />
-<meta property="og:title" content="AXIOM — Human Performance · Research Peptides" />
-<meta property="og:description" content="Clinical-grade research peptides — third-party HPLC verified, ≥98% purity. For research use only." />
-<meta property="og:url" content="https://axiompeptides.example/" />
+<meta property="og:site_name" content="AXIOM — Human Performance & Longevity" />
+<meta property="og:title" content="AXIOM — Human Performance & Longevity" />
+<meta property="og:description" content="Verified peptides, clinical red-light therapy, recovery, wellness and apparel — engineered for the long run." />
+<meta property="og:url" content="https://axiomperformance.example/" />
 <meta property="og:image" content="og.svg" />
 <meta property="og:image:type" content="image/svg+xml" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="AXIOM — Human Performance · Research Peptides" />
-<meta name="twitter:description" content="Clinical-grade research peptides — third-party HPLC verified, ≥98% purity. For research use only." />
+<meta name="twitter:title" content="AXIOM — Human Performance & Longevity" />
+<meta name="twitter:description" content="Verified peptides, clinical red-light therapy, recovery, wellness and apparel — engineered for the long run." />
 <meta name="twitter:image" content="og.svg" />
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"Organization",
-  "name":"AXIOM — Human Performance",
-  "description":"Clinical-grade research peptides for laboratory research use only.",
-  "url":"https://axiompeptides.example/",
-  "logo":"https://axiompeptides.example/og.svg",
+  "name":"AXIOM — Human Performance & Longevity",
+  "description":"Human performance & longevity — verified peptides, clinical red-light therapy, recovery, wellness and apparel.",
+  "url":"https://axiomperformance.example/",
+  "logo":"https://axiomperformance.example/og.svg",
   "address":{"@type":"PostalAddress","addressLocality":"Jakarta","addressCountry":"ID"},
   "contactPoint":{"@type":"ContactPoint","contactType":"sales","availableLanguage":["en","id"]}
 }
@@ -39,7 +39,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
 <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
 
-<!-- Three.js r0.143.0 — DNA helix hero -->
+<!-- Three.js r0.143.0 — abstract performance/longevity hero field -->
 <script type="importmap">
 {
   "imports": {
@@ -51,13 +51,20 @@
 
 <style>
 :root{
-  --bg:#000000;
-  --ink:#ffffff;
-  --muted:#9a9a9a;
-  --muted-2:#6a6a6a;
-  --line:rgba(255,255,255,.13);
-  --line-2:rgba(255,255,255,.24);
-  --line-soft:rgba(255,255,255,.07);
+  --bg:#070605;
+  --ink:#F2EDE5;
+  --muted:#9c9488;
+  --muted-2:#6a635a;
+  --line:rgba(242,237,229,.12);
+  --line-2:rgba(242,237,229,.22);
+  --line-soft:rgba(242,237,229,.06);
+  /* Bronze / copper accent system */
+  --accent:#C88A4E;
+  --accent-bright:#E7B173;
+  --accent-deep:#7C4C24;
+  --accent-soft:rgba(200,138,78,.14);
+  --accent-line:rgba(200,138,78,.34);
+  --accent-grad:linear-gradient(120deg,#E7B173 0%,#C88A4E 46%,#9A5F2C 100%);
   --maxw:1280px;
   --pad:34px;
   --display:"Jost","Century Gothic",system-ui,sans-serif;
@@ -73,7 +80,7 @@ body{
 }
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
 a{color:inherit;text-decoration:none}
-::selection{background:#fff;color:#000}
+::selection{background:var(--accent);color:#0a0704}
 img{max-width:100%;display:block}
 .tnum{font-variant-numeric:tabular-nums}
 
@@ -419,7 +426,7 @@ footer{position:relative;z-index:3;background:var(--bg);border-top:1px solid var
 /* ---------- Custom cursor ---------- */
 #cursorRing,#cursorDot{position:fixed;top:0;left:0;z-index:200;pointer-events:none;border-radius:50%;mix-blend-mode:difference;will-change:transform;opacity:0;transition:opacity .3s ease}
 #cursorRing{width:32px;height:32px;border:1px solid #fff;margin:-16px 0 0 -16px;transition:width .22s ease,height .22s ease,margin .22s ease,background .22s ease,opacity .3s ease}
-#cursorDot{width:5px;height:5px;background:#fff;margin:-2.5px 0 0 -2.5px}
+#cursorDot{width:5px;height:5px;background:var(--accent-bright);margin:-2.5px 0 0 -2.5px}
 body.cursor-on #cursorRing,body.cursor-on #cursorDot{opacity:1}
 body.cursor-on,body.cursor-on a,body.cursor-on button,body.cursor-on input,body.cursor-on select,body.cursor-on summary,body.cursor-on label,body.cursor-on .tlink,body.cursor-on .pcard{cursor:none}
 #cursorRing.hover{width:56px;height:56px;margin:-28px 0 0 -28px;background:rgba(255,255,255,.14)}
@@ -456,6 +463,58 @@ nav.nav-hidden{transform:translateY(-100%)}
   .pcard-price{grid-column:1;grid-row:3;text-align:left;margin-top:4px}
   .pcard-actions{grid-column:2;grid-row:1/4;align-items:center}
 }
+
+/* ============================================================
+   Performance & Longevity — bronze accent layer
+   ============================================================ */
+/* Section numerals, kickers & eyebrows carry the accent */
+.sec-head .no,.stmt .idx,.cat-no,.co-head .no,.hero-mark .tag,.pillar-no{color:var(--accent)}
+.kicker,.eyebrow{color:var(--accent);opacity:.92}
+/* Hero accent word */
+.hero h1 em{font-style:normal;background:var(--accent-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--accent)}
+.stmt h2 em{font-style:normal;color:var(--accent)}
+/* Links / arrows */
+.tlink{color:var(--ink)}
+.tlink:hover{color:var(--accent-bright)}
+.tlink:hover::after{background:var(--accent)}
+.tlink .ar{color:var(--accent)}
+.nav-links a:not(.btn):hover{color:var(--accent-bright)}
+.navcart:hover{color:var(--accent-bright)}
+.navcart .cartbadge{color:var(--accent-bright)}
+/* Buttons — bronze fill */
+.btn:hover{background:var(--accent);color:#0a0704;border-color:var(--accent)}
+.btn-solid{background:var(--accent);border-color:var(--accent);color:#0a0704}
+.btn-solid:hover{background:transparent;color:var(--accent-bright);border-color:var(--accent-line)}
+/* Chips */
+.chip:hover{border-color:var(--accent-line);color:var(--accent-bright)}
+.chip.active{background:var(--accent);color:#0a0704;border-color:var(--accent)}
+/* Catalogue action buttons */
+.add-btn:hover{border-color:var(--accent);color:var(--accent-bright)}
+.add-btn.added{background:var(--accent);border-color:var(--accent);color:#0a0704}
+.ref-btn:hover{border-color:var(--accent-line);color:var(--accent-bright)}
+/* Certificate / verification highlight */
+.coa-h .mark{background:var(--accent-grad);color:#0a0704}
+.coa-h .pass{color:var(--accent-bright);border-color:var(--accent-line)}
+.coa-cell .v.red{color:var(--accent-bright)}
+.feat .ic{color:var(--accent)}
+/* Gate mark */
+.gate-card .mk{color:var(--accent);border-color:var(--accent-line)}
+/* Manifesto / statement accents already inherit via em */
+
+/* ---------- Pillars ---------- */
+.pillars{padding:104px 0 96px;border-top:1px solid var(--line)}
+.pillar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:52px;border-top:1px solid var(--line)}
+.pillar{padding:34px 26px 40px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);position:relative;transition:background .3s}
+.pillar:nth-child(5n){border-right:none}
+.pillar:hover{background:linear-gradient(180deg,var(--accent-soft),transparent 70%)}
+.pillar-no{font-family:var(--sans);font-size:11px;letter-spacing:.06em;font-weight:500;font-variant-numeric:tabular-nums}
+.pillar-ic{margin-top:20px;font-size:26px;color:var(--accent-bright);line-height:1}
+.pillar h4{font-family:var(--display);font-weight:400;font-size:19px;letter-spacing:-.005em;margin-top:20px;color:var(--ink)}
+.pillar p{color:var(--muted);font-size:13px;line-height:1.7;font-weight:300;margin-top:10px}
+.pillar .pillar-link{margin-top:18px;font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--accent);display:inline-flex;gap:7px;align-items:center;transition:gap .2s}
+.pillar:hover .pillar-link{gap:12px}
+@media(max-width:900px){.pillar-grid{grid-template-columns:repeat(2,1fr)}.pillar:nth-child(5n){border-right:1px solid var(--line)}.pillar:nth-child(2n){border-right:none}}
+@media(max-width:560px){.pillar-grid{grid-template-columns:1fr}.pillar,.pillar:nth-child(2n){border-right:none}}
 </style>
 </head>
 <body>
@@ -474,25 +533,25 @@ nav.nav-hidden{transform:translateY(-100%)}
 <div id="cursorRing"></div>
 <div id="cursorDot"></div>
 
-<!-- ===== Three.js DNA helix hero ===== -->
+<!-- ===== Abstract performance / longevity hero field ===== -->
 <div id="sceneWrap"><canvas id="scene"></canvas><div class="scene-scrim"></div></div>
 <div class="scroll-hint" id="scrollHint"><span>Scroll</span><span class="bar"></span></div>
 
 <div class="page">
 
-<div class="ribbon">For <b>Research &amp; Laboratory Use Only</b> · Not for human or veterinary consumption · Prices in IDR</div>
+<div class="ribbon">AXIOM · <b>Human Performance &amp; Longevity</b> · Peptide science · Therapy &amp; recovery · Wellness · Prices in IDR</div>
 
 <nav id="nav">
   <div class="wrap nav-in">
-    <a href="#top" class="brand" aria-label="AXIOM — Human Performance">
+    <a href="#top" class="brand" aria-label="AXIOM — Human Performance & Longevity">
       <img class="brand-logo" src="assets/axiom-wordmark-white.png" alt="AXIOM" width="659" height="126" />
     </a>
     <div class="nav-right">
       <div class="nav-links" id="navLinks">
-        <a href="#catalogue">Catalogue</a>
+        <a href="#pillars">Focus</a>
+        <a href="#catalogue">The Range</a>
         <a href="#quality">Standards</a>
         <a href="#faq">FAQ</a>
-        <a href="#process">Order</a>
         <a href="#contact">Contact</a>
       </div>
       <button class="navcart" id="navCart" aria-label="Open cart">Cart&nbsp;(<span class="cartbadge" id="navCartCount" hidden>0</span><span id="cartZero">0</span>)</button>
@@ -507,19 +566,19 @@ nav.nav-hidden{transform:translateY(-100%)}
     <div class="hero-mark">
       <img src="assets/axiom-logo-white.png" alt="AXIOM — Human Performance" width="663" height="172" />
     </div>
-    <h1>Research peptides,<br><em>measured to the decimal.</em></h1>
-    <p class="lead">A clinical-grade catalogue for performance, recovery and longevity science — every lot independently assayed, documented, and dispatched cold-chain.</p>
+    <h1>Human performance,<br><em>engineered for the long run.</em></h1>
+    <p class="lead">Peptide science, red-light therapy, recovery and longevity — one considered system for people who train for decades, not weeks. Every protocol verified, every device clinical-grade.</p>
     <div class="hero-cta">
-      <a href="#catalogue" class="tlink">Browse the Catalogue <span class="ar">→</span></a>
+      <a href="#pillars" class="tlink">Explore the Range <span class="ar">→</span></a>
       <a href="#quality" class="tlink">Our Standards <span class="ar">→</span></a>
     </div>
   </div>
   <div class="hero-meta">
     <div class="wrap stagger reveal">
-      <div class="m"><div class="k">Purity</div><div class="v">≥ 98%</div></div>
-      <div class="m"><div class="k">Verification</div><div class="v">HPLC / MS</div></div>
-      <div class="m"><div class="k">Products</div><div class="v" id="metaCount">49</div></div>
-      <div class="m"><div class="k">Classification</div><div class="v">Research Use Only</div></div>
+      <div class="m"><div class="k">Focus</div><div class="v">Longevity</div></div>
+      <div class="m"><div class="k">Peptide purity</div><div class="v">≥ 98%</div></div>
+      <div class="m"><div class="k">Catalogue</div><div class="v" id="metaCount">49</div></div>
+      <div class="m"><div class="k">Pillars</div><div class="v">05</div></div>
     </div>
   </div>
 </header>
@@ -529,15 +588,15 @@ nav.nav-hidden{transform:translateY(-100%)}
   <section class="stmt">
     <div class="wrap reveal">
       <div class="idx">01 — Principle</div>
-      <h2>Precision is not a claim.<br><em>It is a certificate.</em></h2>
-      <p>Every batch clears independent HPLC and mass-spectrometry analysis before it is allowed near a research bench. Identity, mass and purity — documented, traceable, and shipped with the vial.</p>
+      <h2>Performance you can measure.<br><em>Longevity you can keep.</em></h2>
+      <p>AXIOM brings peptide science, recovery therapy and longevity tools under one standard — so the gains you make this season are still with you a decade from now. Short-term results, engineered to last.</p>
     </div>
   </section>
   <section class="stmt">
     <div class="wrap reveal">
       <div class="idx">02 — Standard</div>
-      <h2>One neutral standard,<br><em>held without exception.</em></h2>
-      <p>Lyophilised under inert conditions, sealed, and dispatched temperature-controlled. No embellishment, no shortcuts — only the molecule, preserved exactly as specified.</p>
+      <h2>One standard,<br><em>across every product.</em></h2>
+      <p>A verified peptide, a clinical red-light device, a daily wellness protocol — same scrutiny, same documentation, same refusal to cut corners. If it carries the AXIOM mark, it has earned it.</p>
     </div>
   </section>
 </div>
@@ -545,24 +604,77 @@ nav.nav-hidden{transform:translateY(-100%)}
 <!-- ===== SOLID CONTENT ===== -->
 <div class="content">
 
-<!-- ===== CATALOGUE ===== -->
-<section class="section" id="catalogue">
+<!-- ===== PILLARS ===== -->
+<section class="section pillars" id="pillars">
   <div class="wrap">
     <div class="sec-head reveal">
       <div class="lead-col">
-        <div class="no">02 / Catalogue</div>
-        <span class="kicker">Price List</span>
+        <div class="no">01 / Focus</div>
+        <span class="kicker">Five Pillars</span>
       </div>
       <div>
-        <h2>The Catalogue</h2>
-        <p>Search by name or filter by category — research compounds, recovery devices and apparel. Peptide listings are sold strictly for in-vitro and laboratory research.</p>
+        <h2>One system for the long game</h2>
+        <p>Performance and longevity aren't separate pursuits. AXIOM spans five connected pillars — from verified peptide science to the recovery and daily tools that let results compound over a lifetime.</p>
+      </div>
+    </div>
+    <div class="pillar-grid">
+      <a class="pillar reveal" href="#catalogue">
+        <div class="pillar-no">01</div>
+        <div class="pillar-ic"><i class="ph ph-flask"></i></div>
+        <h4>Peptide Science</h4>
+        <p>Research-grade peptides across metabolic, repair, growth and neuro pathways — every lot HPLC/MS verified to ≥98%.</p>
+        <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
+      </a>
+      <a class="pillar reveal" href="#cat-redlight">
+        <div class="pillar-no">02</div>
+        <div class="pillar-ic"><i class="ph ph-sun"></i></div>
+        <h4>Therapy &amp; Recovery</h4>
+        <p>Clinical red-light therapy — compression systems, mats and masks for circulation, skin and post-training recovery.</p>
+        <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
+      </a>
+      <a class="pillar reveal" href="#catalogue">
+        <div class="pillar-no">03</div>
+        <div class="pillar-ic"><i class="ph ph-drop-half"></i></div>
+        <h4>Wellness</h4>
+        <p>Antioxidants, NAD⁺ and cellular-energy support — the daily inputs that hold your baseline while you push it.</p>
+        <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
+      </a>
+      <a class="pillar reveal" href="#catalogue">
+        <div class="pillar-no">04</div>
+        <div class="pillar-ic"><i class="ph ph-infinity"></i></div>
+        <h4>Longevity</h4>
+        <p>Cellular-ageing, senescence and copper-peptide compounds for the decade-over-decade game, not the next cycle.</p>
+        <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
+      </a>
+      <a class="pillar reveal" href="#cat-apparel">
+        <div class="pillar-no">05</div>
+        <div class="pillar-ic"><i class="ph ph-t-shirt"></i></div>
+        <h4>Apparel</h4>
+        <p>Train in the identity — neutral, precise AXIOM performance wear and everyday carry.</p>
+        <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CATALOGUE ===== -->
+<section class="section" id="catalogue" style="border-top:1px solid var(--line)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col">
+        <div class="no">02 / The Range</div>
+        <span class="kicker">Catalogue</span>
+      </div>
+      <div>
+        <h2>The Range</h2>
+        <p>Search by name or filter by category — peptides, recovery devices, wellness and apparel. Peptide listings are sold strictly for in-vitro and laboratory research; devices and apparel are consumer products.</p>
       </div>
     </div>
 
     <div class="controls reveal">
       <div class="search">
         <i class="ph ph-magnifying-glass"></i>
-        <input type="text" id="search" placeholder="Search compounds — BPC-157, Retatrutide, GHK-Cu…" />
+        <input type="text" id="search" placeholder="Search the range — BPC-157, Red Light Mask, NAD⁺…" />
       </div>
       <div class="filters" id="filters">
         <button class="chip active" data-cat="all">All</button>
@@ -585,11 +697,11 @@ nav.nav-hidden{transform:translateY(-100%)}
           <span class="val" id="priceVal">Rp 3.400.000</span>
         </div>
       </div>
-      <div class="rcount" id="rcount">Showing <b>49</b> of 49 compounds</div>
+      <div class="rcount" id="rcount">Showing <b>49</b> of 49 items</div>
     </div>
 
     <div id="catList"></div>
-    <div class="empty" id="empty">No compounds match your search.</div>
+    <div class="empty" id="empty">No items match your search.</div>
   </div>
 </section>
 
@@ -602,17 +714,17 @@ nav.nav-hidden{transform:translateY(-100%)}
         <span class="kicker">Verification</span>
       </div>
       <div>
-        <h2>Verified to the decimal</h2>
-        <p>Every batch clears independent analysis before it reaches a research bench.</p>
+        <h2>Held to one standard</h2>
+        <p>Whether it's a peptide, a therapy device or a wellness protocol — nothing carries the AXIOM mark until it's verified, documented and sourced right.</p>
       </div>
     </div>
     <div class="feat-grid">
-      <div class="feat reveal"><div class="ic">01</div><h4>HPLC &amp; MS Tested</h4><p>Each lot is analysed by high-performance liquid chromatography and mass spectrometry to confirm identity and ≥98% purity.</p></div>
-      <div class="feat reveal"><div class="ic">02</div><h4>Certificate of Analysis</h4><p>A downloadable CoA accompanies every lot — purity, mass and batch traceability fully documented.</p></div>
-      <div class="feat reveal"><div class="ic">03</div><h4>Cold-Chain Logistics</h4><p>Lyophilised peptides are stored and dispatched temperature-controlled to preserve molecular integrity in transit.</p></div>
-      <div class="feat reveal"><div class="ic">04</div><h4>Lyophilised &amp; Sealed</h4><p>Freeze-dried and sealed under inert conditions for maximum shelf stability and reconstitution consistency.</p></div>
+      <div class="feat reveal"><div class="ic">01</div><h4>HPLC &amp; MS Tested</h4><p>Every peptide lot is analysed by high-performance liquid chromatography and mass spectrometry to confirm identity and ≥98% purity.</p></div>
+      <div class="feat reveal"><div class="ic">02</div><h4>Certificate of Analysis</h4><p>A downloadable CoA accompanies every peptide lot — purity, mass and batch traceability fully documented.</p></div>
+      <div class="feat reveal"><div class="ic">03</div><h4>Clinical-Grade Devices</h4><p>Therapy hardware is specified to clinical red/near-infrared wavelengths (660 + 850 nm) with verified irradiance — not novelty LEDs.</p></div>
+      <div class="feat reveal"><div class="ic">04</div><h4>Cold-Chain Logistics</h4><p>Lyophilised peptides are stored and dispatched temperature-controlled to preserve molecular integrity in transit.</p></div>
       <div class="feat reveal"><div class="ic">05</div><h4>Discreet Packaging</h4><p>Neutral, protective packaging with tamper-evident seals and batch labelling on every unit.</p></div>
-      <div class="feat reveal"><div class="ic">06</div><h4>Research Support</h4><p>Direct line to our team for handling, reconstitution and storage guidance — strictly for research contexts.</p></div>
+      <div class="feat reveal"><div class="ic">06</div><h4>Direct Support</h4><p>A direct line to our team for handling, protocol and device guidance — before and after you order.</p></div>
     </div>
     <div class="coa-wrap reveal">
       <div class="coa">
@@ -647,8 +759,8 @@ nav.nav-hidden{transform:translateY(-100%)}
         <span class="kicker">Essentials</span>
       </div>
       <div>
-        <h2>Research FAQ</h2>
-        <p>Handling, logistics and compliance — the essentials before you order.</p>
+        <h2>Questions</h2>
+        <p>Handling, logistics and compliance across peptides, devices and wellness — the essentials before you order.</p>
       </div>
     </div>
     <div class="faq">
@@ -657,7 +769,7 @@ nav.nav-hidden{transform:translateY(-100%)}
       <details class="faq-item reveal"><summary class="faq-q"><span class="num">03</span> What purity standard do you guarantee?<span class="qi">+</span></summary><div class="faq-a">Every lot is independently analysed by HPLC and mass spectrometry to confirm identity and a minimum of 98% purity (most lots exceed 99%). A Certificate of Analysis accompanies each lot.</div></details>
       <details class="faq-item reveal"><summary class="faq-q"><span class="num">04</span> How does shipping &amp; cold-chain work?<span class="qi">+</span></summary><div class="faq-a">Orders are dispatched in protective, temperature-managed packaging with tamper-evident seals. Domestic delivery within Indonesia typically arrives in 2–4 working days; international timelines are quoted per destination.</div></details>
       <details class="faq-item reveal"><summary class="faq-q"><span class="num">05</span> What payment methods are accepted?<span class="qi">+</span></summary><div class="faq-a">Bank transfer and major e-wallets in IDR. After you send your compound list we return an itemised quote; payment is settled before dispatch. Prices are indicative and confirmed at quotation.</div></details>
-      <details class="faq-item reveal"><summary class="faq-q"><span class="num">06</span> Are these products for human use?<span class="qi">+</span></summary><div class="faq-a"><b>No.</b> All compounds are sold strictly for in-vitro laboratory and research use. They are not drugs, supplements, food or cosmetics, and are not intended for human or veterinary consumption, diagnostic, or therapeutic use. By ordering you confirm you are a qualified researcher or institution.</div></details>
+      <details class="faq-item reveal"><summary class="faq-q"><span class="num">06</span> Which products are for human use?<span class="qi">+</span></summary><div class="faq-a">Therapy devices and apparel are ordinary <b>consumer products</b>. Peptides, however, are sold strictly for <b>in-vitro laboratory and research use</b> — they are not drugs, supplements, food or cosmetics, and are not intended for human or veterinary consumption, diagnostic or therapeutic use. By ordering peptides you confirm you are a qualified researcher or institution.</div></details>
     </div>
   </div>
 </section>
@@ -671,14 +783,14 @@ nav.nav-hidden{transform:translateY(-100%)}
         <span class="kicker">How to Order</span>
       </div>
       <div>
-        <h2>From enquiry to bench</h2>
+        <h2>From enquiry to doorstep</h2>
       </div>
     </div>
     <div class="steps">
-      <div class="step reveal"><h4>Select Compounds</h4><p>Browse the catalogue and note the compounds and doses your protocol requires.</p></div>
+      <div class="step reveal"><h4>Choose Your Range</h4><p>Browse the catalogue and add the peptides, devices or wellness items you need.</p></div>
       <div class="step reveal"><h4>Request a Quote</h4><p>Send your list via the form or WhatsApp. We confirm stock and current IDR pricing.</p></div>
-      <div class="step reveal"><h4>Confirm &amp; Pay</h4><p>Review your itemised quote, acknowledge research-use terms, and settle securely.</p></div>
-      <div class="step reveal"><h4>Cold-Chain Delivery</h4><p>Your order ships temperature-controlled with CoA documentation included.</p></div>
+      <div class="step reveal"><h4>Confirm &amp; Pay</h4><p>Review your itemised quote, acknowledge any research-use terms, and settle securely.</p></div>
+      <div class="step reveal"><h4>Tracked Delivery</h4><p>Your order ships protected — peptides cold-chain with CoA, devices insured and tracked.</p></div>
     </div>
   </div>
 </section>
@@ -688,11 +800,11 @@ nav.nav-hidden{transform:translateY(-100%)}
   <div class="wrap">
     <div class="cta reveal">
       <div class="kicker">Request a Quote</div>
-      <h2>Build your research order</h2>
-      <p>Tell us which compounds and quantities you need. Quotes are returned within 24 hours with live stock and pricing.</p>
+      <h2>Build your order</h2>
+      <p>Tell us which peptides, devices or wellness items you need. Quotes are returned within 24 hours with live stock and pricing.</p>
       <div class="cta-row">
-        <a href="https://wa.me/18038573396?text=Hello%20AXIOM%2C%20I%27d%20like%20a%20research%20peptide%20quote." target="_blank" rel="noopener" class="btn btn-solid"><i class="ph-fill ph-whatsapp-logo"></i> WhatsApp Us</a>
-        <a href="mailto:research@axiompeptides.example?subject=Research%20Quote%20Request" class="tlink">Email Enquiry <span class="ar">→</span></a>
+        <a href="https://wa.me/18038573396?text=Hello%20AXIOM%2C%20I%27d%20like%20a%20quote." target="_blank" rel="noopener" class="btn btn-solid"><i class="ph-fill ph-whatsapp-logo"></i> WhatsApp Us</a>
+        <a href="mailto:hello@axiomperformance.example?subject=AXIOM%20Quote%20Request" class="tlink">Email Enquiry <span class="ar">→</span></a>
       </div>
     </div>
   </div>
@@ -711,9 +823,9 @@ nav.nav-hidden{transform:translateY(-100%)}
       </div>
     </div>
     <div class="comp-card">
-      <p class="comp-lead reveal">Many compounds listed here are <b>experimental, lack long-term human safety data, or are strictly regulated</b>. This catalogue is published for qualified researchers and institutions. <b>We do not provide usage, dosing, administration, or cycling guidance of any kind</b> — those decisions require a licensed medical professional with knowledge of your specific situation.</p>
+      <p class="comp-lead reveal">The <b>peptides</b> in our range are <b>experimental, lack long-term human safety data, or are strictly regulated</b>, and are listed for qualified researchers and institutions. <b>We do not provide usage, dosing, administration, or cycling guidance of any kind</b> — those decisions require a licensed medical professional with knowledge of your specific situation. Therapy devices and apparel are ordinary consumer products.</p>
       <div class="comp-grid">
-        <div class="comp-tile reveal"><div class="ic">Research Use Only</div><h4>In-vitro only</h4><p>Products are intended exclusively for in-vitro laboratory and scientific research — not for human or veterinary consumption, diagnosis, or treatment.</p></div>
+        <div class="comp-tile reveal"><div class="ic">Peptides · RUO</div><h4>In-vitro only</h4><p>Peptides are intended exclusively for in-vitro laboratory and scientific research — not for human or veterinary consumption, diagnosis, or treatment.</p></div>
         <div class="comp-tile reveal"><div class="ic">Consult a Physician</div><h4>Seek advice</h4><p>Always consult a qualified physician before considering any peptide, hormone, or research chemical. Self-administration carries serious health risks.</p></div>
         <div class="comp-tile reveal"><div class="ic">Know Your Law</div><h4>Compliance</h4><p>Several items (e.g. androgens, melanocortin agonists) are controlled or regulated in many jurisdictions. Buyers are responsible for legal compliance.</p></div>
       </div>
@@ -727,32 +839,31 @@ nav.nav-hidden{transform:translateY(-100%)}
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <img src="assets/axiom-logo-white.png" alt="AXIOM — Human Performance" width="663" height="172" />
-        <p>Clinical-grade research peptides for performance, recovery and longevity science. Independently tested, documented, and dispatched with care.</p>
+        <img src="assets/axiom-logo-white.png" alt="AXIOM — Human Performance & Longevity" width="663" height="172" />
+        <p>Human performance &amp; longevity — peptide science, recovery therapy, wellness and apparel under one standard. Independently tested, documented, and dispatched with care.</p>
       </div>
       <div>
-        <h5>Catalogue</h5>
-        <a href="#catalogue">Metabolic &amp; Weight</a>
-        <a href="#catalogue">Tissue Repair</a>
-        <a href="#catalogue">Growth Factors</a>
-        <a href="#catalogue">Neuropeptides</a>
-        <a href="#catalogue">Hormonal Research</a>
-        <a href="#catalogue">Longevity &amp; Cosmetic</a>
+        <h5>Focus</h5>
+        <a href="#catalogue">Peptide Science</a>
+        <a href="#cat-redlight">Therapy &amp; Recovery</a>
+        <a href="#catalogue">Wellness</a>
+        <a href="#catalogue">Longevity</a>
+        <a href="#cat-apparel">Apparel</a>
       </div>
       <div>
         <h5>Contact</h5>
         <a href="https://wa.me/18038573396" target="_blank" rel="noopener">WhatsApp Order Line</a>
-        <a href="mailto:research@axiompeptides.example">research@axiompeptides.example</a>
+        <a href="mailto:hello@axiomperformance.example">hello@axiomperformance.example</a>
         <p class="fl">Mon–Sat · 09:00–18:00 WIB</p>
         <p class="fl">Jakarta, Indonesia</p>
       </div>
     </div>
     <div class="disclaimer">
-      <b>Research Use Only.</b> All products listed on this site are intended exclusively for in-vitro laboratory research and development. They are <b>not</b> drugs, food, cosmetics, or supplements, and are <b>not</b> intended for human or animal consumption, diagnostic, or therapeutic use. By purchasing, the buyer affirms they are a qualified researcher or institution and accepts full responsibility for safe, legal, and compliant handling. Prices are indicative, quoted in Indonesian Rupiah (IDR), and subject to change without notice.
+      <b>Peptides — Research Use Only.</b> Peptides listed on this site are intended exclusively for in-vitro laboratory research and development. They are <b>not</b> drugs, food, cosmetics, or supplements, and are <b>not</b> intended for human or animal consumption, diagnostic, or therapeutic use. By purchasing peptides, the buyer affirms they are a qualified researcher or institution and accepts full responsibility for safe, legal, and compliant handling. Therapy devices and apparel are consumer products. Prices are indicative, quoted in Indonesian Rupiah (IDR), and subject to change without notice.
     </div>
     <div class="foot-bottom">
-      <span>© <span id="yr"></span> AXIOM — Human Performance</span>
-      <span>Science · Precision · For Research Use Only</span>
+      <span>© <span id="yr"></span> AXIOM — Human Performance &amp; Longevity</span>
+      <span>Performance · Recovery · Longevity</span>
     </div>
   </div>
 </footer>
@@ -782,8 +893,8 @@ nav.nav-hidden{transform:translateY(-100%)}
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle" hidden>
   <div class="gate-card">
     <div class="mk"><i class="ph ph-flask"></i></div>
-    <h3 id="gateTitle">Research Use Only</h3>
-    <p>The products in this catalogue are sold strictly for <b>in-vitro laboratory and research use</b> — not for human or veterinary consumption. By entering you confirm that you are <b>18 or older</b> and a qualified researcher or institutional buyer, and that you accept the research-use and compliance terms.</p>
+    <h3 id="gateTitle">Before you enter</h3>
+    <p>AXIOM offers therapy devices, wellness and apparel alongside <b>research peptides</b>. Those peptides are sold strictly for <b>in-vitro laboratory and research use</b> — not for human or veterinary consumption. By entering you confirm that you are <b>18 or older</b> and that, for any peptide purchase, you are a qualified researcher or institutional buyer who accepts the research-use and compliance terms.</p>
     <div class="gate-actions">
       <button class="btn btn-solid" id="gateAccept">I Confirm — Enter</button>
       <a class="btn decline" href="https://www.google.com" id="gateDecline">Leave</a>
@@ -814,69 +925,36 @@ nav.nav-hidden{transform:translateY(-100%)}
   </div>
 </div>
 
-<!-- ===== DNA HELIX HERO (Three.js r0.143.0) ===== -->
+<!-- ===== HERO — abstract performance / longevity current (Three.js r0.143.0) ===== -->
 <script type="module">
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
-import { GammaCorrectionShader } from 'three/addons/shaders/GammaCorrectionShader.js';
-import { CopyShader } from 'three/addons/shaders/CopyShader.js';
-
-/* ---- Fixed parameters (monochrome Swiss recolor) ---- */
-const bgColor      = '#000000';
-const flameColor   = '#3a3a3a';
-const flameColor2  = '#8f8f8f';
-const flameAmt     = 0.2;
-const atmoColor    = '#b9b9b9';
-const atmoCount    = 780;
-const atmoSize     = 24;
-const atmoSpeed    = 0.4;
-const colorLow     = '#5c5c5c';
-const colorHigh    = '#ffffff';
-const opacity      = 2;
-const pointSize    = 4;
-const brightness   = 1.15;
-const twist        = 0.65;
-const waveAmt      = 0.7;
-const dnaFloat     = 0.95;
-const spin         = 0.18;
-const scale        = 0.63;
-const scrollClimb  = 9.5;
-const scrollTwist  = 0.9;
-const scrollDolly  = 0;
-const scrollSpin   = 1.8;
-const parallax     = 1;
-const pointerRadius   = 2.2;
-const pointerStrength = 0.2;
-
-function hexToVec3(hex){ const n=parseInt(hex.slice(1),16); return new THREE.Vector3(((n>>16)&255)/255,((n>>8)&255)/255,(n&255)/255); }
-const Lerp=(a,b,t)=>a+(b-a)*t;
 
 const canvas = document.getElementById('scene');
 const sceneWrap = document.getElementById('sceneWrap');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const LAYERS = { NONE:0, TORUS_SCENE:1, BLOOM_SCENE:2, ENTIRE_SCENE:3 };
-
-const renderer = new THREE.WebGL1Renderer({ canvas, antialias:true });
+const renderer = new THREE.WebGL1Renderer({ canvas, antialias:true, powerPreference:'high-performance' });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.VSMShadowMap;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x000000);
-scene.fog = new THREE.Fog(0x000000, 0, 15);
+scene.background = new THREE.Color(0x070605);
+scene.fog = new THREE.FogExp2(0x070605, 0.055);
 
-const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 400);
-camera.position.set(0, 0, 8.67);
-camera.layers.enable(LAYERS.TORUS_SCENE);
-camera.layers.enable(LAYERS.BLOOM_SCENE);
-camera.layers.enable(LAYERS.ENTIRE_SCENE);
+const camera = new THREE.PerspectiveCamera(46, window.innerWidth/window.innerHeight, 0.1, 200);
+camera.position.set(0, 0, 15);
+camera.lookAt(0, 0, 0);
 
-/* ---- Shared GLSL ---- */
+/* Bloom composer — soft copper glow */
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.9, 0.72, 0.12);
+composer.addPass(bloom);
+
+/* ---- Simplex noise (GLSL) for the flow field ---- */
 const SNOISE = `
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
@@ -885,307 +963,169 @@ float snoise(vec3 v){
   vec3 i = floor(v + dot(v, C.yyy)); vec3 x0 = v - i + dot(i, C.xxx);
   vec3 g = step(x0.yzx, x0.xyz); vec3 l = 1.0 - g;
   vec3 i1 = min(g.xyz, l.zxy); vec3 i2 = max(g.xyz, l.zxy);
-  vec3 x1 = x0 - i1 + 1.0 * C.xxx; vec3 x2 = x0 - i2 + 2.0 * C.xxx; vec3 x3 = x0 - 1.0 + 3.0 * C.xxx;
+  vec3 x1 = x0 - i1 + C.xxx; vec3 x2 = x0 - i2 + 2.0*C.xxx; vec3 x3 = x0 - 1.0 + 3.0*C.xxx;
   i = mod(i, 289.0);
   vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));
   float n_ = 1.0/7.0; vec3 ns = n_ * D.wyz - D.xzx;
-  vec4 j = p - 49.0 * floor(p * ns.z *ns.z);
+  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
   vec4 x_ = floor(j * ns.z); vec4 y_ = floor(j - 7.0 * x_);
-  vec4 x = x_ *ns.x + ns.yyyy; vec4 y = y_ *ns.x + ns.yyyy; vec4 h = 1.0 - abs(x) - abs(y);
+  vec4 x = x_ * ns.x + ns.yyyy; vec4 y = y_ * ns.x + ns.yyyy; vec4 h = 1.0 - abs(x) - abs(y);
   vec4 b0 = vec4(x.xy, y.xy); vec4 b1 = vec4(x.zw, y.zw);
   vec4 s0 = floor(b0)*2.0 + 1.0; vec4 s1 = floor(b1)*2.0 + 1.0; vec4 sh = -step(h, vec4(0.0));
   vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy; vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
   vec3 p0 = vec3(a0.xy,h.x); vec3 p1 = vec3(a0.zw,h.y); vec3 p2 = vec3(a1.xy,h.z); vec3 p3 = vec3(a1.zw,h.w);
-  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
-  p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
-  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); m = m * m;
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+  p0*=norm.x; p1*=norm.y; p2*=norm.z; p3*=norm.w;
+  vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); m = m*m;
   return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
 }
-float random(vec3 p) { return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453); }
 `;
 
-/* ---- Helix points ---- */
-const helixMat = new THREE.ShaderMaterial({
+/* ---- Particle field: points seeded on a broad band, advected by a curl-like flow ----
+   Motion is computed in the vertex shader from time + seed, so it is deterministic and cheap. */
+const COUNT = Math.min(window.innerWidth < 680 ? 9000 : 20000, 20000);
+const seed = new Float32Array(COUNT*3);
+const rnd  = new Float32Array(COUNT);
+for(let i=0;i<COUNT;i++){
+  // seed positions across a wide, shallow volume skewed to the right of the hero
+  seed[i*3]   = (Math.random()*2-1)*14.0;
+  seed[i*3+1] = (Math.random()*2-1)*7.5;
+  seed[i*3+2] = (Math.random()*2-1)*4.5;
+  rnd[i] = Math.random();
+}
+const geo = new THREE.BufferGeometry();
+geo.setAttribute('seed', new THREE.BufferAttribute(seed,3));
+geo.setAttribute('rnd', new THREE.BufferAttribute(rnd,1));
+
+const mat = new THREE.ShaderMaterial({
   transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
   uniforms:{
-    uTime:{value:0}, uAppear:{value:0},
-    uColLow:{value:hexToVec3(colorLow)}, uColHigh:{value:hexToVec3(colorHigh)},
-    uOpacity:{value:opacity}, uSize:{value:pointSize}, uBrightness:{value:brightness},
-    uTwist:{value:twist}, uWaveAmt:{value:waveAmt}, uFloat:{value:dnaFloat}, uScale:{value:scale},
-    uCursor:{value:new THREE.Vector3()}, uRepelRadius:{value:pointerRadius}, uRepelStrength:{value:pointerStrength}, uActivity:{value:0}
+    uTime:{value:0}, uAppear:{value:0}, uScroll:{value:0},
+    uPointer:{value:new THREE.Vector2(0,0)},
+    uLow:{value:new THREE.Color(0x7c4c24)},   // deep bronze
+    uHigh:{value:new THREE.Color(0xe7b173)},  // lit copper
+    uSize:{value:(window.innerWidth<680?2.1:2.7)},
+    uDpr:{value:Math.min(window.devicePixelRatio,2)}
   },
   vertexShader:`
-uniform float uTime; uniform float uSize; uniform float uTwist; uniform float uWaveAmt; uniform float uScale; uniform float uFloat;
-uniform vec3 uColLow; uniform vec3 uColHigh;
-uniform vec3 uCursor; uniform float uRepelRadius; uniform float uRepelStrength; uniform float uActivity;
-varying float vFade; varying vec3 vColor;
-${SNOISE}
-void main() {
-  float stretchedY = position.y * 7.0 - 8.0;
-  float rnd1 = random(position);
-  float rnd2 = random(position + vec3(1.0));
-  float rnd3 = random(position + vec3(2.0));
-  float t = stretchedY + sin(uTime * 0.8 + rnd1 * 6.28318) * uFloat;
-  float twist = t * uTwist;
-  float dnaRadius = 1.0;
-  float strandThickness = 0.35;
-  vec3 dnaPos;
-  if (rnd1 < 0.40) {
-    vec3 core = vec3(dnaRadius * cos(twist), t, dnaRadius * sin(twist));
-    vec3 offset = vec3(rnd1 - 0.2, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * strandThickness;
-    dnaPos = core + offset;
-  } else if (rnd1 < 0.80) {
-    vec3 core = vec3(dnaRadius * cos(twist + 3.14159), t, dnaRadius * sin(twist + 3.14159));
-    vec3 offset = vec3(rnd1 - 0.6, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * strandThickness;
-    dnaPos = core + offset;
-  } else {
-    float rungT = (rnd1 - 0.80) * 5.0;
-    float discreteT = floor(t * 2.5) / 2.5;
-    float discreteTwist = discreteT * uTwist;
-    vec3 p1 = vec3(dnaRadius * cos(discreteTwist), discreteT, dnaRadius * sin(discreteTwist));
-    vec3 p2 = vec3(dnaRadius * cos(discreteTwist + 3.14159), discreteT, dnaRadius * sin(discreteTwist + 3.14159));
-    vec3 core = mix(p1, p2, rungT);
-    vec3 offset = vec3(rnd1 - 0.9, rnd2 - 0.5, rnd3 - 0.5) * 2.0 * 0.10;
-    dnaPos = core + offset;
-  }
-  dnaPos.x += snoise(vec3(0.0, t * 0.2, uTime * 0.2)) * uWaveAmt;
-  dnaPos.z += snoise(vec3(t * 0.2, 0.0, uTime * 0.2)) * uWaveAmt;
-  vec3 finalPos = (dnaPos - vec3(0.0, -8.0, 0.0)) * uScale;
-  vec4 modelPosition = modelMatrix * vec4(finalPos, 1.0);
-  vec3 toP = modelPosition.xyz - uCursor;
-  float cd = length(toP);
-  float fall = smoothstep(uRepelRadius, 0.0, cd);
-  modelPosition.xyz += normalize(toP + vec3(0.0001)) * fall * uRepelStrength * uActivity;
-  vec4 mvPosition = viewMatrix * modelPosition;
-  float colMix = smoothstep(-20.0, 12.0, t);
-  vColor = mix(uColLow, uColHigh, clamp(colMix, 0.0, 1.0));
-  vFade = 1.0;
-  gl_PointSize = uSize * (10.0 / -mvPosition.z);
-  gl_PointSize = max(gl_PointSize, 1.5);
-  gl_Position = projectionMatrix * mvPosition;
-}`,
+    ${SNOISE}
+    attribute vec3 seed; attribute float rnd;
+    uniform float uTime, uAppear, uScroll, uSize, uDpr;
+    uniform vec2 uPointer;
+    varying float vGlow; varying float vDepth;
+    void main(){
+      vec3 p = seed;
+      float t = uTime*0.06 + rnd*6.28318;
+      // curl-ish drift from layered noise
+      float n1 = snoise(p*0.11 + vec3(t, 0.0, 0.0));
+      float n2 = snoise(p*0.16 + vec3(0.0, t*0.8, 4.0));
+      float n3 = snoise(p*0.09 + vec3(2.0, 0.0, t*0.6));
+      p.x += n1*2.6;
+      p.y += n2*2.0 + sin(t + seed.x*0.3)*0.6;
+      p.z += n3*2.2;
+      // gentle upward longevity "current" + parallax on scroll
+      p.y += uScroll*3.0;
+      p.xy += uPointer * (1.2 + p.z*0.05);
+      // appear: rise + settle
+      p.y -= (1.0 - uAppear)*4.0;
+      float flick = 0.55 + 0.45*sin(t*2.0 + rnd*20.0);
+      vGlow = flick;
+      vec4 mv = modelViewMatrix * vec4(p,1.0);
+      vDepth = clamp((mv.z + 18.0)/16.0, 0.0, 1.0);
+      gl_Position = projectionMatrix * mv;
+      gl_PointSize = uSize * uDpr * (140.0 / -mv.z) * (0.5 + rnd*0.9) * uAppear;
+    }`,
   fragmentShader:`
-uniform float uOpacity; uniform float uBrightness; uniform float uAppear;
-varying float vFade; varying vec3 vColor;
-void main() {
-  vec2 xy = gl_PointCoord - 0.5;
-  float ll = length(xy);
-  if (ll > 0.5) discard;
-  float a = smoothstep(0.5, 0.1, ll);
-  gl_FragColor = vec4(vColor * uBrightness, vFade * a * uOpacity * uAppear);
-}`
+    precision highp float;
+    uniform vec3 uLow, uHigh; uniform float uAppear;
+    varying float vGlow; varying float vDepth;
+    void main(){
+      vec2 d = gl_PointCoord - 0.5;
+      float r = length(d);
+      if(r > 0.5) discard;
+      float a = smoothstep(0.5, 0.0, r);
+      vec3 col = mix(uLow, uHigh, vGlow*vDepth);
+      gl_FragColor = vec4(col, a * (0.10 + 0.22*vGlow) * (0.4 + 0.6*vDepth) * uAppear);
+    }`
 });
+const field = new THREE.Points(geo, mat);
+scene.add(field);
 
-const helixGeo = new THREE.SphereGeometry(4.2, 200, 600);
-const points = new THREE.Points(helixGeo, helixMat);
-points.frustumCulled = false;
-points.layers.enable(LAYERS.ENTIRE_SCENE);
-const group = new THREE.Group();
-group.add(points);
-scene.add(group);
+/* ---- A slow thread — thin luminous copper ribbon threading the field ---- */
+const threadCurve = new THREE.CatmullRomCurve3(
+  Array.from({length:14},(_,i)=>{
+    const a=i/13;
+    return new THREE.Vector3(
+      Math.sin(a*6.28318*1.5)*5.5 + a*3.0 - 3.0,
+      Math.cos(a*6.28318*1.2)*2.6,
+      Math.sin(a*6.28318)*3.0
+    );
+  }), false, 'catmullrom', 0.4
+);
+const threadGeo = new THREE.TubeGeometry(threadCurve, 240, 0.028, 8, false);
+const threadMat = new THREE.MeshBasicMaterial({ color:0xC88A4E, transparent:true, opacity:0.0, blending:THREE.AdditiveBlending, depthWrite:false });
+const thread = new THREE.Mesh(threadGeo, threadMat);
+scene.add(thread);
 
-/* ---- Ambient motes ---- */
-const atmoGeo = new THREE.BufferGeometry();
-const aPos = new Float32Array(atmoCount*3), aSize = new Float32Array(atmoCount), aSeed = new Float32Array(atmoCount);
-for(let i=0;i<atmoCount;i++){
-  aPos[i*3]=Math.random()*2-1; aPos[i*3+1]=Math.random()*2-1; aPos[i*3+2]=Math.random()*2-1;
-  aSize[i]=atmoSize*(0.4+Math.random()); aSeed[i]=Math.random();
-}
-atmoGeo.setAttribute('position', new THREE.BufferAttribute(aPos,3));
-atmoGeo.setAttribute('size', new THREE.BufferAttribute(aSize,1));
-atmoGeo.setAttribute('seed', new THREE.BufferAttribute(aSeed,1));
-const atmoMat = new THREE.ShaderMaterial({
-  transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, depthTest:false,
-  uniforms:{ uTime:{value:0}, uColor:{value:hexToVec3(atmoColor)}, uRes:{value:new THREE.Vector2(window.innerWidth*window.devicePixelRatio, window.innerHeight*window.devicePixelRatio)} },
-  vertexShader:`
-attribute float size; attribute float seed; uniform float uTime; uniform vec2 uRes;
-varying float vA;
-vec3 warp(vec3 p, float t){ float c=0.9,a=1.9,b=0.02,s=0.05; p*=2.;
-  p.x+=c*sin(s*t+a*p.y)+t*b; p.y+=c*cos(s*t+a*p.x); p.y+=c*sin(s*t+a*p.z)+t*b;
-  p.z+=c*cos(s*t+a*p.y); p.z+=c*sin(s*t+a*p.x)+t*b; p.x+=c*cos(s*t+a*p.z);
-  return cos(p+vec3(1,2,4)); }
-void main(){
-  vec3 v = position*4.0 + warp(position, uTime)*1.2;
-  vec4 mv = modelViewMatrix * vec4(v, 1.0);
-  float r = length(v); float farF = 1.0 - smoothstep(5.0, 6.5, r); float nearF = smoothstep(0.0, 0.5, -mv.z);
-  vA = farF * nearF;
-  gl_PointSize = size * uRes.y / 900.0 / -mv.z; gl_PointSize = max(gl_PointSize, 1.0);
-  gl_Position = projectionMatrix * mv;
-}`,
-  fragmentShader:`
-uniform vec3 uColor; varying float vA;
-void main(){ vec2 p = gl_PointCoord - 0.5; float l = length(p); if (l > 0.5) discard;
-  float tex = smoothstep(0.5, 0.0, l); gl_FragColor = vec4(uColor * tex, tex * vA * 0.6); }`
-});
-const atmo = new THREE.Points(atmoGeo, atmoMat);
-atmo.frustumCulled = false;
-atmo.layers.enable(LAYERS.ENTIRE_SCENE);
-scene.add(atmo);
-
-/* ---- Composers ---- */
-const renderScene = new RenderPass(scene, camera);
-
-const torusComposer = new EffectComposer(renderer);
-torusComposer.renderToScreen = false;
-torusComposer.addPass(renderScene);
-torusComposer.addPass(new ShaderPass(GammaCorrectionShader));
-torusComposer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.22, 0.2, 0));
-torusComposer.addPass(new ShaderPass(CopyShader));
-
-const bloomComposer = new EffectComposer(renderer);
-bloomComposer.renderToScreen = false;
-bloomComposer.addPass(renderScene);
-bloomComposer.addPass(new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 0.6, 0.6, 0));
-bloomComposer.addPass(new ShaderPass(GammaCorrectionShader));
-
-const FinalShader = {
-  uniforms:{
-    iTime:{value:0}, tDiffuse:{value:null}, torusTexture:{value:null}, bloomTexture:{value:null}, haloTexture:{value:null},
-    uBg:{value:hexToVec3(bgColor)}, uFlameA:{value:hexToVec3(flameColor)}, uFlameB:{value:hexToVec3(flameColor2)}, uFlameAmt:{value:flameAmt}
-  },
-  vertexShader:`varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position, 1.0); }`,
-  fragmentShader:`
-uniform float iTime; uniform sampler2D tDiffuse; uniform sampler2D bloomTexture; uniform sampler2D torusTexture; uniform sampler2D haloTexture;
-uniform vec3 uBg; uniform vec3 uFlameA; uniform vec3 uFlameB; uniform float uFlameAmt;
-varying vec2 vUv;
-vec3 warp3d(vec3 pos, float t){ float curv=.8,a=1.9,b=0.7; pos*=2.;
-  pos.x+=curv*sin(t+a*pos.y)+t*b; pos.y+=curv*cos(t+a*pos.x);
-  pos.y+=curv*sin(t+a*pos.z)+t*b; pos.z+=curv*cos(t+a*pos.y);
-  pos.z+=curv*sin(t+a*pos.x)+t*b; pos.x+=curv*cos(t+a*pos.z);
-  return 0.5+0.5*cos(pos.xyz+vec3(1,2,4)); }
-void main(){
-  vec2 uv = 2.*vUv - 1.;
-  vec3 w = pow(warp3d(vec3(uv.x, sin(uv.y), uv.y), iTime*1.5), vec3(1.5));
-  vec3 flame = 1.5*uFlameA*w.x; flame*=w.y; flame += uFlameB*w.z;
-  flame *= smoothstep(0.25, 1., abs(uv.y));
-  float md = smoothstep(-0.7, 1., -uv.y*uv.x); flame *= md*md;
-  vec3 bg = uBg * (1.0 - 0.4 * length(uv));
-  vec3 halo = texture2D(haloTexture, vUv).xyz;
-  gl_FragColor = vec4(bg + flame*uFlameAmt + texture2D(bloomTexture, vUv).xyz + texture2D(torusTexture, vUv).xyz + texture2D(tDiffuse, vUv).xyz + halo, 1.);
-}`
-};
-const finalPass = new ShaderPass(FinalShader);
-finalPass.uniforms.bloomTexture.value = bloomComposer.renderTarget1.texture;
-finalPass.uniforms.torusTexture.value = torusComposer.renderTarget1.texture;
-
-const finalComposer = new EffectComposer(renderer);
-finalComposer.addPass(renderScene);
-finalComposer.addPass(finalPass);
-
-/* ---- Interaction / scroll state ---- */
-let scrollTarget=0, scrollSmooth=0, scrollCurrent=0;
-let mouseTarget={x:0,y:0}, mouse={x:0,y:0};
-const POINTER = { active:false, lastMove:0, world:new THREE.Vector3(), activity:0 };
-let spinPhase=0, lastT=performance.now()/1000, startT=performance.now()/1000;
-const _plane = new THREE.Plane(new THREE.Vector3(0,0,1), 0);
-const _ray = new THREE.Raycaster();
-const _hit = new THREE.Vector3();
-
-function climbHeight(){ return window.innerHeight * 3; }
-function readScroll(){ scrollTarget = Math.max(0, Math.min(1, window.scrollY / climbHeight())); }
-
-addEventListener('scroll', readScroll, {passive:true});
+/* ---- Pointer + scroll ---- */
+const pointer = { x:0, y:0, tx:0, ty:0 };
 addEventListener('mousemove', e=>{
-  mouseTarget.x = (e.clientX/window.innerWidth)*2 - 1;
-  mouseTarget.y = -((e.clientY/window.innerHeight)*2 - 1);
-  POINTER.active = true; POINTER.lastMove = performance.now()/1000;
+  pointer.tx = (e.clientX/window.innerWidth - 0.5);
+  pointer.ty = -(e.clientY/window.innerHeight - 0.5);
 });
-addEventListener('mouseout', ()=>{ POINTER.active = false; });
-
-function updateScene(scroll, mx, my){
-  const now = performance.now()/1000;
-  const dt = Math.min(now - lastT, 0.05); lastT = now;
-  helixMat.uniforms.uTime.value = now;
-  atmoMat.uniforms.uTime.value = now * atmoSpeed * 8.0;
-  finalPass.uniforms.iTime.value = now;
-
-  camera.position.set(mx*parallax, my*parallax, 8.67 - scroll*scrollDolly);
-  camera.lookAt(0,0,0);
-  const heroOffsetX = (window.innerWidth/window.innerHeight > 1) ? 2.2 : 0.9;
-  group.position.x = heroOffsetX;
-  group.position.y = -scroll*scrollClimb;
-  helixMat.uniforms.uTwist.value = twist * (1 + scroll*scrollTwist);
-  spinPhase += dt * (spin + scroll*scrollSpin);
-  group.rotation.y = spinPhase;
-  atmo.position.copy(camera.position);
-
-  const elapsed = now - startT;
-  helixMat.uniforms.uAppear.value = Math.max(0, Math.min((elapsed - 0.2)/1.4, 1));
-
-  // pointer world point on z=0 plane
-  _ray.setFromCamera({x:mouse.x, y:mouse.y}, camera);
-  if(_ray.ray.intersectPlane(_plane, _hit)){
-    POINTER.world.lerp(_hit, 0.12);
-  }
-  const idle = now - POINTER.lastMove;
-  const targetAct = (POINTER.active && idle < 3) ? 1 : 0;
-  POINTER.activity += (targetAct - POINTER.activity) * 0.06;
-  helixMat.uniforms.uCursor.value.copy(POINTER.world);
-  helixMat.uniforms.uActivity.value = POINTER.activity;
-}
-
-function renderComposers(){
-  camera.layers.set(LAYERS.TORUS_SCENE); torusComposer.render();
-  camera.layers.set(LAYERS.BLOOM_SCENE); bloomComposer.render();
-  camera.layers.set(LAYERS.ENTIRE_SCENE); finalComposer.render();
-}
-
-function updateFade(){
-  const vh = window.innerHeight;
-  // fully visible over the first ~2.2 screens, fade out by 3 screens
-  const y = window.scrollY;
-  let op = 1 - (y - vh*2.1)/(vh*0.8);
-  op = Math.max(0, Math.min(1, op));
-  sceneWrap.style.opacity = op.toFixed(3);
-  const hint = document.getElementById('scrollHint');
-  if(hint) hint.style.opacity = (y < vh*0.5) ? '1' : '0';
-}
-
-function loop(){
-  requestAnimationFrame(loop);
-  scrollSmooth  = Lerp(scrollSmooth, scrollTarget, 0.10);
-  scrollCurrent = Lerp(scrollCurrent, scrollSmooth, 0.06);
-  mouse.x = Lerp(mouse.x, mouseTarget.x, 0.06);
-  mouse.y = Lerp(mouse.y, mouseTarget.y, 0.06);
-  updateScene(scrollCurrent, mouse.x, mouse.y);
-  renderComposers();
-  updateFade();
-}
+let scroll = 0;
+addEventListener('scroll', ()=>{ scroll = Math.min(window.scrollY / window.innerHeight, 1.2); }, {passive:true});
 
 function resize(){
   const w=window.innerWidth, h=window.innerHeight;
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  renderer.setSize(w,h);
-  camera.aspect = w/h; camera.updateProjectionMatrix();
-  [torusComposer,bloomComposer,finalComposer].forEach(c=>{ c.setPixelRatio(Math.min(window.devicePixelRatio,2)); c.setSize(w,h); });
-  atmoMat.uniforms.uRes.value.set(w*window.devicePixelRatio, h*window.devicePixelRatio);
+  renderer.setSize(w,h); composer.setSize(w,h);
+  bloom.resolution.set(w,h);
+  camera.aspect=w/h; camera.updateProjectionMatrix();
+  mat.uniforms.uDpr.value = Math.min(window.devicePixelRatio,2);
 }
 addEventListener('resize', resize);
 
-/* ---- Debug handle (house convention) ---- */
-window.__axiom = {
-  snap(v){
-    scrollTarget=scrollSmooth=scrollCurrent=v;
-    startT = performance.now()/1000 - 2.0; // force appeared
-    updateScene(v, mouse.x, mouse.y);
-    helixMat.uniforms.uAppear.value = 1;
-    renderComposers();
-  },
-  frame(){ updateScene(scrollCurrent, mouse.x, mouse.y); renderComposers(); },
-  points, group, helixMat, camera
-};
-
-readScroll();
-if(reduceMotion){
-  // static appeared frame, no scroll scrub
-  startT = performance.now()/1000 - 2.0;
-  updateScene(0, 0, 0);
-  helixMat.uniforms.uAppear.value = 1;
-  renderComposers();
-  updateFade();
-} else {
-  loop();
+const start = performance.now();
+function frame(now){
+  const t = (now - start)/1000;
+  pointer.x += (pointer.tx - pointer.x)*0.04;
+  pointer.y += (pointer.ty - pointer.y)*0.04;
+  const appear = Math.min(Math.max((t-0.15)/1.8, 0), 1);
+  const ease = 1 - Math.pow(1-appear, 3);
+  mat.uniforms.uTime.value = now/1000;
+  mat.uniforms.uAppear.value = ease;
+  mat.uniforms.uScroll.value = scroll;
+  mat.uniforms.uPointer.value.set(pointer.x*1.4, pointer.y*1.0);
+  threadMat.opacity = 0.5*ease;
+  field.rotation.y = pointer.x*0.25 + t*0.012;
+  field.rotation.x = pointer.y*0.12;
+  thread.rotation.y = field.rotation.y;
+  thread.rotation.x = field.rotation.x;
+  camera.position.y = -scroll*1.5;
+  composer.render();
 }
+let running=false;
+function loop(now){ if(!running) return; frame(now||performance.now()); requestAnimationFrame(loop); }
+function play(){ if(running) return; running=true; requestAnimationFrame(loop); }
+function pause(){ running=false; }
+
+resize();
+if(reduceMotion){
+  // single settled frame, no animation
+  mat.uniforms.uAppear.value = 1; mat.uniforms.uTime.value = 3.0; threadMat.opacity = 0.5;
+  composer.render();
+} else {
+  play();
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden) pause(); else if(!reduceMotion) play(); });
+
+/* Debug handle for deterministic capture */
+window.__axiom = {
+  snap(a=0){ mat.uniforms.uAppear.value=1; mat.uniforms.uTime.value=a*40.0; mat.uniforms.uScroll.value=0; threadMat.opacity=0.5; composer.render(); },
+  frame(){ frame(performance.now()); },
+  get running(){ return running; },
+  field, thread, camera
+};
 </script>
 
 <!-- ===== Catalogue / cart / drawer / gate logic ===== -->
