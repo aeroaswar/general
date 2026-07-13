@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Products — AXIOM · Peptides, Red-Light Therapy, Wellness & Apparel</title>
+<meta name="description" content="The full AXIOM range — verified research peptides, clinical red-light therapy devices, wellness and apparel. Filter, compare, and build your quote." />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#070605" />
+<meta name="robots" content="index,follow" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070605'/%3E%3Cg stroke='%23C88A4E' stroke-width='6' stroke-linecap='round' fill='none'%3E%3Cpolyline points='24,74 38,26 52,74'/%3E%3Ccircle cx='70' cy='52' r='16'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="cursorRing"></div>
+<div id="cursorDot"></div>
+
+<div class="ribbon">AXIOM · <b>Human Performance &amp; Longevity</b> · Peptide science · Therapy &amp; recovery · Wellness · Prices in IDR</div>
+
+<nav id="nav">
+  <div class="wrap nav-in">
+    <a href="index.html" class="brand" aria-label="AXIOM — Human Performance & Longevity">
+      <img class="brand-logo" src="assets/axiom-wordmark-white.png" alt="AXIOM" width="659" height="126" />
+    </a>
+    <div class="nav-right">
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="products.html" class="active">Products</a>
+        <a href="standards.html">Standards</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <button class="navcart" id="navCart" aria-label="Open cart">Cart&nbsp;(<span class="cartbadge" id="navCartCount" hidden>0</span><span id="cartZero">0</span>)</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ph ph-list"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+<header class="page-head">
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">Home</a><span class="sep">/</span><span class="here">Products</span></div>
+    <span class="kicker">The Range</span>
+    <h1>Every product,<br><em>one standard.</em></h1>
+    <p>Peptide science, red-light therapy, wellness and apparel — search the full range or filter by category. Peptides are research-use only; devices and apparel are consumer products.</p>
+  </div>
+</header>
+
+<section class="section" id="catalogue" style="padding-top:64px">
+  <div class="wrap">
+    <div class="controls reveal">
+      <div class="search">
+        <i class="ph ph-magnifying-glass"></i>
+        <input type="text" id="search" placeholder="Search the range — BPC-157, Red Light Mask, NAD⁺…" />
+      </div>
+      <div class="filters" id="filters">
+        <button class="chip active" data-cat="all">All</button>
+      </div>
+    </div>
+
+    <div class="toolbar2 reveal">
+      <div class="tool-group">
+        <div class="sel">
+          <select id="sort" aria-label="Sort products">
+            <option value="featured">Sort — Featured</option>
+            <option value="price-asc">Price — Low to High</option>
+            <option value="price-desc">Price — High to Low</option>
+            <option value="name">Name — A to Z</option>
+          </select>
+        </div>
+        <div class="range">
+          <label for="price">Max</label>
+          <input type="range" id="price" min="1000000" max="6500000" step="100000" value="6500000" />
+          <span class="val" id="priceVal">Rp 6.500.000</span>
+        </div>
+      </div>
+      <div class="rcount" id="rcount">Showing <b>57</b> of 57 items</div>
+    </div>
+
+    <div id="catList"></div>
+    <div class="empty" id="empty">No items match your search.</div>
+  </div>
+</section>
+
+<!-- ===== REFERENCE DRAWER ===== -->
+<div class="drawer-ov" id="drawerOv"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Compound research information">
+  <div class="drawer-h">
+    <span class="accent"></span>
+    <button class="drawer-close" id="drawerClose" aria-label="Close"><i class="ph-bold ph-x"></i></button>
+    <div class="cls" id="drCls">—</div>
+    <h3 id="drName">—</h3>
+    <div class="doses" id="drDoses"></div>
+  </div>
+  <div class="drawer-b">
+    <div class="dr-block"><div class="k"><i class="ph-bold ph-atom"></i> Studied for</div><p id="drMech">—</p></div>
+    <div class="dr-block half"><div class="k"><i class="ph-bold ph-timer"></i> Approx. half-life</div><p id="drHalf">—</p></div>
+    <div class="dr-block"><div class="k"><i class="ph-bold ph-snowflake"></i> Storage &amp; reconstitution</div><p id="drHandling">—</p></div>
+    <div class="dr-note"><i class="ph-fill ph-info"></i><p><b>Research context only.</b> This panel intentionally provides no human dosing, administration routes, frequencies, cycles, or stacking guidance. Consult a licensed physician before any use.</p></div>
+  </div>
+</aside>
+
+<!-- ===== ACKNOWLEDGEMENT GATE ===== -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle" hidden>
+  <div class="gate-card">
+    <div class="mk"><i class="ph ph-flask"></i></div>
+    <h3 id="gateTitle">Before you enter</h3>
+    <p>AXIOM offers therapy devices, wellness and apparel alongside <b>research peptides</b>. Those peptides are sold strictly for <b>in-vitro laboratory and research use</b> — not for human or veterinary consumption. By entering you confirm that you are <b>18 or older</b> and that, for any peptide purchase, you are a qualified researcher or institutional buyer who accepts the research-use and compliance terms.</p>
+    <div class="gate-actions">
+      <button class="btn btn-solid" id="gateAccept">I Confirm — Enter</button>
+      <a class="btn decline" href="https://www.google.com" id="gateDecline">Leave</a>
+    </div>
+    <div class="small">This site does not provide medical advice, dosing, or usage guidance.</div>
+  </div>
+</div>
+
+<!-- ===== QUOTE DRAWER ===== -->
+<div class="quote-bar" id="quoteBar">
+  <div class="quote-inner">
+    <div class="quote-card">
+      <div class="quote-top" id="quoteTop">
+        <span class="qc" id="qCount">0</span>
+        <span class="ql">Your Cart</span>
+        <span class="qt"><span id="qTotal">Rp 0</span><small>Estimated total</small></span>
+        <i class="ph ph-caret-up qcaret"></i>
+      </div>
+      <div class="quote-body">
+        <div class="quote-items" id="qItems"></div>
+        <div class="quote-actions">
+          <a class="btn btn-solid" id="qWhatsApp" href="#" target="_blank" rel="noopener"><i class="ph-fill ph-whatsapp-logo"></i> Checkout via WhatsApp</a>
+          <button class="btn ghost" id="qCopy"><i class="ph ph-copy"></i> Copy list</button>
+          <button class="btn ghost" id="qClear"><i class="ph ph-trash"></i> Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <img src="assets/axiom-logo-white.png" alt="AXIOM — Human Performance & Longevity" width="663" height="172" />
+        <p>Human performance &amp; longevity — peptide science, recovery therapy, wellness and apparel under one standard. Independently tested, documented, and dispatched with care.</p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <a href="products.html">Products</a>
+        <a href="products.html#cat-redlight">Therapy &amp; Recovery</a>
+        <a href="products.html#cat-apparel">Apparel</a>
+        <a href="standards.html">Standards</a>
+        <a href="contact.html">Contact &amp; FAQ</a>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <a href="https://wa.me/18038573396" target="_blank" rel="noopener">WhatsApp Order Line</a>
+        <a href="mailto:hello@axiomperformance.example">hello@axiomperformance.example</a>
+        <p class="fl">Mon–Sat · 09:00–18:00 WIB</p>
+        <p class="fl">Jakarta, Indonesia</p>
+      </div>
+    </div>
+    <div class="disclaimer">
+      <b>Peptides — Research Use Only.</b> Peptides listed on this site are intended exclusively for in-vitro laboratory research and development. They are <b>not</b> drugs, food, cosmetics, or supplements, and are <b>not</b> intended for human or animal consumption, diagnostic, or therapeutic use. By purchasing peptides, the buyer affirms they are a qualified researcher or institution and accepts full responsibility for safe, legal, and compliant handling. Therapy devices and apparel are consumer products. Prices are indicative, quoted in Indonesian Rupiah (IDR), and subject to change without notice.
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> AXIOM — Human Performance &amp; Longevity</span>
+      <span>Performance · Recovery · Longevity</span>
+    </div>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="site.js"></script>
+<script src="catalog.js"></script>
+</body>
+</html>
