@@ -1002,6 +1002,9 @@ const mat = new THREE.ShaderMaterial({
   uniforms:{
     uTime:{value:0}, uAppear:{value:0}, uScroll:{value:0},
     uPointer:{value:new THREE.Vector2(0,0)},
+    uPointerW:{value:new THREE.Vector3(0,0,0)},  // cursor in field-local space
+    uActivity:{value:0},                          // cursor velocity energy 0..1
+    uBurst:{value:0}, uBurstW:{value:new THREE.Vector3(0,0,0)}, // click shockwave
     uLow:{value:new THREE.Color(0x7c4c24)},   // deep bronze
     uHigh:{value:new THREE.Color(0xe7b173)},  // lit copper
     uSize:{value:(window.innerWidth<680?2.1:2.7)},
@@ -1010,8 +1013,9 @@ const mat = new THREE.ShaderMaterial({
   vertexShader:`
     ${SNOISE}
     attribute vec3 seed; attribute float rnd;
-    uniform float uTime, uAppear, uScroll, uSize, uDpr;
+    uniform float uTime, uAppear, uScroll, uSize, uDpr, uActivity, uBurst;
     uniform vec2 uPointer;
+    uniform vec3 uPointerW, uBurstW;
     varying float vGlow; varying float vDepth;
     void main(){
       vec3 p = seed;
@@ -1026,14 +1030,30 @@ const mat = new THREE.ShaderMaterial({
       // gentle upward longevity "current" + parallax on scroll
       p.y += uScroll*3.0;
       p.xy += uPointer * (1.2 + p.z*0.05);
+      // ---- cursor interaction ----
+      // repel + energize around the pointer (field-local space); cursor speed widens & strengthens it
+      vec2 toP = p.xy - uPointerW.xy;
+      float d = length(toP);
+      float radius = 2.6 + uActivity*2.4;
+      float infl = smoothstep(radius, 0.0, d);
+      vec2 dir = toP / max(d, 0.0001);
+      // swirl: push mixes radial with tangential so the field curls around the cursor
+      vec2 tang = vec2(-dir.y, dir.x);
+      p.xy += (dir*(0.9 + uActivity*1.8) + tang*(0.5 + uActivity*0.9)*sin(t*3.0 + rnd*9.0)) * infl;
+      p.z  += infl * uActivity * 1.2;
+      // click shockwave: expanding ring pushes outward from the click point
+      float bd = length(p.xy - uBurstW.xy);
+      float ringR = (1.0 - uBurst) * 9.0;            // ring expands as uBurst decays 1 -> 0
+      float ring = smoothstep(1.6, 0.0, abs(bd - ringR)) * uBurst;
+      p.xy += (p.xy - uBurstW.xy) / max(bd, 0.0001) * ring * 2.4;
       // appear: rise + settle
       p.y -= (1.0 - uAppear)*4.0;
       float flick = 0.55 + 0.45*sin(t*2.0 + rnd*20.0);
-      vGlow = flick;
+      vGlow = flick + infl*(0.7 + uActivity*1.5) + ring*1.6;
       vec4 mv = modelViewMatrix * vec4(p,1.0);
       vDepth = clamp((mv.z + 18.0)/16.0, 0.0, 1.0);
       gl_Position = projectionMatrix * mv;
-      gl_PointSize = uSize * uDpr * (140.0 / -mv.z) * (0.5 + rnd*0.9) * uAppear;
+      gl_PointSize = uSize * uDpr * (140.0 / -mv.z) * (0.5 + rnd*0.9) * uAppear * (1.0 + infl*(0.5 + uActivity*0.7) + ring*0.8);
     }`,
   fragmentShader:`
     precision highp float;
@@ -1044,8 +1064,11 @@ const mat = new THREE.ShaderMaterial({
       float r = length(d);
       if(r > 0.5) discard;
       float a = smoothstep(0.5, 0.0, r);
-      vec3 col = mix(uLow, uHigh, vGlow*vDepth);
-      gl_FragColor = vec4(col, a * (0.10 + 0.22*vGlow) * (0.4 + 0.6*vDepth) * uAppear);
+      float g = clamp(vGlow, 0.0, 2.4);
+      vec3 col = mix(uLow, uHigh, clamp(g*vDepth, 0.0, 1.0));
+      // overdrive: cursor-energized particles whiten past copper
+      col = mix(col, vec3(1.0, 0.93, 0.82), clamp(g - 1.0, 0.0, 1.0)*0.65);
+      gl_FragColor = vec4(col, a * (0.10 + 0.20*g) * (0.4 + 0.6*vDepth) * uAppear);
     }`
 });
 const field = new THREE.Points(geo, mat);
@@ -1068,11 +1091,42 @@ const thread = new THREE.Mesh(threadGeo, threadMat);
 scene.add(thread);
 
 /* ---- Pointer + scroll ---- */
-const pointer = { x:0, y:0, tx:0, ty:0 };
+const pointer = { x:0, y:0, tx:0, ty:0, ndcX:0, ndcY:0, activity:0, tActivity:0, live:false };
+let lastMove = { x:null, y:null, t:0 };
 addEventListener('mousemove', e=>{
+  pointer.live = true;
   pointer.tx = (e.clientX/window.innerWidth - 0.5);
   pointer.ty = -(e.clientY/window.innerHeight - 0.5);
+  pointer.ndcX = (e.clientX/window.innerWidth)*2 - 1;
+  pointer.ndcY = -((e.clientY/window.innerHeight)*2 - 1);
+  // cursor velocity -> energy (0..1)
+  const now = performance.now();
+  if(lastMove.x !== null){
+    const dt = Math.max(now - lastMove.t, 1);
+    const v = Math.hypot(e.clientX - lastMove.x, e.clientY - lastMove.y) / dt; // px/ms
+    pointer.tActivity = Math.min(pointer.tActivity + v*0.45, 1);
+  }
+  lastMove = { x:e.clientX, y:e.clientY, t:now };
 });
+/* click / tap -> shockwave through the field */
+let burst = 0;
+const burstLocal = new THREE.Vector3();
+addEventListener('pointerdown', e=>{
+  const nx = (e.clientX/window.innerWidth)*2 - 1;
+  const ny = -((e.clientY/window.innerHeight)*2 - 1);
+  burstLocal.copy(unprojectToField(nx, ny));
+  mat.uniforms.uBurstW.value.copy(burstLocal);
+  burst = 1;
+});
+/* unproject NDC to the z=0 plane, then into the rotating field's local space */
+const _v = new THREE.Vector3(), _dir = new THREE.Vector3(), _world = new THREE.Vector3();
+function unprojectToField(nx, ny){
+  _v.set(nx, ny, 0.5).unproject(camera);
+  _dir.copy(_v).sub(camera.position).normalize();
+  const t = -camera.position.z / _dir.z;
+  _world.copy(camera.position).addScaledVector(_dir, t);
+  return field.worldToLocal(_world.clone());
+}
 let scroll = 0;
 addEventListener('scroll', ()=>{ scroll = Math.min(window.scrollY / window.innerHeight, 1.2); }, {passive:true});
 
@@ -1090,17 +1144,29 @@ function frame(now){
   const t = (now - start)/1000;
   pointer.x += (pointer.tx - pointer.x)*0.04;
   pointer.y += (pointer.ty - pointer.y)*0.04;
+  // energy eases toward target, target decays -> calm settles back in
+  pointer.activity += (pointer.tActivity - pointer.activity)*0.10;
+  pointer.tActivity *= 0.94;
+  burst = Math.max(burst - 0.016, 0); // ~1s shockwave
   const appear = Math.min(Math.max((t-0.15)/1.8, 0), 1);
   const ease = 1 - Math.pow(1-appear, 3);
   mat.uniforms.uTime.value = now/1000;
   mat.uniforms.uAppear.value = ease;
   mat.uniforms.uScroll.value = scroll;
   mat.uniforms.uPointer.value.set(pointer.x*1.4, pointer.y*1.0);
-  threadMat.opacity = 0.5*ease;
+  mat.uniforms.uActivity.value = pointer.activity;
+  mat.uniforms.uBurst.value = burst;
   field.rotation.y = pointer.x*0.25 + t*0.012;
   field.rotation.x = pointer.y*0.12;
   thread.rotation.y = field.rotation.y;
   thread.rotation.x = field.rotation.x;
+  // cursor position in field-local space (after rotation update); parked off-field until a real pointer moves
+  field.updateMatrixWorld();
+  if(pointer.live) mat.uniforms.uPointerW.value.copy(unprojectToField(pointer.ndcX, pointer.ndcY));
+  else mat.uniforms.uPointerW.value.set(999, 999, 0);
+  // scene-wide response: bloom + thread brighten with cursor energy
+  bloom.strength = 0.9 + pointer.activity*0.55 + burst*0.4;
+  threadMat.opacity = (0.5 + pointer.activity*0.25)*ease;
   camera.position.y = -scroll*1.5;
   composer.render();
 }
@@ -1121,7 +1187,9 @@ document.addEventListener('visibilitychange', ()=>{ if(document.hidden) pause();
 
 /* Debug handle for deterministic capture */
 window.__axiom = {
-  snap(a=0){ mat.uniforms.uAppear.value=1; mat.uniforms.uTime.value=a*40.0; mat.uniforms.uScroll.value=0; threadMat.opacity=0.5; composer.render(); },
+  snap(a=0){ mat.uniforms.uAppear.value=1; mat.uniforms.uTime.value=a*40.0; mat.uniforms.uScroll.value=0; mat.uniforms.uActivity.value=0; mat.uniforms.uBurst.value=0; threadMat.opacity=0.5; composer.render(); },
+  pulse(nx=0, ny=0){ mat.uniforms.uBurstW.value.copy(unprojectToField(nx, ny)); burst = 1; }, // manual shockwave for testing
+  poke(nx=0, ny=0, act=1){ pointer.live=true; pointer.ndcX=nx; pointer.ndcY=ny; pointer.tActivity=act; }, // manual cursor energize
   frame(){ frame(performance.now()); },
   get running(){ return running; },
   field, thread, camera
