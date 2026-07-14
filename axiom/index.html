@@ -537,6 +537,97 @@ nav.nav-hidden{transform:translateY(-100%)}
 /* ---------- Single-file views ---------- */
 .view{display:none}
 .view.active{display:block}
+
+/* ---------- Focus visibility (a11y) ---------- */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:1px}
+.pcard:focus-visible{outline-offset:-2px}
+.skip-link{position:fixed;left:12px;top:-60px;z-index:300;background:var(--accent);color:#0a0704;padding:10px 16px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:top .2s}
+.skip-link:focus{top:12px}
+
+/* ---------- Language toggle ---------- */
+.lang-toggle{display:inline-flex;border:1px solid var(--line-2);font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;overflow:hidden}
+.lang-toggle button{background:transparent;border:none;color:var(--muted-2);padding:7px 10px;cursor:pointer;transition:.18s;line-height:1}
+.lang-toggle button.on{background:var(--accent);color:#0a0704}
+.lang-toggle button:not(.on):hover{color:var(--ink)}
+
+/* ---------- Product cards: clickable affordance ---------- */
+.pcard{cursor:pointer}
+.pcard-view{font-family:var(--sans);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);font-weight:500;display:inline-flex;align-items:center;gap:6px;transition:color .2s,gap .2s}
+.pcard:hover .pcard-view{color:var(--accent);gap:9px}
+
+/* ---------- Product detail modal ---------- */
+.pd-ov{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
+.pd-ov.show{opacity:1;pointer-events:auto}
+.pd{position:fixed;z-index:81;top:50%;left:50%;transform:translate(-50%,calc(-50% + 14px));width:min(920px,94vw);max-height:92vh;background:#0a0806;border:1px solid var(--line-2);opacity:0;pointer-events:none;transition:opacity .34s cubic-bezier(.16,1,.3,1),transform .34s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;overflow:hidden}
+.pd.show{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+.pd-close{position:absolute;top:16px;right:16px;z-index:3;width:40px;height:40px;border:1px solid var(--line-2);background:rgba(10,8,6,.6);color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:18px}
+.pd-close:hover{background:var(--accent);color:#0a0704;border-color:var(--accent)}
+.pd-body{display:grid;grid-template-columns:1fr 1fr;overflow:auto}
+.pd-media{position:relative;min-height:360px;background:#070605;border-right:1px solid var(--line);overflow:hidden}
+.pd-media img{width:100%;height:100%;object-fit:cover;display:block}
+.pd-media.brand{display:grid;place-items:center}
+.pd-media.brand::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 55% at 50% 42%,var(--accent-soft),transparent 70%)}
+.pd-media.brand i{font-size:96px;color:var(--accent);opacity:.5;position:relative}
+.pd-media .pd-tagfloat{position:absolute;left:20px;bottom:18px;font-family:var(--sans);font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.pd-main{padding:40px 36px 32px;display:flex;flex-direction:column;min-width:0}
+.pd-cat{font-family:var(--sans);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.pd h3{font-family:var(--display);font-weight:400;font-size:clamp(24px,3.4vw,32px);letter-spacing:-.01em;line-height:1.08;margin-top:14px}
+.pd-dose{font-family:var(--sans);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-top:12px}
+.pd-desc{color:var(--muted);font-size:14px;line-height:1.75;font-weight:300;margin-top:22px}
+.pd-specs{margin-top:24px;border-top:1px solid var(--line)}
+.pd-specs .row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line-soft)}
+.pd-specs .row .k{font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+.pd-specs .row .v{font-family:var(--sans);font-size:13px;color:var(--ink);text-align:right;font-weight:400}
+.pd-ref{margin-top:22px;border:1px solid var(--line);padding:18px 20px}
+.pd-ref .k{font-family:var(--sans);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.pd-ref p{color:var(--muted);font-size:12.5px;line-height:1.7;font-weight:300}
+.pd-buy{margin-top:auto;padding-top:26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pd-price{font-family:var(--display);font-weight:400;font-size:26px;color:var(--ink);font-variant-numeric:tabular-nums}
+.pd-price .cur{color:var(--muted-2);font-size:15px;margin-right:5px}
+.pd-price.na{font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+.pd-buy .btn{flex:1;justify-content:center;min-width:150px}
+.pd-note{font-size:11px;color:var(--muted-2);font-weight:300;margin-top:12px;line-height:1.6}
+@media(max-width:720px){
+  .pd{width:100vw;height:100dvh;max-height:none;top:0;left:0;transform:translateY(20px)}
+  .pd.show{transform:none}
+  .pd-body{grid-template-columns:1fr;display:block}
+  .pd-media{aspect-ratio:16/11;border-right:none;border-bottom:1px solid var(--line)}
+  .pd-main{padding:28px 22px 26px}
+}
+
+/* ---------- Trust / assurance band ---------- */
+.assure{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.assure-grid{display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid var(--line)}
+.assure-cell{padding:34px 26px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.assure-cell i{font-size:24px;color:var(--accent-bright)}
+.assure-cell .v{font-family:var(--display);font-weight:400;font-size:22px;letter-spacing:-.005em;color:var(--ink)}
+.assure-cell .k{font-family:var(--sans);font-size:11px;letter-spacing:.06em;color:var(--muted);font-weight:300;line-height:1.55}
+@media(max-width:820px){.assure-grid{grid-template-columns:repeat(2,1fr)}.assure-cell:nth-child(2n){border-right:none}}
+@media(max-width:460px){.assure-grid{grid-template-columns:1fr}.assure-cell{border-right:none}}
+
+/* ---------- Enquiry form ---------- */
+.eform{display:grid;grid-template-columns:1fr 1fr;gap:22px 26px;margin-top:12px}
+.eform .full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:9px}
+.field label{font-family:var(--sans);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.field label .req{color:var(--accent)}
+.field input,.field textarea,.field select{background:transparent;border:none;border-bottom:1px solid var(--line-2);color:var(--ink);font-family:var(--sans);font-size:14px;font-weight:300;padding:10px 2px;outline:none;transition:border-color .2s;border-radius:0}
+.field textarea{min-height:96px;resize:vertical;line-height:1.6}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted-2)}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--accent)}
+.field.invalid input,.field.invalid textarea{border-color:#c0563e}
+.field .err{font-size:10.5px;color:#d07a63;font-weight:400;display:none;letter-spacing:.02em}
+.field.invalid .err{display:block}
+.eform-actions{grid-column:1/-1;display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.eform-note{font-size:11.5px;color:var(--muted-2);font-weight:300;line-height:1.6;grid-column:1/-1}
+.form-ok{grid-column:1/-1;border:1px solid var(--accent-line);background:var(--accent-soft);padding:22px 24px;display:none}
+.form-ok.show{display:block}
+.form-ok h4{font-family:var(--display);font-weight:400;font-size:19px;margin-bottom:8px}
+.form-ok p{color:var(--muted);font-size:13.5px;font-weight:300;line-height:1.7}
+@media(max-width:640px){.eform{grid-template-columns:1fr}}
+
+/* ---------- Single-file views ---------- */
 </style>
 
 <!-- Three.js r0.143.0 — abstract performance/longevity hero field -->
@@ -550,6 +641,7 @@ nav.nav-hidden{transform:translateY(-100%)}
 </script>
 </head>
 <body>
+<a class="skip-link" href="#top" data-t="a11y.skip">Skip to content</a>
 
 <!-- ===== Intro preloader ===== -->
 <div id="preloader" aria-hidden="true">
@@ -568,7 +660,7 @@ nav.nav-hidden{transform:translateY(-100%)}
 <div id="cursorRing"></div>
 <div id="cursorDot"></div>
 
-<div class="ribbon">AXIOM · <b>Human Performance &amp; Longevity</b> · Peptide science · Therapy &amp; recovery · Wellness · Prices in IDR</div>
+<div class="ribbon"><span data-t="ribbon">AXIOM · <b>Human Performance &amp; Longevity</b> · Peptide science · Therapy &amp; recovery · Wellness · Prices in IDR</span></div>
 
 <nav id="nav">
   <div class="wrap nav-in">
@@ -577,12 +669,16 @@ nav.nav-hidden{transform:translateY(-100%)}
     </a>
     <div class="nav-right">
       <div class="nav-links" id="navLinks">
-        <a href="#home">Home</a>
-        <a href="#products">Products</a>
-        <a href="#standards">Standards</a>
-        <a href="#contact">Contact</a>
+        <a href="#home" data-t="nav.home">Home</a>
+        <a href="#products" data-t="nav.products">Products</a>
+        <a href="#standards" data-t="nav.standards">Standards</a>
+        <a href="#contact" data-t="nav.contact">Contact</a>
       </div>
-      <button class="navcart" id="navCart" aria-label="Open cart">Cart&nbsp;(<span class="cartbadge" id="navCartCount" hidden>0</span><span id="cartZero">0</span>)</button>
+      <div class="lang-toggle" id="langToggle" role="group" aria-label="Language">
+        <button type="button" data-lang="en" class="on">EN</button>
+        <button type="button" data-lang="id">ID</button>
+      </div>
+      <button class="navcart" id="navCart" aria-label="Open cart"><span data-t="nav.cart">Cart</span>&nbsp;(<span class="cartbadge" id="navCartCount" hidden>0</span><span id="cartZero">0</span>)</button>
       <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="ph ph-list"></i></button>
     </div>
   </div>
@@ -598,19 +694,19 @@ nav.nav-hidden{transform:translateY(-100%)}
     <div class="hero-mark">
       <img src="assets/axiom-logo-white.png" alt="AXIOM — Human Performance" width="663" height="172" />
     </div>
-    <h1>Human performance,<br><em>engineered for the long run.</em></h1>
-    <p class="lead">Peptide science, red-light therapy, recovery and longevity — one considered system for people who train for decades, not weeks. Every protocol verified, every device clinical-grade.</p>
+    <h1 data-t="hero.h">Human performance,<br><em>engineered for the long run.</em></h1>
+    <p class="lead" data-t="hero.lead">Peptide science, red-light therapy, recovery and longevity — one considered system for people who train for decades, not weeks. Every protocol verified, every device clinical-grade.</p>
     <div class="hero-cta">
-      <a href="#products" class="tlink">Explore the Range <span class="ar">→</span></a>
-      <a href="#standards" class="tlink">Our Standards <span class="ar">→</span></a>
+      <a href="#products" class="tlink"><span data-t="hero.cta1">Explore the Range</span> <span class="ar">→</span></a>
+      <a href="#standards" class="tlink"><span data-t="hero.cta2">Our Standards</span> <span class="ar">→</span></a>
     </div>
   </div>
   <div class="hero-meta">
     <div class="wrap stagger reveal">
-      <div class="m"><div class="k">Focus</div><div class="v">Longevity</div></div>
-      <div class="m"><div class="k">Peptide purity</div><div class="v">≥ 98%</div></div>
-      <div class="m"><div class="k">Catalogue</div><div class="v" id="metaCount">57</div></div>
-      <div class="m"><div class="k">Pillars</div><div class="v">05</div></div>
+      <div class="m"><div class="k" data-t="meta.focus">Focus</div><div class="v">Longevity</div></div>
+      <div class="m"><div class="k" data-t="meta.purity">Peptide purity</div><div class="v">≥ 98%</div></div>
+      <div class="m"><div class="k" data-t="meta.catalogue">Catalogue</div><div class="v" id="metaCount">57</div></div>
+      <div class="m"><div class="k" data-t="meta.pillars">Pillars</div><div class="v">05</div></div>
     </div>
   </div>
 </header>
@@ -620,14 +716,14 @@ nav.nav-hidden{transform:translateY(-100%)}
   <section class="stmt">
     <div class="wrap reveal">
       <div class="idx">01 — Principle</div>
-      <h2>Performance you can measure.<br><em>Longevity you can keep.</em></h2>
+      <h2 data-t="man.1h">Performance you can measure.<br><em>Longevity you can keep.</em></h2>
       <p>AXIOM brings peptide science, recovery therapy and longevity tools under one standard — so the gains you make this season are still with you a decade from now. Short-term results, engineered to last.</p>
     </div>
   </section>
   <section class="stmt">
     <div class="wrap reveal">
       <div class="idx">02 — Standard</div>
-      <h2>One standard,<br><em>across every product.</em></h2>
+      <h2 data-t="man.2h">One standard,<br><em>across every product.</em></h2>
       <p>A verified peptide, a clinical red-light device, a daily wellness protocol — same scrutiny, same documentation, same refusal to cut corners. If it carries the AXIOM mark, it has earned it.</p>
     </div>
   </section>
@@ -635,6 +731,34 @@ nav.nav-hidden{transform:translateY(-100%)}
 
 <!-- ===== SOLID CONTENT ===== -->
 <div class="content">
+
+<!-- ===== TRUST / ASSURANCE BAND ===== -->
+<section class="assure" aria-label="Assurances">
+  <div class="wrap">
+    <div class="assure-grid stagger reveal">
+      <div class="assure-cell">
+        <i class="ph ph-seal-check"></i>
+        <div class="v" data-t="assure.1v">≥ 98% purity</div>
+        <div class="k" data-t="assure.1k">Every peptide lot HPLC/MS-verified with a Certificate of Analysis.</div>
+      </div>
+      <div class="assure-cell">
+        <i class="ph ph-snowflake"></i>
+        <div class="v" data-t="assure.2v">Cold-chain shipped</div>
+        <div class="k" data-t="assure.2k">Temperature-managed, tamper-evident packaging across Indonesia.</div>
+      </div>
+      <div class="assure-cell">
+        <i class="ph ph-sun"></i>
+        <div class="v" data-t="assure.3v">Clinical-grade</div>
+        <div class="k" data-t="assure.3k">Therapy devices at true 660 + 850 nm with verified irradiance.</div>
+      </div>
+      <div class="assure-cell">
+        <i class="ph ph-chats-circle"></i>
+        <div class="v" data-t="assure.4v">24-hour quotes</div>
+        <div class="k" data-t="assure.4k">A direct line to the team — before and after you order.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ===== PILLARS ===== -->
 <section class="section pillars" id="pillars">
@@ -645,7 +769,7 @@ nav.nav-hidden{transform:translateY(-100%)}
         <span class="kicker">Five Pillars</span>
       </div>
       <div>
-        <h2>One system for the long game</h2>
+        <h2 data-t="pil.h">One system for the long game</h2>
         <p>Performance and longevity aren't separate pursuits. AXIOM spans five connected pillars — from verified peptide science to the recovery and daily tools that let results compound over a lifetime.</p>
       </div>
     </div>
@@ -653,35 +777,35 @@ nav.nav-hidden{transform:translateY(-100%)}
       <a class="pillar reveal" href="#products">
         <div class="pillar-no">01</div>
         <div class="pillar-ic"><i class="ph ph-flask"></i></div>
-        <h4>Peptide Science</h4>
+        <h4 data-t="pil.1">Peptide Science</h4>
         <p>Research-grade peptides across metabolic, repair, growth and neuro pathways — every lot HPLC/MS verified to ≥98%.</p>
         <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
       </a>
       <a class="pillar reveal" href="#products/cat-redlight">
         <div class="pillar-no">02</div>
         <div class="pillar-ic"><i class="ph ph-sun"></i></div>
-        <h4>Therapy &amp; Recovery</h4>
+        <h4 data-t="pil.2">Therapy &amp; Recovery</h4>
         <p>Clinical red-light therapy — compression systems, mats and masks for circulation, skin and post-training recovery.</p>
         <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
       </a>
       <a class="pillar reveal" href="#products">
         <div class="pillar-no">03</div>
         <div class="pillar-ic"><i class="ph ph-drop-half"></i></div>
-        <h4>Wellness</h4>
+        <h4 data-t="pil.3">Wellness</h4>
         <p>Antioxidants, NAD⁺ and cellular-energy support — the daily inputs that hold your baseline while you push it.</p>
         <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
       </a>
       <a class="pillar reveal" href="#products">
         <div class="pillar-no">04</div>
         <div class="pillar-ic"><i class="ph ph-infinity"></i></div>
-        <h4>Longevity</h4>
+        <h4 data-t="pil.4">Longevity</h4>
         <p>Cellular-ageing, senescence and copper-peptide compounds for the decade-over-decade game, not the next cycle.</p>
         <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
       </a>
       <a class="pillar reveal" href="#products/cat-apparel">
         <div class="pillar-no">05</div>
         <div class="pillar-ic"><i class="ph ph-t-shirt"></i></div>
-        <h4>Apparel</h4>
+        <h4 data-t="pil.5">Apparel</h4>
         <p>Train in the identity — neutral, precise AXIOM performance wear and everyday carry.</p>
         <span class="pillar-link">Explore <i class="ph ph-arrow-right"></i></span>
       </a>
@@ -698,7 +822,7 @@ nav.nav-hidden{transform:translateY(-100%)}
         <span class="kicker">Featured</span>
       </div>
       <div>
-        <h2>One from each pillar</h2>
+        <h2 data-t="feat.h">One from each pillar</h2>
         <p>A cross-section of the range — from the research bench to the recovery room. The full catalogue lives on its own page.</p>
       </div>
     </div>
@@ -729,7 +853,7 @@ nav.nav-hidden{transform:translateY(-100%)}
       </a>
     </div>
     <div class="featured-foot reveal">
-      <a href="#products" class="btn">Browse the Full Range — 57 Products</a>
+      <a href="#products" class="btn"><span data-t="feat.btn">Browse the Full Range — 57 Products</span></a>
     </div>
   </div>
 </section>
@@ -743,7 +867,7 @@ nav.nav-hidden{transform:translateY(-100%)}
         <span class="kicker">Verification</span>
       </div>
       <div>
-        <h2>Held to one standard</h2>
+        <h2 data-t="std.h">Held to one standard</h2>
         <p>Whether it's a peptide, a therapy device or a wellness protocol — nothing carries the AXIOM mark until it's verified, documented and sourced right.</p>
       </div>
     </div>
@@ -762,11 +886,11 @@ nav.nav-hidden{transform:translateY(-100%)}
 <section class="section" id="contact">
   <div class="wrap">
     <div class="cta reveal">
-      <div class="kicker">Request a Quote</div>
-      <h2>Build your order</h2>
+      <div class="kicker" data-t="cta.kicker">Request a Quote</div>
+      <h2 data-t="cta.h">Build your order</h2>
       <p>Tell us which peptides, devices or wellness items you need. Quotes are returned within 24 hours with live stock and pricing.</p>
       <div class="cta-row">
-        <a href="https://wa.me/18038573396?text=Hello%20AXIOM%2C%20I%27d%20like%20a%20quote." target="_blank" rel="noopener" class="btn btn-solid"><i class="ph-fill ph-whatsapp-logo"></i> WhatsApp Us</a>
+        <a href="https://wa.me/18038573396?text=Hello%20AXIOM%2C%20I%27d%20like%20a%20quote." target="_blank" rel="noopener" class="btn btn-solid"><i class="ph-fill ph-whatsapp-logo"></i> <span data-t="cta.wa">WhatsApp Us</span></a>
         <a href="#contact" class="tlink">Order Process &amp; FAQ <span class="ar">→</span></a>
       </div>
     </div>
@@ -784,7 +908,7 @@ nav.nav-hidden{transform:translateY(-100%)}
   <div class="wrap">
     <div class="crumb"><a href="#home">Home</a><span class="sep">/</span><span class="here">Products</span></div>
     <span class="kicker">The Range</span>
-    <h1>Every product,<br><em>one standard.</em></h1>
+    <h1 data-t="ph.prod">Every product,<br><em>one standard.</em></h1>
     <p>Peptide science, red-light therapy, wellness and apparel — search the full range or filter by category. Peptides are research-use only; devices and apparel are consumer products.</p>
   </div>
 </header>
@@ -835,7 +959,7 @@ nav.nav-hidden{transform:translateY(-100%)}
   <div class="wrap">
     <div class="crumb"><a href="#home">Home</a><span class="sep">/</span><span class="here">Standards</span></div>
     <span class="kicker">Verification</span>
-    <h1>Held to <em>one standard.</em></h1>
+    <h1 data-t="ph.std">Held to <em>one standard.</em></h1>
     <p>Whether it's a peptide, a therapy device or a wellness protocol — nothing carries the AXIOM mark until it's verified, documented and sourced right.</p>
   </div>
 </header>
@@ -906,7 +1030,7 @@ nav.nav-hidden{transform:translateY(-100%)}
   <div class="wrap">
     <div class="crumb"><a href="#home">Home</a><span class="sep">/</span><span class="here">Contact</span></div>
     <span class="kicker">Order &amp; Support</span>
-    <h1>From enquiry<br><em>to doorstep.</em></h1>
+    <h1 data-t="ph.con">From enquiry<br><em>to doorstep.</em></h1>
     <p>How ordering works, the questions we hear most, and a direct line to the team. Quotes are returned within 24 hours with live stock and pricing.</p>
   </div>
 </header>
@@ -919,14 +1043,14 @@ nav.nav-hidden{transform:translateY(-100%)}
         <span class="kicker">How to Order</span>
       </div>
       <div>
-        <h2>Four steps</h2>
+        <h2 data-t="step.h">Four steps</h2>
       </div>
     </div>
     <div class="steps">
-      <div class="step reveal"><h4>Choose Your Range</h4><p>Browse the catalogue and add the peptides, devices or wellness items you need.</p></div>
-      <div class="step reveal"><h4>Request a Quote</h4><p>Send your list via the form or WhatsApp. We confirm stock and current IDR pricing.</p></div>
-      <div class="step reveal"><h4>Confirm &amp; Pay</h4><p>Review your itemised quote, acknowledge any research-use terms, and settle securely.</p></div>
-      <div class="step reveal"><h4>Tracked Delivery</h4><p>Your order ships protected — peptides cold-chain with CoA, devices insured and tracked.</p></div>
+      <div class="step reveal"><h4 data-t="step.1">Choose Your Range</h4><p>Browse the catalogue and add the peptides, devices or wellness items you need.</p></div>
+      <div class="step reveal"><h4 data-t="step.2">Request a Quote</h4><p>Send your list via the form or WhatsApp. We confirm stock and current IDR pricing.</p></div>
+      <div class="step reveal"><h4 data-t="step.3">Confirm &amp; Pay</h4><p>Review your itemised quote, acknowledge any research-use terms, and settle securely.</p></div>
+      <div class="step reveal"><h4 data-t="step.4">Tracked Delivery</h4><p>Your order ships protected — peptides cold-chain with CoA, devices insured and tracked.</p></div>
     </div>
   </div>
 </section>
@@ -939,7 +1063,7 @@ nav.nav-hidden{transform:translateY(-100%)}
         <span class="kicker">Essentials</span>
       </div>
       <div>
-        <h2>Questions</h2>
+        <h2 data-t="faq.h">Questions</h2>
         <p>Handling, logistics and compliance across peptides, devices and wellness — the essentials before you order.</p>
       </div>
     </div>
@@ -954,17 +1078,47 @@ nav.nav-hidden{transform:translateY(-100%)}
   </div>
 </section>
 
-<section class="section" id="contact-cta" style="border-top:1px solid var(--line)">
+<section class="section" id="enquiry" style="border-top:1px solid var(--line)">
   <div class="wrap">
-    <div class="cta reveal">
-      <div class="kicker">Request a Quote</div>
-      <h2>Build your order</h2>
-      <p>Tell us which peptides, devices or wellness items you need. Quotes are returned within 24 hours with live stock and pricing.</p>
-      <div class="cta-row">
-        <a href="https://wa.me/18038573396?text=Hello%20AXIOM%2C%20I%27d%20like%20a%20quote." target="_blank" rel="noopener" class="btn btn-solid"><i class="ph-fill ph-whatsapp-logo"></i> WhatsApp Us</a>
-        <a href="mailto:hello@axiomperformance.example?subject=AXIOM%20Quote%20Request" class="tlink">Email Enquiry <span class="ar">→</span></a>
+    <div class="sec-head reveal">
+      <div class="lead-col">
+        <div class="no">03 / Enquiry</div>
+        <span class="kicker" data-t="enq.kicker">Request a Quote</span>
+      </div>
+      <div>
+        <h2 data-t="enq.h">Build your order</h2>
+        <p data-t="enq.lead">Tell us which peptides, devices or wellness items you need. We reply within 24 hours with live stock and pricing. If you've added items to your cart, they're included below automatically.</p>
       </div>
     </div>
+    <form class="eform reveal" id="enquiryForm" novalidate>
+      <div class="field">
+        <label for="efName"><span data-t="enq.name">Name</span> <span class="req">*</span></label>
+        <input type="text" id="efName" name="name" autocomplete="name" required />
+        <span class="err" data-t="enq.errName">Please enter your name.</span>
+      </div>
+      <div class="field">
+        <label for="efContact"><span data-t="enq.contact">Email or WhatsApp</span> <span class="req">*</span></label>
+        <input type="text" id="efContact" name="contact" autocomplete="email" required />
+        <span class="err" data-t="enq.errContact">Please leave an email or WhatsApp number.</span>
+      </div>
+      <div class="field full">
+        <label for="efItems" data-t="enq.items">Items of interest</label>
+        <input type="text" id="efItems" name="items" placeholder="BPC-157, Red Light Mask, NAD⁺…" />
+      </div>
+      <div class="field full">
+        <label for="efMsg" data-t="enq.msg">Message</label>
+        <textarea id="efMsg" name="message" placeholder="Quantities, questions, delivery city…"></textarea>
+      </div>
+      <p class="eform-note" data-t="enq.note">Submitting opens WhatsApp (or your email app) with everything pre-filled — nothing is stored on this site. Peptide orders confirm research-use terms at checkout.</p>
+      <div class="eform-actions">
+        <button type="submit" class="btn btn-solid"><i class="ph-fill ph-whatsapp-logo"></i> <span data-t="enq.send">Send via WhatsApp</span></button>
+        <a href="mailto:hello@axiomperformance.example?subject=AXIOM%20Quote%20Request" class="tlink" id="efEmail"><span data-t="enq.email">Send by email</span> <span class="ar">→</span></a>
+      </div>
+      <div class="form-ok" id="formOk" role="status">
+        <h4 data-t="enq.okH">Opening WhatsApp…</h4>
+        <p data-t="enq.okP">If nothing opened, your browser may have blocked it — use the email link above, or message us directly at +1 803 857 3396.</p>
+      </div>
+    </form>
   </div>
 </section>
 </div>
@@ -978,7 +1132,7 @@ nav.nav-hidden{transform:translateY(-100%)}
         <p>Human performance &amp; longevity — peptide science, recovery therapy, wellness and apparel under one standard. Independently tested, documented, and dispatched with care.</p>
       </div>
       <div>
-        <h5>Explore</h5>
+        <h5 data-t="foot.explore">Explore</h5>
         <a href="#products">Products</a>
         <a href="#products/cat-redlight">Therapy &amp; Recovery</a>
         <a href="#products/cat-apparel">Apparel</a>
@@ -986,7 +1140,7 @@ nav.nav-hidden{transform:translateY(-100%)}
         <a href="#contact">Contact &amp; FAQ</a>
       </div>
       <div>
-        <h5>Contact</h5>
+        <h5 data-t="foot.contact">Contact</h5>
         <a href="https://wa.me/18038573396" target="_blank" rel="noopener">WhatsApp Order Line</a>
         <a href="mailto:hello@axiomperformance.example">hello@axiomperformance.example</a>
         <p class="fl">Mon–Sat · 09:00–18:00 WIB</p>
@@ -1004,6 +1158,31 @@ nav.nav-hidden{transform:translateY(-100%)}
 </footer>
 
 <!-- ===== REFERENCE DRAWER ===== -->
+<!-- ===== PRODUCT DETAIL MODAL ===== -->
+<div class="pd-ov" id="pdOv"></div>
+<aside class="pd" id="pd" role="dialog" aria-modal="true" aria-labelledby="pdName" aria-hidden="true">
+  <button class="pd-close" id="pdClose" aria-label="Close"><i class="ph-bold ph-x"></i></button>
+  <div class="pd-body">
+    <div class="pd-media" id="pdMedia"></div>
+    <div class="pd-main">
+      <div class="pd-cat" id="pdCat">—</div>
+      <h3 id="pdName">—</h3>
+      <div class="pd-dose" id="pdDose"></div>
+      <p class="pd-desc" id="pdDesc"></p>
+      <div class="pd-specs" id="pdSpecs"></div>
+      <div class="pd-ref" id="pdRef" hidden>
+        <div class="k"><i class="ph-bold ph-atom"></i> <span data-t="pd.studied">Studied for</span></div>
+        <p id="pdRefText">—</p>
+      </div>
+      <div class="pd-buy">
+        <span class="pd-price" id="pdPrice">—</span>
+        <button class="btn btn-solid" id="pdAdd"><i class="ph ph-plus"></i> <span data-t="pd.add">Add to cart</span></button>
+      </div>
+      <p class="pd-note" id="pdNote"></p>
+    </div>
+  </div>
+</aside>
+
 <div class="drawer-ov" id="drawerOv"></div>
 <aside class="drawer" id="drawer" aria-hidden="true" aria-label="Compound research information">
   <div class="drawer-h">
@@ -1652,10 +1831,10 @@ CAT.forEach(c=>{
   const short=c.name.split(" & ")[0].split(",")[0];
   const cards=c.items.map((it,i)=>{
     const id=`${c.id}-${i}`;
-    ITEMS[id]={id,name:it.name,dose:it.dose,price:it.price,cat:c.id};
+    ITEMS[id]={id,name:it.name,dose:it.dose,price:it.price,cat:c.id,img:it.img||null,content:it.content||null,catName:c.name,catShort:short,catNo:c.no,catBlurb:c.blurb,unit:c.unit||'compounds',idx:i};
     const priceHtml=it.price==null?'<span class="pcard-price na">On request</span>':`<span class="pcard-price"><span class="cur">Rp</span>${fmt(it.price)}</span>`;
     return `
-    <article class="pcard${it.img?' has-media':''}" data-id="${id}" data-name="${(it.name+' '+it.dose).toLowerCase()}" data-idx="${i}" data-price="${it.price==null?'':it.price}">
+    <article class="pcard${it.img?' has-media':''}" data-id="${id}" data-name="${(it.name+' '+it.dose).toLowerCase()}" data-idx="${i}" data-price="${it.price==null?'':it.price}" tabindex="0" role="button" aria-label="View ${it.name}">
       ${it.img?`<div class="pcard-media"><img src="${it.img}" alt="${it.name}" loading="lazy" onerror="this.parentElement.remove()" /></div>`:''}
       <div class="pcard-top">
         <span class="pcard-tag">${short}</span>
@@ -1801,10 +1980,81 @@ function openRef(name){
   drawer.classList.add("show");drawerOv.classList.add("show");drawer.setAttribute("aria-hidden","false");
 }
 function closeRef(){drawer.classList.remove("show");drawerOv.classList.remove("show");drawer.setAttribute("aria-hidden","true");}
-list.addEventListener("click",e=>{const b=e.target.closest("[data-ref]");if(b)openRef(b.dataset.ref);});
+list.addEventListener("click",e=>{const b=e.target.closest("[data-ref]");if(b){e.stopPropagation();openRef(b.dataset.ref);}});
 drawerOv.addEventListener("click",closeRef);
 document.getElementById("drawerClose").addEventListener("click",closeRef);
 addEventListener("keydown",e=>{if(e.key==="Escape")closeRef();});
+
+/* ---- Product detail modal ---- */
+const pd=document.getElementById("pd"),pdOv=document.getElementById("pdOv");
+let pdReturnFocus=null;
+const CAT_ICON={metabolic:"scales",tissue:"first-aid-kit",growth:"pulse",neuro:"brain",reproductive:"gender-intersex",longevity:"sparkle",redlight:"sun",apparel:"t-shirt"};
+function specRows(it){
+  const rows=[];
+  if(it.dose) rows.push(["Specification",it.dose]);
+  if(it.content) rows.push([it.cat==="apparel"?"Type":it.cat==="redlight"?"Format":"Presentation",it.content]);
+  if(REF[it.name]){ rows.push(["Purity","≥ 98% · HPLC/MS"]); rows.push(["Classification","Research use only"]); }
+  else if(it.cat==="redlight"){ rows.push(["Wavelengths","660 + 850 nm"]); rows.push(["Classification","Consumer device"]); }
+  else if(it.cat==="apparel"){ rows.push(["Classification","Consumer product"]); }
+  rows.push(["Category",it.catName]);
+  return rows;
+}
+function openProduct(id){
+  const it=ITEMS[id]; if(!it) return;
+  pdReturnFocus=document.activeElement;
+  const media=document.getElementById("pdMedia");
+  if(it.img){ media.className="pd-media"; media.innerHTML=`<img src="${it.img}" alt="${it.name}" /><span class="pd-tagfloat">${it.catShort}</span>`; }
+  else{ media.className="pd-media brand"; media.innerHTML=`<i class="ph ph-${CAT_ICON[it.cat]||'cube'}"></i><span class="pd-tagfloat">${it.catShort}</span>`; }
+  document.getElementById("pdCat").textContent=it.catName;
+  document.getElementById("pdName").textContent=it.name;
+  document.getElementById("pdDose").textContent=it.dose||"";
+  const r=REF[it.name];
+  document.getElementById("pdDesc").textContent = r ? r.mech : it.catBlurb;
+  document.getElementById("pdSpecs").innerHTML=specRows(it).map(([k,v])=>`<div class="row"><span class="k">${k}</span><span class="v">${v}</span></div>`).join("");
+  const refBox=document.getElementById("pdRef");
+  if(r){ refBox.hidden=false; document.getElementById("pdRefText").textContent=`${r.cls}. ${HANDLING}`; }
+  else refBox.hidden=true;
+  const priceEl=document.getElementById("pdPrice"),addBtn=document.getElementById("pdAdd");
+  if(it.price==null){ priceEl.className="pd-price na"; priceEl.textContent="Price on request"; addBtn.style.display="none"; }
+  else{ priceEl.className="pd-price"; priceEl.innerHTML=`<span class="cur">Rp</span>${fmt(it.price)}`; addBtn.style.display=""; addBtn.dataset.add=id; }
+  document.getElementById("pdNote").textContent = r
+    ? "For in-vitro laboratory and research use only. No dosing, administration or usage guidance is provided."
+    : "Consumer product. Prices are indicative and confirmed at quotation.";
+  pd.classList.add("show"); pdOv.classList.add("show"); pd.setAttribute("aria-hidden","false");
+  document.documentElement.style.overflow="hidden";
+  document.getElementById("pdClose").focus();
+  if((location.hash.split("/")[1]||"")!=="p") history.pushState(null,"",`#products/p/${id}`);
+}
+function closeProduct(fromPop){
+  if(!pd.classList.contains("show"))return;
+  pd.classList.remove("show"); pdOv.classList.remove("show"); pd.setAttribute("aria-hidden","true");
+  if(!document.getElementById("gate")||document.getElementById("gate").hidden) document.documentElement.style.overflow="";
+  if(pdReturnFocus&&pdReturnFocus.focus)pdReturnFocus.focus();
+  if(!fromPop && /#products\/p\//.test(location.hash)) history.replaceState(null,"","#products");
+}
+window.axOpenProduct=openProduct; window.axCloseProduct=closeProduct;
+window.axProductOpen=()=>pd.classList.contains("show");
+// open on card click (ignore action buttons) + keyboard
+list.addEventListener("click",e=>{
+  if(e.target.closest("[data-add],[data-ref]"))return;
+  const card=e.target.closest(".pcard"); if(card)openProduct(card.dataset.id);
+});
+list.addEventListener("keydown",e=>{
+  if(e.key!=="Enter"&&e.key!==" ")return;
+  const card=e.target.closest(".pcard"); if(card&&!e.target.closest("[data-add],[data-ref]")){e.preventDefault();openProduct(card.dataset.id);}
+});
+document.getElementById("pdClose").addEventListener("click",()=>closeProduct());
+pdOv.addEventListener("click",()=>closeProduct());
+document.getElementById("pdAdd").addEventListener("click",e=>{ addItem(e.currentTarget.dataset.add); const s=e.currentTarget.querySelector("span"); if(s){const o=s.textContent;s.textContent="Added ✓";setTimeout(()=>s.textContent=o,1400);} });
+addEventListener("keydown",e=>{
+  if(e.key==="Escape")closeProduct();
+  if(e.key==="Tab"&&pd.classList.contains("show")){
+    const f=pd.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])');
+    if(!f.length)return; const first=f[0],last=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
 
 /* ---- Acknowledgement gate ---- */
 (function(){
@@ -1822,13 +2072,103 @@ addEventListener("keydown",e=>{if(e.key==="Escape")closeRef();});
 
 </script>
 <script>
+/* ===== i18n (interface language EN/ID) ===== */
+(function(){
+const ID={
+ "nav.home":"Beranda","nav.products":"Produk","nav.standards":"Standar","nav.contact":"Kontak","nav.cart":"Keranjang",
+ "ribbon":'AXIOM · <b>Human Performance &amp; Longevity</b> · Ilmu peptida · Terapi &amp; pemulihan · Wellness · Harga dalam Rupiah',
+ "hero.h":"Performa manusia,<br><em>dirancang untuk jangka panjang.</em>",
+ "hero.lead":"Ilmu peptida, terapi red-light, pemulihan dan longevity — satu sistem terpadu untuk mereka yang berlatih untuk puluhan tahun, bukan minggu. Setiap protokol terverifikasi, setiap perangkat berkelas klinis.",
+ "hero.cta1":"Jelajahi Rangkaian","hero.cta2":"Standar Kami",
+ "meta.focus":"Fokus","meta.purity":"Kemurnian peptida","meta.catalogue":"Katalog","meta.pillars":"Pilar",
+ "man.1h":"Performa yang bisa diukur.<br><em>Longevity yang bisa dipertahankan.</em>",
+ "man.2h":"Satu standar,<br><em>di setiap produk.</em>",
+ "pil.h":"Satu sistem untuk jangka panjang",
+ "pil.1":"Ilmu Peptida","pil.2":"Terapi &amp; Pemulihan","pil.3":"Wellness","pil.4":"Longevity","pil.5":"Apparel",
+ "feat.h":"Satu dari tiap pilar","feat.btn":"Lihat Seluruh Rangkaian — 57 Produk",
+ "std.h":"Dipegang pada satu standar",
+ "cta.kicker":"Minta Penawaran","cta.h":"Susun pesanan Anda","cta.wa":"WhatsApp Kami",
+ "ph.prod":"Setiap produk,<br><em>satu standar.</em>","ph.std":"Dipegang pada <em>satu standar.</em>","ph.con":"Dari pertanyaan<br><em>hingga ke depan pintu.</em>",
+ "step.h":"Empat langkah","step.1":"Pilih Rangkaian Anda","step.2":"Minta Penawaran","step.3":"Konfirmasi &amp; Bayar","step.4":"Pengiriman Terlacak",
+ "faq.h":"Pertanyaan","foot.explore":"Jelajahi","foot.contact":"Kontak",
+ "assure.1v":"Kemurnian ≥ 98%","assure.1k":"Setiap lot peptida terverifikasi HPLC/MS dengan Sertifikat Analisis.",
+ "assure.2v":"Dikirim rantai-dingin","assure.2k":"Kemasan bersuhu terkendali dan tersegel, di seluruh Indonesia.",
+ "assure.3v":"Berkelas klinis","assure.3k":"Perangkat terapi pada 660 + 850 nm sesungguhnya dengan iradiansi terverifikasi.",
+ "assure.4v":"Penawaran 24 jam","assure.4k":"Jalur langsung ke tim — sebelum dan sesudah pemesanan.",
+ "enq.kicker":"Minta Penawaran","enq.h":"Susun pesanan Anda","enq.lead":"Beri tahu peptida, perangkat, atau item wellness yang Anda butuhkan. Kami membalas dalam 24 jam dengan stok dan harga terkini. Item di keranjang Anda otomatis disertakan di bawah.",
+ "enq.name":"Nama","enq.contact":"Email atau WhatsApp","enq.items":"Item yang diminati","enq.msg":"Pesan",
+ "enq.note":"Mengirim akan membuka WhatsApp (atau aplikasi email) dengan semua terisi otomatis — tidak ada yang disimpan di situs ini. Pesanan peptida mengonfirmasi ketentuan penggunaan riset saat checkout.",
+ "enq.send":"Kirim via WhatsApp","enq.email":"Kirim lewat email",
+ "enq.errName":"Mohon isi nama Anda.","enq.errContact":"Mohon tinggalkan email atau nomor WhatsApp.",
+ "enq.okH":"Membuka WhatsApp…","enq.okP":"Jika tidak ada yang terbuka, browser Anda mungkin memblokirnya — gunakan tautan email di atas, atau hubungi kami langsung di +1 803 857 3396.",
+ "pd.studied":"Dipelajari untuk","pd.add":"Tambah ke keranjang","a11y.skip":"Lewati ke konten"
+};
+const nodes=[...document.querySelectorAll("[data-t]")];
+nodes.forEach(el=>el._en=el.innerHTML);
+function apply(lang){
+  nodes.forEach(el=>{const k=el.dataset.t; el.innerHTML=(lang==="id"&&ID[k])?ID[k]:el._en;});
+  document.documentElement.lang=lang;
+  document.querySelectorAll("#langToggle button").forEach(b=>b.classList.toggle("on",b.dataset.lang===lang));
+  try{localStorage.setItem("axiom_lang",lang);}catch(e){}
+}
+let lang="en"; try{lang=localStorage.getItem("axiom_lang")||"en";}catch(e){}
+apply(lang);
+document.getElementById("langToggle").addEventListener("click",e=>{const b=e.target.closest("button");if(b)apply(b.dataset.lang);});
+
+/* ===== Enquiry form ===== */
+(function(){
+const form=document.getElementById("enquiryForm"); if(!form)return;
+const WA="18038573396";
+function cartLines(){
+  try{const c=JSON.parse(localStorage.getItem(window.AX_CART_KEY)||"{}");
+    return Object.values(c).map(e=>`${e.name}${e.dose?' '+e.dose:''} ×${e.qty}`);}catch(e){return [];}
+}
+function compose(){
+  const name=form.name.value.trim(),contact=form.contact.value.trim();
+  const items=form.items.value.trim(), msg=form.message.value.trim();
+  const cart=cartLines();
+  let t=`Hello AXIOM, I'd like a quote.\n\nName: ${name}\nContact: ${contact}`;
+  if(items) t+=`\nItems of interest: ${items}`;
+  if(cart.length) t+=`\nIn my cart:\n- ${cart.join("\n- ")}`;
+  if(msg) t+=`\n\n${msg}`;
+  return t;
+}
+function validate(){
+  let ok=true;
+  [["efName","name"],["efContact","contact"]].forEach(([id,n])=>{
+    const f=document.getElementById(id).closest(".field");
+    const bad=!form[n].value.trim();
+    f.classList.toggle("invalid",bad); if(bad)ok=false;
+  });
+  return ok;
+}
+form.addEventListener("input",e=>{const f=e.target.closest(".field");if(f)f.classList.remove("invalid");});
+document.getElementById("efEmail").addEventListener("click",e=>{
+  if(!validate()){e.preventDefault();return;}
+  e.currentTarget.href=`mailto:hello@axiomperformance.example?subject=${encodeURIComponent("AXIOM Quote Request")}&body=${encodeURIComponent(compose())}`;
+});
+form.addEventListener("submit",e=>{
+  e.preventDefault();
+  if(!validate())return;
+  const url=`https://wa.me/${WA}?text=${encodeURIComponent(compose())}`;
+  document.getElementById("formOk").classList.add("show");
+  window.open(url,"_blank","noopener");
+});
+})();
+})();
+</script>
+<script>
 /* ===== Hash router — one file, four views ===== */
 (function(){
 const VIEWS=["home","products","standards","contact"];
 function route(){
   const h=(location.hash||"#home").replace(/^#\/?/,"");
-  let [view,anchor]=h.split("/");
+  const parts=h.split("/");
+  let view=parts[0], anchor=parts[1];
   if(!VIEWS.includes(view)){view="home";anchor=null;}
+  // product deep link: #products/p/<id>
+  const isProduct = view==="products" && parts[1]==="p" && parts[2];
+  if(isProduct){ anchor=null; }
   document.querySelectorAll(".view").forEach(v=>v.classList.toggle("active",v.dataset.view===view));
   document.querySelectorAll("#navLinks a").forEach(a=>{
     const t=(a.getAttribute("href")||"").replace(/^#\/?/,"").split("/")[0];
@@ -1838,8 +2178,11 @@ function route(){
   if(hint)hint.style.display=view==="home"?"":"none";
   if(window.__axiom&&window.__axiom.setActive)window.__axiom.setActive(view==="home");
   else{const w=document.getElementById("sceneWrap");if(w)w.style.display=view==="home"?"":"none";}
-  if(anchor)requestAnimationFrame(()=>requestAnimationFrame(()=>{const el=document.getElementById(anchor);if(el)el.scrollIntoView({behavior:"instant",block:"start"});}));
-  else window.scrollTo(0,0);
+  if(isProduct){ if(window.axOpenProduct)window.axOpenProduct(parts[2]); }
+  else{ if(window.axProductOpen&&window.axProductOpen())window.axCloseProduct(true);
+    if(anchor)requestAnimationFrame(()=>requestAnimationFrame(()=>{const el=document.getElementById(anchor);if(el)el.scrollIntoView({behavior:"instant",block:"start"});}));
+    else window.scrollTo(0,0);
+  }
 }
 addEventListener("hashchange",route);
 route();
