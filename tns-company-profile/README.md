@@ -2,7 +2,8 @@
 
 A redesigned company profile for **PT Tambang Nikel Sulawesi (TNS)**, rebuilt in
 the **Swiss / International Typographic Style** from the content of the original
-2025 profile. Output is a **12-page A4 portrait PDF**.
+2025 profile and expanded with partner/investor-grade sections. Output is a
+**20-page A4 portrait PDF**.
 
 **Deliverable:** [`TNS_Company_Profile_2025.pdf`](./TNS_Company_Profile_2025.pdf)
 
@@ -29,20 +30,39 @@ Rebuilt on the principles of the International Typographic Style:
 1. Cover — *Locally mined, nationally trusted*
 2. Contents
 3. The Company (history, founded 2022)
-4. Vision & Mission
-5. Core Values
-6. A Trusted Supplier (position in the chain)
-7. Nickel Ore Supply by Region
-8. Suppliers & Smelters
-9. Volume & Growth (ore volume supplied to smelter)
-10. Services
-11. Philosophy
-12. Connect With Us (contact)
+4. By the Numbers (key figures at a glance)
+5. Vision & Mission
+6. Core Values
+7. Why TNS (value proposition)
+8. A Trusted Supplier (position in the chain)
+9. How We Work (five-step operating model)
+10. Supply by Region
+11. Coverage & Logistics (map)
+12. Suppliers & Smelters
+13. Product & Specifications (ore grades & terms)
+14. Volume & Growth
+15. Track Record (2022–2025 timeline)
+16. Services
+17. Responsible Sourcing & Hilirisasi
+18. Philosophy
+19. Connect With Us (contact)
+20. Back cover
 
-All figures, names, addresses and statements are taken from the source profile.
-Where the source presented relative bar heights without numbers (year-on-year
-revenue), the chart is reproduced as a clearly labelled relative index rather
-than inventing currency figures.
+Figures, names, addresses and statements are taken from the source profile.
+Additions built without new data (By the Numbers, Why TNS, How We Work, Coverage,
+Track Record, Responsible Sourcing) are derived from that source and standard
+domain practice. Two items are clearly labelled as provisional pending the
+company's real data: the **year-on-year revenue** chart (shown as a relative
+index, not invented figures) and the **product specifications** (indicative
+laterite-ore ranges, confirmed per cargo).
+
+## Map — real geography
+
+The Coverage & Logistics map is drawn from **Natural Earth 1:10m** coastline data
+(`world-atlas`), projected to the Sulawesi + Halmahera region. Sourcing regions
+are scaled by volume; smelter hubs (IMIP/Morowali, Konawe, Weda Bay) and a barge
+route are overlaid. `make_map.js` regenerates the coastline paths and node
+positions.
 
 ## Assets
 
@@ -58,6 +78,10 @@ than inventing currency figures.
 pip install playwright pillow pymupdf   # PyMuPDF/Pillow only needed for source asset extraction
 playwright install chromium             # or set CHROME_PATH to an existing Chromium
 python3 render_pdf.py
+
+# to regenerate the map coastline paths (optional):
+npm install world-atlas topojson-client
+node make_map.js                        # writes map_coast.txt + node positions
 ```
 
 `render_pdf.py` loads `profile.html`, waits for fonts, and prints to A4 with
