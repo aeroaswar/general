@@ -3,7 +3,7 @@
 A redesigned company profile for **PT Tambang Nikel Sulawesi (TNS)**, rebuilt in
 the **Swiss / International Typographic Style** from the content of the original
 2025 profile and expanded with partner/investor-grade sections. Output is a
-**20-page A4 portrait PDF**.
+**21-page A4 portrait PDF**.
 
 **Deliverable:** [`TNS_Company_Profile_2025.pdf`](./TNS_Company_Profile_2025.pdf)
 
@@ -40,13 +40,14 @@ Rebuilt on the principles of the International Typographic Style:
 11. Coverage & Logistics (map)
 12. Suppliers & Smelters
 13. Product & Specifications (ore grades & terms)
-14. Volume & Growth
-15. Track Record (2022–2025 timeline)
-16. Services
-17. Responsible Sourcing & Hilirisasi
-18. Philosophy
-19. Connect With Us (contact)
-20. Back cover
+14. Pricing Framework (HPM benchmark methodology)
+15. Volume & Growth
+16. Track Record (2022–2025 timeline)
+17. Services
+18. Responsible Sourcing & Hilirisasi
+19. Philosophy
+20. Connect With Us (contact)
+21. Back cover
 
 Figures, names, addresses and statements are taken from the source profile.
 Additions built without new data (By the Numbers, Why TNS, How We Work, Coverage,
@@ -54,7 +55,10 @@ Track Record, Responsible Sourcing) are derived from that source and standard
 domain practice. Two items are clearly labelled as provisional pending the
 company's real data: the **year-on-year revenue** chart (shown as a relative
 index, not invented figures) and the **product specifications** (indicative
-laterite-ore ranges, confirmed per cargo).
+laterite-ore ranges, confirmed per cargo). The **Pricing Framework** page states
+the HPM benchmark methodology (Kepmen ESDM No. 144/2026, HMA reference prices,
+correction factors); its worked build-up uses a representative specification and
+published-style reference prices, as labelled on the page.
 
 ## Map — real geography
 

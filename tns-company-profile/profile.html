@@ -192,6 +192,23 @@ img{display:block;}
 .tl .yr .pd{font-weight:600;font-size:7.6px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);margin-top:1.6mm;}
 .tl .yr .big{font-weight:700;font-size:13px;color:var(--red);margin-top:4mm;letter-spacing:-.01em;}
 .tl .yr .d{font-weight:400;font-size:9.2px;line-height:1.5;color:var(--gray);margin-top:2mm;}
+/* pricing framework */
+.exhibit{border:1px solid var(--ink);padding:6mm;}
+.formula{font-family:'Liberation Mono',ui-monospace,'Courier New',monospace;font-size:10px;line-height:1.75;color:var(--ink);margin:0;white-space:pre;letter-spacing:0;}
+.pxbul{display:grid;grid-template-columns:6px 1fr;gap:3.4mm;align-items:start;padding:2.8mm 0;border-top:1px solid var(--line);font-weight:400;font-size:9.6px;line-height:1.5;color:var(--ink-2);}
+.pxbul .sq{margin-top:1.6mm;}
+.pxbul:last-child{border-bottom:1px solid var(--line);}
+.pxbar{display:grid;grid-template-columns:23mm 1fr 13mm;gap:3mm;align-items:center;padding:2.7mm 0;}
+.pxbar .g{font-weight:600;font-size:10px;color:var(--ink);letter-spacing:-.01em;}
+.pxbar .g s{text-decoration:none;color:var(--gray);font-weight:400;font-size:8px;}
+.pxbar .track{height:4.6mm;background:var(--paper-2);position:relative;}
+.pxbar .fill{height:100%;background:var(--red);}
+.pxbar .fill.ink{background:var(--ink);}
+.pxbar .v{font-weight:700;font-size:11px;text-align:right;letter-spacing:-.01em;font-variant-numeric:tabular-nums;}
+.pxtotal{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--ink);margin-top:4mm;padding-top:3.4mm;}
+.pxtotal>div:first-child{font-weight:600;font-size:11px;letter-spacing:-.01em;}
+.pxtotal .amt{font-weight:800;font-size:16px;letter-spacing:-.02em;}
+.pxtotal .amt span{font-weight:500;font-size:10px;color:var(--gray);}
 /* vertical timeline */
 .vtl{position:relative;margin-top:16mm;}
 .vtl::before{content:"";position:absolute;left:43mm;top:8mm;bottom:8mm;width:2px;background:var(--ink);}
@@ -285,12 +302,13 @@ img{display:block;}
       <div style="grid-column:7 / span 6">
         <div class="toc2"><div class="n">10</div><div class="t">Suppliers &amp; Smelters</div><div class="p">12</div></div>
         <div class="toc2"><div class="n">11</div><div class="t">Product &amp; Specifications</div><div class="p">13</div></div>
-        <div class="toc2"><div class="n">12</div><div class="t">Volume &amp; Growth</div><div class="p">14</div></div>
-        <div class="toc2"><div class="n">13</div><div class="t">Track Record</div><div class="p">15</div></div>
-        <div class="toc2"><div class="n">14</div><div class="t">Services</div><div class="p">16</div></div>
-        <div class="toc2"><div class="n">15</div><div class="t">Responsible Sourcing</div><div class="p">17</div></div>
-        <div class="toc2"><div class="n">16</div><div class="t">Philosophy</div><div class="p">18</div></div>
-        <div class="toc2"><div class="n">17</div><div class="t">Connect With Us</div><div class="p">19</div></div>
+        <div class="toc2"><div class="n">12</div><div class="t">Pricing Framework</div><div class="p">14</div></div>
+        <div class="toc2"><div class="n">13</div><div class="t">Volume &amp; Growth</div><div class="p">15</div></div>
+        <div class="toc2"><div class="n">14</div><div class="t">Track Record</div><div class="p">16</div></div>
+        <div class="toc2"><div class="n">15</div><div class="t">Services</div><div class="p">17</div></div>
+        <div class="toc2"><div class="n">16</div><div class="t">Responsible Sourcing</div><div class="p">18</div></div>
+        <div class="toc2"><div class="n">17</div><div class="t">Philosophy</div><div class="p">19</div></div>
+        <div class="toc2"><div class="n">18</div><div class="t">Connect With Us</div><div class="p">20</div></div>
         <div style="display:flex;justify-content:flex-end;margin-top:10mm">
           <svg class="mark" width="33mm" height="19.8mm" viewBox="-4 -4 218 134">
             <polygon points="30,90 150,90 120,126 0,126" fill="#E01A1D"/>
@@ -301,7 +319,7 @@ img{display:block;}
       </div>
     </div>
   </div>
-  <div class="folio"><div class="pg">02 <small>/ 20</small></div><div class="mono-label gray">Locally Mined, Nationally Trusted</div><div class="f-line"></div></div>
+  <div class="folio"><div class="pg">02 <small>/ 21</small></div><div class="mono-label gray">Locally Mined, Nationally Trusted</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 03 · THE COMPANY (01) ============ -->
@@ -340,7 +358,7 @@ img{display:block;}
     <div class="scrim"></div>
     <div class="cap-w" style="left:16mm;bottom:24mm">Fig. 02 — Coastal ore load-out, nickel concession · Sulawesi</div>
   </div>
-  <div class="folio rev"><div class="pg">03 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">03 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 04 · BY THE NUMBERS (02) ============ -->
@@ -375,7 +393,7 @@ img{display:block;}
       </div>
       <div style="grid-column:9 / span 4;text-align:right">
         <div class="mono-label red">Detail follows →</div>
-        <div class="cap" style="margin-top:2mm">Regions p.10 · Volume p.14 · Track record p.15</div>
+        <div class="cap" style="margin-top:2mm">Regions p.10 · Volume p.15 · Track record p.16</div>
       </div>
     </div>
   </div>
@@ -385,7 +403,7 @@ img{display:block;}
     <div class="scrim"></div>
     <div class="cap-w" style="left:16mm;bottom:23mm">Locally mined, nationally trusted — since 2022</div>
   </div>
-  <div class="folio rev"><div class="pg">04 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">04 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 05 · VISION & MISSION (03) ============ -->
@@ -413,7 +431,7 @@ img{display:block;}
     <div class="scrim"></div>
     <div class="cap-w" style="left:16mm;bottom:24mm">Fig. 03 — Ore stockpile &amp; load-out operations</div>
   </div>
-  <div class="folio rev"><div class="pg">05 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">05 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 06 · CORE VALUES (04) ============ -->
@@ -441,7 +459,7 @@ img{display:block;}
     <div class="scrim"></div>
     <div class="cap-w" style="left:16mm;bottom:24mm">Fig. 04 — Haul road, ore movement to load-out</div>
   </div>
-  <div class="folio rev"><div class="pg">06 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">06 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 07 · WHY TNS (05) ============ -->
@@ -468,7 +486,7 @@ img{display:block;}
     <div class="scrim"></div>
     <div class="cap-w" style="left:16mm;bottom:23mm">Reliability · Logistics · Network · Compliance · National alignment</div>
   </div>
-  <div class="folio rev"><div class="pg">07 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">07 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 08 · A TRUSTED SUPPLIER (06) ============ -->
@@ -491,7 +509,7 @@ img{display:block;}
       <div class="c"><div class="k">Downstream</div><div class="v">Smelters</div><div class="arrow">Feed for processing</div></div>
     </div>
   </div>
-  <div class="folio"><div class="pg">08 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio"><div class="pg">08 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 09 · HOW WE WORK (07) ============ -->
@@ -518,7 +536,7 @@ img{display:block;}
     <div class="scrim"></div>
     <div class="cap-w" style="left:16mm;bottom:23mm">Fig. — Barging &amp; hauling, mine site to smelter</div>
   </div>
-  <div class="folio rev"><div class="pg">09 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">09 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 10 · SUPPLY BY REGION (08) ============ -->
@@ -551,7 +569,7 @@ img{display:block;}
     </div>
   </div>
   <div class="breg"><div class="bl"></div><div class="row"><div class="mono-label gray">Total sourcing footprint — 940,000 MT across three regions</div><div class="mono-label red">TNS</div></div></div>
-  <div class="folio"><div class="pg">10 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio"><div class="pg">10 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 11 · COVERAGE & LOGISTICS (09) ============ -->
@@ -603,7 +621,7 @@ img{display:block;}
       </div>
     </div>
   </div>
-  <div class="folio"><div class="pg">11 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio"><div class="pg">11 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 12 · SUPPLIERS & SMELTERS (10) ============ -->
@@ -633,7 +651,7 @@ img{display:block;}
       <div class="cap-w" style="left:16mm;bottom:24mm">Fig. 06 — Stockpile &amp; load-out operations</div>
     </div>
   </div>
-  <div class="folio rev"><div class="pg">12 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">12 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
 <!-- ============ 13 · PRODUCT & SPECIFICATIONS (11) ============ -->
@@ -669,15 +687,76 @@ img{display:block;}
     <div class="scrim"></div>
     <div class="cap-w" style="left:16mm;bottom:23mm">Fig. — Nickel ore stockpile, ready for load-out</div>
   </div>
-  <div class="folio rev"><div class="pg">13 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">13 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
-<!-- ============ 14 · VOLUME & GROWTH (12) ============ -->
+<!-- ============ 14 · PRICING FRAMEWORK (12) ============ -->
 <section class="sheet">
-  <div class="rhead"><div class="mono-label"><span class="secno">12</span>&nbsp;&nbsp;Volume &amp; Growth</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
+  <div class="rhead"><div class="mono-label"><span class="secno">12</span>&nbsp;&nbsp;Pricing Framework</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
   <div class="pad">
     <div class="grid" style="margin-top:11mm">
-      <div style="grid-column:1 / span 8"><div class="eyebrow">12 — Ore Volume Supplied to Smelter</div>
+      <div style="grid-column:1 / span 6">
+        <div class="eyebrow">12 — Pricing Framework</div>
+        <div class="h-sec" style="margin-top:6mm">Every price,<br>to the national<br>benchmark.</div>
+        <p class="body" style="margin-top:8mm;max-width:90mm">Every sale is anchored to <b>HPM</b> — the government's benchmark price
+          under Kepmen ESDM No.&nbsp;144/2026. Any invoice can be recomputed by
+          either party from three published inputs:</p>
+        <div style="margin-top:5mm;max-width:90mm">
+          <div class="pxbul"><span class="sq"></span><div>The certified assay <b>(COA)</b> — Ni, Fe, Co, Cr, moisture.</div></div>
+          <div class="pxbul"><span class="sq"></span><div>Ministry reference prices <b>(HMA)</b> — published twice monthly.</div></div>
+          <div class="pxbul"><span class="sq"></span><div>Bank Indonesia mid-rate — first working day of the B/L month.</div></div>
+        </div>
+        <p class="body gray" style="margin-top:5mm;max-width:90mm">An automated monitor recomputes the benchmark on each publication and
+          briefs partners on price direction.</p>
+      </div>
+      <div style="grid-column:8 / span 5">
+        <div class="exhibit">
+          <div class="mono-label gray" style="margin-bottom:5mm">Exhibit — HPM benchmark formula (per WMT)</div>
+<pre class="formula">HPM = [ %Ni·CF·HMA + %Fe·CF·HMA
+        + %Co·CF·HMA + %Cr·CF·HMA ]
+        × ( 1 − MC )</pre>
+          <div class="rule" style="margin:5mm 0"></div>
+          <div class="cap" style="line-height:1.7"><b>CF</b> — published correction factor<br><b>HMA</b> — reference price&nbsp;&nbsp;·&nbsp;&nbsp;<b>MC</b> — moisture</div>
+        </div>
+        <div class="mono-label gray" style="margin-top:6mm;line-height:1.7">Recomputable · transparent · both&nbsp;parties</div>
+      </div>
+    </div>
+
+    <div class="grid" style="margin-top:16mm">
+      <div style="grid-column:1 / span 6">
+        <div class="mono-label" style="margin-bottom:5mm">Nickel payability by grade — correction factor</div>
+        <div class="pxbar"><div class="g">1.0%</div><div class="track"><div class="fill ink" style="width:70.6%"></div></div><div class="v">24%</div></div>
+        <div class="pxbar"><div class="g">1.4%</div><div class="track"><div class="fill ink" style="width:82.4%"></div></div><div class="v">28%</div></div>
+        <div class="pxbar"><div class="g">1.6% <s>base</s></div><div class="track"><div class="fill" style="width:88.2%"></div></div><div class="v">30%</div></div>
+        <div class="pxbar"><div class="g">2.0%</div><div class="track"><div class="fill ink" style="width:100%"></div></div><div class="v">34%</div></div>
+        <div class="cap" style="margin-top:4mm;max-width:88mm">Each additional 0.1% of certified nickel grade adds one point of payability.</div>
+      </div>
+      <div style="grid-column:8 / span 5">
+        <div class="mono-label" style="margin-bottom:5mm">Price build-up by payable element — Jun 2026 (II), USD/WMT</div>
+        <div class="pxbar"><div class="g">Nickel <s>1.50%</s></div><div class="track"><div class="fill" style="width:100%"></div></div><div class="v">52.71</div></div>
+        <div class="pxbar"><div class="g">Iron <s>49%</s></div><div class="track"><div class="fill ink" style="width:28.6%"></div></div><div class="v">15.10</div></div>
+        <div class="pxbar"><div class="g">Cobalt <s>0.05%</s></div><div class="track"><div class="fill ink" style="width:10.3%"></div></div><div class="v">5.45</div></div>
+        <div class="pxbar"><div class="g">Chromium <s>1.0%</s></div><div class="track"><div class="fill ink" style="width:0.8%"></div></div><div class="v">0.41</div></div>
+        <div class="pxtotal"><div>HPM at 35% moisture</div><div class="amt">USD 73.67 <span>/ WMT</span></div></div>
+        <div class="cap" style="margin-top:3mm;max-width:80mm">Computed from published reference prices and a representative specification.</div>
+      </div>
+    </div>
+  </div>
+  <div class="band" style="height:52mm;bottom:0">
+    <div class="rl"></div>
+    <img src="assets/barge_load.jpg" style="object-position:center 52%;filter:grayscale(1) contrast(1.06)" alt="Barge cargo">
+    <div class="scrim" style="height:44mm"></div>
+    <div class="cap-w" style="left:16mm;bottom:22mm">Fig. — Barge cargo, invoiced to the national benchmark</div>
+  </div>
+  <div class="folio rev"><div class="pg">14 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+</section>
+
+<!-- ============ 15 · VOLUME & GROWTH (13) ============ -->
+<section class="sheet">
+  <div class="rhead"><div class="mono-label"><span class="secno">13</span>&nbsp;&nbsp;Volume &amp; Growth</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
+  <div class="pad">
+    <div class="grid" style="margin-top:11mm">
+      <div style="grid-column:1 / span 8"><div class="eyebrow">13 — Ore Volume Supplied to Smelter</div>
         <div class="h-sec" style="margin-top:6mm">Volume delivered,<br>year on year.</div></div>
       <div style="grid-column:9 / span 4;text-align:right"><div class="mono-label gray">Unit</div>
         <div style="font-weight:700;font-size:15px;margin-top:2mm">WMT</div>
@@ -700,15 +779,15 @@ img{display:block;}
     </div>
   </div>
   <div class="breg"><div class="bl"></div><div class="row"><div class="mono-label gray">Cumulative to smelter — 940,000 WMT since 2023</div><div class="mono-label red">TNS</div></div></div>
-  <div class="folio"><div class="pg">14 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio"><div class="pg">15 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
-<!-- ============ 15 · TRACK RECORD (13) ============ -->
+<!-- ============ 16 · TRACK RECORD (14) ============ -->
 <section class="sheet">
-  <div class="rhead"><div class="mono-label"><span class="secno">13</span>&nbsp;&nbsp;Track Record</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
+  <div class="rhead"><div class="mono-label"><span class="secno">14</span>&nbsp;&nbsp;Track Record</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
   <div class="pad">
     <div class="grid" style="margin-top:11mm">
-      <div style="grid-column:1 / span 8"><div class="eyebrow">13 — Track Record</div>
+      <div style="grid-column:1 / span 8"><div class="eyebrow">14 — Track Record</div>
         <div class="h-sec" style="margin-top:6mm">From first cargo<br>to national scale.</div></div>
       <div style="grid-column:9 / span 4"><p class="body gray" style="margin-top:2mm">Founded in 2022, PT&nbsp;TNS moved from its first deliveries to hundreds of
         thousands of tonnes in under three years.</p></div>
@@ -729,14 +808,14 @@ img{display:block;}
     </div>
   </div>
   <div class="breg"><div class="bl"></div><div class="row"><div class="mono-label gray">A short history, a steep curve — supplier base, logistics and smelter ties all widening</div><div class="mono-label red">TNS</div></div></div>
-  <div class="folio"><div class="pg">15 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio"><div class="pg">16 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
-<!-- ============ 16 · SERVICES (14) ============ -->
+<!-- ============ 17 · SERVICES (15) ============ -->
 <section class="sheet">
-  <div class="rhead"><div class="mono-label"><span class="secno">14</span>&nbsp;&nbsp;Services</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
+  <div class="rhead"><div class="mono-label"><span class="secno">15</span>&nbsp;&nbsp;Services</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
   <div class="pad">
-    <div style="margin-top:11mm"><div class="eyebrow">14 — Our Offered Services</div>
+    <div style="margin-top:11mm"><div class="eyebrow">15 — Our Offered Services</div>
       <div class="h-sec" style="margin-top:6mm">Four ways we<br>work with partners.</div></div>
     <div class="grid" style="grid-template-columns:repeat(4,1fr);gap:6mm;margin-top:16mm">
       <div class="svc"><img class="ph" src="assets/barge_load.jpg" alt="Trading nickel ore"><div class="n">01</div><h3>Trading<br>Nickel Ore</h3><p>Core business — sourcing and supplying nickel ore from supplier through to smelter.</p></div>
@@ -748,19 +827,19 @@ img{display:block;}
       <div class="grid" style="align-items:center">
         <div style="grid-column:1 / span 8"><div style="font-weight:300;font-size:23px;line-height:1.2;letter-spacing:-.018em;color:var(--ink);max-width:130mm">Tell us what you want to discuss — from a single cargo to a
           long-term supply &amp; logistics programme.</div></div>
-        <div style="grid-column:10 / span 3;text-align:right"><div class="mono-label red" style="font-size:9.5px">Talk to us →</div><div class="cap" style="margin-top:2.4mm">Contact — page 19</div></div>
+        <div style="grid-column:10 / span 3;text-align:right"><div class="mono-label red" style="font-size:9.5px">Talk to us →</div><div class="cap" style="margin-top:2.4mm">Contact — page 20</div></div>
       </div>
     </div>
   </div>
-  <div class="folio"><div class="pg">16 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio"><div class="pg">17 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
-<!-- ============ 17 · RESPONSIBLE SOURCING (15) ============ -->
+<!-- ============ 18 · RESPONSIBLE SOURCING (16) ============ -->
 <section class="sheet">
-  <div class="rhead"><div class="mono-label"><span class="secno">15</span>&nbsp;&nbsp;Responsible Sourcing</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
+  <div class="rhead"><div class="mono-label"><span class="secno">16</span>&nbsp;&nbsp;Responsible Sourcing</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
   <div class="pad">
     <div class="grid" style="margin-top:11mm">
-      <div style="grid-column:1 / span 8"><div class="eyebrow">15 — Responsible Sourcing &amp; Hilirisasi</div>
+      <div style="grid-column:1 / span 8"><div class="eyebrow">16 — Responsible Sourcing &amp; Hilirisasi</div>
         <div class="h-sec" style="margin-top:6mm">Sourced right,<br>kept onshore.</div></div>
       <div style="grid-column:9 / span 4"><p class="body gray" style="margin-top:2mm">How PT&nbsp;TNS trades responsibly — and how that supports Indonesia's
         national downstreaming agenda.</p></div>
@@ -778,15 +857,15 @@ img{display:block;}
     <div class="scrim" style="background:linear-gradient(180deg,rgba(60,8,10,0),rgba(40,6,8,.5) 45%,rgba(28,4,6,.9))"></div>
     <div class="cap-w" style="left:16mm;bottom:24mm">Fig. 07 — Nickel concession, national resource</div>
   </div>
-  <div class="folio rev"><div class="pg">17 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">18 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
-<!-- ============ 18 · PHILOSOPHY (16) ============ -->
+<!-- ============ 19 · PHILOSOPHY (17) ============ -->
 <section class="sheet">
-  <div class="rhead"><div class="mono-label"><span class="secno">16</span>&nbsp;&nbsp;Philosophy</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
+  <div class="rhead"><div class="mono-label"><span class="secno">17</span>&nbsp;&nbsp;Philosophy</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
   <div class="pad">
     <div style="margin-top:20mm">
-      <div class="eyebrow">16 — Guiding Principle</div>
+      <div class="eyebrow">17 — Guiding Principle</div>
       <div style="font-weight:300;font-size:52px;line-height:1.04;letter-spacing:-.028em;margin-top:9mm;max-width:168mm;color:var(--ink)">A satisfied customer is<br>a good <b style="font-weight:800">business strategy</b><br>above all things<span class="num-red">.</span></div>
       <p class="lead" style="margin-top:12mm;max-width:120mm">PT Tambang Nikel Sulawesi is always guided by professionalism in its
         work — building lasting trust with every partner it serves.</p>
@@ -799,15 +878,15 @@ img{display:block;}
       <div class="cap-w" style="right:16mm;bottom:26mm;text-align:right;line-height:1.7">Locally Mined,<br>Nationally Trusted</div>
     </div>
   </div>
-  <div class="folio rev"><div class="pg">18 <small>/ 20</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">19 <small>/ 21</small></div><div class="mono-label gray">Company Profile 2025</div><div class="f-line"></div></div>
 </section>
 
-<!-- ============ 19 · CONNECT WITH US (17) ============ -->
+<!-- ============ 20 · CONNECT WITH US (18) ============ -->
 <section class="sheet">
-  <div class="rhead"><div class="mono-label"><span class="secno">17</span>&nbsp;&nbsp;Connect With Us</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
+  <div class="rhead"><div class="mono-label"><span class="secno">18</span>&nbsp;&nbsp;Connect With Us</div><div class="mono-label gray">PT Tambang Nikel Sulawesi</div><div class="rh-line"></div></div>
   <div class="pad">
     <div class="grid" style="margin-top:11mm">
-      <div style="grid-column:1 / span 7"><div class="eyebrow">17 — Connect With Us</div>
+      <div style="grid-column:1 / span 7"><div class="eyebrow">18 — Connect With Us</div>
         <div class="h-sec" style="margin-top:6mm">Let's move<br>ore, together.</div>
         <p class="body gray" style="margin-top:6mm;max-width:78mm">For sourcing, offtake, logistics or partnership enquiries, reach the
           operations and shipment desks directly.</p></div>
@@ -830,10 +909,10 @@ img{display:block;}
       </div>
     </div>
   </div>
-  <div class="folio rev"><div class="pg">19 <small>/ 20</small></div><div class="mono-label gray">Locally Mined, Nationally Trusted</div><div class="f-line"></div></div>
+  <div class="folio rev"><div class="pg">20 <small>/ 21</small></div><div class="mono-label gray">Locally Mined, Nationally Trusted</div><div class="f-line"></div></div>
 </section>
 
-<!-- ============ 20 · BACK COVER ============ -->
+<!-- ============ 21 · BACK COVER ============ -->
 <section class="sheet">
   <div class="back">
     <img src="assets/ridge_duo.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;opacity:.5" alt="">
