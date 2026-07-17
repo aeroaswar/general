@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AXIOM — Brand Guidelines v1.0</title>
+<meta name="description" content="AXIOM — Human Performance & Longevity. Brand guidelines and identity system: logo, color, typography, layout, motion, voice, applications, compliance and design tokens." />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#070605" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070605'/%3E%3Cg stroke='%23C88A4E' stroke-width='6' stroke-linecap='round' fill='none'%3E%3Cpolyline points='24,74 38,26 52,74'/%3E%3Ccircle cx='70' cy='52' r='16'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+/* ============================================================
+   AXIOM Brand Guidelines — token-identical sibling of index.html
+   ============================================================ */
+:root{
+  --bg:#070605;
+  --ink:#F2EDE5;
+  --muted:#9c9488;
+  --muted-2:#6a635a;
+  --line:rgba(242,237,229,.12);
+  --line-2:rgba(242,237,229,.22);
+  --line-soft:rgba(242,237,229,.06);
+  /* Bronze / copper accent system */
+  --accent:#C88A4E;
+  --accent-bright:#E7B173;
+  --accent-deep:#7C4C24;
+  --accent-soft:rgba(200,138,78,.14);
+  --accent-line:rgba(200,138,78,.34);
+  --accent-grad:linear-gradient(120deg,#E7B173 0%,#C88A4E 46%,#9A5F2C 100%);
+  --maxw:1280px;
+  --pad:34px;
+  --display:"Jost","Century Gothic",system-ui,sans-serif;
+  --sans:"Inter",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Inter",system-ui,sans-serif;
+  /* brand-book additions (documented in §13) */
+  --paper:#F2EDE5;
+  --paper-ink:#070605;
+  --ok:#8FA37E;
+  --warn:#C8A24E;
+  --err:#B0553B;
+  --info:#9C9488;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:400;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
+  font-feature-settings:"tnum" 1,"cv05" 1;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad)}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#0a0704}
+img{max-width:100%;display:block}
+.tnum{font-variant-numeric:tabular-nums}
+.kicker{font-family:var(--sans);font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;font-weight:500;color:var(--muted)}
+.rule{height:1px;background:var(--line);width:100%}
+
+/* ---------- Scene / hero canvas ---------- */
+#scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block}
+#sceneWrap{position:fixed;inset:0;z-index:0;transition:opacity .35s linear}
+#sceneWrap.off{opacity:0}
+.scene-scrim{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(100deg,#000 0%,#000 32%,rgba(0,0,0,.78) 50%,rgba(0,0,0,.28) 68%,rgba(0,0,0,0) 82%);}
+@media(max-width:680px){.scene-scrim{background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.72) 55%,#000 100%)}}
+.static-field{background:
+  radial-gradient(60% 50% at 72% 40%, rgba(200,138,78,.22), transparent 70%),
+  radial-gradient(40% 36% at 60% 70%, rgba(124,76,36,.28), transparent 70%),
+  var(--bg)}
+.page{position:relative;z-index:2}
+
+/* ---------- Nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line);transition:transform .45s cubic-bezier(.16,1,.3,1),background .3s}
+nav.nav-hidden{transform:translateY(-100%)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand svg{height:24px;width:auto;display:block}
+.brand .bw{display:flex;flex-direction:column;gap:5px;line-height:1}
+.brand .wm{font-family:var(--display);font-weight:400;font-size:19px;letter-spacing:.44em;color:var(--ink);padding-left:2px}
+.brand .wmsub{font-family:var(--sans);font-weight:500;font-size:7px;letter-spacing:.42em;color:var(--muted);padding-left:3px}
+.nav-tag{font-family:var(--sans);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);font-weight:500;white-space:nowrap}
+.nav-tag b{color:var(--accent);font-weight:600}
+.sel{position:relative}
+.sel select{appearance:none;font-family:var(--sans);font-weight:500;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);background:transparent;border:none;border-bottom:1px solid var(--line-2);padding:8px 26px 8px 2px;cursor:pointer;outline:none;max-width:200px}
+.sel select option{background:#0a0a0a;color:#fff;text-transform:none;letter-spacing:0}
+.sel select:focus{color:var(--ink);border-color:var(--ink)}
+.sel::after{content:"↓";position:absolute;right:6px;top:50%;transform:translateY(-50%);color:var(--muted-2);pointer-events:none;font-size:11px}
+@media(min-width:1101px){.nav-jump{display:none}}
+@media(max-width:680px){.nav-tag{display:none}.nav-in{gap:12px}.sel select{max-width:130px}}
+
+/* ---------- TOC rail ---------- */
+#toc{position:fixed;left:26px;top:50%;transform:translateY(-50%);z-index:40;display:none;flex-direction:column;gap:2px;max-height:76vh;overflow:auto;scrollbar-width:none}
+#toc::-webkit-scrollbar{display:none}
+@media(min-width:1101px){#toc{display:flex}}
+#toc a{display:flex;align-items:center;gap:10px;padding:5px 8px;font-family:var(--sans);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--muted-2);transition:color .2s}
+#toc a .n{font-variant-numeric:tabular-nums;font-size:9px;color:var(--muted-2);width:18px}
+#toc a .b{width:14px;height:1px;background:var(--line);transition:.25s}
+#toc a:hover{color:var(--muted)}
+#toc a.active{color:var(--ink)}
+#toc a.active .b{background:var(--accent);width:24px}
+#toc a.active .n{color:var(--accent)}
+@media(max-width:1500px){#toc a span.t{display:none}#toc{left:18px}}
+
+/* ---------- Buttons / links ---------- */
+.btn{font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  padding:15px 26px;border:1px solid var(--line-2);background:transparent;color:var(--ink);
+  cursor:pointer;transition:.24s;display:inline-flex;align-items:center;gap:10px;white-space:nowrap}
+.btn:hover{background:var(--ink);color:#000;border-color:var(--ink)}
+.btn-solid{background:var(--ink);border-color:var(--ink);color:#000}
+.btn-solid:hover{background:#000;color:var(--ink);border-color:var(--line-2)}
+.tlink{font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--ink);display:inline-flex;align-items:center;gap:9px;position:relative;padding-bottom:6px}
+.tlink::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:var(--line-2);transition:background .24s}
+.tlink:hover::after{background:var(--ink)}
+.tlink .ar{transition:transform .24s}
+.tlink:hover .ar{transform:translateX(4px)}
+
+/* ---------- Hero / cover ---------- */
+.hero{position:relative;min-height:92vh;display:flex;flex-direction:column;padding:120px 0 46px}
+.hero-in{max-width:940px;flex:1 0 auto;display:flex;flex-direction:column;justify-content:center}
+.hero-mark svg{width:min(430px,80vw);height:auto;display:block;margin-left:-4px;margin-bottom:44px}
+.hero h1{font-family:var(--display);font-weight:300;font-size:clamp(36px,5.6vw,76px);line-height:1.02;letter-spacing:-.01em;color:var(--ink)}
+.hero h1 em{font-style:normal;color:var(--muted)}
+.hero .lead{max-width:560px;margin-top:30px;color:var(--muted);font-size:16px;line-height:1.75;font-weight:300}
+.hero-meta{margin-top:52px}
+.hero-meta .row{display:flex;gap:0;flex-wrap:wrap;border-top:1px solid var(--line)}
+.hero-meta .m{flex:1;min-width:150px;padding:18px 26px 0 0;border-right:1px solid var(--line-soft)}
+.hero-meta .m:last-child{border-right:none}
+.hero-meta .m .k{font-family:var(--sans);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+.hero-meta .m .v{font-family:var(--display);font-weight:400;font-size:19px;color:var(--ink);margin-top:8px;letter-spacing:.01em}
+
+/* ---------- Section scaffold ---------- */
+.content{position:relative;z-index:3;background:var(--bg);border-top:1px solid var(--line)}
+.section{padding:110px 0;border-top:1px solid var(--line)}
+.section:first-child{border-top:none}
+.sec-head{display:grid;grid-template-columns:220px 1fr;gap:40px;margin-bottom:64px;align-items:start}
+.sec-head .lead-col .no{font-family:var(--sans);font-size:11px;letter-spacing:.28em;color:var(--accent);font-weight:500}
+.sec-head .lead-col .kicker{margin-top:16px;display:block}
+.sec-head h2{font-family:var(--display);font-weight:300;font-size:clamp(28px,4vw,46px);line-height:1.06;letter-spacing:-.01em}
+.sec-head h2 em{font-style:normal;color:var(--muted)}
+.sec-head p{color:var(--muted);margin-top:18px;font-size:15px;max-width:560px;font-weight:300;line-height:1.75}
+@media(max-width:760px){.sec-head{grid-template-columns:1fr;gap:20px;margin-bottom:44px}}
+.sub{margin-top:72px}
+.sub-h{display:flex;align-items:baseline;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:30px}
+.sub-h .sn{font-family:var(--sans);font-size:10px;letter-spacing:.22em;color:var(--accent);font-weight:500;font-variant-numeric:tabular-nums}
+.sub-h h3{font-family:var(--display);font-weight:400;font-size:21px;letter-spacing:-.005em}
+.sub-h .note{margin-left:auto;font-size:11px;color:var(--muted-2);letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.prose{max-width:660px;color:var(--muted);font-size:15px;line-height:1.8;font-weight:300}
+.prose b,.prose strong{color:var(--ink);font-weight:500}
+.prose+.prose{margin-top:16px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+.two-col>*,.app-grid>*{min-width:0}
+@media(max-width:860px){.two-col{grid-template-columns:1fr}}
+
+/* ---------- Reveal / stagger (site-identical) ---------- */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0)*65ms)}
+.stagger.in>*{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal,.stagger>*{opacity:1!important;transform:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  #cursorRing,#cursorDot{display:none!important}
+  #sceneWrap{display:none}
+  .demo-dot{animation:none!important}
+}
+
+/* ---------- Custom cursor (site-identical) ---------- */
+#cursorRing,#cursorDot{position:fixed;top:0;left:0;z-index:200;pointer-events:none;border-radius:50%;mix-blend-mode:difference;will-change:transform;opacity:0;transition:opacity .3s ease}
+#cursorRing{width:32px;height:32px;border:1px solid #fff;margin:-16px 0 0 -16px;transition:width .22s ease,height .22s ease,margin .22s ease,background .22s ease,opacity .3s ease}
+#cursorDot{width:5px;height:5px;background:var(--accent-bright);margin:-2.5px 0 0 -2.5px}
+body.cursor-on #cursorRing,body.cursor-on #cursorDot{opacity:1}
+body.cursor-on,body.cursor-on a,body.cursor-on button,body.cursor-on select,body.cursor-on summary{cursor:none}
+#cursorRing.hover{width:56px;height:56px;margin:-28px 0 0 -28px;background:rgba(255,255,255,.14)}
+@media(pointer:coarse){#cursorRing,#cursorDot{display:none}}
+
+/* ---------- Scroll progress ---------- */
+#progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:60;transition:width .12s linear;pointer-events:none}
+
+/* ---------- Pillars (site-identical pattern) ---------- */
+.pillar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:8px;border-top:1px solid var(--line)}
+.pillar{padding:30px 24px 36px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);position:relative;transition:background .3s}
+.pillar:nth-child(5n){border-right:none}
+.pillar:hover{background:linear-gradient(180deg,var(--accent-soft),transparent 70%)}
+.pillar-no{font-family:var(--sans);font-size:11px;letter-spacing:.06em;font-weight:500;font-variant-numeric:tabular-nums;color:var(--accent)}
+.pillar-ic{margin-top:18px;font-size:25px;color:var(--accent-bright);line-height:1}
+.pillar h4{font-family:var(--display);font-weight:400;font-size:18px;letter-spacing:-.005em;margin-top:18px;color:var(--ink)}
+.pillar p{color:var(--muted);font-size:12.5px;line-height:1.65;font-weight:300;margin-top:9px}
+@media(max-width:1020px){.pillar-grid{grid-template-columns:repeat(2,1fr)}.pillar:nth-child(5n){border-right:1px solid var(--line)}.pillar:nth-child(2n){border-right:none}}
+@media(max-width:560px){.pillar-grid{grid-template-columns:1fr}.pillar{border-right:none!important}}
+
+/* ---------- Data tables ---------- */
+table.spec{width:100%;border-collapse:collapse;font-size:13px}
+table.spec th{font-family:var(--sans);font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--muted-2);text-align:left;padding:12px 16px 12px 0;border-bottom:1px solid var(--line-2)}
+table.spec td{padding:14px 16px 14px 0;border-bottom:1px solid var(--line);color:var(--muted);font-weight:300;vertical-align:top;line-height:1.6}
+table.spec td:first-child{color:var(--ink);font-weight:400}
+table.spec .tnum{color:var(--ink)}
+.tbl-scroll{overflow-x:auto}
+.tbl-scroll table{min-width:640px}
+
+/* ---------- Swatches ---------- */
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.swatch{background:var(--bg);padding:0;border:none;text-align:left;cursor:pointer;font-family:var(--sans);transition:background .25s;position:relative}
+.swatch:hover{background:#0d0b09}
+.swatch .chip{height:86px;display:block}
+.swatch .meta{padding:14px 16px 18px}
+.swatch .nm,.swatch .tk,.swatch .hx{display:block}
+.swatch .nm{font-size:12.5px;color:var(--ink);font-weight:500}
+.swatch .tk{font-size:10.5px;color:var(--muted-2);margin-top:4px;letter-spacing:.04em}
+.swatch .hx{font-size:11px;color:var(--muted);margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.swatch .cp{position:absolute;top:10px;right:12px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#0a0704;background:var(--accent-bright);padding:3px 8px;opacity:0;transition:opacity .2s;font-weight:600}
+.swatch.copied .cp{opacity:1}
+.ramp{display:flex;border:1px solid var(--line);margin-top:14px}
+.ramp button{flex:1;height:64px;border:none;cursor:pointer;position:relative;padding:0}
+.ramp button span{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-family:var(--sans);font-size:8.5px;letter-spacing:.08em;font-weight:500;opacity:.85}
+.ramp-cap{display:flex;justify-content:space-between;margin-top:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+.prop-bar{display:flex;height:34px;border:1px solid var(--line);margin-top:14px;overflow:hidden}
+.prop-bar>div{display:flex;align-items:center;justify-content:center;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.badge{display:inline-block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:3px 9px;border:1px solid var(--line-2);color:var(--muted)}
+.badge.pass{color:#0a0704;background:var(--accent-bright);border-color:var(--accent-bright)}
+.badge.large{color:var(--accent);border-color:var(--accent-line)}
+.badge.fail{color:var(--err);border-color:var(--err)}
+
+/* ---------- Type specimens ---------- */
+.specimen{border-top:1px solid var(--line);padding:26px 0;display:grid;grid-template-columns:200px 1fr;gap:30px;align-items:baseline}
+.specimen .lab{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-2);font-weight:500;line-height:1.9}
+.specimen .lab b{display:block;color:var(--muted);font-weight:500}
+@media(max-width:760px){.specimen{grid-template-columns:1fr;gap:10px}}
+.tt-demo{border:1px solid var(--line);padding:34px;margin-top:14px}
+.tt-demo+.tt-demo{margin-top:1px}
+
+/* ---------- Logo section ---------- */
+.lockup-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:760px){.lockup-grid{grid-template-columns:1fr}}
+.lockup{background:var(--bg);padding:52px 40px;display:flex;flex-direction:column;gap:26px;align-items:flex-start;min-height:230px;justify-content:center;position:relative}
+.lockup .tag{position:absolute;top:14px;left:16px;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+.lockup.on-paper{background:var(--paper)}
+.lockup.on-paper .tag{color:#8a8378}
+.clearspace{border:1px solid var(--line);padding:64px;display:grid;place-items:center;position:relative}
+.clearspace .cs-box{position:relative;border:1px dashed var(--accent-line);padding:44px}
+.clearspace .cs-lab{position:absolute;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.misuse-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:760px){.misuse-grid{grid-template-columns:1fr}}
+.misuse{background:var(--bg);padding:38px 26px 26px;position:relative;min-height:170px;display:flex;flex-direction:column;justify-content:space-between;gap:22px;overflow:hidden}
+.misuse .art{display:grid;place-items:center;min-height:74px}
+.misuse::before{content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent 48.8%,var(--err) 48.8%,var(--err) 51.2%,transparent 51.2%);opacity:.55;pointer-events:none}
+.misuse .cap{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--err);font-weight:600}
+.misuse .cap i{margin-right:6px}
+
+/* ---------- Grid & spacing diagrams ---------- */
+.grid-demo{border:1px solid var(--line);padding:26px;position:relative}
+.grid-cols{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;height:120px}
+.grid-cols div{background:var(--accent-soft);border:1px solid var(--accent-line)}
+.space-bars{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.space-bar{display:flex;align-items:center;gap:18px}
+.space-bar .b{height:16px;background:var(--accent-soft);border:1px solid var(--accent-line)}
+.space-bar .k{font-size:11px;color:var(--muted);width:150px;font-weight:300}
+.space-bar .v{font-size:11px;color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* ---------- Icon row ---------- */
+.icon-row{display:flex;gap:1px;flex-wrap:wrap;background:var(--line);border:1px solid var(--line)}
+.icon-cell{background:var(--bg);width:92px;height:92px;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center}
+.icon-cell i{font-size:26px;color:var(--accent-bright)}
+.icon-cell span{font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+
+/* ---------- Photo frames ---------- */
+.frame-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:860px){.frame-grid{grid-template-columns:1fr}}
+.frame{border:1px solid var(--line)}
+.frame .ph{aspect-ratio:4/3;overflow:hidden;position:relative;background:#0c0a08}
+.frame .ph img{width:100%;height:100%;object-fit:cover}
+.frame .cap{padding:14px 16px;display:flex;align-items:center;gap:10px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.frame.do .cap{color:var(--accent)}
+.frame.dont .cap{color:var(--err)}
+.frame .desc{padding:0 16px 16px;font-size:12.5px;color:var(--muted);font-weight:300;line-height:1.65}
+.dont-art{width:100%;height:100%;display:grid;place-items:center;font-family:var(--display);font-weight:400}
+
+/* ---------- Motion demos ---------- */
+.demo-stage{border:1px solid var(--line);padding:40px;position:relative;min-height:180px}
+.demo-stage .replay{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--line-2);color:var(--muted);font-family:var(--sans);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;padding:8px 14px;cursor:pointer;transition:.2s;display:inline-flex;gap:7px;align-items:center}
+.demo-stage .replay:hover{color:var(--ink);border-color:var(--ink)}
+.ease-svg{width:100%;max-width:380px;height:auto;display:block}
+.ease-track{position:relative;height:44px;border-bottom:1px solid var(--line);margin-top:20px}
+.demo-dot{position:absolute;top:50%;left:0;width:11px;height:11px;border-radius:50%;background:var(--accent-bright);transform:translateY(-50%)}
+.demo-stage.play .demo-dot.expo{animation:slideX 1.2s cubic-bezier(.16,1,.3,1) forwards}
+.demo-stage.play .demo-dot.lin{animation:slideX 1.2s linear forwards}
+@keyframes slideX{to{left:calc(100% - 12px)}}
+.ease-lab{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2);font-weight:500;margin-top:8px}
+
+/* ---------- Copy blocks & examples ---------- */
+.codeblk{position:relative;border:1px solid var(--line);background:#0a0908;margin-top:14px}
+.codeblk pre{padding:26px 28px;overflow-x:auto;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.7;color:var(--muted);font-weight:400}
+.codeblk pre .c{color:var(--muted-2)}
+.codeblk pre .k{color:var(--accent-bright)}
+.codeblk pre .v{color:var(--ink)}
+.codeblk .cpy{position:absolute;top:12px;right:12px;background:none;border:1px solid var(--line-2);color:var(--muted);font-family:var(--sans);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;padding:8px 14px;cursor:pointer;transition:.2s}
+.codeblk .cpy:hover{color:var(--ink);border-color:var(--ink)}
+.codeblk .cpy.done{color:#0a0704;background:var(--accent-bright);border-color:var(--accent-bright)}
+.ex-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(max-width:860px){.ex-grid{grid-template-columns:1fr}}
+.ex{background:var(--bg);padding:30px 30px 34px}
+.ex .lab{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.ex .body{margin-top:16px;color:var(--ink);font-weight:300;font-size:14.5px;line-height:1.7}
+.ex .body .h{font-family:var(--display);font-weight:300;font-size:26px;line-height:1.15;letter-spacing:-.01em}
+.ex .body .h em{font-style:normal;color:var(--muted)}
+.ex .body .small{font-size:12px;color:var(--muted);line-height:1.7}
+.lex{display:grid;grid-template-columns:1fr 1fr;gap:44px}
+@media(max-width:760px){.lex{grid-template-columns:1fr}}
+.lex .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.lex .chips span{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;padding:8px 13px;border:1px solid var(--line)}
+.lex .use span{color:var(--ink);border-color:var(--accent-line)}
+.lex .avoid span{color:var(--muted-2);text-decoration:line-through;text-decoration-color:var(--err)}
+
+/* ---------- Application mockups ---------- */
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+@media(max-width:960px){.app-grid{grid-template-columns:1fr}}
+.mock-cap{margin-top:14px;font-size:11px;color:var(--muted-2);letter-spacing:.06em;line-height:1.7;font-weight:300}
+.mock-cap b{color:var(--muted);font-weight:500}
+
+/* product card (site-identical pattern) */
+.pcard{border:1px solid var(--line);background:var(--bg);display:block;max-width:360px}
+.pcard-media{aspect-ratio:4/3;overflow:hidden;background:#0c0a08}
+.pcard-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.pcard:hover .pcard-media img{transform:scale(1.04)}
+.pcard-body{padding:22px 24px 26px}
+.pcard-top{display:flex;justify-content:space-between;align-items:center}
+.pcard-tag{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.pcard-idx{font-size:10px;color:var(--muted-2);font-variant-numeric:tabular-nums}
+.pcard-name{font-family:var(--display);font-weight:400;font-size:21px;margin-top:14px;color:var(--ink)}
+.pcard-dose{font-size:11.5px;color:var(--muted);margin-top:4px;display:block;font-weight:300}
+.pcard-go{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.pcard-price{font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums}
+.pcard-price .cur{font-size:10px;color:var(--muted);margin-right:3px}
+.pcard-go .go{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:500;display:inline-flex;gap:7px;align-items:center}
+
+/* CoA paper document */
+.coa-doc{background:var(--paper);color:var(--paper-ink);max-width:520px;padding:44px 46px 38px;box-shadow:0 30px 80px rgba(0,0,0,.55);font-family:var(--sans)}
+.coa-doc .hd{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:22px;border-bottom:2px solid var(--paper-ink)}
+.coa-doc .hd svg{height:22px;width:auto}
+.coa-doc .hd .t{text-align:right}
+.coa-doc .hd .t .a{font-family:var(--display);font-size:15px;letter-spacing:.12em;font-weight:400}
+.coa-doc .hd .t .b{font-size:8.5px;letter-spacing:.3em;text-transform:uppercase;color:#8a8378;margin-top:5px;font-weight:500}
+.coa-doc h4{font-family:var(--display);font-weight:400;font-size:22px;margin-top:26px;letter-spacing:-.005em}
+.coa-doc .sub2{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#8a8378;font-weight:500;margin-top:6px}
+.coa-doc .gridc{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:26px;border-top:1px solid rgba(7,6,5,.18)}
+.coa-doc .cell{padding:13px 14px 13px 0;border-bottom:1px solid rgba(7,6,5,.12)}
+.coa-doc .cell .k{font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:#8a8378;font-weight:600}
+.coa-doc .cell .v{font-size:13.5px;margin-top:5px;font-variant-numeric:tabular-nums;font-weight:400}
+.coa-doc .cell .v.acc{color:var(--accent-deep);font-weight:600}
+.coa-doc .pbar{margin-top:26px}
+.coa-doc .pbar .k{display:flex;justify-content:space-between;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#8a8378;font-weight:600}
+.coa-doc .pbar .tr{height:7px;background:rgba(7,6,5,.1);margin-top:8px}
+.coa-doc .pbar .fl{height:100%;width:99.2%;background:linear-gradient(90deg,var(--accent-deep),var(--accent))}
+.coa-doc .ft{margin-top:28px;padding-top:16px;border-top:1px solid rgba(7,6,5,.18);font-size:9.5px;line-height:1.65;color:#6b655b}
+.coa-doc .sig{display:flex;justify-content:space-between;align-items:flex-end;margin-top:24px}
+.coa-doc .sig .ln{width:170px;border-bottom:1px solid rgba(7,6,5,.4);padding-bottom:4px;font-family:var(--display);font-size:15px;font-style:italic;color:#3d3a34}
+.coa-doc .sig .st{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#8a8378;font-weight:600}
+.coa-doc .pass{font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--paper);background:var(--accent-deep);padding:5px 12px}
+
+/* vial label */
+.vial-wrap{display:flex;gap:34px;align-items:flex-end;flex-wrap:wrap}
+.vial-label{width:300px;background:#0d0b09;border:1px solid var(--line-2);padding:16px 18px}
+.vial-label .r1{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid var(--accent-line)}
+.vial-label .r1 svg{height:11px;width:auto}
+.vial-label .r1 span{font-size:7px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.vial-label h5{font-family:var(--display);font-weight:400;font-size:19px;margin-top:12px;color:var(--ink);letter-spacing:.02em}
+.vial-label .dose{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.08em}
+.vial-label .gridl{display:grid;grid-template-columns:1fr 1fr 1fr;margin-top:12px;border-top:1px solid var(--line)}
+.vial-label .gc{padding:8px 8px 2px 0}
+.vial-label .gc .k{font-size:6.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);font-weight:600}
+.vial-label .gc .v{font-size:10px;color:var(--ink);margin-top:3px;font-variant-numeric:tabular-nums}
+.vial-label .ruo{margin-top:12px;padding-top:8px;border-top:1px solid var(--line);font-size:7.5px;letter-spacing:.06em;color:var(--muted-2);line-height:1.5;text-transform:uppercase;font-weight:500}
+.vial-3d{width:110px;height:200px;border-radius:14px 14px 10px 10px;position:relative;overflow:hidden;background:linear-gradient(90deg,#12100d 0%,#241f19 18%,#3a332a 38%,#241f19 62%,#0f0d0b 100%);border:1px solid var(--line-2)}
+.vial-3d::before{content:"";position:absolute;top:0;left:0;right:0;height:34px;background:linear-gradient(180deg,#4a4238,#241f19);border-bottom:1px solid var(--accent-line)}
+.vial-3d .band{position:absolute;left:0;right:0;top:58px;bottom:34px;background:linear-gradient(90deg,rgba(13,11,9,.9),rgba(30,25,20,.92) 30%,rgba(46,39,31,.94) 50%,rgba(20,17,14,.92) 75%,rgba(10,9,7,.9));border-top:1px solid var(--accent-line);border-bottom:1px solid var(--accent-line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:0 10px;text-align:center}
+.vial-3d .band .wmv{font-family:var(--display);font-size:12px;letter-spacing:.4em;color:var(--ink);padding-left:3px}
+.vial-3d .band .cn{font-family:var(--display);font-size:13px;color:var(--accent-bright);letter-spacing:.04em}
+.vial-3d .band .dv{font-size:7px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;font-weight:500}
+.vial-3d .shine{position:absolute;top:0;bottom:0;left:22%;width:9%;background:linear-gradient(90deg,transparent,rgba(242,237,229,.14),transparent)}
+
+/* business card */
+.bcard-row{display:flex;gap:30px;flex-wrap:wrap}
+.bcard{width:322px;aspect-ratio:85.6/54;border:1px solid var(--line-2);padding:24px 26px;display:flex;flex-direction:column;justify-content:space-between;background:var(--bg)}
+.bcard.front .top{display:flex;justify-content:space-between;align-items:flex-start}
+.bcard.front .top svg{height:26px;width:auto}
+.bcard.front .wmly{font-family:var(--display);font-size:16px;letter-spacing:.44em;color:var(--ink);padding-left:2px}
+.bcard.front .sub3{font-size:6.5px;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);margin-top:6px;font-weight:500}
+.bcard.back{background:var(--paper);color:var(--paper-ink);border-color:transparent}
+.bcard.back .nm{font-family:var(--display);font-size:16px;font-weight:400}
+.bcard.back .rl{font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:#8a8378;margin-top:4px;font-weight:600}
+.bcard.back .ct{font-size:9.5px;line-height:1.9;color:#4b463e}
+.bcard.back .ct b{font-weight:600;color:var(--paper-ink)}
+
+/* email mock */
+.email-mock{max-width:520px;border:1px solid var(--line);background:#0a0908}
+.email-mock .eh{padding:30px 36px;border-bottom:1px solid var(--line);display:flex;justify-content:center}
+.email-mock .eh svg{height:20px;width:auto}
+.email-mock .eb{padding:36px}
+.email-mock .eb .kick{font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.email-mock .eb h5{font-family:var(--display);font-weight:300;font-size:26px;margin-top:14px;line-height:1.15;color:var(--ink)}
+.email-mock .eb p{font-size:13px;color:var(--muted);margin-top:14px;line-height:1.75;font-weight:300}
+.email-mock .ef{padding:22px 36px;border-top:1px solid var(--line);font-size:9.5px;color:var(--muted-2);line-height:1.7}
+
+/* social frames */
+.social-row{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-start}
+.soc{border:1px solid var(--line);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:26px}
+.soc.sq{width:300px;aspect-ratio:1/1}
+.soc.story{width:210px;aspect-ratio:9/16}
+.soc .k2{font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent);font-weight:600;position:relative}
+.soc h6{font-family:var(--display);font-weight:300;font-size:22px;line-height:1.12;color:var(--ink);margin-top:10px;position:relative}
+.soc h6 em{font-style:normal;color:var(--muted)}
+.soc .wm2{position:absolute;top:20px;left:24px;font-family:var(--display);font-size:12px;letter-spacing:.4em;color:var(--ink)}
+.soc .scrim2{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.72) 100%)}
+
+/* apparel */
+.apparel-row{display:flex;gap:1px;flex-wrap:wrap;background:var(--line);border:1px solid var(--line)}
+.app-cell{background:var(--bg);flex:1;min-width:220px;padding:36px 26px;display:flex;flex-direction:column;align-items:center;gap:20px}
+.app-cell svg{width:150px;height:auto}
+.app-cell .cap2{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2);font-weight:500;text-align:center;line-height:1.8}
+.app-cell .cap2 b{color:var(--muted);font-weight:500}
+
+/* ---------- Compliance ---------- */
+.comp-card{border:1px solid var(--accent-line);background:linear-gradient(180deg,var(--accent-soft),transparent 40%);padding:44px}
+@media(max-width:680px){.comp-card{padding:28px 22px}}
+.comp-card .mk2{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.comp-card p{max-width:760px}
+.disc-item{border:1px solid var(--line);margin-top:1px;padding:26px 30px;position:relative}
+.disc-item .lab{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.disc-item p{margin-top:12px;font-size:13px;color:var(--muted);line-height:1.75;font-weight:300;max-width:720px}
+.disc-item .cpy2{position:absolute;top:20px;right:20px;background:none;border:1px solid var(--line-2);color:var(--muted);font-family:var(--sans);font-size:9px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;padding:7px 12px;cursor:pointer;transition:.2s}
+.disc-item .cpy2:hover{color:var(--ink);border-color:var(--ink)}
+.disc-item .cpy2.done{color:#0a0704;background:var(--accent-bright);border-color:var(--accent-bright)}
+
+/* ---------- Steps / governance ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line)}
+@media(max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.steps{grid-template-columns:1fr}}
+.step{padding:28px 26px 34px;border-bottom:1px solid var(--line);border-right:1px solid var(--line);counter-increment:step}
+.step:last-child{border-right:none}
+@media(max-width:860px){.step:nth-child(2n){border-right:none}}
+.step .n2{font-size:11px;color:var(--accent);font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.step h4{font-family:var(--display);font-weight:400;font-size:18px;margin-top:16px;color:var(--ink)}
+.step p{color:var(--muted);font-size:13px;line-height:1.7;font-weight:300;margin-top:9px}
+
+/* ---------- Footer ---------- */
+footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-index:3;background:var(--bg)}
+.foot-note{max-width:760px;color:var(--muted-2);font-size:12px;line-height:1.8;font-weight:300}
+.foot-note b{color:var(--muted);font-weight:500}
+.foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<div id="cursorRing"></div>
+<div id="cursorDot"></div>
+
+<div id="sceneWrap" class="static-field"><canvas id="scene"></canvas><div class="scene-scrim"></div></div>
+
+<nav id="nav">
+  <div class="wrap nav-in">
+    <a href="#cover" class="brand" aria-label="AXIOM — Brand Guidelines">
+      <svg viewBox="0 0 100 100" fill="none" aria-hidden="true"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+      <span class="bw"><span class="wm">AXIOM</span><span class="wmsub">Brand Guidelines</span></span>
+    </a>
+    <span class="nav-tag">Identity System · <b>v1.0</b> · Jul 2026</span>
+    <div class="sel nav-jump">
+      <select id="jump" aria-label="Jump to section">
+        <option value="">Sections</option>
+        <option value="#foundation">02 · Foundation</option>
+        <option value="#messaging">03 · Messaging</option>
+        <option value="#voice">04 · Voice</option>
+        <option value="#logo">05 · Logo</option>
+        <option value="#color">06 · Color</option>
+        <option value="#type">07 · Typography</option>
+        <option value="#layout">08 · Layout</option>
+        <option value="#imagery">09 · Imagery</option>
+        <option value="#motion">10 · Motion</option>
+        <option value="#applications">11 · Applications</option>
+        <option value="#compliance">12 · Compliance</option>
+        <option value="#tokens">13 · Tokens</option>
+        <option value="#governance">14 · Governance</option>
+      </select>
+    </div>
+  </div>
+</nav>
+
+<aside id="toc" aria-label="Table of contents">
+  <a href="#cover"><span class="n">01</span><span class="b"></span><span class="t">Cover</span></a>
+  <a href="#foundation"><span class="n">02</span><span class="b"></span><span class="t">Foundation</span></a>
+  <a href="#messaging"><span class="n">03</span><span class="b"></span><span class="t">Messaging</span></a>
+  <a href="#voice"><span class="n">04</span><span class="b"></span><span class="t">Voice</span></a>
+  <a href="#logo"><span class="n">05</span><span class="b"></span><span class="t">Logo</span></a>
+  <a href="#color"><span class="n">06</span><span class="b"></span><span class="t">Color</span></a>
+  <a href="#type"><span class="n">07</span><span class="b"></span><span class="t">Typography</span></a>
+  <a href="#layout"><span class="n">08</span><span class="b"></span><span class="t">Layout</span></a>
+  <a href="#imagery"><span class="n">09</span><span class="b"></span><span class="t">Imagery</span></a>
+  <a href="#motion"><span class="n">10</span><span class="b"></span><span class="t">Motion</span></a>
+  <a href="#applications"><span class="n">11</span><span class="b"></span><span class="t">Applications</span></a>
+  <a href="#compliance"><span class="n">12</span><span class="b"></span><span class="t">Compliance</span></a>
+  <a href="#tokens"><span class="n">13</span><span class="b"></span><span class="t">Tokens</span></a>
+  <a href="#governance"><span class="n">14</span><span class="b"></span><span class="t">Governance</span></a>
+</aside>
+
+<div class="page">
+
+<!-- ===== 01 · COVER ===== -->
+<header class="hero" id="cover">
+  <div class="wrap hero-in">
+    <div class="hero-mark">
+      <svg viewBox="0 0 520 150" fill="none" role="img" aria-label="AXIOM — Human Performance">
+        <g stroke="#F2EDE5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20,104 51,16 82,104"/>
+          <line x1="124" y1="16" x2="186" y2="104"/>
+          <line x1="186" y1="16" x2="124" y2="104"/>
+          <line x1="228" y1="16" x2="228" y2="104"/>
+          <circle cx="312" cy="60" r="44"/>
+          <polyline points="392,104 392,16 434,74 476,16 476,104"/>
+        </g>
+        <text x="270" y="138" text-anchor="middle" font-family="Jost, 'Century Gothic', system-ui, sans-serif" font-size="15" font-weight="400" letter-spacing="9" fill="#9c9488">HUMAN PERFORMANCE</text>
+      </svg>
+    </div>
+    <h1>Brand guidelines,<br><em>held to one standard.</em></h1>
+    <p class="lead">The complete identity system for AXIOM — Human Performance &amp; Longevity. Everything a designer, writer or developer needs to produce on-brand work on day one: foundation, voice, logo, color, type, layout, motion, applications and tokens.</p>
+    <div class="hero-meta">
+      <div class="row stagger reveal">
+        <div class="m"><div class="k">Version</div><div class="v tnum">1.0</div></div>
+        <div class="m"><div class="k">Issued</div><div class="v">Jul 2026</div></div>
+        <div class="m"><div class="k">Sections</div><div class="v tnum">14</div></div>
+        <div class="m"><div class="k">Owner</div><div class="v">AXIOM Studio</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="content">
+
+<!-- ===== 02 · FOUNDATION ===== -->
+<section class="section" id="foundation">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">02 / Foundation</div><span class="kicker">Who We Are</span></div>
+      <div>
+        <h2>One house,<br><em>one standard.</em></h2>
+        <p>The strategic ground everything else stands on — mission, values, audience and architecture. If a decision contradicts this page, the decision is wrong.</p>
+      </div>
+    </div>
+
+    <div class="two-col reveal">
+      <div>
+        <span class="kicker">Mission</span>
+        <p class="prose" style="margin-top:14px">Make verified, research-grade performance and longevity tools available to people who train for <b>decades, not weeks</b> — held to one standard.</p>
+        <div style="margin-top:34px"><span class="kicker">Vision</span>
+        <p class="prose" style="margin-top:14px">A world where the gains people make this season are still with them a decade from now, because the tools behind them were <b>documented, not promised</b>.</p></div>
+      </div>
+      <div>
+        <span class="kicker">Positioning</span>
+        <p class="prose" style="margin-top:14px">AXIOM is the considered, clinical-grade house for human performance and longevity in Indonesia. We bring peptide science, red-light therapy, recovery, wellness and apparel under a single standard of verification and documentation. <b>Short-term results, engineered to last.</b></p>
+        <div style="margin-top:34px"><span class="kicker">Brand Promise</span>
+        <p class="prose" style="margin-top:14px;font-family:var(--display);font-size:21px;color:var(--ink);font-weight:300">Human performance, engineered for the long run.</p></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">02·1</span><h3>Values</h3></div>
+      <div class="steps">
+        <div class="step"><div class="n2">01</div><h4>Verification over claims</h4><p>Nothing carries the mark until it is tested, documented and sourced right.</p></div>
+        <div class="step"><div class="n2">02</div><h4>Restraint</h4><p>We state what we can prove and stop there. The discipline is the credibility.</p></div>
+        <div class="step"><div class="n2">03</div><h4>The long run</h4><p>We build for the decade-over-decade game, not the next cycle.</p></div>
+        <div class="step"><div class="n2">04</div><h4>Direct</h4><p>A real line to real people, before and after the order.</p></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">02·2</span><h3>Five pillars</h3><span class="note">Written as AXIOM · Pillar Name</span></div>
+      <div class="pillar-grid stagger reveal">
+        <div class="pillar"><div class="pillar-no">01</div><div class="pillar-ic"><i class="ph ph-flask"></i></div><h4>Peptide Science</h4><p>Research-grade peptides across metabolic, repair, growth and neuro pathways — every lot HPLC/MS verified to ≥98%.</p></div>
+        <div class="pillar"><div class="pillar-no">02</div><div class="pillar-ic"><i class="ph ph-sun"></i></div><h4>Therapy &amp; Recovery</h4><p>Clinical red-light therapy — compression systems, mats and masks for circulation, skin and recovery.</p></div>
+        <div class="pillar"><div class="pillar-no">03</div><div class="pillar-ic"><i class="ph ph-drop-half"></i></div><h4>Wellness</h4><p>Antioxidants, NAD⁺ and cellular-energy support — the daily inputs that hold your baseline while you push it.</p></div>
+        <div class="pillar"><div class="pillar-no">04</div><div class="pillar-ic"><i class="ph ph-infinity"></i></div><h4>Longevity</h4><p>Cellular-ageing, senescence and copper-peptide compounds for the decade-over-decade game.</p></div>
+        <div class="pillar"><div class="pillar-no">05</div><div class="pillar-ic"><i class="ph ph-t-shirt"></i></div><h4>Apparel</h4><p>Train in the identity — neutral, precise AXIOM performance wear and everyday carry.</p></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">02·3</span><h3>Audience</h3></div>
+      <div class="ex-grid">
+        <div class="ex"><div class="lab">Persona · The Researcher</div><div class="body"><b>Lab buyer / scientist.</b><span class="small" style="display:block;margin-top:8px">Needs research-grade material with identity and purity they can trust and cite. Buys by lot, reads the Certificate of Analysis first. To them AXIOM is a documented, cold-chain supplier that speaks their language and never oversteps into usage claims.</span></div></div>
+        <div class="ex"><div class="lab">Persona · The Decade Athlete</div><div class="body"><b>Serious professional, 30–50.</b><span class="small" style="display:block;margin-top:8px">Trains seriously, thinks in decades, and is wary of hype and neon-supplement marketing. Wants recovery and longevity tools with real specifications behind them. To them AXIOM is the calm, clinical system that respects the long game.</span></div></div>
+        <div class="ex"><div class="lab">Persona · The Clinic Buyer</div><div class="body"><b>Recovery / wellness studio.</b><span class="small" style="display:block;margin-top:8px">Sources devices for a treatment space and needs clinical-grade hardware with verified wavelengths and irradiance, plus reliable restock and support. To them AXIOM is a dependable, spec-honest partner they can put in front of clients.</span></div></div>
+        <div class="ex"><div class="lab">Persona · The Identity Wearer</div><div class="body"><b>Apparel-first.</b><span class="small" style="display:block;margin-top:8px">Came for the aesthetic — neutral, precise, understated performance wear — and stays for what the mark stands for. To them AXIOM is an identity worn quietly, the same standard on the label as in the lab.</span></div></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">02·4</span><h3>Brand architecture</h3></div>
+      <p class="prose">AXIOM is one master brand — a <b>branded house</b>, not a house of brands. Everything ships under the single AXIOM mark and the single AXIOM standard. The offering is organised into five pillars, written as the master brand, a middot, then the pillar in title case: <b>AXIOM · Peptide Science</b>, <b>AXIOM · Therapy &amp; Recovery</b>, <b>AXIOM · Wellness</b>, <b>AXIOM · Longevity</b>, <b>AXIOM · Apparel</b>. Pillars never get their own logos, palettes or type.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 03 · MESSAGING ===== -->
+<section class="section" id="messaging">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">03 / Messaging</div><span class="kicker">Story &amp; Message</span></div>
+      <div>
+        <h2>Say it once,<br><em>prove it always.</em></h2>
+        <p>The approved language of the brand — pitches, tagline, value propositions and boilerplate. Copy from here rather than paraphrasing.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">03·1</span><h3>Elevator pitches</h3><span class="note">Exact word counts</span></div>
+      <div class="ex-grid">
+        <div class="ex"><div class="lab">15 words</div><div class="body">AXIOM: verified peptides, red-light therapy and recovery under one standard, engineered for the long run.</div></div>
+        <div class="ex"><div class="lab">30 words</div><div class="body">AXIOM is a human-performance house from Jakarta: research-grade peptides, clinical red-light devices, recovery and wellness — every lot verified, every device documented, all held to one standard for the long run.</div></div>
+        <div class="ex" style="grid-column:1/-1"><div class="lab">60 words</div><div class="body">AXIOM is a human-performance and longevity house based in Jakarta, built for people who train for decades, not weeks. We bring research-grade peptides, clinical red-light therapy, recovery, wellness and apparel under one standard: HPLC/MS-verified purity, a Certificate of Analysis per lot, cold-chain logistics, and direct human support. Peptides are always Research Use Only. Short-term results, engineered for the long run.</div></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">03·2</span><h3>Tagline</h3></div>
+      <div class="tt-demo">
+        <span class="kicker">Primary</span>
+        <p style="font-family:var(--display);font-weight:300;font-size:clamp(24px,3.4vw,40px);line-height:1.1;margin-top:16px">Human performance, <em style="font-style:normal;color:var(--muted)">engineered for the long run.</em></p>
+      </div>
+      <div class="tt-demo" style="display:flex;gap:14px 34px;flex-wrap:wrap;align-items:baseline">
+        <span class="kicker" style="width:100%">Approved alternates</span>
+        <span style="font-family:var(--display);font-weight:300;font-size:19px">One standard, across every product.</span>
+        <span style="font-family:var(--display);font-weight:300;font-size:19px;color:var(--muted)">Built for decades, not weeks.</span>
+        <span style="font-family:var(--display);font-weight:300;font-size:19px;color:var(--muted)">Verified, documented, sourced right.</span>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">03·3</span><h3>Value propositions by pillar</h3></div>
+      <div class="tbl-scroll"><table class="spec">
+        <tr><th style="width:220px">Pillar</th><th>Value proposition</th></tr>
+        <tr><td>AXIOM · Peptide Science</td><td>Research-grade peptides across metabolic, repair, growth and neuro pathways — every lot analysed by HPLC and mass spectrometry to a minimum of 98% purity, with a Certificate of Analysis per lot. Research Use Only, in-vitro.</td></tr>
+        <tr><td>AXIOM · Therapy &amp; Recovery</td><td>Clinical red-light therapy specified to true 660 and 850 nm with verified irradiance — compression systems, mats and masks for circulation, skin and post-training recovery. Clinical-grade hardware, not novelty LEDs.</td></tr>
+        <tr><td>AXIOM · Wellness</td><td>Antioxidants, NAD⁺ and cellular-energy support — the daily inputs that hold your baseline while you push it, documented to the same standard as everything else we carry.</td></tr>
+        <tr><td>AXIOM · Longevity</td><td>Cellular-ageing, senescence and copper-peptide compounds for the decade-over-decade game — research-grade material, verified and documented, framed for the long run rather than the next cycle.</td></tr>
+        <tr><td>AXIOM · Apparel</td><td>Neutral, precise performance wear and everyday carry. The same standard on the label as in the lab — identity worn quietly.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">03·4</span><h3>Messaging matrix</h3></div>
+      <div class="tbl-scroll"><table class="spec">
+        <tr><th>Persona</th><th>Pain</th><th>Promise</th><th>Proof</th><th>CTA</th></tr>
+        <tr><td>The Researcher</td><td>Can't trust identity or purity of research material</td><td>Verified, documented material by lot</td><td>HPLC/MS ≥98%, CoA per lot, cold-chain</td><td>Request the CoA</td></tr>
+        <tr><td>The Decade Athlete</td><td>Hype and neon marketing, nothing built to last</td><td>A calm, clinical system for the long game</td><td>One standard across every product</td><td>Explore the range</td></tr>
+        <tr><td>The Clinic Buyer</td><td>Novelty LEDs, unreliable specs and restock</td><td>Clinical-grade hardware, spec-honest</td><td>True 660 + 850 nm, verified irradiance</td><td>Talk to the team</td></tr>
+        <tr><td>The Identity Wearer</td><td>Loud logos that stand for nothing</td><td>Quiet identity, real standard behind it</td><td>Same mark, lab to label</td><td>Wear the standard</td></tr>
+      </table></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">03·5</span><h3>Boilerplate</h3><span class="note">Copy verbatim</span></div>
+      <div class="disc-item"><div class="lab">Short · ~40 words</div><button class="cpy2" data-copy-target>Copy</button><p>AXIOM is a human-performance and longevity house based in Jakarta, Indonesia. We bring research-grade peptides, clinical red-light therapy, recovery, wellness and apparel under one standard — verified, documented, sourced right. Peptides are Research Use Only, in-vitro. Prices in IDR.</p></div>
+      <div class="disc-item"><div class="lab">Long · ~100 words</div><button class="cpy2" data-copy-target>Copy</button><p>AXIOM is a human-performance and longevity house based in Jakarta, Indonesia, built for people who train for decades, not weeks. We bring research-grade peptides, clinical red-light therapy, recovery, wellness and apparel under a single standard of verification and documentation: every peptide lot analysed by HPLC and mass spectrometry to a minimum of 98% purity, a Certificate of Analysis per lot, clinical-wavelength devices, cold-chain logistics, and direct human support. Peptides are Research Use Only, intended exclusively for in-vitro laboratory research — never for human or animal consumption. Short-term results, engineered to last. Human performance, engineered for the long run.</p></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">03·6</span><h3>The RUO messaging standard</h3></div>
+      <div class="comp-card">
+        <div class="mk2">Non-negotiable</div>
+        <p class="prose" style="margin-top:16px">Wherever peptides appear, copy states plainly that they are <b>Research Use Only</b>, intended exclusively for in-vitro laboratory and scientific research — never for human or veterinary consumption, diagnosis, or treatment. We describe scientific mechanism, pharmacokinetics and laboratory handling only. We never provide dosing, administration routes, frequencies, cycling, stacking, or medical guidance of any kind. The disclaimer is stated as fact, without apology, and is never buried.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 04 · VOICE ===== -->
+<section class="section" id="voice">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">04 / Voice</div><span class="kicker">Verbal Identity</span></div>
+      <div>
+        <h2>Proof before promise,<br><em>then stop talking.</em></h2>
+        <p>The exacting lab director who is also a coach for the long game — precise, quietly confident, plain-spoken, never hyped.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">04·1</span><h3>Voice principles</h3></div>
+      <div class="steps">
+        <div class="step"><div class="n2">01</div><h4>Proof before promise</h4><p>Lead with the number, the method, the document. "Every lot analysed by HPLC and mass spectrometry to ≥98% purity."</p></div>
+        <div class="step"><div class="n2">02</div><h4>Short declaratives</h4><p>State it plainly and stop. "One standard, across every product."</p></div>
+        <div class="step"><div class="n2">03</div><h4>Quiet confidence</h4><p>Confident without hype; no superlatives, no fear-selling. "If it carries the AXIOM mark, it has earned it."</p></div>
+        <div class="step"><div class="n2">04</div><h4>Honest restraint</h4><p>Say what we can document, and name the limits openly. "This panel intentionally contains no dosing or usage guidance."</p></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">04·2</span><h3>Tone by context</h3></div>
+      <div class="tbl-scroll"><table class="spec">
+        <tr><th>Context</th><th>Register</th><th>What changes</th><th>What never changes</th><th>Example</th></tr>
+        <tr><td>Marketing</td><td>Editorial, unhurried, confident</td><td>More narrative, the "long run" refrain</td><td>No superlatives, no medical claims</td><td>"Built for decades, not weeks."</td></tr>
+        <tr><td>Product &amp; catalogue</td><td>Precise, specification-led</td><td>Terse, numeric, factual</td><td>Proof-led, RUO on peptides</td><td>"BPC-157 · 10 mg · Pen · HPLC/MS ≥98%."</td></tr>
+        <tr><td>Legal &amp; compliance</td><td>Plain, definitive, complete</td><td>Fuller sentences, exact terms</td><td>Stated without apology, never buried</td><td>"Peptides are Research Use Only, in-vitro."</td></tr>
+        <tr><td>Support &amp; WhatsApp</td><td>Warm, direct, human</td><td>Contractions, first person, helpful</td><td>No dosing or usage guidance</td><td>"Happy to help — here's your itemised quote."</td></tr>
+      </table></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">04·3</span><h3>Grammar &amp; style</h3></div>
+      <div class="tbl-scroll"><table class="spec">
+        <tr><th style="width:200px">Rule</th><th>Standard</th></tr>
+        <tr><td>Currency</td><td>Indonesian Rupiah as <span class="tnum">Rp 1.600.000</span> — "Rp", a space, periods as thousands separators, no decimals.</td></tr>
+        <tr><td>Units</td><td>Space between value and unit: <span class="tnum">10 mg</span>, <span class="tnum">660 nm</span>, <span class="tnum">2–8 °C</span>. Use ≥ for minimums (<span class="tnum">≥ 98%</span>).</td></tr>
+        <tr><td>Numerals</td><td>Tabular numerals in specs, prices and CoA tables. Spell out one through nine in prose; figures for data and measurements.</td></tr>
+        <tr><td>Capitalisation</td><td>"AXIOM" is always all caps. Pillars in title case (Peptide Science, Therapy &amp; Recovery). Certificate of Analysis capitalised.</td></tr>
+        <tr><td>Headlines</td><td>Sentence case, not title case. Emphasis carried by a muted colour-shift &lt;em&gt;, never by exclamation.</td></tr>
+        <tr><td>En-dash</td><td>Use – for ranges (2–4 working days, 660–850 nm) and as a spaced editorial break ( — ).</td></tr>
+        <tr><td>Punctuation</td><td>No exclamation marks, anywhere. No emojis in body copy.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">04·4</span><h3>Lexicon</h3></div>
+      <div class="lex">
+        <div class="use"><span class="kicker">Words we use</span>
+          <div class="chips"><span>standard</span><span>verified</span><span>documented</span><span>protocol</span><span>lot</span><span>purity</span><span>clinical</span><span>research-grade</span><span>longevity</span><span>the long run</span><span>Certificate of Analysis</span><span>cold-chain</span></div>
+        </div>
+        <div class="avoid"><span class="kicker">Words we avoid</span>
+          <div class="chips"><span>miracle</span><span>guaranteed</span><span>cure</span><span>anti-aging</span><span>stack</span><span>cycle</span><span>boost</span><span>best / #1</span></div>
+          <p class="prose" style="font-size:12.5px;margin-top:14px">Overclaims, medical claims, usage advice and superlatives — each one spends credibility the proof column earned.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">04·5</span><h3>Worked examples</h3><span class="note">12 specimens, final copy</span></div>
+      <div class="ex-grid">
+        <div class="ex"><div class="lab">01 · Hero headline</div><div class="body"><span class="h">Human performance,<br><em>engineered for the long run.</em></span></div></div>
+        <div class="ex"><div class="lab">02 · Section headline</div><div class="body"><span class="h">One standard,<br><em>across every product.</em></span></div></div>
+        <div class="ex"><div class="lab">03 · Product blurb · BPC-157 10 mg Pen</div><div class="body"><span class="small">A pentadecapeptide studied in vitro for tissue-repair and cytoprotective pathways. Supplied as a white lyophilate, HPLC/MS-verified to ≥ 98% purity with a Certificate of Analysis per lot. Research Use Only — in-vitro laboratory research; not for human or veterinary use.</span></div></div>
+        <div class="ex"><div class="lab">04 · Product blurb · Red Light Therapy Mask</div><div class="body"><span class="small">A face-contoured LED array at clinical 660 and 850 nm with verified irradiance, built for circulation, skin and post-training recovery. Clinical-grade hardware — a consumer product, documented to the same standard as everything we carry.</span></div></div>
+        <div class="ex"><div class="lab">05 · CTA button set</div><div class="body" style="display:flex;gap:12px;flex-wrap:wrap"><span class="btn btn-solid" style="pointer-events:none">Explore the range</span><span class="btn" style="pointer-events:none">Request a quote</span><span class="btn" style="pointer-events:none">Read our standards</span></div></div>
+        <div class="ex"><div class="lab">06 · Error message</div><div class="body"><span class="small">That didn't send. Check your email or WhatsApp number and try again, or message us directly at +1 803 857 3396.</span></div></div>
+        <div class="ex"><div class="lab">07 · Out of stock</div><div class="body"><span class="small">Currently out of stock. Leave your details and we'll confirm the next lot and its Certificate of Analysis as soon as it lands.</span></div></div>
+        <div class="ex"><div class="lab">08 · Order confirmation email intro</div><div class="body"><span class="small">Your AXIOM order is confirmed and moving to dispatch. Peptides ship cold-chain with their Certificate of Analysis; devices are insured and tracked.</span></div></div>
+        <div class="ex"><div class="lab">09 · WhatsApp quote reply</div><div class="body"><span class="small">Thanks for your list — here's your itemised quote with live stock and IDR pricing. Everything's verified and CoA-backed; reply here and we'll get it moving.</span></div></div>
+        <div class="ex"><div class="lab">10 · Social caption · CoA post</div><div class="body"><span class="small">Every lot, documented. HPLC and mass spectrometry, ≥ 98% purity, a Certificate of Analysis in the box. Verified, documented, sourced right.</span></div></div>
+        <div class="ex"><div class="lab">11 · Acknowledgement gate (short)</div><div class="body"><span class="small">AXIOM carries research peptides sold strictly for in-vitro laboratory use — not for human or veterinary consumption. Enter only if you are 18 or older and, for any peptide purchase, a qualified researcher or institutional buyer.</span></div></div>
+        <div class="ex"><div class="lab">12 · Disclaimer pair · EN + ID</div><div class="body"><span class="small"><b>EN</b> — Peptides are sold strictly for in-vitro laboratory research and are not intended for human or animal consumption.<br><br><b>ID</b> — Peptida dijual khusus untuk penelitian laboratorium in-vitro dan tidak ditujukan untuk konsumsi manusia atau hewan.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 05 · LOGO ===== -->
+<section class="section" id="logo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">05 / Logo</div><span class="kicker">The Mark</span></div>
+      <div>
+        <h2>Summit and cycle,<br><em>drawn in one stroke.</em></h2>
+        <p>The symbol is an abstract "A" peak beside an orbit — performance and longevity in a single monoline gesture. Round-capped strokes, bronze on the near-black canvas.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">05·1</span><h3>Lockups</h3></div>
+      <div class="lockup-grid">
+        <div class="lockup"><span class="tag">A · Symbol only</span>
+          <svg viewBox="0 0 100 100" width="84" height="84" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+        </div>
+        <div class="lockup"><span class="tag">B · Horizontal · symbol + wordmark</span>
+          <div style="display:flex;align-items:center;gap:18px">
+            <svg viewBox="0 0 100 100" width="52" height="52" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+            <span style="font-family:var(--display);font-size:26px;letter-spacing:.44em;color:var(--ink);padding-left:2px">AXIOM</span>
+          </div>
+        </div>
+        <div class="lockup"><span class="tag">C · Stacked</span>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px;width:100%">
+            <svg viewBox="0 0 100 100" width="56" height="56" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+            <span style="font-family:var(--display);font-size:21px;letter-spacing:.44em;color:var(--ink);padding-left:4px">AXIOM</span>
+          </div>
+        </div>
+        <div class="lockup"><span class="tag">D · Wordmark + subline</span>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-family:var(--display);font-size:28px;letter-spacing:.44em;color:var(--ink)">AXIOM</span>
+            <span style="font-family:var(--sans);font-weight:500;font-size:8.5px;letter-spacing:.42em;color:var(--muted);text-transform:uppercase">Human Performance &amp; Longevity</span>
+          </div>
+        </div>
+      </div>
+      <p class="mock-cap"><b>Full wordmark.</b> The five-glyph monoline wordmark (A X I O M strokes) used on the site hero and print headers is the display cut of lockup D — see the cover of this document. Prefer lockup B in navigation, A at favicon/avatar sizes, D on documents.</p>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">05·2</span><h3>Clear space &amp; minimum sizes</h3></div>
+      <div class="two-col">
+        <div class="clearspace">
+          <div class="cs-box">
+            <span class="cs-lab" style="top:-16px;left:50%;transform:translateX(-50%)">1×</span>
+            <span class="cs-lab" style="left:-26px;top:50%;transform:translateY(-50%) rotate(-90deg)">1×</span>
+            <svg viewBox="0 0 100 100" width="92" height="92" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+          </div>
+        </div>
+        <div>
+          <p class="prose">Minimum clear space on all sides equals <b>1× the orbit ring's diameter</b>. Nothing enters this zone — no type, imagery, or edges.</p>
+          <div class="tbl-scroll" style="margin-top:24px"><table class="spec">
+            <tr><th>Lockup</th><th>Min digital</th><th>Min print</th></tr>
+            <tr><td>A · Symbol</td><td class="tnum">16 px</td><td class="tnum">5 mm</td></tr>
+            <tr><td>B · Horizontal</td><td class="tnum">110 px wide</td><td class="tnum">30 mm</td></tr>
+            <tr><td>C · Stacked</td><td class="tnum">64 px wide</td><td class="tnum">18 mm</td></tr>
+            <tr><td>D · Wordmark + subline</td><td class="tnum">140 px wide</td><td class="tnum">38 mm</td></tr>
+          </table></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">05·3</span><h3>Color versions</h3></div>
+      <div class="lockup-grid">
+        <div class="lockup"><span class="tag">Bronze on canvas · primary</span>
+          <svg viewBox="0 0 100 100" width="66" height="66" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+        </div>
+        <div class="lockup"><span class="tag">Ink on canvas · quiet contexts</span>
+          <svg viewBox="0 0 100 100" width="66" height="66" fill="none"><g stroke="#F2EDE5" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+        </div>
+        <div class="lockup on-paper"><span class="tag">Ink on paper · print</span>
+          <svg viewBox="0 0 100 100" width="66" height="66" fill="none"><g stroke="#070605" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+        </div>
+        <div class="lockup on-paper"><span class="tag">Bronze-deep on paper · accents ≥ 24 px only</span>
+          <svg viewBox="0 0 100 100" width="66" height="66" fill="none"><g stroke="#7C4C24" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+        </div>
+      </div>
+      <p class="mock-cap"><b>Gradient use.</b> The sanctioned <b>--accent-grad</b> may fill the symbol only in hero/celebratory contexts, never at small sizes. No other gradients, ever.</p>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">05·4</span><h3>Misuse</h3><span class="note">Never do these</span></div>
+      <div class="misuse-grid">
+        <div class="misuse"><div class="art"><svg viewBox="0 0 100 100" width="60" height="60" fill="none" style="transform:scaleX(1.45)"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><i class="ph-bold ph-x"></i>Don't stretch or squash</div></div>
+        <div class="misuse"><div class="art"><svg viewBox="0 0 100 100" width="60" height="60" fill="none"><g stroke="#7A5FD0" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><i class="ph-bold ph-x"></i>Don't recolor off-palette</div></div>
+        <div class="misuse"><div class="art"><svg viewBox="0 0 100 100" width="60" height="60" fill="none" style="filter:drop-shadow(0 6px 8px rgba(231,177,115,.8))"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><i class="ph-bold ph-x"></i>Don't add effects or shadows</div></div>
+        <div class="misuse"><div class="art"><svg viewBox="0 0 100 100" width="60" height="60" fill="none" style="transform:rotate(-24deg)"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><i class="ph-bold ph-x"></i>Don't rotate</div></div>
+        <div class="misuse"><div class="art" style="background:url('assets/products/leg-compression-lifestyle.webp') center/cover;width:100%;"><svg viewBox="0 0 100 100" width="60" height="60" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><i class="ph-bold ph-x"></i>Don't place on busy imagery without a scrim</div></div>
+        <div class="misuse"><div class="art"><div style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 100 100" width="46" height="46" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg><span style="font-family:Georgia,serif;font-style:italic;font-size:22px;color:var(--ink)">Axiom</span></div></div><div class="cap"><i class="ph-bold ph-x"></i>Don't reset the wordmark in other type</div></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">05·5</span><h3>Co-branding &amp; favicon</h3></div>
+      <div class="two-col">
+        <p class="prose">In partner lockups, AXIOM sits left, a 1 px hairline divider (<b>--line-2</b>) stands between marks at 1× clear space each side, and the partner mark is scaled to matching optical height. The AXIOM mark is never subordinated below 80% of the partner's height.</p>
+        <p class="prose">The favicon is the symbol-only lockup: bronze strokes on <b>#070605</b>, exported as SVG. The same asset serves as social avatar. Never use the wordmark at avatar sizes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 06 · COLOR ===== -->
+<section class="section" id="color">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">06 / Color</div><span class="kicker">Palette</span></div>
+      <div>
+        <h2>Warm dark, bone ink,<br><em>bronze earned sparingly.</em></h2>
+        <p>A warm near-black canvas, bone-white ink and a bronze/copper accent. No purple, no cool blue, no pure black, no pure white — and bronze stays an accent, never a flood.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">06·1</span><h3>Core palette</h3><span class="note">Click any swatch to copy</span></div>
+      <div class="swatch-grid">
+        <button class="swatch" data-hex="#070605"><span class="chip" style="background:#070605;border-bottom:1px solid var(--line)"></span><span class="meta"><span class="nm">Canvas</span><span class="tk">--bg</span><span class="hx">#070605</span></span><span class="cp">Copied</span></button>
+        <button class="swatch" data-hex="#F2EDE5"><span class="chip" style="background:#F2EDE5"></span><span class="meta"><span class="nm">Ink</span><span class="tk">--ink</span><span class="hx">#F2EDE5</span></span><span class="cp">Copied</span></button>
+        <button class="swatch" data-hex="#9C9488"><span class="chip" style="background:#9C9488"></span><span class="meta"><span class="nm">Muted</span><span class="tk">--muted</span><span class="hx">#9C9488</span></span><span class="cp">Copied</span></button>
+        <button class="swatch" data-hex="#6A635A"><span class="chip" style="background:#6A635A"></span><span class="meta"><span class="nm">Muted deep</span><span class="tk">--muted-2</span><span class="hx">#6A635A</span></span><span class="cp">Copied</span></button>
+        <button class="swatch" data-hex="#C88A4E"><span class="chip" style="background:#C88A4E"></span><span class="meta"><span class="nm">Accent · bronze</span><span class="tk">--accent</span><span class="hx">#C88A4E</span></span><span class="cp">Copied</span></button>
+        <button class="swatch" data-hex="#E7B173"><span class="chip" style="background:#E7B173"></span><span class="meta"><span class="nm">Accent bright</span><span class="tk">--accent-bright</span><span class="hx">#E7B173</span></span><span class="cp">Copied</span></button>
+        <button class="swatch" data-hex="#7C4C24"><span class="chip" style="background:#7C4C24"></span><span class="meta"><span class="nm">Accent deep</span><span class="tk">--accent-deep</span><span class="hx">#7C4C24</span></span><span class="cp">Copied</span></button>
+        <button class="swatch" data-hex="linear-gradient(120deg,#E7B173 0%,#C88A4E 46%,#9A5F2C 100%)"><span class="chip" style="background:linear-gradient(120deg,#E7B173 0%,#C88A4E 46%,#9A5F2C 100%)"></span><span class="meta"><span class="nm">Accent gradient</span><span class="tk">--accent-grad</span><span class="hx">120° E7B173 → 9A5F2C</span></span><span class="cp">Copied</span></button>
+      </div>
+      <p class="mock-cap" style="margin-top:18px"><b>Hairlines.</b> Dividers use ink at low alpha: <b>--line</b> rgba(242,237,229,.12) · <b>--line-2</b> .22 · <b>--line-soft</b> .06 · <b>--accent-line</b> rgba(200,138,78,.34). Selection is bronze with near-black text.</p>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">06·2</span><h3>Ramps</h3><span class="note">50–900 · click to copy</span></div>
+      <span class="kicker">Bronze</span>
+      <div class="ramp">
+        <button data-hex="#F0E8DF" style="background:#F0E8DF"><span style="color:#604326">50</span></button>
+        <button data-hex="#EDE2D7" style="background:#EDE2D7"><span style="color:#604326">100</span></button>
+        <button data-hex="#E6D3C4" style="background:#E6D3C4"><span style="color:#604326">200</span></button>
+        <button data-hex="#DDBFA9" style="background:#DDBFA9"><span style="color:#604326">300</span></button>
+        <button data-hex="#D3A887" style="background:#D3A887"><span style="color:#604326">400</span></button>
+        <button data-hex="#C88A4E" style="background:#C88A4E;outline:2px solid #F2EDE5;outline-offset:-2px"><span style="color:#070605">500</span></button>
+        <button data-hex="#B37B46" style="background:#B37B46"><span style="color:#F2EDE5">600</span></button>
+        <button data-hex="#9C6C3D" style="background:#9C6C3D"><span style="color:#F2EDE5">700</span></button>
+        <button data-hex="#815932" style="background:#815932"><span style="color:#F2EDE5">800</span></button>
+        <button data-hex="#604326" style="background:#604326"><span style="color:#F2EDE5">900</span></button>
+      </div>
+      <div class="ramp-cap"><span>Toward bone</span><span>500 = --accent</span><span>Toward canvas</span></div>
+      <div style="margin-top:30px"><span class="kicker">Warm neutral</span>
+      <div class="ramp">
+        <button data-hex="#EEE9E1" style="background:#EEE9E1"><span style="color:#4B4742">50</span></button>
+        <button data-hex="#E8E3DB" style="background:#E8E3DB"><span style="color:#4B4742">100</span></button>
+        <button data-hex="#DBD5CD" style="background:#DBD5CD"><span style="color:#4B4742">200</span></button>
+        <button data-hex="#C9C3BA" style="background:#C9C3BA"><span style="color:#4B4742">300</span></button>
+        <button data-hex="#B5AEA4" style="background:#B5AEA4"><span style="color:#4B4742">400</span></button>
+        <button data-hex="#9C9488" style="background:#9C9488;outline:2px solid #F2EDE5;outline-offset:-2px"><span style="color:#070605">500</span></button>
+        <button data-hex="#8B8479" style="background:#8B8479"><span style="color:#F2EDE5">600</span></button>
+        <button data-hex="#7A746A" style="background:#7A746A"><span style="color:#F2EDE5">700</span></button>
+        <button data-hex="#655F58" style="background:#655F58"><span style="color:#F2EDE5">800</span></button>
+        <button data-hex="#4B4742" style="background:#4B4742"><span style="color:#F2EDE5">900</span></button>
+      </div>
+      <div class="ramp-cap"><span>Toward bone</span><span>500 = --muted</span><span>Toward canvas</span></div></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">06·3</span><h3>Semantic states &amp; light palette</h3><span class="note">Brand-book extension · ratified v1.0</span></div>
+      <div class="two-col">
+        <div>
+          <div class="swatch-grid" style="grid-template-columns:repeat(2,1fr)">
+            <button class="swatch" data-hex="#8FA37E"><span class="chip" style="background:#8FA37E;height:56px"></span><span class="meta"><span class="nm">Success / verified</span><span class="tk">--ok</span><span class="hx">#8FA37E</span></span><span class="cp">Copied</span></button>
+            <button class="swatch" data-hex="#C8A24E"><span class="chip" style="background:#C8A24E;height:56px"></span><span class="meta"><span class="nm">Warning</span><span class="tk">--warn</span><span class="hx">#C8A24E</span></span><span class="cp">Copied</span></button>
+            <button class="swatch" data-hex="#B0553B"><span class="chip" style="background:#B0553B;height:56px"></span><span class="meta"><span class="nm">Error</span><span class="tk">--err</span><span class="hx">#B0553B</span></span><span class="cp">Copied</span></button>
+            <button class="swatch" data-hex="#9C9488"><span class="chip" style="background:#9C9488;height:56px"></span><span class="meta"><span class="nm">Info</span><span class="tk">--info</span><span class="hx">#9C9488</span></span><span class="cp">Copied</span></button>
+          </div>
+          <p class="mock-cap">Muted, desaturated, warm — states inform without shouting. Never neon green/red.</p>
+        </div>
+        <div>
+          <div style="background:var(--paper);color:var(--paper-ink);padding:34px;border:1px solid var(--line)">
+            <span style="font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#8a8378;font-weight:600">Light / print equivalent</span>
+            <p style="font-family:var(--display);font-weight:300;font-size:24px;margin-top:14px;line-height:1.2">Bone paper, near-black ink, <span style="color:#7C4C24">bronze-deep accents.</span></p>
+            <p style="font-size:12.5px;color:#4b463e;margin-top:12px;line-height:1.7">Stationery and documents invert to <b>--paper #F2EDE5</b> with <b>--paper-ink #070605</b>. On paper, use <b>--accent-deep #7C4C24</b> for accents — core bronze fails contrast for small text on light ground.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">06·4</span><h3>Accessibility</h3><span class="note">Ratios computed live on this page</span></div>
+      <div class="tbl-scroll"><table class="spec" id="contrastTable">
+        <tr><th>Pair</th><th>Sample</th><th>Ratio</th><th>Verdict</th><th>Rule</th></tr>
+        <tr data-fg="#F2EDE5" data-bg="#070605"><td>Ink on canvas</td><td><span style="background:#070605;color:#F2EDE5;padding:6px 12px;border:1px solid var(--line)">Aa 14 px</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td>Body and headlines — unrestricted.</td></tr>
+        <tr data-fg="#9C9488" data-bg="#070605"><td>Muted on canvas</td><td><span style="background:#070605;color:#9C9488;padding:6px 12px;border:1px solid var(--line)">Aa 14 px</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td>Secondary copy — unrestricted.</td></tr>
+        <tr data-fg="#C88A4E" data-bg="#070605"><td>Bronze on canvas</td><td><span style="background:#070605;color:#C88A4E;padding:6px 12px;border:1px solid var(--line)">Aa 14 px</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td>Text allowed at any size; prefer labels ≥ 10 px w500.</td></tr>
+        <tr data-fg="#E7B173" data-bg="#070605"><td>Bronze bright on canvas</td><td><span style="background:#070605;color:#E7B173;padding:6px 12px;border:1px solid var(--line)">Aa 14 px</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td>Highlight text — unrestricted.</td></tr>
+        <tr data-fg="#6A635A" data-bg="#070605"><td>Muted-deep on canvas</td><td><span style="background:#070605;color:#6A635A;padding:6px 12px;border:1px solid var(--line)">Aa 18 px</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td><b>Large or decorative only</b> — ≥ 18 px, or uppercase micro-labels ≥ 9.5 px w500 as decorative meta.</td></tr>
+        <tr data-fg="#7C4C24" data-bg="#070605"><td>Bronze deep on canvas</td><td><span style="background:#070605;color:#7C4C24;padding:6px 12px;border:1px solid var(--line)">Aa</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td><b>Decorative only</b> — gradients, particles, fills. Never text.</td></tr>
+        <tr data-fg="#070605" data-bg="#F2EDE5"><td>Ink on paper</td><td><span style="background:#F2EDE5;color:#070605;padding:6px 12px">Aa 14 px</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td>Print body — unrestricted.</td></tr>
+        <tr data-fg="#C88A4E" data-bg="#F2EDE5"><td>Bronze on paper</td><td><span style="background:#F2EDE5;color:#C88A4E;padding:6px 12px">Aa 24 px</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td><b>Decorative/large only</b> — on paper switch text accents to --accent-deep.</td></tr>
+        <tr data-fg="#7C4C24" data-bg="#F2EDE5"><td>Bronze deep on paper</td><td><span style="background:#F2EDE5;color:#7C4C24;padding:6px 12px">Aa 14 px</span></td><td class="tnum ratio">—</td><td class="verdict">—</td><td>Print accent text — passes AA.</td></tr>
+      </table></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">06·5</span><h3>Usage proportion</h3></div>
+      <div class="prop-bar">
+        <div style="flex:0 0 82%;background:#070605;color:var(--muted-2);border-right:1px solid var(--line)">Canvas ~82%</div>
+        <div style="flex:0 0 10%;background:#F2EDE5;color:#070605">Ink ~10%</div>
+        <div style="flex:0 0 8%;background:linear-gradient(120deg,#E7B173,#C88A4E);color:#070605">≤8%</div>
+      </div>
+      <p class="mock-cap"><b>Canvas dominates.</b> Ink carries content; bronze is earned emphasis at 10% of any surface or less. If a layout feels bronze-heavy, it is off-brand — remove accents until it calms.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 07 · TYPOGRAPHY ===== -->
+<section class="section" id="type">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">07 / Typography</div><span class="kicker">Type System</span></div>
+      <div>
+        <h2>Jost speaks,<br><em>Inter documents.</em></h2>
+        <p>Two families, strictly cast: Jost carries display at a light 300 weight; Inter carries body, UI and the wide-tracked micro-labels that sign every section.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">07·1</span><h3>Families</h3></div>
+      <div class="specimen"><div class="lab"><b>Jost</b>Display · 300 / 400 / 500<br>Fallback: Century Gothic, geometric system sans</div>
+        <div style="font-family:var(--display);font-weight:300;font-size:clamp(30px,4.4vw,52px);line-height:1.1">Engineered for the long run <span style="color:var(--muted)">— AaBbCc 0123456789</span></div></div>
+      <div class="specimen"><div class="lab"><b>Inter</b>Body · UI · Labels · 300 / 400 / 500 / 600<br>Fallback: system-ui, Helvetica Neue, Arial</div>
+        <div style="font-size:17px;font-weight:300;line-height:1.7;color:var(--muted)">Every lot is analysed by high-performance liquid chromatography and mass spectrometry. <span style="color:var(--ink);font-weight:400">AaBbCc 0123456789</span> <span class="tnum" style="color:var(--ink)">Rp 1.600.000 · ≥ 98% · 660 nm</span></div></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">07·2</span><h3>Type scale</h3></div>
+      <div class="tbl-scroll"><table class="spec">
+        <tr><th>Role</th><th>Family / weight</th><th>Size</th><th>Line height</th><th>Tracking</th><th>Color</th></tr>
+        <tr><td>Display XL · hero</td><td>Jost 300</td><td class="tnum">clamp(34px, 5.4vw, 72px)</td><td class="tnum">1.02</td><td class="tnum">-0.01em</td><td>--ink, em → --muted</td></tr>
+        <tr><td>Display L · section h2</td><td>Jost 300</td><td class="tnum">clamp(28px, 4vw, 46px)</td><td class="tnum">1.06</td><td class="tnum">-0.01em</td><td>--ink</td></tr>
+        <tr><td>Display M · card h3/h4</td><td>Jost 400</td><td class="tnum">18–22px</td><td class="tnum">1.2</td><td class="tnum">-0.005em</td><td>--ink</td></tr>
+        <tr><td>Stat value</td><td>Jost 400 tnum</td><td class="tnum">19px</td><td class="tnum">1.2</td><td class="tnum">+0.01em</td><td>--ink</td></tr>
+        <tr><td>Body L · lead</td><td>Inter 300</td><td class="tnum">15–16px</td><td class="tnum">1.75</td><td class="tnum">0</td><td>--muted</td></tr>
+        <tr><td>Body M</td><td>Inter 300–400</td><td class="tnum">13–14px</td><td class="tnum">1.7</td><td class="tnum">0</td><td>--muted</td></tr>
+        <tr><td>Button / nav link</td><td>Inter 500</td><td class="tnum">11px</td><td class="tnum">1</td><td class="tnum">+0.18em · caps</td><td>--ink / --muted</td></tr>
+        <tr><td>Kicker / eyebrow</td><td>Inter 500</td><td class="tnum">10.5px</td><td class="tnum">1</td><td class="tnum">+0.32–0.34em · caps</td><td>--muted</td></tr>
+        <tr><td>Meta key / caption</td><td>Inter 500</td><td class="tnum">9.5–10px</td><td class="tnum">1.4</td><td class="tnum">+0.22–0.26em · caps</td><td>--muted-2 (large/deco rule)</td></tr>
+      </table></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">07·3</span><h3>Signature treatments</h3></div>
+      <div class="tt-demo">
+        <span class="kicker">Wordmark tracking · .44em, subline .42em</span>
+        <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px">
+          <span style="font-family:var(--display);font-weight:400;font-size:34px;letter-spacing:.44em;color:var(--ink)">AXIOM</span>
+          <span style="font-size:9px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);font-weight:500">Human Performance &amp; Longevity</span>
+        </div>
+      </div>
+      <div class="tt-demo">
+        <span class="kicker">Emphasis by color shift, never italics</span>
+        <p style="font-family:var(--display);font-weight:300;font-size:clamp(24px,3.4vw,40px);line-height:1.1;margin-top:16px">Performance you can measure.<br><em style="font-style:normal;color:var(--muted)">Longevity you can keep.</em></p>
+      </div>
+      <div class="tt-demo">
+        <span class="kicker">Tabular numerals in all data</span>
+        <div style="display:flex;gap:44px;flex-wrap:wrap;margin-top:18px" class="tnum">
+          <span style="font-family:var(--display);font-size:21px">≥ 98.0%</span>
+          <span style="font-family:var(--display);font-size:21px">Rp 1.600.000</span>
+          <span style="font-family:var(--display);font-size:21px">660 + 850 nm</span>
+          <span style="font-family:var(--display);font-size:21px">1419.5 Da</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">07·4</span><h3>Rules</h3></div>
+      <div class="two-col">
+        <div>
+          <span class="kicker" style="color:var(--accent)">Do</span>
+          <ul class="prose" style="margin-top:14px;list-style:none;display:flex;flex-direction:column;gap:10px">
+            <li>— Headlines in Jost 300, sentence case, tight leading.</li>
+            <li>— Micro-labels uppercase, wide-tracked Inter 500 — the brand's most-used detail.</li>
+            <li>— Load only the cast weights: Jost 300/400/500, Inter 300–600.</li>
+            <li>— Tabular numerals for every price, spec and table.</li>
+          </ul>
+        </div>
+        <div>
+          <span class="kicker" style="color:var(--err)">Don't</span>
+          <ul class="prose" style="margin-top:14px;list-style:none;display:flex;flex-direction:column;gap:10px">
+            <li>— Never set headlines bold or in Inter; never set body in Jost.</li>
+            <li>— Never use italics for emphasis — shift color to --muted instead.</li>
+            <li>— Never letter-space body copy; tracking belongs to labels and the wordmark.</li>
+            <li>— Never introduce a third family, including for code or data.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 08 · LAYOUT ===== -->
+<section class="section" id="layout">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">08 / Layout</div><span class="kicker">Grid &amp; Space</span></div>
+      <div>
+        <h2>Airy by rule,<br><em>divided by hairlines.</em></h2>
+        <p>A 1280 px container, generous vertical rhythm, and thin rules as the core texture. This very page is set on the system it documents.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">08·1</span><h3>Container &amp; grid</h3></div>
+      <div class="grid-demo">
+        <div class="grid-cols" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+      </div>
+      <p class="mock-cap"><b>--maxw 1280px</b> centered container · <b>--pad 34px</b> gutters · 12 logical columns, 16–40 px gaps. Section headers split 220px / 1fr; content splits collapse to one column under 760–860 px.</p>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">08·2</span><h3>Spacing scale</h3></div>
+      <div class="space-bars">
+        <div class="space-bar"><span class="k">Hairline gap</span><div class="b" style="width:8px"></div><span class="v tnum">8 px</span></div>
+        <div class="space-bar"><span class="k">Inline gaps</span><div class="b" style="width:16px"></div><span class="v tnum">16 px</span></div>
+        <div class="space-bar"><span class="k">Component padding</span><div class="b" style="width:26px"></div><span class="v tnum">24–26 px</span></div>
+        <div class="space-bar"><span class="k">Gutter</span><div class="b" style="width:34px"></div><span class="v tnum">34 px</span></div>
+        <div class="space-bar"><span class="k">Block spacing</span><div class="b" style="width:64px"></div><span class="v tnum">64 px</span></div>
+        <div class="space-bar"><span class="k">Section rhythm</span><div class="b" style="width:110px"></div><span class="v tnum">110 px</span></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">08·3</span><h3>Section header anatomy</h3><span class="note">Self-demonstrating</span></div>
+      <div style="border:1px dashed var(--accent-line);padding:34px">
+        <div class="sec-head" style="margin-bottom:0">
+          <div class="lead-col"><div class="no">NN / Index</div><span class="kicker">Kicker Label</span></div>
+          <div>
+            <h2>Jost 300 headline,<br><em>muted turn.</em></h2>
+            <p>Inter 300 lead at 15 px, max-width 560 px, muted. The left column holds the bronze index number and wide-tracked kicker; the pattern collapses to one column under 760 px.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">08·4</span><h3>Hairlines &amp; meta strips</h3></div>
+      <div class="two-col">
+        <div>
+          <p class="prose">Every major block is separated by a <b>--line</b> hairline. Vertical soft rules (<b>--line-soft</b>) divide stat cells; stronger <b>--line-2</b> outlines inputs and buttons. Hairlines are texture, not decoration — do not omit them, and never thicken them.</p>
+        </div>
+        <div>
+          <div class="hero-meta" style="margin-top:0"><div class="row" style="border-top:1px solid var(--line)">
+            <div class="m"><div class="k">Focus</div><div class="v">Longevity</div></div>
+            <div class="m"><div class="k">Peptide purity</div><div class="v tnum">≥ 98%</div></div>
+            <div class="m"><div class="k">Pillars</div><div class="v tnum">05</div></div>
+          </div></div>
+          <p class="mock-cap">The meta strip: uppercase key at 10 px --muted-2, Jost value at 19 px --ink.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">08·5</span><h3>Breakpoints</h3></div>
+      <div class="tbl-scroll"><table class="spec">
+        <tr><th>Width</th><th>Change</th></tr>
+        <tr><td class="tnum">≤ 1100 px</td><td>TOC rail hides; nav gains the jump select.</td></tr>
+        <tr><td class="tnum">≤ 1020 px</td><td>Pillar grid 5 → 2 columns.</td></tr>
+        <tr><td class="tnum">≤ 860 px</td><td>Two-column content stacks; example grids stack.</td></tr>
+        <tr><td class="tnum">≤ 760 px</td><td>Section header collapses to one column.</td></tr>
+        <tr><td class="tnum">≤ 680 px</td><td>Scene scrim rotates vertical; padding tightens.</td></tr>
+        <tr><td class="tnum">≤ 560 px</td><td>Pillars and steps go single column.</td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 09 · IMAGERY ===== -->
+<section class="section" id="imagery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">09 / Imagery</div><span class="kicker">Icons · Texture · Photo</span></div>
+      <div>
+        <h2>Lamplight on bronze,<br><em>never neon.</em></h2>
+        <p>Monoline Phosphor icons, the bronze particle field as the signature texture, and photography lit warm with deep shadow.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">09·1</span><h3>Iconography</h3><span class="note">Phosphor · regular weight</span></div>
+      <div class="icon-row">
+        <div class="icon-cell"><i class="ph ph-flask"></i><span>flask</span></div>
+        <div class="icon-cell"><i class="ph ph-sun"></i><span>sun</span></div>
+        <div class="icon-cell"><i class="ph ph-drop-half"></i><span>drop-half</span></div>
+        <div class="icon-cell"><i class="ph ph-infinity"></i><span>infinity</span></div>
+        <div class="icon-cell"><i class="ph ph-t-shirt"></i><span>t-shirt</span></div>
+        <div class="icon-cell"><i class="ph ph-atom"></i><span>atom</span></div>
+        <div class="icon-cell"><i class="ph ph-snowflake"></i><span>snowflake</span></div>
+        <div class="icon-cell"><i class="ph ph-timer"></i><span>timer</span></div>
+        <div class="icon-cell"><i class="ph ph-arrow-right"></i><span>arrow</span></div>
+      </div>
+      <p class="mock-cap"><b>One family, one weight.</b> Phosphor regular (thin allowed at ≥ 32 px), colored --accent-bright or --ink. Fill weight only inside solid buttons. Never mix icon sets; never use emoji as icons.</p>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">09·2</span><h3>Signature texture · the particle field</h3></div>
+      <div class="two-col">
+        <div>
+          <p class="prose">The brand's hero texture is an <b>additive-blended bronze particle field</b> — points advected by curl-like noise, drifting upward as a "longevity current", colored <b>#7C4C24 → #E7B173</b> by depth, gently reactive to the cursor. It runs behind hero content only, always behind a scrim.</p>
+          <p class="prose">Under <b>prefers-reduced-motion</b>, on coarse pointers, and in print/email, the field is replaced by the static fallback: layered bronze radial gradients on canvas with ≤ 4% grain. The cover of this document uses exactly that pairing.</p>
+        </div>
+        <div>
+          <div class="static-field" style="position:relative;height:230px;border:1px solid var(--line)"><span style="position:absolute;left:16px;bottom:14px;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:500">Static fallback spec</span></div>
+          <p class="mock-cap"><b>Fallback.</b> radial-gradient 60% 50% at 72% 40% rgba(200,138,78,.22) + 40% 36% at 60% 70% rgba(124,76,36,.28) on --bg.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">09·3</span><h3>Photography</h3></div>
+      <div class="frame-grid">
+        <div class="frame do"><div class="ph"><img src="assets/products/therapy-mask.webp" alt="Red light therapy mask, warm-lit product photography" loading="lazy" /></div><div class="cap"><i class="ph-bold ph-check"></i>Do · Clinical product</div><div class="desc">Clean product on deep neutral ground, warm key light, honest detail. Specs visible, nothing staged.</div></div>
+        <div class="frame do"><div class="ph"><img src="assets/products/leg-compression-lifestyle.webp" alt="Recovery scene with leg compression system in warm light" loading="lazy" /></div><div class="cap"><i class="ph-bold ph-check"></i>Do · Warm recovery scene</div><div class="desc">Lived-in recovery moments — bronze/amber light, deep shadow, calm posture. The long game, not the max lift.</div></div>
+        <div class="frame dont"><div class="ph"><div class="dont-art" style="background:linear-gradient(135deg,#0af,#f0f,#0f6);color:#fff"><span style="font-size:30px;font-weight:600;font-family:Arial Black,system-ui;transform:rotate(-6deg)">100% GAINS!!</span></div></div><div class="cap"><i class="ph-bold ph-x"></i>Don't · Neon supplement</div><div class="desc">No neon gradients, no shouting overlays, no cold clinical blue, no stocky gym clichés or hype claims.</div></div>
+      </div>
+      <p class="mock-cap" style="margin-top:18px"><b>Art direction.</b> Subjects: macro lab detail (vials, lyophilate, CoA paper, HPLC traces), warm-lit recovery scenes, neutral apparel on warm seamless. Grade warm; shadows deep but readable; grain subtle (≤ 4% opacity). Any text over imagery sits on the sanctioned scrim gradient.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10 · MOTION ===== -->
+<section class="section" id="motion">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">10 / Motion</div><span class="kicker">Interaction</span></div>
+      <div>
+        <h2>Engineered and calm —<br><em>precision, not carnival.</em></h2>
+        <p>Motion is slow, expo-out and unhurried. Nothing flashes, nothing bounces hard, and every animated element ships a static equivalent under reduced motion.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">10·1</span><h3>Easing &amp; durations</h3></div>
+      <div class="two-col">
+        <div>
+          <svg class="ease-svg" viewBox="0 0 200 130" aria-label="Easing curve cubic-bezier .16 1 .3 1">
+            <line x1="20" y1="110" x2="185" y2="110" stroke="rgba(242,237,229,.12)"/>
+            <line x1="20" y1="110" x2="20" y2="10" stroke="rgba(242,237,229,.12)"/>
+            <path d="M20,110 C46.4,-10 69.5,10 185,10" fill="none" stroke="#C88A4E" stroke-width="2"/>
+            <path d="M20,110 L185,10" fill="none" stroke="rgba(242,237,229,.22)" stroke-dasharray="3 4"/>
+            <text x="24" y="24" fill="#9c9488" font-size="8" font-family="Inter,sans-serif" letter-spacing="1">cubic-bezier(.16, 1, .3, 1)</text>
+            <text x="120" y="102" fill="#6a635a" font-size="8" font-family="Inter,sans-serif" letter-spacing="1">linear (avoid)</text>
+          </svg>
+          <div class="tbl-scroll" style="margin-top:22px"><table class="spec">
+            <tr><th>Token</th><th>Value</th><th>Use</th></tr>
+            <tr><td>Ease · signature</td><td class="tnum">cubic-bezier(.16, 1, .3, 1)</td><td>Reveals, transforms, nav</td></tr>
+            <tr><td>Ease · draw</td><td class="tnum">cubic-bezier(.65, 0, .35, 1)</td><td>Hairline draw-ins</td></tr>
+            <tr><td>Duration · micro</td><td class="tnum">180–240 ms</td><td>Hovers, color shifts</td></tr>
+            <tr><td>Duration · standard</td><td class="tnum">700 ms</td><td>Reveal rise + fade</td></tr>
+            <tr><td>Duration · draw</td><td class="tnum">950 ms</td><td>Rules, progress</td></tr>
+            <tr><td>Stagger step</td><td class="tnum">65 ms</td><td>Grid children</td></tr>
+          </table></div>
+        </div>
+        <div class="demo-stage" id="easeDemo">
+          <button class="replay" data-demo="easeDemo"><i class="ph ph-arrow-counter-clockwise"></i>Replay</button>
+          <span class="kicker">Expo-out vs linear</span>
+          <div class="ease-track"><div class="demo-dot expo"></div></div>
+          <div class="ease-lab">Signature · .16, 1, .3, 1</div>
+          <div class="ease-track"><div class="demo-dot lin" style="background:var(--muted-2)"></div></div>
+          <div class="ease-lab">Linear · avoid for movement</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">10·2</span><h3>Reveal &amp; stagger</h3></div>
+      <div class="demo-stage" id="revealDemo">
+        <button class="replay" data-demo="revealDemo"><i class="ph ph-arrow-counter-clockwise"></i>Replay</button>
+        <span class="kicker">18 px rise · 700 ms · 65 ms stagger</span>
+        <div class="stagger in demo-stagger" style="display:flex;gap:1px;margin-top:24px;background:var(--line);border:1px solid var(--line)">
+          <div style="flex:1;background:var(--bg);padding:26px 20px"><div class="pillar-no">01</div><p style="font-size:12px;color:var(--muted);margin-top:10px">Elements fade and rise on entry.</p></div>
+          <div style="flex:1;background:var(--bg);padding:26px 20px"><div class="pillar-no">02</div><p style="font-size:12px;color:var(--muted);margin-top:10px">Children stagger at 65 ms.</p></div>
+          <div style="flex:1;background:var(--bg);padding:26px 20px"><div class="pillar-no">03</div><p style="font-size:12px;color:var(--muted);margin-top:10px">Once in, they stay — no re-trigger.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">10·3</span><h3>Cursor &amp; magnetic hover</h3><span class="note">Fine pointers only</span></div>
+      <div class="demo-stage" style="display:flex;gap:26px;flex-wrap:wrap;align-items:center">
+        <a class="btn magnet" href="#motion" onclick="return false">Magnetic button</a>
+        <a class="tlink magnet" href="#motion" onclick="return false">Magnetic link <span class="ar">→</span></a>
+        <p class="mock-cap" style="margin:0;max-width:340px"><b>Spec.</b> Lagging ring (16%/frame) + fast dot (35%/frame), difference blend; ring widens to 56 px over interactive targets. Magnetic pull strength 0.32, released with the signature ease. Hidden on coarse pointers and under reduced motion.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">10·4</span><h3>Principles &amp; reduced motion</h3></div>
+      <div class="comp-card">
+        <div class="mk2">Mandate</div>
+        <p class="prose" style="margin-top:16px">Motion communicates <b>engineered calm</b>: one signature ease, low distances (≤ 18 px), no bounce, no flash. The scroll progress bar is bronze; the nav hides on scroll-down and returns on scroll-up. Every animated element — field, reveals, cursor, demos — has a static equivalent, and <b>prefers-reduced-motion: reduce</b> disables them all. This page honors that mandate itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11 · APPLICATIONS ===== -->
+<section class="section" id="applications">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">11 / Applications</div><span class="kicker">In Use</span></div>
+      <div>
+        <h2>The standard,<br><em>applied.</em></h2>
+        <p>The identity across its real surfaces — catalogue, documents, packaging, print, email, social and apparel. Every mockup here is built from the tokens in §13.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">11·1</span><h3>Product card &amp; Certificate of Analysis</h3></div>
+      <div class="app-grid">
+        <div>
+          <div class="pcard">
+            <div class="pcard-media"><img src="assets/products/therapy-mask.webp" alt="AXIOM Red Light Therapy Mask product photo" loading="lazy" /></div>
+            <div class="pcard-body">
+              <div class="pcard-top"><span class="pcard-tag">Red Light Therapy</span><span class="pcard-idx">07·03</span></div>
+              <h4 class="pcard-name">Red Light Therapy Mask</h4>
+              <span class="pcard-dose">Face · LED array · 660 + 850 nm</span>
+              <div class="pcard-go"><span class="pcard-price"><span class="cur">Rp</span>2.400.000</span><span class="go">View <i class="ph ph-arrow-right"></i></span></div>
+            </div>
+          </div>
+          <p class="mock-cap"><b>Catalogue card.</b> Hairline frame, bronze category tag, Jost name, tabular price. Image zooms 4% on hover with the signature ease.</p>
+        </div>
+        <div>
+          <div class="coa-doc">
+            <div class="hd">
+              <svg viewBox="0 0 100 100" fill="none"><g stroke="#070605" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+              <div class="t"><div class="a">AXIOM</div><div class="b">Human Performance &amp; Longevity</div></div>
+            </div>
+            <h4>Certificate of Analysis</h4>
+            <div class="sub2">Specimen · Issued per lot · <span class="pass" style="margin-left:6px">Pass</span></div>
+            <div class="gridc">
+              <div class="cell"><div class="k">Compound</div><div class="v">BPC-157</div></div>
+              <div class="cell"><div class="k">Lot No.</div><div class="v">AX-2606-1157</div></div>
+              <div class="cell"><div class="k">Purity (HPLC)</div><div class="v acc">99.2%</div></div>
+              <div class="cell"><div class="k">Molecular Mass</div><div class="v">1419.5 Da</div></div>
+              <div class="cell"><div class="k">Method</div><div class="v">HPLC / MS</div></div>
+              <div class="cell"><div class="k">Appearance</div><div class="v">White lyophilate</div></div>
+            </div>
+            <div class="pbar"><div class="k"><span>Purity</span><span>99.2% of 100</span></div><div class="tr"><div class="fl"></div></div></div>
+            <div class="sig"><div><div class="ln">A. Wijaya</div><div class="st" style="margin-top:6px">Quality Control</div></div><div class="st">Issued 12 Jun 2026</div></div>
+            <div class="ft">Research Use Only · In-vitro laboratory use · Not for human consumption. A representative CoA accompanies every lot; figures shown are specimen values for illustration.</div>
+          </div>
+          <p class="mock-cap"><b>CoA document.</b> The print palette in action — paper ground, ink rules, bronze-deep accents, tabular data, RUO footer. This is the brand's most important document; it ships with every peptide lot.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">11·2</span><h3>Packaging · vial label</h3></div>
+      <div class="vial-wrap">
+        <div>
+          <div class="vial-label">
+            <div class="r1"><svg viewBox="0 0 520 150" fill="none"><g stroke="#F2EDE5" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,104 51,16 82,104"/><line x1="124" y1="16" x2="186" y2="104"/><line x1="186" y1="16" x2="124" y2="104"/><line x1="228" y1="16" x2="228" y2="104"/><circle cx="312" cy="60" r="44"/><polyline points="392,104 392,16 434,74 476,16 476,104"/></g></svg><span>Peptide Science</span></div>
+            <h5>BPC-157</h5>
+            <div class="dose">10 mg · Lyophilised powder</div>
+            <div class="gridl">
+              <div class="gc"><div class="k">Lot</div><div class="v">AX-2606-1157</div></div>
+              <div class="gc"><div class="k">Purity</div><div class="v">≥ 98%</div></div>
+              <div class="gc"><div class="k">Store</div><div class="v">−20 °C</div></div>
+            </div>
+            <div class="ruo">Research Use Only · In-vitro laboratory use · Not for human consumption</div>
+          </div>
+          <p class="mock-cap"><b>Flat label · 3:1.</b> Wordmark row over a bronze hairline, compound in Jost, micro spec grid, RUO micro-disclaimer. Tamper-evident seal covers the cap.</p>
+        </div>
+        <div>
+          <div class="vial-3d" role="img" aria-label="Vial mock with wrapped label">
+            <div class="band"><span class="wmv">AXIOM</span><span class="cn">BPC-157</span><span class="dv">10 mg · RUO</span></div>
+            <div class="shine"></div>
+          </div>
+          <p class="mock-cap"><b>On the vial.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">11·3</span><h3>Stationery · business card</h3><span class="note">85.6 × 54 mm</span></div>
+      <div class="bcard-row">
+        <div class="bcard front">
+          <div class="top">
+            <svg viewBox="0 0 100 100" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+            <span style="font-size:7px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted-2);font-weight:600">Jakarta · ID</span>
+          </div>
+          <div><div class="wmly">AXIOM</div><div class="sub3">Human Performance &amp; Longevity</div></div>
+        </div>
+        <div class="bcard back">
+          <div><div class="nm">Adi Nugraha</div><div class="rl">Research &amp; Quality</div></div>
+          <div class="ct"><b>hello@axiomperformance.example</b><br>+1 803 857 3396 · WhatsApp<br>Mon–Sat · 09:00–18:00 WIB · Jakarta</div>
+        </div>
+      </div>
+      <p class="mock-cap"><b>Front</b> dark: bronze symbol, wide-tracked wordmark. <b>Back</b> paper: ink text, micro-labels, no bronze small text (contrast rule §06·4).</p>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">11·4</span><h3>Email</h3><span class="note">600 px column</span></div>
+      <div class="email-mock">
+        <div class="eh"><svg viewBox="0 0 520 150" fill="none"><g stroke="#F2EDE5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,104 51,16 82,104"/><line x1="124" y1="16" x2="186" y2="104"/><line x1="186" y1="16" x2="124" y2="104"/><line x1="228" y1="16" x2="228" y2="104"/><circle cx="312" cy="60" r="44"/><polyline points="392,104 392,16 434,74 476,16 476,104"/></g></svg></div>
+        <div class="eb">
+          <div class="kick">Order Confirmed</div>
+          <h5>Your order is moving<br>to dispatch.</h5>
+          <p>Your AXIOM order is confirmed and moving to dispatch. Peptides ship cold-chain with their Certificate of Analysis; devices are insured and tracked.</p>
+          <div style="margin-top:26px"><span class="btn btn-solid" style="pointer-events:none">Track your order</span></div>
+        </div>
+        <div class="ef">Peptides are Research Use Only, for in-vitro laboratory research — not for human or animal consumption. Devices and apparel are consumer products. Prices in IDR.</div>
+      </div>
+      <p class="mock-cap"><b>Email.</b> Centered logo header, one kicker, one Jost headline, one action. Static field only — no animation in email. Disclaimer footer always present.</p>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">11·5</span><h3>Social</h3></div>
+      <div class="social-row">
+        <div class="soc sq static-field">
+          <div class="scrim2"></div>
+          <span class="wm2">AXIOM</span>
+          <span class="k2">Verification</span>
+          <h6>Every lot,<br><em>documented.</em></h6>
+        </div>
+        <div class="soc story static-field">
+          <div class="scrim2"></div>
+          <span class="wm2">AXIOM</span>
+          <span class="k2">The Long Run</span>
+          <h6>Built for decades,<br><em>not weeks.</em></h6>
+        </div>
+        <div style="max-width:280px">
+          <p class="mock-cap" style="margin-top:0"><b>Templates.</b> 1:1 and 9:16 on the static bronze field with a bottom scrim. Wordmark small at top-left, kicker + Jost headline low-left. Caption voice: proof-led (§04·5 example 10). Bio one-liner: "Research peptides (RUO, in-vitro), clinical red-light therapy, recovery &amp; apparel — one standard. Jakarta."</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">11·6</span><h3>Apparel</h3><span class="note">Placement spec</span></div>
+      <div class="apparel-row">
+        <div class="app-cell">
+          <svg viewBox="0 0 200 200" fill="none" role="img" aria-label="Tee placement">
+            <path d="M60 34 L84 22 Q100 34 116 22 L140 34 L166 62 L144 82 L144 178 L56 178 L56 82 L34 62 Z" fill="#141210" stroke="rgba(242,237,229,.22)"/>
+            <g stroke="#C88A4E" stroke-width="2.6" stroke-linecap="round"><polyline points="72,74 77.6,54.8 83.2,74"/><circle cx="90.4" cy="65.2" r="6.4"/></g>
+          </svg>
+          <div class="cap2"><b>Performance Tee</b><br>Left-chest symbol · 20 mm · bronze on ink</div>
+        </div>
+        <div class="app-cell">
+          <svg viewBox="0 0 200 200" fill="none" role="img" aria-label="Hoodie back placement">
+            <path d="M58 40 Q100 18 142 40 L168 70 L146 88 L146 182 L54 182 L54 88 L32 70 Z" fill="#1a1713" stroke="rgba(242,237,229,.22)"/>
+            <path d="M74 40 Q100 56 126 40" stroke="rgba(242,237,229,.22)" fill="none"/>
+            <text x="100" y="120" text-anchor="middle" font-family="Jost, sans-serif" font-size="13" letter-spacing="6" fill="#F2EDE5">AXIOM</text>
+          </svg>
+          <div class="cap2"><b>Training Hoodie</b><br>Back wordmark · 120 mm · ink on garment</div>
+        </div>
+        <div class="app-cell">
+          <svg viewBox="0 0 200 200" fill="none" role="img" aria-label="Cap placement">
+            <path d="M40 112 Q40 58 100 58 Q160 58 160 112 L160 120 L40 120 Z" fill="#141210" stroke="rgba(242,237,229,.22)"/>
+            <path d="M40 118 Q100 104 160 118 L172 132 Q100 118 28 132 Z" fill="#0f0d0b" stroke="rgba(242,237,229,.22)"/>
+            <g stroke="#C88A4E" stroke-width="2.4" stroke-linecap="round"><polyline points="88,102 93,84.8 98,102"/><circle cx="104.4" cy="94.4" r="5.8"/></g>
+          </svg>
+          <div class="cap2"><b>Logo Cap</b><br>Front symbol · 30 mm · tonal or bronze</div>
+        </div>
+      </div>
+      <p class="mock-cap"><b>Restraint rule.</b> Garments in warm neutrals (ink, bone, deep bronze). One mark per garment face. No slogans, no all-over prints, no off-palette colorways.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 12 · COMPLIANCE ===== -->
+<section class="section" id="compliance">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">12 / Compliance</div><span class="kicker">Legal Identity</span></div>
+      <div>
+        <h2>Restraint is<br><em>the credibility.</em></h2>
+        <p>The compliance voice is part of the identity, not an appendix. Research Use Only framing is stated plainly, set legibly, and never buried.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">12·1</span><h3>The RUO / in-vitro standard</h3></div>
+      <div class="comp-card">
+        <div class="mk2">Definitive · non-negotiable</div>
+        <p class="prose" style="margin-top:16px">Peptides listed by AXIOM are <b>Research Use Only</b>, intended exclusively for in-vitro laboratory and scientific research. They are not drugs, food, cosmetics, or supplements, and are not intended for human or veterinary consumption, diagnosis, or treatment. AXIOM provides no dosing, administration, cycling, or medical guidance. By purchasing, the buyer affirms they are a qualified researcher or institution.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">12·2</span><h3>Disclaimer library</h3><span class="note">Copy verbatim per surface</span></div>
+      <div class="disc-item"><div class="lab">A · Site footer · ~80 words</div><button class="cpy2" data-copy-target>Copy</button><p>Peptides — Research Use Only. Peptides listed on this site are intended exclusively for in-vitro laboratory research and development. They are not drugs, food, cosmetics, or supplements, and are not intended for human or animal consumption, diagnostic, or therapeutic use. By purchasing peptides, the buyer affirms they are a qualified researcher or institution and accepts full responsibility for safe, legal, and compliant handling. Therapy devices and apparel are consumer products. Prices are indicative, quoted in Indonesian Rupiah (IDR), and subject to change.</p></div>
+      <div class="disc-item"><div class="lab">B · Product page · ~30 words</div><button class="cpy2" data-copy-target>Copy</button><p>Research Use Only. Intended exclusively for in-vitro laboratory research — not for human or veterinary consumption, diagnosis, or treatment. No dosing or usage guidance is provided. Consult a licensed physician.</p></div>
+      <div class="disc-item"><div class="lab">C · Packaging micro · ≤15 words</div><button class="cpy2" data-copy-target>Copy</button><p>Research Use Only · In-vitro laboratory use · Not for human consumption.</p></div>
+      <div class="disc-item"><div class="lab">D · Email footer · ~25 words</div><button class="cpy2" data-copy-target>Copy</button><p>Peptides are Research Use Only, for in-vitro laboratory research — not for human or animal consumption. Devices and apparel are consumer products. Prices in IDR.</p></div>
+      <div class="disc-item"><div class="lab">E · Social bio</div><button class="cpy2" data-copy-target>Copy</button><p>Research peptides (RUO, in-vitro), clinical red-light therapy, recovery &amp; apparel — one standard. Jakarta.</p></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">12·3</span><h3>Acknowledgement gate</h3></div>
+      <div class="two-col">
+        <div style="border:1px solid var(--line-2);padding:40px;background:#0a0908">
+          <div style="width:44px;height:44px;border:1px solid var(--accent-line);display:grid;place-items:center;color:var(--accent-bright);font-size:20px"><i class="ph ph-flask"></i></div>
+          <h4 style="font-family:var(--display);font-weight:400;font-size:23px;margin-top:22px">Before you enter</h4>
+          <p style="font-size:13px;color:var(--muted);margin-top:14px;line-height:1.75;font-weight:300">AXIOM offers therapy devices, wellness and apparel alongside research peptides. Those peptides are sold strictly for in-vitro laboratory and research use — not for human or veterinary consumption. By entering you confirm that you are 18 or older and that, for any peptide purchase, you are a qualified researcher or institutional buyer who accepts the research-use and compliance terms. No medical, dosing, or usage guidance is provided.</p>
+          <div style="display:flex;gap:12px;margin-top:26px;flex-wrap:wrap"><span class="btn btn-solid" style="pointer-events:none">I Confirm — Enter</span><span class="btn" style="pointer-events:none;color:var(--muted)">Leave</span></div>
+        </div>
+        <div>
+          <span class="kicker">Packaging claim rules</span>
+          <ul class="prose" style="margin-top:16px;list-style:none;display:flex;flex-direction:column;gap:12px;font-size:13.5px">
+            <li>— A label <b>may</b> state compound name, lot number, HPLC purity, molecular mass, and storage temperature.</li>
+            <li>— A label <b>must</b> carry the RUO / in-vitro micro disclaimer and a tamper-evident seal.</li>
+            <li>— A label <b>may not</b> state or imply human dose, route, frequency, cycle, or therapeutic benefit.</li>
+            <li>— A label <b>may not</b> use "cure", "treatment", "anti-aging", "guaranteed", or any medical or superlative claim.</li>
+            <li>— Only the sanctioned palette and approved AXIOM mark may appear — no third-party or medical-authority endorsement.</li>
+          </ul>
+          <div style="margin-top:30px"><span class="kicker">Jurisdiction caution</span>
+          <p class="prose" style="margin-top:14px;font-size:13.5px">Several compounds are controlled or regulated in many jurisdictions. Legality of import, possession, and handling varies by country and region. Buyers are solely responsible for confirming and complying with the laws that apply to them before ordering. AXIOM makes no representation of legality in any territory.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 13 · TOKENS ===== -->
+<section class="section" id="tokens">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">13 / Tokens</div><span class="kicker">Handoff</span></div>
+      <div>
+        <h2>One source of truth,<br><em>named in code.</em></h2>
+        <p>Token names match the live site exactly, so guidelines and code never drift. Copy the CSS block or the JSON — both describe the same system.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">13·1</span><h3>brand.css</h3></div>
+      <div class="codeblk"><button class="cpy" data-copy-target>Copy</button><pre id="cssTokens">:root{
+  <span class="c">/* canvas + ink */</span>
+  <span class="k">--bg</span>:<span class="v">#070605</span>; <span class="k">--ink</span>:<span class="v">#F2EDE5</span>; <span class="k">--muted</span>:<span class="v">#9c9488</span>; <span class="k">--muted-2</span>:<span class="v">#6a635a</span>;
+  <span class="c">/* hairlines */</span>
+  <span class="k">--line</span>:<span class="v">rgba(242,237,229,.12)</span>; <span class="k">--line-2</span>:<span class="v">rgba(242,237,229,.22)</span>; <span class="k">--line-soft</span>:<span class="v">rgba(242,237,229,.06)</span>;
+  <span class="c">/* bronze / copper accent system */</span>
+  <span class="k">--accent</span>:<span class="v">#C88A4E</span>; <span class="k">--accent-bright</span>:<span class="v">#E7B173</span>; <span class="k">--accent-deep</span>:<span class="v">#7C4C24</span>;
+  <span class="k">--accent-soft</span>:<span class="v">rgba(200,138,78,.14)</span>; <span class="k">--accent-line</span>:<span class="v">rgba(200,138,78,.34)</span>;
+  <span class="k">--accent-grad</span>:<span class="v">linear-gradient(120deg,#E7B173 0%,#C88A4E 46%,#9A5F2C 100%)</span>;
+  <span class="c">/* type */</span>
+  <span class="k">--display</span>:<span class="v">"Jost","Century Gothic",system-ui,sans-serif</span>;
+  <span class="k">--sans</span>:<span class="v">"Inter",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif</span>;
+  <span class="k">--mono</span>:<span class="v">"Inter",system-ui,sans-serif</span>;
+  <span class="c">/* layout */</span>
+  <span class="k">--maxw</span>:<span class="v">1280px</span>; <span class="k">--pad</span>:<span class="v">34px</span>;
+  <span class="c">/* brand-book extensions · v1.0 */</span>
+  <span class="k">--paper</span>:<span class="v">#F2EDE5</span>; <span class="k">--paper-ink</span>:<span class="v">#070605</span>;
+  <span class="k">--ok</span>:<span class="v">#8FA37E</span>; <span class="k">--warn</span>:<span class="v">#C8A24E</span>; <span class="k">--err</span>:<span class="v">#B0553B</span>; <span class="k">--info</span>:<span class="v">#9C9488</span>;
+}</pre></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">13·2</span><h3>tokens.json</h3></div>
+      <div class="codeblk"><button class="cpy" data-copy-target>Copy</button><pre id="jsonTokens">{
+  <span class="k">"color"</span>: {
+    <span class="k">"bg"</span>: <span class="v">"#070605"</span>, <span class="k">"ink"</span>: <span class="v">"#F2EDE5"</span>, <span class="k">"muted"</span>: <span class="v">"#9C9488"</span>, <span class="k">"muted2"</span>: <span class="v">"#6A635A"</span>,
+    <span class="k">"accent"</span>: <span class="v">"#C88A4E"</span>, <span class="k">"accentBright"</span>: <span class="v">"#E7B173"</span>, <span class="k">"accentDeep"</span>: <span class="v">"#7C4C24"</span>,
+    <span class="k">"paper"</span>: <span class="v">"#F2EDE5"</span>, <span class="k">"paperInk"</span>: <span class="v">"#070605"</span>,
+    <span class="k">"ok"</span>: <span class="v">"#8FA37E"</span>, <span class="k">"warn"</span>: <span class="v">"#C8A24E"</span>, <span class="k">"err"</span>: <span class="v">"#B0553B"</span>, <span class="k">"info"</span>: <span class="v">"#9C9488"</span>,
+    <span class="k">"rampBronze"</span>: [<span class="v">"#F0E8DF","#EDE2D7","#E6D3C4","#DDBFA9","#D3A887","#C88A4E","#B37B46","#9C6C3D","#815932","#604326"</span>],
+    <span class="k">"rampNeutral"</span>: [<span class="v">"#EEE9E1","#E8E3DB","#DBD5CD","#C9C3BA","#B5AEA4","#9C9488","#8B8479","#7A746A","#655F58","#4B4742"</span>]
+  },
+  <span class="k">"type"</span>: {
+    <span class="k">"display"</span>: <span class="v">"Jost"</span>, <span class="k">"sans"</span>: <span class="v">"Inter"</span>,
+    <span class="k">"weights"</span>: { <span class="k">"display"</span>: [<span class="v">300,400,500</span>], <span class="k">"sans"</span>: [<span class="v">300,400,500,600</span>] },
+    <span class="k">"trackingWordmark"</span>: <span class="v">"0.44em"</span>, <span class="k">"trackingKicker"</span>: <span class="v">"0.34em"</span>, <span class="k">"trackingDisplay"</span>: <span class="v">"-0.01em"</span>
+  },
+  <span class="k">"space"</span>: { <span class="k">"scale"</span>: [<span class="v">8,16,24,34,64,110</span>], <span class="k">"maxw"</span>: <span class="v">1280</span>, <span class="k">"pad"</span>: <span class="v">34</span> },
+  <span class="k">"motion"</span>: {
+    <span class="k">"ease"</span>: <span class="v">"cubic-bezier(0.16,1,0.3,1)"</span>, <span class="k">"easeDraw"</span>: <span class="v">"cubic-bezier(0.65,0,0.35,1)"</span>,
+    <span class="k">"durMicroMs"</span>: <span class="v">220</span>, <span class="k">"durRevealMs"</span>: <span class="v">700</span>, <span class="k">"durDrawMs"</span>: <span class="v">950</span>, <span class="k">"staggerMs"</span>: <span class="v">65</span>
+  }
+}</pre></div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">13·3</span><h3>Asset index</h3></div>
+      <div class="tbl-scroll"><table class="spec">
+        <tr><th>Asset</th><th>Path</th><th>Use</th></tr>
+        <tr><td>Wordmark SVG · white strokes</td><td class="tnum">axiom/assets/axiom-logo.svg</td><td>Hero, print headers; recolor via stroke</td></tr>
+        <tr><td>Logo PNG · white</td><td class="tnum">axiom/assets/axiom-logo-white.png</td><td>Raster contexts, email</td></tr>
+        <tr><td>Wordmark PNG · white</td><td class="tnum">axiom/assets/axiom-wordmark-white.png</td><td>Raster contexts</td></tr>
+        <tr><td>Symbol / favicon SVG</td><td class="tnum">inline data URI (this document, index.html)</td><td>Favicon, avatars, small marks</td></tr>
+        <tr><td>OG image template</td><td class="tnum">axiom/og.svg</td><td>1200×630 link previews</td></tr>
+        <tr><td>Product photography</td><td class="tnum">axiom/assets/products/*.webp</td><td>Catalogue, art-direction reference</td></tr>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 14 · GOVERNANCE ===== -->
+<section class="section" id="governance">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="lead-col"><div class="no">14 / Governance</div><span class="kicker">Keeping the Standard</span></div>
+      <div>
+        <h2>Signed off,<br><em>or it doesn't ship.</em></h2>
+        <p>How work gets approved, how this document evolves, and where to go when in doubt.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal" style="margin-top:0">
+      <div class="sub-h"><span class="sn">14·1</span><h3>Approval workflow</h3></div>
+      <div class="steps">
+        <div class="step"><div class="n2">01</div><h4>Draft</h4><p>Writer produces copy against these guidelines and the lexicon.</p></div>
+        <div class="step"><div class="n2">02</div><h4>Brand review</h4><p>Brand owner checks voice, tone, and pillar accuracy.</p></div>
+        <div class="step"><div class="n2">03</div><h4>Compliance sign-off</h4><p>Required on any peptide-adjacent copy; verifies RUO/in-vitro framing and zero dosing or medical language.</p></div>
+        <div class="step"><div class="n2">04</div><h4>Publish</h4><p>Owner releases and logs the version; only signed-off copy ships.</p></div>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">14·2</span><h3>Versioning &amp; contact</h3></div>
+      <div class="two-col">
+        <p class="prose">This guide is versioned semantically (<b>v1.0</b>). Increment the minor version for additions and clarifications (v1.1), the major version for changes that alter voice, positioning, or the compliance standard (v2.0). The change and its approver are logged with each release.</p>
+        <p class="prose">Request logos, tokens, or copy templates — or route any question — to <b>hello@axiomperformance.example</b>. Sign-off matrix: brand owner approves identity and voice; compliance approves all peptide-adjacent surfaces; either may block release.</p>
+      </div>
+    </div>
+
+    <div class="sub reveal">
+      <div class="sub-h"><span class="sn">14·3</span><h3>When in doubt</h3></div>
+      <div class="comp-card" style="border-color:var(--line-2);background:none">
+        <p class="prose" style="font-family:var(--display);font-size:clamp(19px,2.4vw,26px);font-weight:300;color:var(--ink);line-height:1.5;max-width:none">Lead with proof, not promise.<br>If it touches a peptide, it is Research Use Only — and never dosing.<br>When unsure, say less and send it to compliance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /content -->
+
+<footer>
+  <div class="wrap">
+    <span class="kicker">Assumptions &amp; Ratified Gaps · v1.0</span>
+    <p class="foot-note" style="margin-top:18px">This edition extends the live identity where the site was silent, for owner ratification: <b>semantic state colors</b> (--ok, --warn, --err, --info — muted, warm, in-palette); the <b>light/print palette</b> (--paper, --paper-ink, bronze-deep for print accents); <b>50–900 ramps</b> for bronze and warm neutral; the <b>photography art direction</b> in §09; and formalised minimum sizes and clear space for the logo system. Personas, pitches and the disclaimer library were authored to the existing site voice. All other values are extracted verbatim from the live site.</p>
+    <div class="foot-bottom">
+      <span>© <span id="yr">2026</span> AXIOM — Human Performance &amp; Longevity</span>
+      <span>Brand Guidelines · v1.0 · One Standard</span>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /page -->
+
+<script>
+(function(){
+"use strict";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const coarse = matchMedia("(pointer: coarse)").matches;
+
+/* ---- Reveal (site-identical) ---- */
+document.querySelectorAll(".stagger").forEach(s=>[...s.children].forEach((c,i)=>c.style.setProperty("--i",i)));
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+/* ---- Scroll progress + nav hide ---- */
+const bar=document.getElementById("progress"),nav=document.getElementById("nav");
+let lastY=scrollY,ticking=false;
+function onScroll(){
+  if(ticking)return;ticking=true;
+  requestAnimationFrame(()=>{
+    const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;
+    if(bar)bar.style.width=(h>0?(y/h*100):0)+"%";
+    if(nav){
+      if(y>lastY&&y>240)nav.classList.add("nav-hidden");
+      else nav.classList.remove("nav-hidden");
+    }
+    lastY=y;ticking=false;
+  });
+}
+addEventListener("scroll",onScroll,{passive:true});onScroll();
+
+/* ---- TOC scrollspy ---- */
+const tocLinks=[...document.querySelectorAll("#toc a")];
+const secs=tocLinks.map(a=>document.querySelector(a.getAttribute("href"))).filter(Boolean);
+const spy=new IntersectionObserver(es=>{
+  es.forEach(en=>{
+    if(en.isIntersecting){
+      tocLinks.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+en.target.id));
+    }
+  });
+},{rootMargin:"-30% 0px -60% 0px"});
+secs.forEach(s=>spy.observe(s));
+
+/* ---- Jump select ---- */
+const jump=document.getElementById("jump");
+if(jump)jump.addEventListener("change",()=>{if(jump.value){location.hash=jump.value;jump.selectedIndex=0;}});
+
+/* ---- Custom cursor (fine pointers only) ---- */
+if(!coarse&&!reduce){
+  const ring=document.getElementById("cursorRing"),dot=document.getElementById("cursorDot");
+  if(ring&&dot){
+    let rx=innerWidth/2,ry=innerHeight/2,dx=rx,dy=ry,tx=rx,ty=ry,on=false;
+    const hoverSel="a,button,select,summary,.tlink,.chip,.swatch";
+    addEventListener("mousemove",e=>{
+      tx=e.clientX;ty=e.clientY;
+      if(!on){on=true;document.body.classList.add("cursor-on");}
+      const t=e.target.closest?e.target.closest(hoverSel):null;
+      ring.classList.toggle("hover",!!t);
+    });
+    addEventListener("mouseleave",()=>{on=false;document.body.classList.remove("cursor-on");});
+    (function tick(){
+      dx+=(tx-dx)*0.35;dy+=(ty-dy)*0.35;
+      rx+=(tx-rx)*0.16;ry+=(ty-ry)*0.16;
+      dot.style.transform="translate("+dx+"px,"+dy+"px)";
+      ring.style.transform="translate("+rx+"px,"+ry+"px)";
+      requestAnimationFrame(tick);
+    })();
+  }
+}
+
+/* ---- Magnetic hover (fine pointers only) ---- */
+if(!coarse&&!reduce){
+  const strength=0.32;
+  document.querySelectorAll(".magnet, .btn, .tlink").forEach(el=>{
+    el.addEventListener("mousemove",e=>{
+      const r=el.getBoundingClientRect();
+      const mx=e.clientX-(r.left+r.width/2),my=e.clientY-(r.top+r.height/2);
+      el.style.transform="translate("+(mx*strength)+"px,"+(my*strength)+"px)";
+    });
+    el.addEventListener("mouseleave",()=>{el.style.transform="";el.style.transition="transform .4s cubic-bezier(.16,1,.3,1)";setTimeout(()=>el.style.transition="",400);});
+  });
+}
+
+/* ---- Copy to clipboard: swatches + ramps ---- */
+function flash(el,cls){el.classList.add(cls);setTimeout(()=>el.classList.remove(cls),1400);}
+document.querySelectorAll("[data-hex]").forEach(b=>{
+  b.addEventListener("click",()=>{
+    const v=b.dataset.hex;
+    if(navigator.clipboard)navigator.clipboard.writeText(v).catch(()=>{});
+    if(b.classList.contains("swatch"))flash(b,"copied");
+    else{const s=b.querySelector("span");if(s){const t=s.textContent;s.textContent="✓";setTimeout(()=>s.textContent=t,900);}}
+  });
+});
+
+/* ---- Copy blocks (code + disclaimers + boilerplate) ---- */
+document.querySelectorAll("[data-copy-target]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const host=btn.closest(".codeblk, .disc-item");
+    const src=host?host.querySelector("pre, p"):null;
+    if(src&&navigator.clipboard)navigator.clipboard.writeText(src.textContent.trim()).catch(()=>{});
+    const t=btn.textContent;btn.textContent="Copied";btn.classList.add("done");
+    setTimeout(()=>{btn.textContent=t;btn.classList.remove("done");},1400);
+  });
+});
+
+/* ---- Live WCAG contrast table ---- */
+(function(){
+  function lum(hex){
+    const c=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16)/255)
+      .map(v=>v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4));
+    return 0.2126*c[0]+0.7152*c[1]+0.0722*c[2];
+  }
+  document.querySelectorAll("#contrastTable tr[data-fg]").forEach(row=>{
+    const l1=lum(row.dataset.fg),l2=lum(row.dataset.bg);
+    const hi=Math.max(l1,l2),lo=Math.min(l1,l2);
+    const r=(hi+0.05)/(lo+0.05);
+    row.querySelector(".ratio").textContent=r.toFixed(2)+" : 1";
+    const v=row.querySelector(".verdict");
+    if(r>=4.5)v.innerHTML='<span class="badge pass">AA</span>';
+    else if(r>=3)v.innerHTML='<span class="badge large">AA Large</span>';
+    else v.innerHTML='<span class="badge fail">Decorative</span>';
+  });
+})();
+
+/* ---- Demo replay buttons ---- */
+document.querySelectorAll(".replay").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const stage=document.getElementById(btn.dataset.demo);
+    if(!stage)return;
+    if(stage.id==="easeDemo"){
+      stage.classList.remove("play");void stage.offsetWidth;stage.classList.add("play");
+    }else{
+      const st=stage.querySelector(".demo-stagger");
+      if(st){st.classList.remove("in");void st.offsetWidth;st.classList.add("in");}
+    }
+  });
+});
+if(!reduce){const ed=document.getElementById("easeDemo");if(ed)setTimeout(()=>ed.classList.add("play"),900);}
+
+/* ---- Bronze particle field (canvas 2D, hero only) ---- */
+(function(){
+  const wrap=document.getElementById("sceneWrap"),cv=document.getElementById("scene");
+  if(!wrap||!cv)return;
+  if(reduce||coarse){cv.remove();return;} /* static fallback stays */
+  const ctx=cv.getContext("2d");
+  const DPR=Math.min(devicePixelRatio||1,1.5);
+  let W=0,H=0,parts=[],running=true,px=-1e4,py=-1e4;
+  const LOW=[124,76,36],HIGH=[231,177,115];
+  function resize(){
+    W=innerWidth;H=innerHeight;
+    cv.width=W*DPR;cv.height=H*DPR;
+    cv.style.width=W+"px";cv.style.height=H+"px";
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    const n=Math.min(W<680?160:340,340);
+    parts=[];
+    for(let i=0;i<n;i++)parts.push(spawn(true));
+  }
+  function spawn(anywhere){
+    return {
+      x:(0.34+Math.random()*0.66)*W + (anywhere?0:0),
+      y:anywhere?Math.random()*H:H+10,
+      z:Math.random(),                 /* depth 0..1 */
+      s:Math.random()*6.283,
+      sp:0.12+Math.random()*0.35      /* upward speed */
+    };
+  }
+  addEventListener("resize",resize);resize();
+  addEventListener("mousemove",e=>{px=e.clientX;py=e.clientY},{passive:true});
+  document.addEventListener("visibilitychange",()=>{running=!document.hidden;if(running)requestAnimationFrame(frame);});
+  let heroGone=false;
+  addEventListener("scroll",()=>{
+    const gone=scrollY>innerHeight*1.15;
+    if(gone!==heroGone){heroGone=gone;wrap.classList.toggle("off",gone);}
+  },{passive:true});
+  let t=0;
+  function frame(){
+    if(!running)return;
+    if(heroGone){requestAnimationFrame(frame);return;}
+    t+=0.008;
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation="lighter";
+    for(const p of parts){
+      /* layered-sine pseudo-curl drift + upward current */
+      p.x += Math.sin(p.y*0.006 + t*2 + p.s)*0.35 + Math.sin(p.y*0.0013 + t)*0.22;
+      p.y -= p.sp*(0.6+p.z);
+      /* mild pointer attraction */
+      const dx=px-p.x,dy=py-p.y,d2=dx*dx+dy*dy;
+      if(d2<32400){const d=Math.sqrt(d2)||1,f=(1-d/180)*0.5;p.x+=dx/d*f;p.y+=dy/d*f;}
+      if(p.y<-12){Object.assign(p,spawn(false));}
+      const g=0.55+0.45*Math.sin(t*2.4+p.s*3);
+      const m=p.z*g;
+      const r=LOW[0]+(HIGH[0]-LOW[0])*m, gg=LOW[1]+(HIGH[1]-LOW[1])*m, b=LOW[2]+(HIGH[2]-LOW[2])*m;
+      const size=0.7+p.z*1.9;
+      ctx.beginPath();
+      ctx.fillStyle="rgba("+(r|0)+","+(gg|0)+","+(b|0)+","+(0.14+0.5*m)+")";
+      ctx.arc(p.x,p.y,size,0,6.283);
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ---- Footer year ---- */
+const yr=document.getElementById("yr");if(yr)yr.textContent=new Date().getFullYear();
+})();
+</script>
+
+</body>
+</html>
