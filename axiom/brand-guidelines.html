@@ -148,9 +148,9 @@ nav.nav-hidden{transform:translateY(-100%)}
 .play .sting-demo .bl{animation:bladeIn .9s cubic-bezier(.16,1,.3,1) forwards}
 @keyframes bladeIn{from{opacity:0;transform:translate(var(--tx),var(--ty))}to{opacity:1;transform:none}}
 @keyframes stingHide{to{opacity:0;visibility:hidden}}
-.hm-img{opacity:0;animation:markIn .8s cubic-bezier(.16,1,.3,1) 1.5s forwards}
+.hm-img{opacity:0;animation:markIn .8s cubic-bezier(.16,1,.3,1) 1.8s forwards}
 @keyframes markIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.sting{display:none}.hm-img{opacity:1;animation:none}.sting-demo .bl{opacity:1!important;animation:none!important}}
+@media(prefers-reduced-motion:reduce){.hero-mark svg.sting{display:none!important}.hm-img{opacity:1;animation:none}.sting-demo .bl{opacity:1!important;animation:none!important}}
 
 /* ---------- Section scaffold ---------- */
 .content{position:relative;z-index:3;background:var(--bg);border-top:1px solid var(--line)}
@@ -220,6 +220,10 @@ table.spec td{padding:14px 16px 14px 0;border-bottom:1px solid var(--line);color
 table.spec td:first-child{color:var(--ink);font-weight:400}
 table.spec .tnum{color:var(--ink)}
 .tbl-scroll{overflow-x:auto}
+@media(max-width:560px){
+  .tbl-scroll{-webkit-mask-image:linear-gradient(90deg,#000 90%,transparent);mask-image:linear-gradient(90deg,#000 90%,transparent)}
+  table.spec th{width:auto!important;min-width:110px}
+}
 .tbl-scroll table{min-width:640px}
 
 /* ---------- Swatches ---------- */
@@ -858,7 +862,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
           <img src="assets/logo/axiom-logo-white.svg" alt="AXIOM — Human Performance" style="height:62px;width:auto" />
         </div>
       </div>
-      <p class="mock-cap"><b>The wordmark is drawn artwork, never typed.</b> Crossbar-less A, notched X, wide O ring, sharp M — use the supplied assets (axiom-wordmark-white.png, axiom-logo-white.png) exactly as delivered. The Jost wide-tracked "AXIOM" text style (§07·3) is reserved for UI labels and contexts where the artwork cannot be placed. Prefer lockup B in navigation, A at favicon/avatar sizes, D on documents and heroes.</p>
+      <p class="mock-cap"><b>The wordmark is drawn artwork, never typed.</b> Crossbar-less A, notched X, wide O ring, sharp M — use the supplied vector assets (assets/logo/axiom-wordmark-*.svg, axiom-logo-*.svg) exactly as delivered. The Jost wide-tracked "AXIOM" text style (§07·3) is reserved for UI labels and contexts where the artwork cannot be placed. Prefer lockup B in navigation, A at favicon/avatar sizes, D on documents and heroes.</p>
     </div>
 
     <div class="sub reveal">
@@ -1322,7 +1326,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
     </div>
 
     <div class="sub reveal">
-      <div class="sub-h"><span class="sn">10·5</span><h3>Logo motion · the sting</h3><span class="note">Brand opener · ~1.9 s total</span></div>
+      <div class="sub-h"><span class="sn">10·5</span><h3>Logo motion · the sting</h3><span class="note">Brand opener · ~2.6 s total</span></div>
       <div class="two-col">
         <div class="demo-stage" id="stingDemo" style="display:grid;place-items:center;min-height:240px">
           <button class="replay" data-demo="stingDemo"><svg class="pi"><use href="#i-arrow-counter-clockwise"/></svg>Replay</button>
@@ -1340,7 +1344,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
             <tr><td>Blade travel</td><td class="tnum">~15% of mark size, along each blade's diagonal</td></tr>
             <tr><td>Blade duration</td><td class="tnum">900 ms · cubic-bezier(.16, 1, .3, 1)</td></tr>
             <tr><td>Stagger</td><td class="tnum">80 ms · order TL → TR → BL → BR</td></tr>
-            <tr><td>Hold, then hand-off</td><td class="tnum">≥ 400 ms hold; crossfade to wordmark 300–800 ms</td></tr>
+            <tr><td>Hold, then hand-off</td><td class="tnum">≥ 400 ms hold; sting exits fully before the wordmark enters</td></tr>
           </table></div>
           <p class="mock-cap"><b>Usage.</b> Page load-in (this document's cover), video openers, social stings. Play once — never loop. Under reduced motion the mark appears static, complete.</p>
         </div>
@@ -1538,11 +1542,11 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
       <div class="disc-item"><div class="lab">B · Product page · ~25 words</div><button class="cpy2" data-copy-target>Copy</button><p>Research Use Only. Intended exclusively for in-vitro laboratory research — not for human or veterinary consumption, diagnosis, or treatment. No dosing or usage guidance is provided.</p></div>
       <div class="disc-item"><div class="lab">C · Packaging micro · ≤15 words</div><button class="cpy2" data-copy-target>Copy</button><p>Research Use Only · In-vitro laboratory use · Not for human consumption.</p></div>
       <div class="disc-item"><div class="lab">D · Email footer · ~25 words</div><button class="cpy2" data-copy-target>Copy</button><p>Peptides are Research Use Only, for in-vitro laboratory research — not for human or animal consumption. Devices and apparel are consumer products. Prices in IDR.</p></div>
+      <div class="disc-item"><div class="lab">E · Social bio</div><button class="cpy2" data-copy-target>Copy</button><p>Research peptides (RUO, in-vitro), clinical red-light therapy, recovery &amp; apparel — one standard. Jakarta.</p></div>
       <div class="disc-item"><div class="lab">F · Site footer · Bahasa Indonesia</div><button class="cpy2" data-copy-target>Copy</button><p>Peptida — Research Use Only. Peptida yang tercantum di situs ini ditujukan khusus untuk penelitian dan pengembangan laboratorium in-vitro. Peptida ini bukan obat, pangan, kosmetik, maupun suplemen, dan tidak ditujukan untuk konsumsi, diagnosis, maupun terapi pada manusia atau hewan. Dengan membeli peptida, pembeli menyatakan dirinya sebagai peneliti atau institusi yang kompeten dan menerima tanggung jawab penuh atas penanganan yang aman, legal, dan sesuai ketentuan. Perangkat terapi dan apparel adalah produk konsumen. Harga bersifat indikatif, dinyatakan dalam Rupiah (IDR), dan dapat berubah sewaktu-waktu.</p></div>
       <div class="disc-item"><div class="lab">G · Product page · Bahasa Indonesia</div><button class="cpy2" data-copy-target>Copy</button><p>Research Use Only. Ditujukan khusus untuk penelitian laboratorium in-vitro — bukan untuk konsumsi, diagnosis, maupun pengobatan pada manusia atau hewan. Tidak ada panduan dosis maupun penggunaan yang diberikan.</p></div>
       <div class="disc-item"><div class="lab">H · Packaging micro · Bahasa Indonesia</div><button class="cpy2" data-copy-target>Copy</button><p>Research Use Only · Penggunaan laboratorium in-vitro · Bukan untuk konsumsi manusia</p></div>
-      <div class="disc-item"><div class="lab">E · Social bio</div><button class="cpy2" data-copy-target>Copy</button><p>Research peptides (RUO, in-vitro), clinical red-light therapy, recovery &amp; apparel — one standard. Jakarta.</p></div>
-    </div>
+          </div>
 
     <div class="sub reveal">
       <div class="sub-h"><span class="sn">12·3</span><h3>Acknowledgement gate</h3></div>
