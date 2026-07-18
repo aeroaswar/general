@@ -477,6 +477,55 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
 .foot-note b{color:var(--muted);font-weight:500}
 .foot-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
 
+
+/* ---------- Paper edition (?paper=1 / body.paper) ---------- */
+body.paper{
+  --bg:#F2EDE5; --ink:#070605; --muted:#4b463e; --muted-2:#8a8378;
+  --line:rgba(7,6,5,.16); --line-2:rgba(7,6,5,.3); --line-soft:rgba(7,6,5,.08);
+  --accent:#7C4C24; --accent-bright:#9A5F2C; --accent-deep:#C88A4E;
+  --accent-soft:rgba(124,76,36,.09); --accent-line:rgba(124,76,36,.36);
+}
+body.paper #sceneWrap,body.paper .scroll-hint{display:none}
+body.paper nav{background:#070605}
+body.paper nav .wmsub{color:#9c9488}
+body.paper .nav-tag{color:#9c9488}
+body.paper .hm-img{filter:invert(.93)}
+body.paper .hero h1 em{color:#8a8378}
+/* specimens keep their true canvas */
+body.paper .lockup:not(.on-paper),body.paper .icon-cell,body.paper .misuse,body.paper .clearspace,body.paper .tt-demo.dark-keep{background:#070605}
+body.paper .lockup:not(.on-paper) .tag{color:#6a635a}
+body.paper .misuse .cap{color:#B0553B}
+body.paper .icon-cell span{color:#9c9488}
+body.paper .icon-cell .pi{color:#E7B173}
+body.paper .swatch{background:#fbf8f3}
+body.paper .swatch .nm{color:#070605}
+body.paper .soc .k2{color:#E7B173}
+body.paper .soc h6{color:#F2EDE5}
+body.paper .soc h6 em{color:#9c9488}
+body.paper .bcard.front{background:#070605;border-color:rgba(7,6,5,.3)}
+body.paper .bcard.back{border:1px solid rgba(7,6,5,.2)}
+body.paper .coa-doc{box-shadow:0 10px 34px rgba(7,6,5,.18);border:1px solid rgba(7,6,5,.12)}
+body.paper .vial-label{background:#0d0b09}
+body.paper .email-mock{background:#0a0908}
+body.paper .email-mock .eb h5{color:#F2EDE5}
+body.paper .email-mock .eb p,body.paper .email-mock .ef{color:#9c9488}
+body.paper .email-mock .eb .kick{color:#C88A4E}
+body.paper .app-cell{background:#F2EDE5}
+body.paper .demo-stage,body.paper #stingDemo{background:#070605}
+body.paper .demo-stage .kicker,body.paper .ease-lab{color:#9c9488}
+body.paper .demo-stage .replay{color:#9c9488;border-color:rgba(242,237,229,.25)}
+body.paper .sting-demo{fill:#C88A4E}
+body.paper .prop-bar>div:first-child{color:#9c9488}
+body.paper .hero-meta .m .k{color:#8a8378}
+body.paper .static-field{background:
+  radial-gradient(60% 50% at 72% 40%, rgba(200,138,78,.22), transparent 70%),
+  radial-gradient(40% 36% at 60% 70%, rgba(124,76,36,.28), transparent 70%),
+  #070605}
+@media print{
+  body.paper .section{break-before:page}
+  body.paper nav{position:static}
+}
+
 /* ---------- Print / PDF edition ---------- */
 @media print{
   .reveal,.stagger>*{opacity:1!important;transform:none!important;transition:none!important}
@@ -1707,6 +1756,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
 (function(){
 "use strict";
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+if(location.search.indexOf("paper")>-1)document.body.classList.add("paper");
 const coarse = matchMedia("(pointer: coarse)").matches;
 
 /* ---- Reveal (site-identical) ---- */
