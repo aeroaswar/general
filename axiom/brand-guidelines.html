@@ -7,7 +7,7 @@
 <meta name="description" content="AXIOM — Human Performance & Longevity. Brand guidelines and identity system: logo, color, typography, layout, motion, voice, applications, compliance and design tokens." />
 <meta name="robots" content="noindex" />
 <meta name="theme-color" content="#070605" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070605'/%3E%3Cg stroke='%23C88A4E' stroke-width='6' stroke-linecap='round' fill='none'%3E%3Cpolyline points='24,74 38,26 52,74'/%3E%3Ccircle cx='70' cy='52' r='16'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 100'%3E%3Crect width='120' height='100' fill='%23070605'/%3E%3Cdefs%3E%3Cmask id='m'%3E%3Crect width='120' height='100' fill='white'/%3E%3Cpolygon points='60,41.5 70.5,50 60,58.5 49.5,50'/%3E%3C/mask%3E%3C/defs%3E%3Cg fill='%23C88A4E' mask='url(%23m)'%3E%3Cpolygon points='12,2 39,2 108,98 81,98'/%3E%3Cpolygon points='81,2 108,2 39,98 12,98'/%3E%3C/g%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -57,6 +57,7 @@ img{max-width:100%;display:block}
 .tnum{font-variant-numeric:tabular-nums}
 .pi{width:1em;height:1em;display:inline-block;vertical-align:-.12em;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .pi-b{stroke-width:2.4}
+.xicon{fill:currentColor;display:inline-block}
 .kicker{font-family:var(--sans);font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;font-weight:500;color:var(--muted)}
 .rule{height:1px;background:var(--line);width:100%}
 
@@ -457,6 +458,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
 <body>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-axiom-x" viewBox="0 0 120 100"><defs><mask id="axmN"><rect width="120" height="100" fill="#fff"/><polygon points="60,41.5 70.5,50 60,58.5 49.5,50" fill="#000"/></mask></defs><g stroke="none" mask="url(#axmN)"><polygon points="12,2 39,2 108,98 81,98"/><polygon points="81,2 108,2 39,98 12,98"/></g></symbol>
   <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9.5 3h5M10 3.2v5.1l-5.2 9.4a2 2 0 0 0 1.8 2.9h10.8a2 2 0 0 0 1.8-2.9L14 8.3V3.2"/><path d="M7.6 15h8.8"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M19 5l-1.4 1.4M6.4 17.6 5 19"/></symbol>
   <symbol id="i-drop-half" viewBox="0 0 24 24"><path d="M12 3.2c3.4 4 5.8 6.9 5.8 9.8a5.8 5.8 0 0 1-11.6 0c0-2.9 2.4-5.8 5.8-9.8z"/><path d="M12 7.4v11.4"/></symbol>
@@ -480,8 +482,8 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
 <nav id="nav">
   <div class="wrap nav-in">
     <a href="#cover" class="brand" aria-label="AXIOM — Brand Guidelines">
-      <svg viewBox="0 0 100 100" fill="none" aria-hidden="true"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
-      <span class="bw"><img src="assets/axiom-wordmark-white.png" alt="AXIOM" style="height:15px;width:auto;display:block" /><span class="wmsub">Brand Guidelines</span></span>
+      <svg class="xicon" viewBox="0 0 120 100" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg>
+      <span class="bw"><img src="assets/axiom-wordmark-white-flat.png" alt="AXIOM" style="height:15px;width:auto;display:block" /><span class="wmsub">Brand Guidelines</span></span>
     </a>
     <span class="nav-tag">Identity System · <b>v1.0</b> · Jul 2026</span>
     <div class="sel nav-jump">
@@ -528,7 +530,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
 <header class="hero" id="cover">
   <div class="wrap hero-in">
     <div class="hero-mark">
-      <img src="assets/axiom-logo-white.png" alt="AXIOM — Human Performance" />
+      <img src="assets/axiom-logo-white-flat.png" alt="AXIOM — Human Performance" />
     </div>
     <h1>Brand guidelines,<br><em>held to one standard.</em></h1>
     <p class="lead">The complete identity system for AXIOM — Human Performance &amp; Longevity. Everything a designer, writer or developer needs to produce on-brand work on day one: foundation, voice, logo, color, type, layout, motion, applications and tokens.</p>
@@ -767,8 +769,8 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
     <div class="sec-head reveal">
       <div class="lead-col"><div class="no">05 / Logo</div><span class="kicker">The Mark</span></div>
       <div>
-        <h2>Summit and cycle,<br><em>drawn in one stroke.</em></h2>
-        <p>The symbol is an abstract "A" peak beside an orbit — performance and longevity in a single monoline gesture. Round-capped strokes, bronze on the near-black canvas.</p>
+        <h2>Four forces,<br><em>one point of tension.</em></h2>
+        <p>The icon is the wordmark’s own X, cut to stand alone — four solid wedges driving toward a still diamond of negative space. Sharp terminals, no strokes, bronze on the near-black canvas.</p>
       </div>
     </div>
 
@@ -776,22 +778,22 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
       <div class="sub-h"><span class="sn">05·1</span><h3>Lockups</h3></div>
       <div class="lockup-grid">
         <div class="lockup"><span class="tag">A · Symbol only</span>
-          <svg viewBox="0 0 100 100" width="84" height="84" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+          <svg class="xicon" viewBox="0 0 120 100" width="84" height="70" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg>
         </div>
         <div class="lockup"><span class="tag">B · Horizontal · symbol + wordmark</span>
           <div style="display:flex;align-items:center;gap:18px">
-            <svg viewBox="0 0 100 100" width="52" height="52" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
-            <img src="assets/axiom-wordmark-white.png" alt="AXIOM" style="height:24px;width:auto" />
+            <svg class="xicon" viewBox="0 0 120 100" width="52" height="43" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg>
+            <img src="assets/axiom-wordmark-white-flat.png" alt="AXIOM" style="height:24px;width:auto" />
           </div>
         </div>
         <div class="lockup"><span class="tag">C · Stacked</span>
           <div style="display:flex;flex-direction:column;align-items:center;gap:16px;width:100%">
-            <svg viewBox="0 0 100 100" width="56" height="56" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
-            <img src="assets/axiom-wordmark-white.png" alt="AXIOM" style="height:19px;width:auto" />
+            <svg class="xicon" viewBox="0 0 120 100" width="56" height="46" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg>
+            <img src="assets/axiom-wordmark-white-flat.png" alt="AXIOM" style="height:19px;width:auto" />
           </div>
         </div>
         <div class="lockup"><span class="tag">D · Wordmark + subline</span>
-          <img src="assets/axiom-logo-white.png" alt="AXIOM — Human Performance" style="height:62px;width:auto" />
+          <img src="assets/axiom-logo-white-flat.png" alt="AXIOM — Human Performance" style="height:62px;width:auto" />
         </div>
       </div>
       <p class="mock-cap"><b>The wordmark is drawn artwork, never typed.</b> Crossbar-less A, notched X, wide O ring, sharp M — use the supplied assets (axiom-wordmark-white.png, axiom-logo-white.png) exactly as delivered. The Jost wide-tracked "AXIOM" text style (§07·3) is reserved for UI labels and contexts where the artwork cannot be placed. Prefer lockup B in navigation, A at favicon/avatar sizes, D on documents and heroes.</p>
@@ -804,11 +806,11 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
           <div class="cs-box">
             <span class="cs-lab" style="top:-16px;left:50%;transform:translateX(-50%)">1×</span>
             <span class="cs-lab" style="left:-26px;top:50%;transform:translateY(-50%) rotate(-90deg)">1×</span>
-            <svg viewBox="0 0 100 100" width="92" height="92" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+            <svg class="xicon" viewBox="0 0 120 100" width="92" height="76" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg>
           </div>
         </div>
         <div>
-          <p class="prose">Minimum clear space on all sides equals <b>1× the orbit ring's diameter</b>. Nothing enters this zone — no type, imagery, or edges.</p>
+          <p class="prose">Minimum clear space on all sides equals <b>1× the width of one arm</b>. Nothing enters this zone — no type, imagery, or edges.</p>
           <div class="tbl-scroll" style="margin-top:24px"><table class="spec">
             <tr><th>Lockup</th><th>Min digital</th><th>Min print</th></tr>
             <tr><td>A · Symbol</td><td class="tnum">16 px</td><td class="tnum">5 mm</td></tr>
@@ -824,16 +826,16 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
       <div class="sub-h"><span class="sn">05·3</span><h3>Color versions</h3></div>
       <div class="lockup-grid">
         <div class="lockup"><span class="tag">Bronze on canvas · primary</span>
-          <svg viewBox="0 0 100 100" width="66" height="66" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+          <svg class="xicon" viewBox="0 0 120 100" width="66" height="55" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg>
         </div>
         <div class="lockup"><span class="tag">Ink on canvas · quiet contexts</span>
-          <svg viewBox="0 0 100 100" width="66" height="66" fill="none"><g stroke="#F2EDE5" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+          <svg class="xicon" viewBox="0 0 120 100" width="66" height="55" style="color:#F2EDE5" aria-hidden="true"><use href="#i-axiom-x"/></svg>
         </div>
         <div class="lockup on-paper"><span class="tag">Ink on paper · print</span>
-          <svg viewBox="0 0 100 100" width="66" height="66" fill="none"><g stroke="#070605" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+          <svg class="xicon" viewBox="0 0 120 100" width="66" height="55" style="color:#070605" aria-hidden="true"><use href="#i-axiom-x"/></svg>
         </div>
         <div class="lockup on-paper"><span class="tag">Bronze-deep on paper · accents ≥ 24 px only</span>
-          <svg viewBox="0 0 100 100" width="66" height="66" fill="none"><g stroke="#7C4C24" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+          <svg class="xicon" viewBox="0 0 120 100" width="66" height="55" style="color:#7C4C24" aria-hidden="true"><use href="#i-axiom-x"/></svg>
         </div>
       </div>
       <p class="mock-cap"><b>Paper contexts.</b> The wordmark artwork is supplied white-only — on paper, use the ink symbol plus typeset header (as the CoA does) until an ink cut of the artwork is issued. <b>Gradient use.</b> The sanctioned <b>--accent-grad</b> may fill the symbol only in hero/celebratory contexts, never at small sizes. No other gradients, ever.</p>
@@ -842,12 +844,12 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
     <div class="sub reveal">
       <div class="sub-h"><span class="sn">05·4</span><h3>Misuse</h3><span class="note">Never do these</span></div>
       <div class="misuse-grid">
-        <div class="misuse"><div class="art"><svg viewBox="0 0 100 100" width="60" height="60" fill="none" style="transform:scaleX(1.45)"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't stretch or squash</div></div>
-        <div class="misuse"><div class="art"><svg viewBox="0 0 100 100" width="60" height="60" fill="none"><g stroke="#7A5FD0" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't recolor off-palette</div></div>
-        <div class="misuse"><div class="art"><svg viewBox="0 0 100 100" width="60" height="60" fill="none" style="filter:drop-shadow(0 6px 8px rgba(231,177,115,.8))"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't add effects or shadows</div></div>
-        <div class="misuse"><div class="art"><svg viewBox="0 0 100 100" width="60" height="60" fill="none" style="transform:rotate(-24deg)"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't rotate</div></div>
-        <div class="misuse"><div class="art" style="background:url('assets/products/leg-compression-lifestyle.webp') center/cover;width:100%;"><svg viewBox="0 0 100 100" width="60" height="60" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't place on busy imagery without a scrim</div></div>
-        <div class="misuse"><div class="art"><div style="display:flex;align-items:center;gap:10px"><svg viewBox="0 0 100 100" width="46" height="46" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg><span style="font-family:Georgia,serif;font-style:italic;font-size:22px;color:var(--ink)">Axiom</span></div></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't reset the wordmark in other type</div></div>
+        <div class="misuse"><div class="art"><svg class="xicon" viewBox="0 0 120 100" width="60" height="50" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't stretch or squash</div></div>
+        <div class="misuse"><div class="art"><svg class="xicon" viewBox="0 0 120 100" width="60" height="50" style="color:#7A5FD0" aria-hidden="true"><use href="#i-axiom-x"/></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't recolor off-palette</div></div>
+        <div class="misuse"><div class="art"><svg class="xicon" viewBox="0 0 120 100" width="60" height="50" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't add effects or shadows</div></div>
+        <div class="misuse"><div class="art"><svg class="xicon" viewBox="0 0 120 100" width="60" height="50" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't rotate</div></div>
+        <div class="misuse"><div class="art" style="background:url('assets/products/leg-compression-lifestyle.webp') center/cover;width:100%;"><svg class="xicon" viewBox="0 0 120 100" width="60" height="50" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't place on busy imagery without a scrim</div></div>
+        <div class="misuse"><div class="art"><div style="display:flex;align-items:center;gap:10px"><svg class="xicon" viewBox="0 0 120 100" width="46" height="38" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg><span style="font-family:Georgia,serif;font-style:italic;font-size:22px;color:var(--ink)">Axiom</span></div></div><div class="cap"><svg class="pi pi-b"><use href="#i-x"/></svg>Don't reset the wordmark in other type</div></div>
       </div>
     </div>
 
@@ -855,7 +857,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
       <div class="sub-h"><span class="sn">05·5</span><h3>Co-branding &amp; favicon</h3></div>
       <div class="two-col">
         <p class="prose">In partner lockups, AXIOM sits left, a 1 px hairline divider (<b>--line-2</b>) stands between marks at 1× clear space each side, and the partner mark is scaled to matching optical height. The AXIOM mark is never subordinated below 80% of the partner's height.</p>
-        <p class="prose">The favicon is the symbol-only lockup: bronze strokes on <b>#070605</b>, exported as SVG. The same asset serves as social avatar. Never use the wordmark at avatar sizes.</p>
+        <p class="prose">The favicon is the symbol-only lockup: the bronze notched X on <b>#070605</b>, exported as SVG. The same asset serves as social avatar. Never use the wordmark at avatar sizes.</p>
       </div>
     </div>
   </div>
@@ -1154,7 +1156,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
         <div class="icon-cell"><svg class="pi"><use href="#i-timer"/></svg><span>timer</span></div>
         <div class="icon-cell"><svg class="pi"><use href="#i-arrow-right"/></svg><span>arrow</span></div>
       </div>
-      <p class="mock-cap"><b>One family, one weight.</b> Product surfaces use Phosphor regular (thin allowed at ≥ 32 px), colored --accent-bright or --ink; this document renders self-contained inline monoline equivalents (round caps, 1.6 stroke — the same gesture as the mark). Fill weight only inside solid buttons. Never mix icon sets; never use emoji as icons.</p>
+      <p class="mock-cap"><b>One family, one weight.</b> Product surfaces use Phosphor regular (thin allowed at ≥ 32 px), colored --accent-bright or --ink; this document renders self-contained inline monoline equivalents (round caps, 1.6 stroke). Fill weight only inside solid buttons. Never mix icon sets; never use emoji as icons.</p>
     </div>
 
     <div class="sub reveal">
@@ -1288,7 +1290,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
         <div>
           <div class="coa-doc">
             <div class="hd">
-              <svg viewBox="0 0 100 100" fill="none"><g stroke="#070605" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+              <svg class="xicon" viewBox="0 0 120 100" style="color:#070605" aria-hidden="true"><use href="#i-axiom-x"/></svg>
               <div class="t"><div class="a">AXIOM</div><div class="b">Human Performance &amp; Longevity</div></div>
             </div>
             <h4>Certificate of Analysis</h4>
@@ -1315,7 +1317,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
       <div class="vial-wrap">
         <div>
           <div class="vial-label">
-            <div class="r1"><img src="assets/axiom-wordmark-white.png" alt="AXIOM" style="height:11px;width:auto" /><span>Peptide Science</span></div>
+            <div class="r1"><img src="assets/axiom-wordmark-white-flat.png" alt="AXIOM" style="height:11px;width:auto" /><span>Peptide Science</span></div>
             <h5>BPC-157</h5>
             <div class="dose">10 mg · Lyophilised powder</div>
             <div class="gridl">
@@ -1342,10 +1344,10 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
       <div class="bcard-row">
         <div class="bcard front">
           <div class="top">
-            <svg viewBox="0 0 100 100" fill="none"><g stroke="#C88A4E" stroke-width="6" stroke-linecap="round"><polyline points="24,74 38,26 52,74"/><circle cx="70" cy="52" r="16"/></g></svg>
+            <svg class="xicon" viewBox="0 0 120 100" style="color:#C88A4E" aria-hidden="true"><use href="#i-axiom-x"/></svg>
             <span style="font-size:7px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted-2);font-weight:600">Jakarta · ID</span>
           </div>
-          <div><img src="assets/axiom-wordmark-white.png" alt="AXIOM" style="height:16px;width:auto" /><div class="sub3">Human Performance &amp; Longevity</div></div>
+          <div><img src="assets/axiom-wordmark-white-flat.png" alt="AXIOM" style="height:16px;width:auto" /><div class="sub3">Human Performance &amp; Longevity</div></div>
         </div>
         <div class="bcard back">
           <div><div class="nm">Adi Nugraha</div><div class="rl">Research &amp; Quality</div></div>
@@ -1358,7 +1360,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
     <div class="sub reveal">
       <div class="sub-h"><span class="sn">11·4</span><h3>Email</h3><span class="note">600 px column</span></div>
       <div class="email-mock">
-        <div class="eh"><img src="assets/axiom-logo-white.png" alt="AXIOM" style="height:38px;width:auto" /></div>
+        <div class="eh"><img src="assets/axiom-logo-white-flat.png" alt="AXIOM" style="height:38px;width:auto" /></div>
         <div class="eb">
           <div class="kick">Order Confirmed</div>
           <h5>Your order is moving<br>to dispatch.</h5>
@@ -1375,13 +1377,13 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
       <div class="social-row">
         <div class="soc sq static-field">
           <div class="scrim2"></div>
-          <img class="wm2" src="assets/axiom-wordmark-white.png" alt="AXIOM" style="height:11px;width:auto" />
+          <img class="wm2" src="assets/axiom-wordmark-white-flat.png" alt="AXIOM" style="height:11px;width:auto" />
           <span class="k2">Verification</span>
           <h6>Every lot,<br><em>documented.</em></h6>
         </div>
         <div class="soc story static-field">
           <div class="scrim2"></div>
-          <img class="wm2" src="assets/axiom-wordmark-white.png" alt="AXIOM" style="height:11px;width:auto" />
+          <img class="wm2" src="assets/axiom-wordmark-white-flat.png" alt="AXIOM" style="height:11px;width:auto" />
           <span class="k2">The Long Run</span>
           <h6>Built for decades,<br><em>not weeks.</em></h6>
         </div>
@@ -1397,7 +1399,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
         <div class="app-cell">
           <svg viewBox="0 0 200 200" fill="none" role="img" aria-label="Tee placement">
             <path d="M60 34 L84 22 Q100 34 116 22 L140 34 L166 62 L144 82 L144 178 L56 178 L56 82 L34 62 Z" fill="#141210" stroke="rgba(242,237,229,.22)"/>
-            <g stroke="#C88A4E" stroke-width="2.6" stroke-linecap="round"><polyline points="72,74 77.6,54.8 83.2,74"/><circle cx="90.4" cy="65.2" r="6.4"/></g>
+            <use href="#i-axiom-x" x="70" y="56" width="22" height="18" fill="#C88A4E"/>
           </svg>
           <div class="cap2"><b>Performance Tee</b><br>Left-chest symbol · 20 mm · bronze on ink</div>
         </div>
@@ -1413,7 +1415,7 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
           <svg viewBox="0 0 200 200" fill="none" role="img" aria-label="Cap placement">
             <path d="M40 112 Q40 58 100 58 Q160 58 160 112 L160 120 L40 120 Z" fill="#141210" stroke="rgba(242,237,229,.22)"/>
             <path d="M40 118 Q100 104 160 118 L172 132 Q100 118 28 132 Z" fill="#0f0d0b" stroke="rgba(242,237,229,.22)"/>
-            <g stroke="#C88A4E" stroke-width="2.4" stroke-linecap="round"><polyline points="88,102 93,84.8 98,102"/><circle cx="104.4" cy="94.4" r="5.8"/></g>
+            <use href="#i-axiom-x" x="86" y="84" width="22" height="18" fill="#C88A4E"/>
           </svg>
           <div class="cap2"><b>Logo Cap</b><br>Front symbol · 30 mm · tonal or bronze</div>
         </div>
@@ -1539,8 +1541,8 @@ footer{border-top:1px solid var(--line);padding:70px 0 46px;position:relative;z-
       <div class="sub-h"><span class="sn">13·3</span><h3>Asset index</h3></div>
       <div class="tbl-scroll"><table class="spec">
         <tr><th>Asset</th><th>Path</th><th>Use</th></tr>
-        <tr><td>Wordmark + subline artwork · white</td><td class="tnum">axiom/assets/axiom-logo-white.png</td><td>Primary lockup D — heroes, documents, email (dark grounds)</td></tr>
-        <tr><td>Wordmark artwork · white</td><td class="tnum">axiom/assets/axiom-wordmark-white.png</td><td>Wordmark-only lockups B/C, nav, labels (dark grounds)</td></tr>
+        <tr><td>Wordmark + subline artwork · white</td><td class="tnum">axiom/assets/axiom-logo-white-flat.png</td><td>Primary lockup D — heroes, documents, email (dark grounds)</td></tr>
+        <tr><td>Wordmark artwork · white</td><td class="tnum">axiom/assets/axiom-wordmark-white-flat.png</td><td>Wordmark-only lockups B/C, nav, labels (dark grounds)</td></tr>
         <tr><td>Wordmark strokes SVG</td><td class="tnum">axiom/assets/axiom-logo.svg</td><td>Monoline display cut — site hero only</td></tr>
         <tr><td>Symbol / favicon SVG</td><td class="tnum">inline data URI (this document, index.html)</td><td>Favicon, avatars, small marks</td></tr>
         <tr><td>OG image template</td><td class="tnum">axiom/og.svg</td><td>1200×630 link previews</td></tr>
