@@ -1,0 +1,20 @@
+/* AXIOM — brand tokens v1.1 · single source of truth, mirrors the live site */
+:root{
+  /* canvas + ink */
+  --bg:#070605; --ink:#F2EDE5; --muted:#9c9488; --muted-2:#6a635a;
+  /* hairlines */
+  --line:rgba(242,237,229,.12); --line-2:rgba(242,237,229,.22); --line-soft:rgba(242,237,229,.06);
+  /* bronze / copper accent system */
+  --accent:#C88A4E; --accent-bright:#E7B173; --accent-deep:#7C4C24;
+  --accent-soft:rgba(200,138,78,.14); --accent-line:rgba(200,138,78,.34);
+  --accent-grad:linear-gradient(120deg,#E7B173 0%,#C88A4E 46%,#9A5F2C 100%);
+  /* type */
+  --display:"Jost","Century Gothic",system-ui,sans-serif;
+  --sans:"Inter",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --mono:"Inter",system-ui,sans-serif;
+  /* layout */
+  --maxw:1280px; --pad:34px;
+  /* light / print + semantic states · ratified v1.0 */
+  --paper:#F2EDE5; --paper-ink:#070605;
+  --ok:#8FA37E; --warn:#C8A24E; --err:#B0553B; --info:#9C9488;
+}
