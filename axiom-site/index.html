@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AXIOM — Human Performance &amp; Longevity</title>
+<meta name="description" content="AXIOM is a human-performance and longevity house from Jakarta. Research-grade peptides, clinical red-light therapy, recovery, wellness and apparel — held to one standard. Documented, not promised.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23070605'/%3E%3Cg fill='%23C88A4E'%3E%3Cpolygon points='14,4 86,4 50,40'/%3E%3Cpolygon points='96,14 96,86 60,50'/%3E%3Cpolygon points='86,96 14,96 50,60'/%3E%3Cpolygon points='4,86 4,14 40,50'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Acknowledgement gate -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+  <div class="gate-inner">
+    <div class="gate-langs" role="group" aria-label="Language">
+      <button class="gate-lang is-active" data-lang="en" type="button">EN</button>
+      <button class="gate-lang" data-lang="id" type="button">ID</button>
+    </div>
+    <div class="gate-mark" aria-hidden="true">
+      <svg viewBox="0 0 100 100">
+        <polygon class="blade blade-t" points="14,4 86,4 50,40"/>
+        <polygon class="blade blade-r" points="96,14 96,86 60,50"/>
+        <polygon class="blade blade-b" points="86,96 14,96 50,60"/>
+        <polygon class="blade blade-l" points="4,86 4,14 40,50"/>
+      </svg>
+    </div>
+    <div class="gate-copy" data-gate="en">
+      <p class="gate-kicker">Before you enter</p>
+      <h1 id="gate-title" class="gate-title">One house, one standard.</h1>
+      <p class="gate-body">AXIOM offers therapy devices, wellness and apparel alongside research peptides. Those peptides are sold strictly for in-vitro laboratory and research use — not for human or veterinary consumption. By entering you confirm that you are 18 or older and that, for any peptide purchase, you are a qualified researcher or institutional buyer who accepts the research-use and compliance terms. No medical, dosing, or usage guidance is provided.</p>
+    </div>
+    <div class="gate-copy" data-gate="id" hidden>
+      <p class="gate-kicker">Sebelum Anda masuk</p>
+      <h1 class="gate-title">Satu rumah, satu standar.</h1>
+      <p class="gate-body">AXIOM menghadirkan perangkat terapi, produk wellness, dan apparel berdampingan dengan peptida riset. Peptida tersebut dijual khusus untuk penggunaan laboratorium dan riset in-vitro — bukan untuk konsumsi manusia maupun hewan. Dengan masuk, Anda menyatakan berusia 18 tahun ke atas dan, untuk setiap pembelian peptida, Anda adalah peneliti yang kompeten atau pembeli institusional yang menerima ketentuan Research Use Only serta kepatuhan yang berlaku.</p>
+    </div>
+    <div class="gate-actions">
+      <button class="btn btn-solid magnetic" id="gate-confirm" type="button"><span data-gate-btn="en">I Confirm — Enter</span><span data-gate-btn="id" hidden>Saya Konfirmasi — Masuk</span></button>
+      <a class="btn btn-ghost magnetic" href="about:blank"><span data-gate-btn="en">Leave</span><span data-gate-btn="id" hidden>Keluar</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- Logo sting -->
+<div class="sting" id="sting" aria-hidden="true">
+  <svg viewBox="0 0 100 100">
+    <polygon class="blade blade-t" points="14,4 86,4 50,40"/>
+    <polygon class="blade blade-r" points="96,14 96,86 60,50"/>
+    <polygon class="blade blade-b" points="86,96 14,96 50,60"/>
+    <polygon class="blade blade-l" points="4,86 4,14 40,50"/>
+  </svg>
+</div>
+
+<!-- Cursor -->
+<div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+<!-- Scroll progress -->
+<div class="progress" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
+
+<header class="nav" id="nav">
+  <a class="nav-brand" href="#top" aria-label="AXIOM — back to top">
+    <svg class="nav-mark" viewBox="0 0 100 100" aria-hidden="true">
+      <polygon points="14,4 86,4 50,40"/>
+      <polygon points="96,14 96,86 60,50"/>
+      <polygon points="86,96 14,96 50,60"/>
+      <polygon points="4,86 4,14 40,50"/>
+    </svg>
+    <span class="nav-word">AXIOM</span>
+  </a>
+  <nav class="nav-links" aria-label="Sections">
+    <a href="#standard">Standard</a>
+    <a href="#pillars">Pillars</a>
+    <a href="#proof">Proof</a>
+    <a href="#who">Who</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a class="btn btn-line magnetic nav-cta" href="#contact">Talk to us</a>
+</header>
+
+<main id="top">
+
+  <!-- ══ Hero ══ -->
+  <section class="hero" id="hero">
+    <canvas class="hero-field" id="field" aria-hidden="true"></canvas>
+    <div class="hero-fallback" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <p class="kicker hero-kicker" data-hero>AXIOM · Human Performance &amp; Longevity · Jakarta</p>
+      <h1 class="hero-title" id="hero-title">Human performance, <em>engineered for the long&nbsp;run.</em></h1>
+      <p class="lead hero-lead" data-hero>Research-grade peptides, clinical red-light therapy, recovery, wellness and apparel — every lot verified, every device documented, all held to one standard. Documented, not promised.</p>
+      <div class="hero-ctas" data-hero>
+        <a class="btn btn-solid magnetic" href="#pillars">Explore the range</a>
+        <a class="btn btn-ghost magnetic" href="#proof">See the proof</a>
+      </div>
+      <div class="hero-meta" data-hero>
+        <span class="tab">HPLC/MS ≥ 98%</span><i></i>
+        <span>CoA per lot</span><i></i>
+        <span>Cold-chain dispatch</span><i></i>
+        <span class="hero-meta-wide">A person on WhatsApp</span>
+      </div>
+    </div>
+    <div class="hero-hint" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- ══ 01 · The Standard ══ -->
+  <section class="sec sec-standard" id="standard">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-idx"><span class="idx">01</span><span class="kk">The Standard</span></div>
+        <div>
+          <h2 class="sec-title">Documented, <em>not promised.</em></h2>
+          <p class="lead">One sentence the whole house defends. The market sells on noise — we change the axis of the decision from how loud to how documented. Four commitments, held on every surface.</p>
+        </div>
+      </div>
+      <div class="std-rows" id="std-rows">
+        <div class="std-row">
+          <span class="std-num tab">01</span>
+          <h3 class="std-name">Verification over claims</h3>
+          <p class="std-body">Nothing carries the mark until it is tested, documented and sourced right. The competitor sells a vial — we sell a Certificate of Analysis that happens to arrive with a vial.</p>
+        </div>
+        <div class="std-row">
+          <span class="std-num tab">02</span>
+          <h3 class="std-name">Restraint</h3>
+          <p class="std-body">We state what we can prove and stop. No superlatives, no exclamation, no neon. The discipline is the credibility.</p>
+        </div>
+        <div class="std-row">
+          <span class="std-num tab">03</span>
+          <h3 class="std-name">The long run</h3>
+          <p class="std-body">Built for the decade-over-decade game, not the next wave of attention. Short-term results, engineered for the long run.</p>
+        </div>
+        <div class="std-row">
+          <span class="std-num tab">04</span>
+          <h3 class="std-name">Direct</h3>
+          <p class="std-body">A real line to a real person, before and after the order — an itemised quote, live stock, and a fresh CoA on every reorder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 02 · Five Pillars ══ -->
+  <section class="sec" id="pillars">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-idx"><span class="idx">02</span><span class="kk">The Range</span></div>
+        <div>
+          <h2 class="sec-title">One house, <em>one standard.</em></h2>
+          <p class="lead">Five pillars under a single mark. The logo on the apparel is the same mark on the lab label — that repetition is the point.</p>
+        </div>
+      </div>
+      <div class="pillar-grid" data-stagger>
+        <article class="pillar-card">
+          <div class="pillar-top"><span class="pillar-idx tab">01</span><span class="pill">RUO · in-vitro</span></div>
+          <h3>Peptide Science</h3>
+          <p>Research-grade peptides across metabolic, repair, growth and neuro pathways — every lot analysed by HPLC and mass spectrometry to a minimum of 98% purity, with a Certificate of Analysis per lot.</p>
+          <span class="pillar-meta tab">HPLC/MS ≥ 98% · CoA per lot</span>
+        </article>
+        <article class="pillar-card">
+          <div class="pillar-top"><span class="pillar-idx tab">02</span><span class="pill">660 + 850 nm</span></div>
+          <h3>Therapy &amp; Recovery</h3>
+          <p>Clinical red-light therapy specified to true 660 and 850 nm with verified irradiance — compression systems, mats and masks for circulation, skin and post-training recovery. Clinical-grade hardware, not novelty LEDs.</p>
+          <span class="pillar-meta tab">Verified irradiance · 30-day returns</span>
+        </article>
+        <article class="pillar-card">
+          <div class="pillar-top"><span class="pillar-idx tab">03</span><span class="pill">Daily inputs</span></div>
+          <h3>Wellness</h3>
+          <p>Antioxidants, NAD⁺ and cellular-energy support — the daily inputs that hold your baseline while you push it, documented to the same standard as everything else we carry.</p>
+          <span class="pillar-meta tab">Documented sourcing</span>
+        </article>
+        <article class="pillar-card">
+          <div class="pillar-top"><span class="pillar-idx tab">04</span><span class="pill">The decade game</span></div>
+          <h3>Longevity</h3>
+          <p>Cellular-ageing, senescence and copper-peptide compounds for the decade-over-decade game — research-grade material, verified and documented, framed for the long run rather than the next cycle.</p>
+          <span class="pillar-meta tab">Verified · documented</span>
+        </article>
+        <article class="pillar-card">
+          <div class="pillar-top"><span class="pillar-idx tab">05</span><span class="pill">Worn quietly</span></div>
+          <h3>Apparel</h3>
+          <p>Neutral, precise performance wear and everyday carry. The same standard on the label as in the lab — identity worn quietly.</p>
+          <span class="pillar-meta tab">Lab to label</span>
+        </article>
+        <article class="pillar-card pillar-card-cta">
+          <h3>The value ladder</h3>
+          <p>Enter on apparel and wellness. Ascend to the documented core. Every buyer is one message away from the person who runs the account.</p>
+          <a class="btn btn-line magnetic" href="#contact">Start the conversation</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 03 · Proof ══ -->
+  <section class="sec sec-proof" id="proof">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-idx"><span class="idx">03</span><span class="kk">Proof</span></div>
+        <div>
+          <h2 class="sec-title">Say it once, <em>prove it always.</em></h2>
+          <p class="lead">Every lot ships with its Certificate of Analysis — high-performance liquid chromatography and mass spectrometry, per lot, in the box. If the paperwork ever doesn't match, it's on us.</p>
+        </div>
+      </div>
+      <div class="proof-grid">
+        <ul class="proof-points" data-stagger>
+          <li><strong>CoA in every box, or your money back.</strong> The documentation offer no loud reseller can match.</li>
+          <li><strong>Cold-chain dispatch with temperature logging.</strong> Insured and tracked, door to door.</li>
+          <li><strong>A person before and after the order.</strong> Itemised quotes, live stock, IDR pricing — reorders prompted with a fresh CoA for the same lot.</li>
+          <li><strong>Spec-honest hardware.</strong> True wavelengths and verified irradiance, stated plainly on every device.</li>
+        </ul>
+        <figure class="coa" id="coa" data-reveal>
+          <figcaption class="coa-head">
+            <svg class="coa-mark" viewBox="0 0 100 100" aria-hidden="true">
+              <polygon points="14,4 86,4 50,40"/><polygon points="96,14 96,86 60,50"/><polygon points="86,96 14,96 50,60"/><polygon points="4,86 4,14 40,50"/>
+            </svg>
+            <div>
+              <span class="coa-brand">AXIOM</span>
+              <span class="coa-sub">Certificate of Analysis</span>
+            </div>
+            <span class="coa-pass">Specimen · Pass</span>
+          </figcaption>
+          <dl class="coa-fields">
+            <div><dt>Compound</dt><dd>BPC-157</dd></div>
+            <div><dt>Lot No.</dt><dd class="tab">AX-2606-1157</dd></div>
+            <div><dt>Purity (HPLC)</dt><dd class="tab coa-purity" id="coa-purity" data-target="99.2">0.0%</dd></div>
+            <div><dt>Molecular Mass</dt><dd class="tab">1419.5 Da</dd></div>
+            <div><dt>Method</dt><dd>HPLC / MS</dd></div>
+            <div><dt>Appearance</dt><dd>White lyophilate</dd></div>
+          </dl>
+          <div class="coa-meter" aria-hidden="true"><div class="coa-meter-fill" id="coa-meter"></div></div>
+          <div class="coa-foot">
+            <span>A. Wijaya · Quality Control</span>
+            <span class="tab">Issued 12 Jun 2026</span>
+          </div>
+          <p class="coa-ruo">Research Use Only · In-vitro laboratory use · Not for human or veterinary consumption</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 04 · Who it's for ══ -->
+  <section class="sec" id="who">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-idx"><span class="idx">04</span><span class="kk">The Tribe</span></div>
+        <div>
+          <h2 class="sec-title">Built for decades, <em>not weeks.</em></h2>
+          <p class="lead">A market that already distrusts hype does not need to be convinced of restraint — it needs to be found. We open on the smallest market that already believes it.</p>
+        </div>
+      </div>
+      <div class="who-grid" data-stagger>
+        <article class="who-card">
+          <span class="who-role">Primary</span>
+          <h3>The Decade Athlete</h3>
+          <p>Serious professional, 30–50, wary of hype, thinks in decades. Wants recovery and longevity tools with real specifications behind them.</p>
+        </article>
+        <article class="who-card">
+          <span class="who-role">Primary</span>
+          <h3>The Clinic Buyer</h3>
+          <p>Recovery and wellness studios sourcing clinical-grade hardware with verified wavelengths and reliable restock.</p>
+        </article>
+        <article class="who-card">
+          <span class="who-role">Secondary</span>
+          <h3>The Researcher</h3>
+          <p>Lab buyer who reads the CoA first and buys by lot. High trust, high reorder, low persuasion cost.</p>
+        </article>
+        <article class="who-card">
+          <span class="who-role">Secondary</span>
+          <h3>The Identity Wearer</h3>
+          <p>Came for the aesthetic, stays for the standard. The same mark, lab to label.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 05 · Numbers ══ -->
+  <section class="sec sec-numbers" id="numbers">
+    <div class="wrap">
+      <div class="num-grid" data-stagger>
+        <div class="num-cell"><span class="num-val tab"><span data-count="98" data-prefix="≥ " data-suffix="%">≥ 0%</span></span><span class="num-key">HPLC/MS verified purity, minimum, per lot</span></div>
+        <div class="num-cell"><span class="num-val tab"><span data-count="5">0</span></span><span class="num-key">Pillars under one mark and one standard</span></div>
+        <div class="num-cell"><span class="num-val tab"><span data-count="660" data-suffix=" + 850 nm">0 + 850 nm</span></span><span class="num-key">True clinical wavelengths, verified irradiance</span></div>
+        <div class="num-cell"><span class="num-val tab"><span data-count="100" data-suffix="%">0%</span></span><span class="num-key">Of lots ship with their Certificate of Analysis</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 06 · Contact ══ -->
+  <section class="sec sec-contact" id="contact">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-idx"><span class="idx">05</span><span class="kk">Direct</span></div>
+        <div>
+          <h2 class="sec-title">A real line <em>to a real person.</em></h2>
+          <p class="lead">Tell us what you're looking to source and we'll send an itemised quote with live stock and IDR pricing — the proof named before the price, always.</p>
+        </div>
+      </div>
+      <div class="contact-row" data-stagger>
+        <a class="btn btn-solid btn-lg magnetic" href="https://wa.me/6200000000000" rel="noopener">Start on WhatsApp</a>
+        <a class="btn btn-ghost btn-lg magnetic" href="mailto:hello@axiom.example">Request a CoA</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <svg class="footer-mark" viewBox="0 0 100 100" aria-hidden="true">
+          <polygon points="14,4 86,4 50,40"/><polygon points="96,14 96,86 60,50"/><polygon points="86,96 14,96 50,60"/><polygon points="4,86 4,14 40,50"/>
+        </svg>
+        <span class="footer-word">AXIOM</span>
+        <span class="footer-sub">Human Performance &amp; Longevity · Jakarta</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#standard">The Standard</a>
+        <a href="#pillars">The Range</a>
+        <a href="#proof">Proof</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <p class="footer-ruo">Peptides referenced on this site are Research Use Only, intended exclusively for in-vitro laboratory research — not for human or veterinary consumption, diagnosis, or treatment. No dosing or usage guidance is provided. Devices, wellness and apparel are consumer products. Prices in Indonesian Rupiah.</p>
+    <p class="footer-fine tab">AXIOM · Documented, not promised · v1.0</p>
+  </div>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script type="module" src="js/field.js"></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
