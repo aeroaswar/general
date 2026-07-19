@@ -64,7 +64,7 @@
   /* ══ Hero reveal ══ */
   var heroTitle = document.getElementById('hero-title');
   // split headline into words, keeping the muted <em> treatment
-  (function splitWords() {
+  if (heroTitle) (function splitWords() {
     function split(node) {
       var words = node.textContent.split(/\s+/).filter(Boolean);
       node.textContent = '';
@@ -85,7 +85,7 @@
 
   var heroPlayed = false;
   function heroIn() {
-    if (heroPlayed) return;
+    if (heroPlayed || !heroTitle) return;
     heroPlayed = true;
     if (reduced) return;
     var words = heroTitle.querySelectorAll('.w');
@@ -142,7 +142,9 @@
 
   /* ══ 01 · The Standard — pinned scrub on desktop ══ */
   var rows = gsap.utils.toArray('.std-row');
-  if (!reduced) {
+  if (!rows.length) {
+    /* not on this page */
+  } else if (!reduced) {
     ScrollTrigger.matchMedia({
       '(min-width: 900px)': function () {
         var tl = gsap.timeline({
@@ -192,7 +194,7 @@
     var purity = document.getElementById('coa-purity');
     var meter = document.getElementById('coa-meter');
     var pObj = { v: 0 };
-    gsap.to(pObj, {
+    if (purity) gsap.to(pObj, {
       v: 99.2, duration: 1.8, ease: 'power2.out',
       scrollTrigger: { trigger: '#coa', start: 'top 78%', once: true },
       onUpdate: function () {
@@ -204,8 +206,8 @@
     document.querySelectorAll('[data-count]').forEach(function (el) {
       el.textContent = (el.dataset.prefix || '') + el.dataset.count + (el.dataset.suffix || '');
     });
-    document.getElementById('coa-purity').textContent = '99.2%';
-    document.getElementById('coa-meter').style.width = '99.2%';
+    var sp = document.getElementById('coa-purity');
+    if (sp) { sp.textContent = '99.2%'; document.getElementById('coa-meter').style.width = '99.2%'; }
   }
 
   /* ══ Cursor — lagging ring + fast dot, difference blend (§10·3) ══ */
@@ -254,8 +256,8 @@
     removeGate && gate && gate.parentNode && removeGate();
     gsap.globalTimeline.progress(1);
     ScrollTrigger.getAll().forEach(function (st) { st.progress(1); });
-    var target = document.getElementById(cap);
-    if (target) target.scrollIntoView({ behavior: 'auto' });
+    var capTarget = document.getElementById(cap);
+    if (capTarget) capTarget.scrollIntoView({ behavior: 'auto' });
     if (window.__axiom && window.__axiom.snap) window.__axiom.snap(10);
   }
 })();

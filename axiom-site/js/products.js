@@ -84,6 +84,8 @@
   /* ── render: grid ── */
   var grid = document.getElementById('shop-grid');
   var activePillar = 'all';
+  var pillarParam = new URLSearchParams(location.search).get('pillar');
+  if (pillarParam && PILLARS[pillarParam]) activePillar = pillarParam;
 
   function artSvg(p) {
     return '<svg class="prod-art-svg" viewBox="0 0 120 120" aria-hidden="true">' + ART[p.art] + '</svg>';
@@ -105,6 +107,7 @@
   }
 
   function renderGrid(animate) {
+    if (!grid) return;
     var list = PRODUCTS.filter(function (p) { return activePillar === 'all' || p.pillar === activePillar; });
     grid.innerHTML = list.map(cardHtml).join('');
     document.getElementById('shop-count').textContent = list.length + (list.length === 1 ? ' product' : ' products');
@@ -115,12 +118,18 @@
 
   /* ── filter chips ── */
   document.querySelectorAll('.shop-chip').forEach(function (chip) {
+    chip.classList.toggle('is-active', chip.dataset.pillar === activePillar);
     chip.addEventListener('click', function () {
       activePillar = chip.dataset.pillar;
       document.querySelectorAll('.shop-chip').forEach(function (c) { c.classList.toggle('is-active', c === chip); });
       renderGrid(true);
     });
   });
+
+  /* ── featured strip (home) ── */
+  var FEATURED = ['thr-mask', 'pep-bpc157', 'lon-ghkcu', 'thr-mat', 'wel-nad', 'app-crew'];
+  var featured = document.getElementById('featured-grid');
+  if (featured) featured.innerHTML = FEATURED.map(function (id) { return cardHtml(byId[id]); }).join('');
 
   /* ── toast ── */
   var toast = document.getElementById('toast');

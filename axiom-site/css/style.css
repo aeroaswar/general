@@ -116,6 +116,7 @@ body.has-cursor,body.has-cursor a,body.has-cursor button{cursor:none}
 .nav-links{display:flex;gap:26px;margin-left:auto}
 .nav-links a{font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:color .18s var(--ease)}
 .nav-links a:hover{color:var(--ink)}
+.nav-links a.is-active{color:var(--accent-bright)}
 .nav-cart{
   position:relative;flex:none;display:flex;align-items:center;justify-content:center;
   width:42px;height:42px;border:1px solid var(--line-2);border-radius:2px;background:transparent;cursor:pointer;
@@ -251,6 +252,32 @@ body.has-cursor,body.has-cursor a,body.has-cursor button{cursor:none}
 [data-hero],[data-reveal],[data-stagger]>*{opacity:1}
 
 
+/* ═══ Page header (subpages) ═══ */
+.page-head{
+  padding:150px 0 64px;border-bottom:1px solid var(--line);position:relative;
+  background:
+    radial-gradient(52% 60% at 78% 10%,rgba(200,138,78,.14),transparent 62%),
+    radial-gradient(36% 42% at 12% 90%,rgba(124,76,36,.12),transparent 60%);
+}
+.page-title{
+  font-family:var(--display);font-weight:300;
+  font-size:clamp(32px,4.8vw,58px);line-height:1.04;letter-spacing:-.01em;
+  margin:18px 0 0;max-width:18ch;
+}
+.page-title em{font-style:normal;color:var(--muted)}
+
+/* ═══ Home: featured strip ═══ */
+.featured-more{margin-top:34px;display:flex;justify-content:center}
+
+/* ═══ Contact: steps ═══ */
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step-card{border:1px solid var(--line);border-radius:3px;padding:30px 28px;position:relative}
+.step-card::after{content:"";position:absolute;left:28px;right:28px;top:0;height:1px;background:var(--accent-line)}
+.step-num{font-family:var(--display);font-weight:400;font-size:15px;color:var(--accent)}
+.step-card h3{font-family:var(--display);font-weight:400;font-size:20px;margin:12px 0 10px;color:var(--ink)}
+.step-card p{margin:0;color:var(--muted);font-size:13.5px}
+.contact-fine{margin:34px 0 0;color:var(--muted-2);font-size:12px;line-height:1.8;max-width:74ch}
+
 /* ═══ Shop ═══ */
 .shop-bar{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:30px}
 .shop-chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -368,6 +395,8 @@ body.is-locked{overflow:hidden}
 }
 @media(max-width:860px){
   :root{--pad:22px}
+  .steps-grid{grid-template-columns:1fr}
+  .page-head{padding:120px 0 48px}
   .nav-links{display:none}
   .nav-cart{margin-left:auto}
   .sec{padding:80px 0}
