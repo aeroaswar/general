@@ -61,31 +61,31 @@
 *{box-sizing:border-box}
 @page{size:A4;margin:0}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:300;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-.page{position:relative;width:210mm;min-height:297mm;padding:15mm 13mm 12mm;overflow:hidden;background:
+.page{position:relative;width:210mm;min-height:297mm;padding:15mm 15mm 14mm;overflow:hidden;background:
    radial-gradient(52% 40% at 82% 8%,rgba(200,138,78,.16),transparent 60%),
    radial-gradient(44% 34% at 60% 100%,rgba(124,76,36,.20),transparent 62%),
-   var(--bg);font-size:8.8px;line-height:1.42}
+   var(--bg);font-size:9px;line-height:1.42}
 .tab,.p,.q{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
-header.mast{position:relative;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:13px;margin-bottom:13px}
-.logo .kick{font-family:var(--sans);font-size:7px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);font-weight:500}
-.logo .wm{margin:10px 0 7px;line-height:0}
-.logo .wm-art{display:block;width:232px;height:auto}
-.logo .sub{font-family:var(--display);font-weight:300;font-size:9.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+header.mast{position:relative;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px}
+.logo .kick{font-family:var(--sans);font-size:8px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.logo .wm{margin:12px 0 8px;line-height:0}
+.logo .wm-art{display:block;width:255px;height:auto}
+.logo .sub{font-family:var(--display);font-weight:300;font-size:11px;letter-spacing:.36em;text-transform:uppercase;color:var(--muted)}
 .title{text-align:right}
-.title h1{font-family:var(--display);font-weight:300;font-size:23px;margin:0;letter-spacing:0;color:var(--ink)}
-.title .meta{font-family:var(--sans);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px}
-.ruoflag{margin-top:8px;border:1px solid var(--accent-line);border-radius:6px;padding:6px 9px;font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-bright);line-height:1.6;display:inline-block;text-align:right}
+.title h1{font-family:var(--display);font-weight:300;font-size:28px;margin:0;letter-spacing:0;color:var(--ink)}
+.title .meta{font-family:var(--sans);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.ruoflag{margin-top:12px;border:1px solid var(--accent-line);border-radius:6px;padding:6px 9px;font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-bright);line-height:1.6;display:inline-block;text-align:right}
 .intro{position:relative;display:flex;justify-content:space-between;gap:20px;font-size:8px;color:var(--muted);margin-bottom:11px;line-height:1.5}
 .intro p{margin:0;max-width:63%}
 .intro .note{text-align:right;max-width:35%;color:var(--muted-2)}
-.grid{position:relative;column-count:2;column-gap:18px}
-.cat{break-inside:avoid;-webkit-column-break-inside:avoid;margin:0 0 9px;display:inline-block;width:100%}
-.ch{display:flex;align-items:baseline;gap:8px;border-bottom:1px solid var(--accent-line);padding-bottom:4px;margin-bottom:2px}
-.ch .ix{font-family:var(--display);color:var(--accent);font-size:9px;letter-spacing:.05em;font-weight:400}
-.ch h3{font-family:var(--display);font-weight:400;font-size:11px;margin:0;letter-spacing:.01em;color:var(--ink)}
+.grid{position:relative;column-count:2;column-gap:26px}
+.cat{break-inside:avoid;-webkit-column-break-inside:avoid;margin:0 0 11px;display:inline-block;width:100%}
+.ch{display:flex;align-items:baseline;gap:9px;border-bottom:1px solid var(--accent-line);padding-bottom:6px;margin-bottom:3px}
+.ch .ix{font-family:var(--display);color:var(--accent);font-size:11px;letter-spacing:.05em;font-weight:400}
+.ch h3{font-family:var(--display);font-weight:400;font-size:11.5px;margin:0;letter-spacing:.01em;color:var(--ink)}
 table{width:100%;border-collapse:collapse}
-th{text-align:left;font-size:6.6px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);font-weight:500;padding:4px 4px 2.5px;border-bottom:1px solid var(--line)}
-td{padding:2.7px 4px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--muted)}
+th{text-align:left;font-size:6.8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);font-weight:500;padding:7px 5px 4px;border-bottom:1px solid var(--line)}
+td{padding:3.5px 5px;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--muted)}
 td.c{color:var(--ink)}
 .q{text-align:left;color:var(--muted);white-space:nowrap;width:22%}
 th.q{text-align:left}
@@ -95,7 +95,7 @@ tbody tr:last-child td{border-bottom:none}
 .foot{position:relative;margin-top:6px;border-top:1px solid var(--line);padding-top:10px;display:flex;justify-content:space-between;gap:18px;font-size:7.4px;color:var(--muted);line-height:1.6}
 .foot .col b{color:var(--ink);text-transform:uppercase;letter-spacing:.14em;font-size:7px;display:block;margin-bottom:3px;font-weight:500}
 .foot .contact b{color:var(--accent-bright)}
-.ruo-line{position:relative;margin-top:9px;font-size:6.8px;color:var(--muted-2);line-height:1.6;text-align:center;letter-spacing:.02em}
+.ruo-line{position:relative;margin-top:12px;padding-top:10px;border-top:1px solid var(--line-soft);font-size:7.4px;color:var(--muted-2);line-height:1.6;text-align:center;letter-spacing:.02em}
 </style></head><body>
 <div class="page">
   <header class="mast">
