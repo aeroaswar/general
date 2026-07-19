@@ -35,14 +35,19 @@
     if (reduced) { done(); return; }
     sting.classList.add('is-active');
     var blades = sting.querySelectorAll('.blade');
+    var mark = sting.querySelector('svg:not(.sting-word)');
+    var word = sting.querySelector('.sting-word');
     // four blades travel in along their own diagonals — ~15% of mark size,
-    // 900ms, 80ms stagger TL→TR→BL→BR, ≥400ms hold, no bounce, once (§10·5)
+    // 900ms, 80ms stagger TL→TR→BL→BR, ≥400ms hold; the sting exits fully
+    // before the wordmark enters, then hands off to the hero (§10·5)
     var dirs = [{ x: -73, y: -59 }, { x: 73, y: -59 }, { x: -73, y: 59 }, { x: 73, y: 59 }];
     var tl = gsap.timeline({ onComplete: function () { sting.classList.remove('is-active'); done(); } });
     blades.forEach(function (b, i) {
       tl.from(b, { x: dirs[i].x, y: dirs[i].y, opacity: 0, duration: 0.9, ease: EASE }, i * 0.08);
     });
-    tl.to(sting, { opacity: 0, duration: 0.6, ease: EASE }, '+=0.4');
+    tl.to(mark, { opacity: 0, duration: 0.4, ease: EASE }, '+=0.4');
+    tl.fromTo(word, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.7, ease: EASE });
+    tl.to(sting, { opacity: 0, duration: 0.5, ease: EASE }, '+=0.5');
     tl.set(sting, { clearProps: 'opacity' });
   }
 

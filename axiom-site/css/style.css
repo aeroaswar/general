@@ -72,8 +72,13 @@ body.is-gated{overflow:hidden}
 .gate-langs{position:absolute;top:-8px;right:0;display:flex;gap:2px;border:1px solid var(--line);border-radius:2px}
 .gate-lang{background:none;border:0;color:var(--muted-2);font-family:var(--sans);font-weight:500;font-size:10px;letter-spacing:.18em;padding:7px 12px;cursor:pointer;transition:color .18s var(--ease)}
 .gate-lang.is-active{color:var(--accent-bright)}
-.gate-mark{width:64px;margin:0 auto 30px}
-.gate-mark svg,.sting svg,.nav-mark,.coa-mark,.footer-mark{display:block;width:100%;height:auto;fill:var(--accent)}
+.gate-mark{width:64px;margin:0 auto 20px}
+.gate-mark svg,.sting svg:not(.sting-word),.nav-mark,.coa-mark,.footer-mark{display:block;width:100%;height:auto;fill:var(--accent)}
+.nav-word-svg,.gate-word,.footer-word-svg,.coa-word,.sting-word{display:block;fill:var(--ink)}
+.nav-word-svg{height:13px;width:auto}
+.gate-word{height:17px;width:auto;margin:0 auto 30px}
+.footer-word-svg{height:13px;width:auto}
+.coa-word{height:11px;width:auto}
 .gate-kicker{font-weight:500;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
 .gate-title{font-family:var(--display);font-weight:300;font-size:clamp(26px,4.4vw,40px);line-height:1.06;letter-spacing:-.01em;margin:0 0 18px}
 .gate-body{color:var(--muted);font-size:13.5px;line-height:1.8;margin:0}
@@ -82,7 +87,8 @@ body.is-gated{overflow:hidden}
 /* ── Sting ── */
 .sting{position:fixed;inset:0;z-index:70;background:var(--bg);display:none;align-items:center;justify-content:center}
 .sting.is-active{display:flex}
-.sting svg{width:min(140px,26vw)}
+.sting svg:not(.sting-word){width:min(140px,26vw)}
+.sting-word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(300px,56vw);height:auto;opacity:0}
 
 /* ── Cursor (fine pointers only, enabled by JS) ── */
 .cursor-dot,.cursor-ring{position:fixed;top:0;left:0;z-index:99;pointer-events:none;border-radius:50%;mix-blend-mode:difference;display:none}
