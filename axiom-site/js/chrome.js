@@ -18,6 +18,7 @@
 '  <symbol id="i-tshirt" viewBox="0 0 24 24"><path d="M8.2 4 4 6.2l1.6 3.6L8 8.9V20h8V8.9l2.4.9L20 6.2 15.8 4a3.8 3.8 0 0 1-7.6 0z"/></symbol>' +
 '  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12.2a1.8 1.8 0 0 1-1.8 1.6H7.8A1.8 1.8 0 0 1 6 20.2Z"/><path d="M8.6 10.5V6.9a3.4 3.4 0 0 1 6.8 0v3.6"/></symbol>' +
 '  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></symbol>' +
+'  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M6.5 7l.9 12.1a1 1 0 0 0 1 .9h7.2a1 1 0 0 0 1-.9L17.5 7"/><path d="M10 11v5.5M14 11v5.5"/></symbol>' +
 '</svg>' +
 
 '<a class="skip-link" href="#top">Skip to content</a>' +

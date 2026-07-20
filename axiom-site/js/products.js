@@ -315,8 +315,10 @@
           '<div class="cart-row-art">' + artSvg(p) + '</div>' +
           '<div class="cart-row-main"><span class="cart-row-name">' + esc(p.name) + (p.ruo ? ' <span class="pill pill-ruo">RUO</span>' : '') + '</span>' +
           '<span class="cart-row-spec">' + esc(p.spec) + '</span>' +
-          '<div class="cart-qty"><button data-dec="' + id + '" aria-label="Decrease quantity">−</button><span class="tab">' + cart[id] + '</span><button data-inc="' + id + '" aria-label="Increase quantity">+</button>' +
-          '<button class="cart-remove" data-remove="' + id + '">Remove</button></div></div>' +
+          '<div class="cart-controls">' +
+          '<div class="cart-qty"><button data-dec="' + id + '" aria-label="Decrease quantity">−</button><span class="tab">' + cart[id] + '</span><button data-inc="' + id + '" aria-label="Increase quantity">+</button></div>' +
+          '<button class="cart-remove" data-remove="' + id + '" type="button" aria-label="Remove ' + esc(p.name) + '"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-trash"/></svg></button>' +
+          '</div></div>' +
           '<span class="cart-row-price tab">' + fmt(p.price * cart[id]) + '</span></div>';
       }).join('');
     }
