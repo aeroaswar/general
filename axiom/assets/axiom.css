@@ -1,0 +1,245 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   AXIOM — shared design system  ·  Documented, not promised.
+   Tokens + chrome + section anatomy + motion primitives.
+   Consolidated from the four AXIOM artifacts (Business Plan, Brand Guidelines,
+   Go-to-Market, Human Performance) into one source of truth.
+   Normal cursor only — the dot/ring cursor has been removed by request.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Self-hosted type (Jost display · Inter text) ── */
+@font-face{font-family:'Jost';font-style:normal;font-weight:300;font-display:swap;src:url(fonts/jost-300.woff2) format('woff2')}
+@font-face{font-family:'Jost';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/jost-400.woff2) format('woff2')}
+@font-face{font-family:'Jost';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/jost-500.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:300;font-display:swap;src:url(fonts/inter-300.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-400.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-500.woff2) format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-600.woff2) format('woff2')}
+
+/* ── Tokens (Brand Guidelines v1.0 §06/§07/§08) ── */
+:root{
+  --bg:#070605; --bg-1:#0B0908; --ink:#F2EDE5; --muted:#9C9488; --muted-2:#6A635A;
+  --line:rgba(242,237,229,.12); --line-2:rgba(242,237,229,.22); --line-soft:rgba(242,237,229,.06);
+  --accent:#C88A4E; --accent-bright:#E7B173; --accent-deep:#7C4C24;
+  --accent-soft:rgba(200,138,78,.14); --accent-line:rgba(200,138,78,.34);
+  --accent-grad:linear-gradient(120deg,#E7B173 0%,#C88A4E 46%,#9A5F2C 100%);
+  --ok:#8FA37E; --warn:#C87F63;
+  --maxw:1200px; --pad:34px;
+  --display:"Jost","Century Gothic","Futura","Avenir Next",system-ui,sans-serif;
+  --sans:"Inter",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-draw:cubic-bezier(.65,0,.35,1);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--sans);font-weight:300;font-size:14px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::selection{background:var(--accent);color:var(--bg)}
+a{color:var(--accent-bright);text-decoration:none}
+img{max-width:100%}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);position:relative}
+.tab{font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+strong{font-weight:500;color:var(--ink)}
+
+/* keep page content above the ambient field */
+main,.footer,.nav,.progress{position:relative;z-index:2}
+
+/* ── Shared type helpers ── */
+.kicker{font-weight:500;font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent);margin:0}
+.lead{color:var(--muted);font-size:15.5px;line-height:1.75;max-width:64ch;margin:14px 0 0}
+.eyebrow{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);font-weight:500;margin:30px 0 12px}
+.kk{display:block;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-top:8px}
+.idx{font-family:var(--display);font-weight:400;color:var(--accent);font-size:15px}
+.body-col{max-width:74ch}
+.body-col p{color:var(--muted);margin:0 0 14px}
+h3.sub{font-family:var(--display);font-weight:400;font-size:18px;color:var(--ink);margin:30px 0 10px;letter-spacing:-.005em}
+
+/* ── Buttons ── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--sans);font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  padding:15px 28px;border-radius:2px;border:1px solid transparent;cursor:pointer;
+  transition:color .22s var(--ease),background-color .22s var(--ease),border-color .22s var(--ease);
+  will-change:transform;
+}
+.btn-solid{background:var(--accent);color:var(--bg)}
+.btn-solid:hover{background:var(--accent-bright)}
+.btn-ghost{border-color:var(--line-2);color:var(--ink);background:transparent}
+.btn-ghost:hover{border-color:var(--accent-line);color:var(--accent-bright)}
+.btn-line{border-color:var(--accent-line);color:var(--accent-bright);background:transparent;padding:12px 22px}
+.btn-line:hover{background:var(--accent-soft)}
+.btn-lg{padding:19px 38px;font-size:12px}
+.btn-sm{padding:10px 14px;font-size:10px;flex:1}
+.pill{display:inline-block;border:1px solid var(--accent-line);border-radius:999px;padding:3px 11px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-bright);font-weight:500}
+
+/* ── Section anatomy (canonical — used by every page) ── */
+.sec{padding:96px 0;border-bottom:1px solid var(--line)}
+.sec:last-of-type{border-bottom:none}
+.sec-head{display:grid;grid-template-columns:120px 1fr;gap:30px;margin-bottom:48px}
+.sec-idx{align-self:start}
+.sec-title{font-family:var(--display);font-weight:300;font-size:clamp(26px,3.8vw,44px);line-height:1.06;letter-spacing:-.01em;margin:0}
+.sec-title em{font-style:normal;color:var(--muted)}
+
+/* ── Cards ── */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:16px 0}
+.card{border:1px solid var(--line);border-radius:4px;padding:22px 24px;transition:border-color .3s var(--ease),background-color .3s var(--ease)}
+.card:hover{border-color:var(--accent-line)}
+.card .role{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;font-weight:500}
+.card h4{font-family:var(--display);font-weight:400;font-size:17px;margin:0 0 8px;color:var(--ink)}
+.card p{font-size:13px;color:var(--muted);margin:0}
+
+/* ── Clean list ── */
+ul.clean{list-style:none;padding:0;margin:0 0 14px}
+ul.clean li{position:relative;padding:0 0 10px 20px;color:var(--muted);font-size:14px}
+ul.clean li:before{content:"";position:absolute;left:0;top:9px;width:6px;height:1px;background:var(--accent)}
+ul.clean li strong{color:var(--ink);font-weight:500}
+
+/* ── Tables ── */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;margin:16px 0}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:13px;font-variant-numeric:tabular-nums}
+caption{text-align:left;padding:16px 18px 0;font-family:var(--display);font-size:16px;color:var(--ink)}
+th{text-align:left;font-weight:500;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);padding:12px 16px 8px;border-bottom:1px solid var(--line)}
+td{padding:11px 16px;border-bottom:1px solid var(--line-soft);color:var(--muted);vertical-align:top}
+td.name{color:var(--ink)}
+.num{text-align:right}
+tbody tr:last-child td{border-bottom:none}
+
+/* ── Script block / callout ── */
+.script{border:1px solid var(--line);border-left:2px solid var(--accent-line);border-radius:8px;padding:16px 20px;margin:12px 0;background:rgba(200,138,78,.04)}
+.script .lbl{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.script p{color:var(--ink);font-size:13.5px;margin:0 0 8px;line-height:1.65}
+.script p.note{color:var(--muted-2);font-size:11.5px;font-style:italic;margin:6px 0 0}
+.ruo{border:1px solid var(--accent-line);border-radius:8px;padding:14px 18px;margin:18px 0;font-size:12px;color:var(--muted);line-height:1.65}
+.ruo b{color:var(--accent-bright);text-transform:uppercase;letter-spacing:.12em;font-size:10px;font-weight:500;display:block;margin-bottom:4px}
+
+/* ── Ambient background field (home + document pages) ── */
+.bg-field{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block;pointer-events:none;opacity:.55}
+.bg-fallback{
+  position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.9;
+  background:
+    radial-gradient(48% 44% at 78% 12%,rgba(200,138,78,.14),transparent 62%),
+    radial-gradient(40% 40% at 14% 88%,rgba(124,76,36,.16),transparent 60%);
+}
+.bg-field.is-static{display:none}
+
+/* ── Page header (document + shop subpages) ── */
+.page-head{
+  padding:150px 0 64px;border-bottom:1px solid var(--line);position:relative;
+  background:
+    radial-gradient(52% 60% at 82% 6%,rgba(200,138,78,.13),transparent 62%),
+    radial-gradient(36% 42% at 10% 92%,rgba(124,76,36,.11),transparent 60%);
+}
+.page-title{font-family:var(--display);font-weight:300;font-size:clamp(32px,4.8vw,58px);line-height:1.04;letter-spacing:-.01em;margin:18px 0 0;max-width:20ch}
+.page-title em{font-style:normal;color:var(--muted)}
+.docmeta{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px;padding-top:20px;border-top:1px solid var(--line-soft)}
+.docmeta .m .k{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-2)}
+.docmeta .m .v{font-family:var(--display);font-size:15px;margin-top:3px;color:var(--ink)}
+
+/* ══ Chrome — gate ══ */
+.gate{
+  position:fixed;inset:0;z-index:80;padding:28px;display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(60% 50% at 72% 40%,rgba(200,138,78,.22),transparent 62%),
+    radial-gradient(40% 36% at 60% 70%,rgba(124,76,36,.28),transparent 60%),
+    var(--bg);
+}
+.gate.is-leaving{pointer-events:none}
+body.is-gated{overflow:hidden}
+.gate-inner{max-width:620px;text-align:center;position:relative;padding:24px 0}
+.gate-langs{position:absolute;top:-8px;right:0;display:flex;gap:2px;border:1px solid var(--line);border-radius:2px}
+.gate-lang{background:none;border:0;color:var(--muted-2);font-family:var(--sans);font-weight:500;font-size:10px;letter-spacing:.18em;padding:7px 12px;cursor:pointer;transition:color .18s var(--ease)}
+.gate-lang.is-active{color:var(--accent-bright)}
+.gate-mark{width:64px;margin:0 auto 20px}
+.gate-mark svg,.sting svg:not(.sting-word),.nav-mark,.coa-mark,.footer-mark{display:block;width:100%;height:auto;fill:var(--accent)}
+.nav-word-svg,.gate-word,.footer-word-svg,.coa-word,.sting-word{display:block;fill:var(--ink)}
+.nav-word-svg{height:13px;width:auto}
+.gate-word{height:17px;width:auto;margin:0 auto 30px}
+.footer-word-svg{height:13px;width:auto}
+.coa-word{height:11px;width:auto}
+.gate-kicker{font-weight:500;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+.gate-title{font-family:var(--display);font-weight:300;font-size:clamp(26px,4.4vw,40px);line-height:1.06;letter-spacing:-.01em;margin:0 0 18px}
+.gate-body{color:var(--muted);font-size:13.5px;line-height:1.8;margin:0}
+.gate-actions{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+
+/* ══ Chrome — sting (logo motion) ══ */
+.sting{position:fixed;inset:0;z-index:70;background:var(--bg);display:none;align-items:center;justify-content:center}
+.sting.is-active{display:flex}
+.sting svg:not(.sting-word){width:min(140px,26vw)}
+.sting-word{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(300px,56vw);height:auto;opacity:0}
+
+/* ══ Chrome — progress + nav ══ */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;background:transparent}
+.progress-fill{height:100%;width:0;background:var(--accent);transform-origin:left}
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;gap:28px;padding:0 var(--pad);height:64px;
+  background:rgba(7,6,5,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-soft);transition:transform .5s var(--ease);
+}
+.nav.is-hidden{transform:translateY(-100%)}
+.nav-brand{display:flex;align-items:center;gap:12px;flex:none}
+.nav-mark{width:20px}
+.nav-links{display:flex;gap:24px;margin-left:auto}
+.nav-links a{font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);transition:color .18s var(--ease);white-space:nowrap}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a.is-active{color:var(--accent-bright)}
+.nav-cart{
+  position:relative;flex:none;display:flex;align-items:center;justify-content:center;
+  width:42px;height:42px;border:1px solid var(--line-2);border-radius:2px;background:transparent;cursor:pointer;
+  transition:border-color .22s var(--ease);
+}
+.nav-cart:hover{border-color:var(--accent-line)}
+.nav-cart svg{width:19px;height:19px;fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.nav-cart-count{position:absolute;top:-7px;right:-7px;min-width:18px;height:18px;padding:0 5px;display:none;align-items:center;justify-content:center;background:var(--accent);color:var(--bg);font-size:10px;font-weight:600;border-radius:999px}
+.nav-cart-count.is-on{display:inline-flex}
+
+/* ══ Chrome — footer ══ */
+.footer{border-top:1px solid var(--line);padding:54px 0 70px;color:var(--muted-2);background:var(--bg)}
+.footer-top{display:flex;align-items:center;gap:30px;flex-wrap:wrap;margin-bottom:34px}
+.footer-brand{display:flex;align-items:center;gap:14px}
+.footer-mark{width:22px}
+.footer-sub{font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:500}
+.footer-links{margin-left:auto;display:flex;gap:22px;flex-wrap:wrap}
+.footer-links a{font-weight:500;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.footer-links a:hover{color:var(--ink)}
+.footer-ruo{font-size:11.5px;line-height:1.8;max-width:92ch;margin:0 0 18px}
+.footer-fine{font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;margin:0}
+
+/* ── Skip link + a11y ── */
+.skip-link{position:fixed;top:8px;left:8px;z-index:100;transform:translateY(-160%);background:var(--accent);color:var(--bg);font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:11px 18px;border-radius:2px;transition:transform .2s var(--ease)}
+.skip-link:focus{transform:translateY(0);outline:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:focus-visible{outline:2px solid var(--accent-line);outline-offset:2px}
+
+/* ── Reveal primitives (JS animates; static fallback keeps content visible) ── */
+[data-hero],[data-reveal],[data-stagger]>*{opacity:1}
+
+/* ── Toast ── */
+.toast{position:fixed;left:50%;bottom:30px;transform:translate(-50%,14px);z-index:68;background:var(--bg-1);border:1px solid var(--accent-line);border-radius:2px;color:var(--ink);font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:13px 22px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+/* ══ Responsive ══ */
+@media(max-width:900px){
+  :root{--pad:22px}
+  .sec{padding:72px 0}
+  .sec-head{grid-template-columns:1fr;gap:12px;margin-bottom:36px}
+  .page-head{padding:118px 0 48px}
+  .nav{gap:16px}
+  .nav-links{gap:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{font-size:10px;letter-spacing:.12em}
+}
+@media(max-width:600px){
+  .gate-actions .btn{width:100%}
+  .gate-langs{position:static;justify-content:center;margin-bottom:22px;display:inline-flex}
+  .docmeta{gap:18px}
+}
+
+/* ══ Reduced motion — the mandate (Brand Guidelines §10·4) ══ */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}

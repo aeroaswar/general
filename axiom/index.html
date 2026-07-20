@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AXIOM — Documented, not promised.</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20486%20396'%3E%3Crect%20width='486'%20height='396'%20fill='%23070605'/%3E%3Cg%20fill='%23C88A4E'%3E%3Cpath%20d='M0%200%2086%200%20229%20149%20186%20186Z'/%3E%3Cpath%20d='M486%200%20400%200%20257%20149%20300%20186Z'/%3E%3Cpath%20d='M0%20396%2086%20396%20229%20247%20186%20210Z'/%3E%3Cpath%20d='M486%20396%20400%20396%20257%20247%20300%20210Z'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="description" content="The complete AXIOM house — brand, plan, go-to-market and shop, under one standard of verification. Human performance & longevity, Jakarta.">
+<link rel="stylesheet" href="assets/axiom.css">
+<style>
+/* ── Home · hero ── */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-field{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0}
+.hero-fallback{position:absolute;inset:0;opacity:.5;transition:opacity .6s var(--ease);z-index:0;
+  background:radial-gradient(60% 50% at 72% 40%,rgba(200,138,78,.22),transparent 62%),radial-gradient(40% 36% at 60% 70%,rgba(124,76,36,.28),transparent 60%)}
+.hero.is-static .hero-fallback{opacity:1}
+.hero.is-static .hero-field{display:none}
+.hero-scrim{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,6,5,.55) 0%,rgba(7,6,5,.18) 42%,rgba(7,6,5,.86) 100%)}
+.hero-inner{position:relative;z-index:2;padding:120px 0 84px}
+.hero-mark{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.hero-mark svg.m{width:30px;height:auto;fill:var(--accent)}
+.hero-mark svg.w{height:16px;width:auto;fill:var(--ink)}
+.hero-title{font-family:var(--display);font-weight:300;font-size:clamp(40px,8vw,104px);line-height:.98;letter-spacing:-.015em;margin:22px 0 0;max-width:14ch}
+.hero-title em{font-style:normal;color:var(--muted)}
+.hero-title .w{display:inline-block;white-space:pre}
+.hero-lead{max-width:60ch}
+.hero-ctas{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+.hero-meta{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:52px;font-weight:500;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-2)}
+.hero-meta i{width:1px;height:12px;background:var(--line)}
+.hero-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;width:1px;height:44px;background:var(--line);overflow:hidden}
+.hero-hint span{display:block;width:100%;height:50%;background:var(--accent);animation:hint 2.2s var(--ease) infinite}
+@keyframes hint{0%{transform:translateY(-100%)}70%,100%{transform:translateY(200%)}}
+
+/* ── Home · pillars strip ── */
+.pillars{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pillar{padding:26px 22px;border-left:1px solid var(--line-soft)}
+.pillar:first-child{border-left:none}
+.pillar .p-ico{width:22px;height:22px;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin-bottom:14px}
+.pillar h4{font-family:var(--display);font-weight:400;font-size:15px;margin:0 0 4px;color:var(--ink)}
+.pillar p{margin:0;font-size:11.5px;color:var(--muted-2);letter-spacing:.02em}
+
+/* ── Home · chapters ── */
+.chapters{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.chapter{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:4px;padding:34px 32px;overflow:hidden;transition:border-color .35s var(--ease),background-color .35s var(--ease),transform .35s var(--ease)}
+.chapter:hover{border-color:var(--accent-line);background:var(--accent-soft);transform:translateY(-4px)}
+.chapter-num{font-family:var(--display);font-weight:300;font-size:44px;line-height:1;color:var(--accent);opacity:.9}
+.chapter-tag{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-2);font-weight:500;margin-top:8px}
+.chapter h3{font-family:var(--display);font-weight:400;font-size:clamp(22px,2.6vw,28px);letter-spacing:-.01em;margin:20px 0 10px;color:var(--ink)}
+.chapter p{margin:0 0 26px;color:var(--muted);font-size:14px;max-width:44ch}
+.chapter .go{margin-top:auto;font-weight:500;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-bright);display:inline-flex;align-items:center;gap:8px}
+.chapter .go .ar{transition:transform .35s var(--ease)}
+.chapter:hover .go .ar{transform:translateX(5px)}
+
+/* ── Home · CTA ── */
+.cta-band{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px}
+
+@media(max-width:900px){
+  .pillars{grid-template-columns:repeat(2,1fr)}
+  .pillar{border-left:none;border-top:1px solid var(--line-soft)}
+  .pillar:nth-child(-n+2){border-top:none}
+  .chapters{grid-template-columns:1fr}
+  .hero-meta i{display:none}
+}
+@media(max-width:600px){.pillars{grid-template-columns:1fr}}
+</style>
+</head>
+<body data-page="home">
+<main id="top">
+
+  <!-- ══ Hero ══ -->
+  <section class="hero" id="hero">
+    <canvas class="hero-field" id="field" aria-hidden="true"></canvas>
+    <div class="hero-fallback" aria-hidden="true"></div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-mark" data-hero>
+        <svg class="m" viewBox="0 0 486 396" aria-hidden="true"><use href="#i-axiom-x"/></svg>
+        <svg class="w" viewBox="0 0 582 70" aria-label="AXIOM"><use href="#i-axiom-word"/></svg>
+      </div>
+      <p class="kicker hero-kicker" data-hero>Human Performance &amp; Longevity · Jakarta</p>
+      <h1 class="hero-title" id="hero-title">Documented, <em>not promised.</em></h1>
+      <p class="lead hero-lead" data-hero>The complete AXIOM house in one place — the brand, the business plan, the go-to-market and the shop, held to a single standard of verification. Research-grade peptides, clinical red-light therapy, recovery, wellness and apparel.</p>
+      <div class="hero-ctas" data-hero>
+        <a class="btn btn-solid btn-lg magnetic" href="performance.html">Enter the shop</a>
+        <a class="btn btn-ghost btn-lg magnetic" href="brand.html">Read the standard</a>
+      </div>
+      <div class="hero-meta" data-hero>
+        <span class="tab">HPLC/MS ≥ 98%</span><i></i>
+        <span>CoA per lot</span><i></i>
+        <span>Cold-chain dispatch</span><i></i>
+        <span>A person on WhatsApp</span>
+      </div>
+    </div>
+    <div class="hero-hint" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- ══ 01 · The house ══ -->
+  <section class="sec" id="house">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-idx"><span class="idx">01</span><span class="kk">The House</span></div>
+        <div>
+          <h2 class="sec-title">One house, <em>five pillars,</em> one standard.</h2>
+          <p class="lead">The market sells on noise — neon graphics, unverifiable purity, no paperwork. AXIOM changes the axis of the decision from how loud to how documented. Everything ships under one mark, and the mark on the apparel is the same mark on the lab label.</p>
+        </div>
+      </div>
+      <div class="pillars" data-reveal>
+        <div class="pillar"><svg class="p-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-flask"/></svg><h4>Peptide Science</h4><p>Research Use Only</p></div>
+        <div class="pillar"><svg class="p-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sun"/></svg><h4>Therapy &amp; Recovery</h4><p>Clinical red-light</p></div>
+        <div class="pillar"><svg class="p-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-drop"/></svg><h4>Wellness</h4><p>Documented sourcing</p></div>
+        <div class="pillar"><svg class="p-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-infinity"/></svg><h4>Longevity</h4><p>The long run</p></div>
+        <div class="pillar"><svg class="p-ico" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tshirt"/></svg><h4>Apparel</h4><p>Wear the standard</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 02 · Explore ══ -->
+  <section class="sec" id="explore">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-idx"><span class="idx">02</span><span class="kk">Explore</span></div>
+        <div>
+          <h2 class="sec-title">Four documents, <em>one standard.</em></h2>
+          <p class="lead">Everything that runs the house, each on its own page — the live shop, the launch plan, the brand system and the go-to-market strategy.</p>
+        </div>
+      </div>
+      <div class="chapters" data-stagger>
+        <a class="chapter magnetic" href="performance.html">
+          <span class="chapter-num tab">01</span>
+          <span class="chapter-tag">The Shop · Human Performance</span>
+          <h3>Human Performance &amp; Longevity</h3>
+          <p>The live storefront — the five pillars, the range, the Certificate of Analysis, and a WhatsApp quote closed by a person.</p>
+          <span class="go">Enter the shop <span class="ar">→</span></span>
+        </a>
+        <a class="chapter magnetic" href="plan.html">
+          <span class="chapter-num tab">02</span>
+          <span class="chapter-tag">Business Model · Plan · P&amp;L</span>
+          <h3>Business Model &amp; Launch Plan</h3>
+          <p>The reconciled board strategy — five pillars, a decade-long market, pricing by proof and margin, and ninety days to first orders.</p>
+          <span class="go">Read the plan <span class="ar">→</span></span>
+        </a>
+        <a class="chapter magnetic" href="brand.html">
+          <span class="chapter-num tab">03</span>
+          <span class="chapter-tag">Brand Guidelines · v1.0</span>
+          <h3>Brand Guidelines</h3>
+          <p>The full system — logo, warm-dark palette, Jost &amp; Inter, motion, voice, and the Research-Use standard that holds it all.</p>
+          <span class="go">Read the brand <span class="ar">→</span></span>
+        </a>
+        <a class="chapter magnetic" href="gtm.html">
+          <span class="chapter-num tab">04</span>
+          <span class="chapter-tag">Go-to-Market · 8 parts</span>
+          <h3>Go-to-Market Strategy</h3>
+          <p>Positioning, brand, sales, funnels, targets and cadence, closing scripts, the content engine and the operating rhythm.</p>
+          <span class="go">Read the strategy <span class="ar">→</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 03 · Direct ══ -->
+  <section class="sec" id="direct" style="border-bottom:none">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="sec-idx"><span class="idx">03</span><span class="kk">Direct</span></div>
+        <div>
+          <h2 class="sec-title">A real line <em>to a real person.</em></h2>
+          <p class="lead">Tell us what you're looking to source and we'll send an itemised quote with live stock and IDR pricing — the proof named before the price, always.</p>
+        </div>
+      </div>
+      <div class="cta-band" data-stagger>
+        <a class="btn btn-solid btn-lg magnetic" href="https://wa.me/6200000000000" rel="noopener">Start on WhatsApp</a>
+        <a class="btn btn-ghost btn-lg magnetic" href="performance.html">Browse the range</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+<script src="assets/vendor/three.min.js"></script>
+<script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/scrolltrigger.min.js"></script>
+<script src="assets/axiom-field.js"></script>
+<script src="assets/axiom-chrome.js"></script>
+<script src="assets/axiom-motion.js"></script>
+</body>
+</html>
