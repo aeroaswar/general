@@ -24,26 +24,85 @@
     apparel:  ['Neutral, precise make quality', 'Same mark, lab to label', 'Standard consumer returns', 'Identity worn quietly'],
   };
 
+  // Peptide Science entries follow the AXIOM Price List v1.0 (research
+  // catalogue, IDR) verbatim — compound, lot, category, price.
   var PRODUCTS = [
-    { id: 'pep-bpc157',   pillar: 'peptide',  name: 'BPC-157',              spec: '5 mg · lyophilate · repair pathway',       price: 1600000, ruo: true,  art: 'vial' },
-    { id: 'pep-tb500',    pillar: 'peptide',  name: 'TB-500',               spec: '5 mg · lyophilate · repair pathway',       price: 1900000, ruo: true,  art: 'vial' },
-    { id: 'pep-ipam',     pillar: 'peptide',  name: 'Ipamorelin',           spec: '5 mg · lyophilate · growth pathway',       price: 1800000, ruo: true,  art: 'vial' },
-    { id: 'pep-cjc',      pillar: 'peptide',  name: 'CJC-1295 (no DAC)',    spec: '5 mg · lyophilate · growth pathway',       price: 2100000, ruo: true,  art: 'vial' },
-    { id: 'pep-semax',    pillar: 'peptide',  name: 'Semax',                spec: '30 mg · lyophilate · neuro pathway',       price: 1700000, ruo: true,  art: 'vial' },
-    { id: 'pep-selank',   pillar: 'peptide',  name: 'Selank',               spec: '30 mg · lyophilate · neuro pathway',       price: 1700000, ruo: true,  art: 'vial' },
-    { id: 'pep-kit',      pillar: 'peptide',  name: 'BAC Water & Research Kit', spec: '10 ml bacteriostatic · sterile kit',   price: 250000,  ruo: true,  art: 'kit' },
+    // 01 · GLP-1s & Weight Loss
+    { id: 'pep-cagri-10',   pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Cagrilintide',            spec: '10 mg lot · lyophilate', price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-reta-5',     pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Retatrutide',             spec: '5 mg lot · lyophilate',  price: 2700000, ruo: true, art: 'vial' },
+    { id: 'pep-reta-10',    pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Retatrutide',             spec: '10 mg lot · lyophilate', price: 3100000, ruo: true, art: 'vial' },
+    { id: 'pep-reta-15',    pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Retatrutide',             spec: '15 mg lot · lyophilate', price: 3500000, ruo: true, art: 'vial' },
+    { id: 'pep-reta-20',    pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Retatrutide',             spec: '20 mg lot · lyophilate', price: 3900000, ruo: true, art: 'vial' },
+    { id: 'pep-reta-30',    pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Retatrutide',             spec: '30 mg lot · lyophilate', price: 5100000, ruo: true, art: 'vial' },
+    { id: 'pep-reta-60',    pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Retatrutide',             spec: '60 mg lot · lyophilate', price: 8300000, ruo: true, art: 'vial' },
+    { id: 'pep-tirz-10',    pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Tirzepatide',             spec: '10 mg lot · lyophilate', price: 2400000, ruo: true, art: 'vial' },
+    { id: 'pep-tirz-30',    pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Tirzepatide',             spec: '30 mg lot · lyophilate', price: 3800000, ruo: true, art: 'vial' },
+    { id: 'pep-tirz-40',    pillar: 'peptide', cat: 'GLP-1s & Weight Loss', name: 'Tirzepatide',             spec: '40 mg lot · lyophilate', price: 4500000, ruo: true, art: 'vial' },
+    // 02 · GH Secretagogues
+    { id: 'pep-cjcipa-10',  pillar: 'peptide', cat: 'GH Secretagogues', name: 'CJC-1295 (No DAC) + Ipamorelin', spec: '10 mg lot · blend',  price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-cjcipa-20',  pillar: 'peptide', cat: 'GH Secretagogues', name: 'CJC-1295 (No DAC) + Ipamorelin', spec: '20 mg lot · blend',  price: 4300000, ruo: true, art: 'vial' },
+    { id: 'pep-hgh-36',     pillar: 'peptide', cat: 'GH Secretagogues', name: 'HGH 191AA (Somatropin)',      spec: '36 IU lot',              price: 3200000, ruo: true, art: 'vial' },
+    { id: 'pep-hgh-40',     pillar: 'peptide', cat: 'GH Secretagogues', name: 'HGH 191AA (Somatropin)',      spec: '40 IU lot',              price: 3600000, ruo: true, art: 'vial' },
+    { id: 'pep-ipam-10',    pillar: 'peptide', cat: 'GH Secretagogues', name: 'Ipamorelin',                  spec: '10 mg lot · lyophilate', price: 2800000, ruo: true, art: 'vial' },
+    { id: 'pep-ipatesa-18', pillar: 'peptide', cat: 'GH Secretagogues', name: 'Ipamorelin + Tesamorelin',    spec: '18 mg lot · blend',      price: 5000000, ruo: true, art: 'vial' },
+    { id: 'pep-tesa-10',    pillar: 'peptide', cat: 'GH Secretagogues', name: 'Tesamorelin',                 spec: '10 mg lot · lyophilate', price: 3600000, ruo: true, art: 'vial' },
+    { id: 'pep-tesa-20',    pillar: 'peptide', cat: 'GH Secretagogues', name: 'Tesamorelin',                 spec: '20 mg lot · lyophilate', price: 4700000, ruo: true, art: 'vial' },
+    // 03 · Healing & Repair
+    { id: 'pep-bpc157-10',  pillar: 'peptide', cat: 'Healing & Repair', name: 'BPC-157',                     spec: '10 mg lot · lyophilate', price: 2700000, ruo: true, art: 'vial' },
+    { id: 'pep-wolv-20',    pillar: 'peptide', cat: 'Healing & Repair', name: 'BPC-157 + TB-500 (Wolverine)', spec: '20 mg lot · blend',     price: 3900000, ruo: true, art: 'vial' },
+    { id: 'pep-ghkcu-50',   pillar: 'peptide', cat: 'Healing & Repair', name: 'GHK-Cu',                      spec: '50 mg lot · copper peptide', price: 2100000, ruo: true, art: 'vial' },
+    { id: 'pep-ghkcu-100',  pillar: 'peptide', cat: 'Healing & Repair', name: 'GHK-Cu',                      spec: '100 mg lot · copper peptide', price: 2300000, ruo: true, art: 'vial' },
+    { id: 'pep-kpv-10',     pillar: 'peptide', cat: 'Healing & Repair', name: 'KPV',                         spec: '10 mg lot · lyophilate', price: 2600000, ruo: true, art: 'vial' },
+    { id: 'pep-klow-80',    pillar: 'peptide', cat: 'Healing & Repair', name: 'KLOW (BPC+TB+GHK+KPV)',       spec: '80 mg lot · blend',      price: 4400000, ruo: true, art: 'vial' },
+    { id: 'pep-ll37-5',     pillar: 'peptide', cat: 'Healing & Repair', name: 'LL-37',                       spec: '5 mg lot · lyophilate',  price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-pegmgf-2',   pillar: 'peptide', cat: 'Healing & Repair', name: 'Peg MGF',                     spec: '2 mg lot · lyophilate',  price: 3100000, ruo: true, art: 'vial' },
+    { id: 'pep-tb500-10',   pillar: 'peptide', cat: 'Healing & Repair', name: 'TB-500',                      spec: '10 mg lot · lyophilate', price: 2900000, ruo: true, art: 'vial' },
+    // 04 · Brain Health & Nootropics
+    { id: 'pep-adamax-10',  pillar: 'peptide', cat: 'Brain Health & Nootropics', name: 'Adamax',             spec: '10 mg lot · lyophilate', price: 3100000, ruo: true, art: 'vial' },
+    { id: 'pep-cere-60',    pillar: 'peptide', cat: 'Brain Health & Nootropics', name: 'Cerebrolysin',       spec: '60 mg lot',              price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-pine-20',    pillar: 'peptide', cat: 'Brain Health & Nootropics', name: 'Pinealon',           spec: '20 mg lot · lyophilate', price: 3600000, ruo: true, art: 'vial' },
+    { id: 'pep-selank-10',  pillar: 'peptide', cat: 'Brain Health & Nootropics', name: 'Selank',             spec: '10 mg lot · lyophilate', price: 2300000, ruo: true, art: 'vial' },
+    { id: 'pep-semax-10',   pillar: 'peptide', cat: 'Brain Health & Nootropics', name: 'Semax',              spec: '10 mg lot · lyophilate', price: 2300000, ruo: true, art: 'vial' },
+    { id: 'pep-selsem-20',  pillar: 'peptide', cat: 'Brain Health & Nootropics', name: 'Selank + Semax',     spec: '20 mg lot · blend',      price: 3200000, ruo: true, art: 'vial' },
+    // 05 · Energy & Endurance
+    { id: 'pep-5amino-50',  pillar: 'peptide', cat: 'Energy & Endurance', name: '5-Amino-1MQ',               spec: '50 mg lot',              price: 3200000, ruo: true, art: 'vial' },
+    { id: 'pep-aicar-50',   pillar: 'peptide', cat: 'Energy & Endurance', name: 'AICAR',                     spec: '50 mg lot · lyophilate', price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-lcar-5000',  pillar: 'peptide', cat: 'Energy & Endurance', name: 'L-Carnitine (Injectable)',  spec: '5 000 mg lot',           price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-motsc-10',   pillar: 'peptide', cat: 'Energy & Endurance', name: 'MOTS-c',                    spec: '10 mg lot · lyophilate', price: 2400000, ruo: true, art: 'vial' },
+    { id: 'pep-motsc-40',   pillar: 'peptide', cat: 'Energy & Endurance', name: 'MOTS-c',                    spec: '40 mg lot · lyophilate', price: 4300000, ruo: true, art: 'vial' },
+    { id: 'pep-slupp-5',    pillar: 'peptide', cat: 'Energy & Endurance', name: 'SLU-PP-332 (Injectable)',   spec: '5 mg lot',               price: 2700000, ruo: true, art: 'vial' },
+    // 06 · Immunity
+    { id: 'pep-ta1-10',     pillar: 'peptide', cat: 'Immunity', name: 'Thymosin Alpha-1',                    spec: '10 mg lot · lyophilate', price: 3600000, ruo: true, art: 'vial' },
+    // 07 · Sexual Health
+    { id: 'pep-hcg-10000',  pillar: 'peptide', cat: 'Sexual Health', name: 'HCG',                            spec: '10 000 IU lot',          price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-hmg-75',     pillar: 'peptide', cat: 'Sexual Health', name: 'HMG',                            spec: '75 IU lot',              price: 2700000, ruo: true, art: 'vial' },
+    { id: 'pep-kiss-10',    pillar: 'peptide', cat: 'Sexual Health', name: 'Kisspeptin',                     spec: '10 mg lot · lyophilate', price: 3200000, ruo: true, art: 'vial' },
+    { id: 'pep-oxy-10',     pillar: 'peptide', cat: 'Sexual Health', name: 'Oxytocin Acetate',               spec: '10 mg lot · lyophilate', price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-pt141-10',   pillar: 'peptide', cat: 'Sexual Health', name: 'PT-141',                         spec: '10 mg lot · lyophilate', price: 2600000, ruo: true, art: 'vial' },
+    // 08 · Longevity & Cellular Repair
+    { id: 'pep-dsip-5',     pillar: 'peptide', cat: 'Longevity & Cellular Repair', name: 'DSIP',             spec: '5 mg lot · lyophilate',  price: 2100000, ruo: true, art: 'vial' },
+    { id: 'pep-dsip-10',    pillar: 'peptide', cat: 'Longevity & Cellular Repair', name: 'DSIP',             spec: '10 mg lot · lyophilate', price: 2600000, ruo: true, art: 'vial' },
+    { id: 'pep-epi-50',     pillar: 'peptide', cat: 'Longevity & Cellular Repair', name: 'Epithalon',        spec: '50 mg lot · lyophilate', price: 3400000, ruo: true, art: 'vial' },
+    { id: 'pep-hum-10',     pillar: 'peptide', cat: 'Longevity & Cellular Repair', name: 'Humanin',          spec: '10 mg lot · lyophilate', price: 4500000, ruo: true, art: 'vial' },
+    { id: 'pep-nad-500',    pillar: 'peptide', cat: 'Longevity & Cellular Repair', name: 'NAD+',             spec: '500 mg lot',             price: 2600000, ruo: true, art: 'vial' },
+    { id: 'pep-nad-1000',   pillar: 'peptide', cat: 'Longevity & Cellular Repair', name: 'NAD+',             spec: '1 000 mg lot',           price: 3000000, ruo: true, art: 'vial' },
+    { id: 'pep-ss31-50',    pillar: 'peptide', cat: 'Longevity & Cellular Repair', name: 'SS-31',            spec: '50 mg lot · lyophilate', price: 4500000, ruo: true, art: 'vial' },
+    // Research supplies
+    { id: 'pep-kit',        pillar: 'peptide', cat: 'Research Supplies', name: 'BAC Water & Research Kit',   spec: '10 ml bacteriostatic · sterile kit', price: 250000, ruo: true, art: 'kit' },
+    // Therapy & Recovery
     { id: 'thr-mask',     pillar: 'therapy',  name: 'Red Light Therapy Mask',   spec: 'Face · LED array · 660 + 850 nm',      price: 2400000, art: 'mask' },
     { id: 'thr-panel',    pillar: 'therapy',  name: 'Red Light Half-Panel',     spec: 'Torso · 300 LED · 660 + 850 nm',       price: 4800000, art: 'panel' },
     { id: 'thr-mat',      pillar: 'therapy',  name: 'Red Light Full-Body Mat',  spec: 'Full body · 1 200 LED · 660 + 850 nm', price: 6500000, art: 'mat' },
     { id: 'thr-boots',    pillar: 'therapy',  name: 'Compression Recovery Boots', spec: 'Sequential · 4 chamber · pair',      price: 3900000, art: 'boots' },
     { id: 'thr-sleeve',   pillar: 'therapy',  name: 'Targeted Compression Sleeve', spec: 'Knee / elbow · 2 chamber',          price: 1400000, art: 'sleeve' },
+    // Wellness
     { id: 'wel-nad',      pillar: 'wellness', name: 'NAD⁺ Precursor',       spec: '60 capsules · cellular energy',            price: 650000,  art: 'jar' },
     { id: 'wel-antiox',   pillar: 'wellness', name: 'Antioxidant Complex',  spec: '60 capsules · daily baseline',             price: 420000,  art: 'jar' },
     { id: 'wel-energy',   pillar: 'wellness', name: 'Cellular Energy',      spec: '60 capsules · CoQ10 + PQQ',                price: 480000,  art: 'jar' },
     { id: 'wel-mag',      pillar: 'wellness', name: 'Magnesium Complex',    spec: '90 capsules · three forms',                price: 350000,  art: 'jar' },
-    { id: 'lon-ghkcu',    pillar: 'longevity', name: 'GHK-Cu',              spec: '50 mg · copper peptide',                   price: 2200000, ruo: true, art: 'vial' },
-    { id: 'lon-epi',      pillar: 'longevity', name: 'Epithalon',           spec: '10 mg · lyophilate',                       price: 2000000, ruo: true, art: 'vial' },
+    // Longevity (consumer)
     { id: 'lon-nmn',      pillar: 'longevity', name: 'NMN Capsules',        spec: '60 capsules · 500 mg',                     price: 850000,  art: 'jar' },
+    // Apparel
     { id: 'app-tee',      pillar: 'apparel',  name: 'Standard Tee',         spec: 'Heavyweight cotton · bone / canvas',       price: 380000,  art: 'tee' },
     { id: 'app-crew',     pillar: 'apparel',  name: 'Performance Crewneck', spec: 'Brushed loopback · canvas',                price: 680000,  art: 'tee' },
     { id: 'app-shorts',   pillar: 'apparel',  name: 'Training Shorts',      spec: '4-way stretch · 7-inch',                   price: 450000,  art: 'shorts' },
@@ -84,6 +143,8 @@
   /* ── render: grid ── */
   var grid = document.getElementById('shop-grid');
   var activePillar = 'all';
+  var activeCat = 'all';
+  var CATS = ['GLP-1s & Weight Loss', 'GH Secretagogues', 'Healing & Repair', 'Brain Health & Nootropics', 'Energy & Endurance', 'Immunity', 'Sexual Health', 'Longevity & Cellular Repair', 'Research Supplies'];
   var pillarParam = new URLSearchParams(location.search).get('pillar');
   if (pillarParam && PILLARS[pillarParam]) activePillar = pillarParam;
 
@@ -93,9 +154,10 @@
 
   function cardHtml(p) {
     var pil = PILLARS[p.pillar];
+    var label = p.cat || pil.name;
     return '<article class="prod-card" data-id="' + p.id + '">' +
       '<button class="prod-art" data-detail="' + p.id + '" aria-label="View ' + p.name + '">' + artSvg(p) + '</button>' +
-      '<div class="prod-tags"><span class="prod-pillar"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#' + pil.icon + '"/></svg>' + pil.name + '</span>' +
+      '<div class="prod-tags"><span class="prod-pillar"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#' + pil.icon + '"/></svg>' + label + '</span>' +
       (p.ruo ? '<span class="pill pill-ruo">RUO</span>' : '') + '</div>' +
       '<h3 class="prod-name">' + p.name + '</h3>' +
       '<p class="prod-spec">' + p.spec + '</p>' +
@@ -106,9 +168,26 @@
       '</div></div></article>';
   }
 
+  function renderSubchips() {
+    var bar = document.getElementById('shop-subbar');
+    if (!bar) return;
+    if (activePillar !== 'peptide') { bar.innerHTML = ''; bar.hidden = true; return; }
+    bar.hidden = false;
+    var chips = ['all'].concat(CATS);
+    bar.innerHTML = chips.map(function (c) {
+      return '<button class="shop-subchip' + ((c === activeCat) ? ' is-active' : '') + '" data-cat="' + c + '" type="button">' +
+        (c === 'all' ? 'All compounds' : c) + '</button>';
+    }).join('');
+  }
+
   function renderGrid(animate) {
     if (!grid) return;
-    var list = PRODUCTS.filter(function (p) { return activePillar === 'all' || p.pillar === activePillar; });
+    var list = PRODUCTS.filter(function (p) {
+      if (activePillar !== 'all' && p.pillar !== activePillar) return false;
+      if (activePillar === 'peptide' && activeCat !== 'all' && p.cat !== activeCat) return false;
+      return true;
+    });
+    renderSubchips();
     grid.innerHTML = list.map(cardHtml).join('');
     document.getElementById('shop-count').textContent = list.length + (list.length === 1 ? ' product' : ' products');
     if (animate && window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -121,13 +200,21 @@
     chip.classList.toggle('is-active', chip.dataset.pillar === activePillar);
     chip.addEventListener('click', function () {
       activePillar = chip.dataset.pillar;
+      activeCat = 'all';
       document.querySelectorAll('.shop-chip').forEach(function (c) { c.classList.toggle('is-active', c === chip); });
       renderGrid(true);
     });
   });
 
+  document.addEventListener('click', function (e) {
+    var sub = e.target.closest('.shop-subchip');
+    if (!sub) return;
+    activeCat = sub.dataset.cat;
+    renderGrid(true);
+  });
+
   /* ── featured strip (home) ── */
-  var FEATURED = ['thr-mask', 'pep-bpc157', 'lon-ghkcu', 'thr-mat', 'wel-nad', 'app-crew'];
+  var FEATURED = ['thr-mask', 'pep-bpc157-10', 'pep-reta-10', 'thr-mat', 'wel-nad', 'app-crew'];
   var featured = document.getElementById('featured-grid');
   if (featured) featured.innerHTML = FEATURED.map(function (id) { return cardHtml(byId[id]); }).join('');
 

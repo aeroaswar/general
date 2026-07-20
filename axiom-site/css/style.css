@@ -291,6 +291,14 @@ body.has-cursor,body.has-cursor a,body.has-cursor button{cursor:none}
 .shop-chip:hover{color:var(--ink);border-color:var(--line-2)}
 .shop-chip.is-active{color:var(--accent-bright);border-color:var(--accent-line);background:var(--accent-soft)}
 .shop-count{margin-left:auto;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted-2);font-weight:500}
+.shop-subbar{display:flex;gap:6px;flex-wrap:wrap;margin:-14px 0 26px;padding-top:16px;border-top:1px solid var(--line-soft)}
+.shop-subchip{
+  border:1px solid transparent;border-radius:999px;background:transparent;color:var(--muted-2);
+  font-family:var(--sans);font-weight:500;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 13px;cursor:pointer;transition:color .2s var(--ease),border-color .2s var(--ease);
+}
+.shop-subchip:hover{color:var(--muted)}
+.shop-subchip.is-active{color:var(--accent-bright);border-color:var(--accent-line)}
 .shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
 .prod-card{
   border:1px solid var(--line);border-radius:3px;background:rgba(242,237,229,.015);
