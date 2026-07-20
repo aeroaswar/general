@@ -27,6 +27,7 @@
   });
 
   function removeGate() {
+    if (window.AXTrap) AXTrap.release(gate);
     gate.remove();
     document.body.classList.remove('is-gated');
   }
@@ -101,6 +102,7 @@
   } else {
     document.body.classList.add('is-gated');
     document.getElementById('gate-confirm').addEventListener('click', enter);
+    if (window.AXTrap) AXTrap.activate(gate);
   }
 
   /* ══ Nav hide/show + progress ══ */

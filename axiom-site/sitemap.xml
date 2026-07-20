@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Replace axiom.example with the production domain. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://axiom.example/index.html</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://axiom.example/shop.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://axiom.example/proof.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://axiom.example/contact.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+</urlset>

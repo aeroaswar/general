@@ -6,6 +6,20 @@
 <title>Shop — AXIOM</title>
 <meta name="description" content="The AXIOM range: research peptides (RUO), clinical red-light therapy, recovery, wellness, longevity and apparel — one standard, ordered by itemised WhatsApp quote.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 486 486'%3E%3Crect width='486' height='486' fill='%23070605'/%3E%3Cg fill='%23C88A4E' transform='translate(0,45)'%3E%3Cpath d='M0 0 86 0 229 149 186 186Z'/%3E%3Cpath d='M486 0 400 0 257 149 300 186Z'/%3E%3Cpath d='M0 396 86 396 229 247 186 210Z'/%3E%3Cpath d='M486 396 400 396 257 247 300 210Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="canonical" href="https://axiom.example/shop.html">
+<meta name="theme-color" content="#070605">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AXIOM">
+<meta property="og:title" content="Shop — AXIOM">
+<meta property="og:description" content="The AXIOM range: research peptides (RUO), clinical red-light therapy, recovery, wellness, longevity and apparel — ordered by itemised WhatsApp quote.">
+<meta property="og:url" content="https://axiom.example/shop.html">
+<meta property="og:image" content="https://axiom.example/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shop — AXIOM">
+<meta name="twitter:description" content="Browse the full AXIOM catalogue — research peptides, therapy, recovery, wellness and apparel.">
+<meta name="twitter:image" content="https://axiom.example/og.png">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body data-page="shop">
@@ -22,6 +36,20 @@
 
   <section class="sec sec-shop" id="shop">
     <div class="wrap">
+      <div class="shop-tools" data-reveal>
+        <div class="shop-search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-search"/></svg>
+          <input id="shop-search" type="search" placeholder="Search compounds…" aria-label="Search products" autocomplete="off" spellcheck="false">
+        </div>
+        <label class="shop-sort"><span>Sort</span>
+          <select id="shop-sort" aria-label="Sort products">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price · low to high</option>
+            <option value="price-desc">Price · high to low</option>
+            <option value="name">Name · A–Z</option>
+          </select>
+        </label>
+      </div>
       <div class="shop-bar" data-reveal>
         <div class="shop-chips" role="group" aria-label="Filter by pillar">
           <button class="shop-chip is-active" data-pillar="all" type="button">All</button>

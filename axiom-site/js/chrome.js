@@ -17,7 +17,10 @@
 '  <symbol id="i-infinity" viewBox="0 0 24 24"><path d="M6 8.5c-2 0-3.5 1.6-3.5 3.5S4 15.5 6 15.5c4 0 8-7 12-7 2 0 3.5 1.6 3.5 3.5s-1.5 3.5-3.5 3.5c-4 0-8-7-12-7z"/></symbol>' +
 '  <symbol id="i-tshirt" viewBox="0 0 24 24"><path d="M8.2 4 4 6.2l1.6 3.6L8 8.9V20h8V8.9l2.4.9L20 6.2 15.8 4a3.8 3.8 0 0 1-7.6 0z"/></symbol>' +
 '  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 12.2a1.8 1.8 0 0 1-1.8 1.6H7.8A1.8 1.8 0 0 1 6 20.2Z"/><path d="M8.6 10.5V6.9a3.4 3.4 0 0 1 6.8 0v3.6"/></symbol>' +
+'  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></symbol>' +
 '</svg>' +
+
+'<a class="skip-link" href="#top">Skip to content</a>' +
 
 '<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">' +
 '  <div class="gate-inner">' +
@@ -82,6 +85,7 @@
 '  <div class="cart-foot">' +
 '    <p class="cart-ruo" id="cart-ruo" hidden>Cart contains Research Use Only items — in-vitro laboratory use, qualified researchers and institutional buyers only. No dosing or usage guidance is provided.</p>' +
 '    <div class="cart-total-row"><span>Subtotal</span><span class="tab" id="cart-total">Rp 0</span></div>' +
+'    <p class="cart-ref-row">Order ref <span id="cart-ref" class="tab">—</span></p>' +
 '    <p class="cart-note">Quotes are itemised with live stock and confirmed by a person — the proof named before the price.</p>' +
 '    <a class="btn btn-solid btn-lg cart-wa" id="cart-wa" href="#" rel="noopener" target="_blank">Request quote on WhatsApp</a>' +
 '    <button class="btn btn-ghost cart-copy" id="cart-copy" type="button">Copy order</button>' +
@@ -96,6 +100,7 @@
 '</div>' +
 
 '<div class="toast" id="toast" role="status" aria-live="polite"></div>' +
+'<div id="ax-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>' +
 
 '<footer class="footer">' +
 '  <div class="wrap">' +
@@ -124,4 +129,38 @@
   var page = document.body.dataset.page || 'home';
   var link = document.querySelector('.nav-links a[data-nav="' + page + '"]');
   if (link) link.classList.add('is-active');
+
+  /* ── focus trap (stacked: modal can sit over the drawer) + live region ── */
+  (function () {
+    var stack = [];
+    function focusables(c) {
+      return Array.prototype.filter.call(
+        c.querySelectorAll('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea,[tabindex]:not([tabindex="-1"])'),
+        function (el) { return el.offsetParent !== null || el === document.activeElement; });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab' || !stack.length) return;
+      var f = focusables(stack[stack.length - 1].el);
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }, true);
+    window.AXTrap = {
+      activate: function (el) {
+        if (!el) return;
+        stack.push({ el: el, last: document.activeElement });
+        var f = focusables(el); if (f.length) f[0].focus();
+      },
+      release: function (el) {
+        for (var i = stack.length - 1; i >= 0; i--) {
+          if (stack[i].el === el) { var last = stack[i].last; stack.splice(i, 1); if (last && last.focus) last.focus(); break; }
+        }
+      }
+    };
+    window.axAnnounce = function (m) {
+      var l = document.getElementById('ax-live');
+      if (l) { l.textContent = ''; setTimeout(function () { l.textContent = m; }, 40); }
+    };
+  })();
 })();
