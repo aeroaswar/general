@@ -1,6 +1,6 @@
 # PT GSA — Company Profile
 
-A 12-page, A4 company profile for **PT Global Sarana Angkasa (PT GSA)**, an
+An 11-page, A4 company profile for **PT Global Sarana Angkasa (PT GSA)**, an
 international air cargo General Sales Agent. Built as a self-contained HTML
 document, print-tuned to A4.
 
@@ -23,7 +23,7 @@ The layout follows the **PT MMI Company Profile 2026** editorial system:
 3. What we do · 4. Organizational structure · 5. Milestones · 6. Airline partners ·
 7. **Global network** (Indonesia → Europe & USA route map) ·
 8. **Reach and cargo lanes** (great-circle distance chart) · 9. Marketing plan ·
-10. Recognition and strengths · 11–12. Contact.
+10–11. Recognition and strengths.
 
 ## Data notes
 - All company facts are carried from the source GSA proposal.

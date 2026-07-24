@@ -81,8 +81,8 @@
   /* key/value list */
   .kv{display:grid;grid-template-columns:38mm 1fr;row-gap:0}
   .kv .k{font-family:var(--sans);font-size:7.4pt;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-         color:var(--muted);padding:3.4mm 0;border-top:.5pt solid var(--hair)}
-  .kv .v{font-family:var(--sans);font-size:9.4pt;color:var(--ink);padding:3.4mm 0;border-top:.5pt solid var(--hair)}
+         color:var(--muted);padding:2.7mm 0;border-top:.5pt solid var(--hair)}
+  .kv .v{font-family:var(--sans);font-size:9.4pt;color:var(--ink);padding:2.7mm 0;border-top:.5pt solid var(--hair)}
   .kv .v .sub{color:var(--body)}
 
   /* dark feature block */
@@ -173,18 +173,17 @@
           <div class="toc-i">08 Reach and cargo lanes<span>09</span></div>
           <div class="toc-i">09 Marketing plan<span>10</span></div>
           <div class="toc-i">10 Recognition and strengths<span>11</span></div>
-          <div class="toc-i">— Contact<span>12</span></div>
         </div>
       </div>
     </div>
 
-    <div class="stats" style="margin-top:12mm">
+    <div class="stats" style="margin-top:9mm">
       <div class="stat"><div class="n tnum">7,200<small> T</small></div><div class="c">Cargo delivered per year</div></div>
       <div class="stat"><div class="n tnum">18+</div><div class="c">Years of experience</div></div>
       <div class="stat"><div class="n tnum">190</div><div class="c">Destinations in the international network</div></div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:14mm;margin-top:13mm">
+    <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:14mm;margin-top:9mm">
       <div>
         <div class="label" style="margin-bottom:3mm">Company record</div>
         <div class="kv">
@@ -199,10 +198,12 @@
       </div>
       <div>
         <div class="label" style="margin-bottom:3mm">Where we operate</div>
-        <div style="position:relative;background:var(--panel);padding:6mm">
-          <img src="assets/world-pacific.svg" alt="" style="width:100%;display:block;filter:saturate(.9)"/>
-          <!-- Jakarta hub dot at 35.2% / 53.4% of the 1000x500 map -->
-          <span style="position:absolute;left:calc(6mm + (100% - 12mm)*0.352);top:calc(6mm + (100% - 12mm)*0.534*0.5);width:6px;height:6px;background:var(--gsa-red);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(243,101,35,.35)"></span>
+        <div style="background:var(--panel);padding:6mm">
+          <div style="position:relative">
+            <img src="assets/world-pacific.svg" alt="" style="width:100%;display:block;filter:saturate(.9)"/>
+            <!-- Jakarta at 35.2% x / 53.4% y of the 1000x500 map -->
+            <span style="position:absolute;left:35.2%;top:53.4%;width:6px;height:6px;background:var(--gsa-red);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(243,101,35,.4)"></span>
+          </div>
         </div>
         <p style="font-family:var(--sans);font-size:8pt;color:var(--body);margin-top:3mm;line-height:1.5">
           Head office in Jakarta (CGK / DPS gateways). Carrier partnerships reach across Asia, the Middle East, Africa, Europe and the Americas.</p>
@@ -588,42 +589,10 @@
   <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">11</span></div>
 </section>
 
-<!-- ====================== 12 · CONTACT ====================== -->
-<section class="page dark">
-  <div style="position:absolute;inset:0">
-    <img class="duo" src="assets/hero-aircraft.png" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.4;object-position:center 30%"/>
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,15,.72),rgba(20,18,15,.62))"></div>
-  </div>
-
-  <div class="rh" style="border:0;top:15mm">
-    <img src="assets/gsa-logo.png" alt="PT GSA" style="height:11mm;width:auto;position:relative;top:-4mm"/>
-    <span style="color:rgba(240,234,225,.82);letter-spacing:.22em">Contact</span>
-  </div>
-
-  <div style="position:absolute;left:var(--mx);right:var(--mx);top:40%">
-    <h1 class="h1" style="color:#F3EEE5;font-size:26pt">Contact us</h1>
-    <p class="lead" style="color:rgba(240,234,225,.82);max-width:120mm;margin-top:5mm">For cargo sales, interline, and GSA partnership enquiries, talk to us about the next lane.</p>
-
-    <div style="margin-top:10mm;display:grid;grid-template-columns:34mm 1fr;max-width:150mm">
-      <div class="clabel">Office</div><div class="cval">Jakarta, Indonesia</div>
-      <div class="clabel">Telephone</div><div class="cval">To be provided</div>
-      <div class="clabel">Email</div><div class="cval">To be provided</div>
-      <div class="clabel">Website</div><div class="cval">To be provided</div>
-    </div>
-    <p style="font-family:var(--sans);font-size:7.4pt;color:rgba(240,234,225,.5);margin-top:8mm;max-width:150mm">Contact details were not present in the source material and are shown as placeholders for the company to complete.</p>
-  </div>
-
-  <div class="rf" style="bottom:13mm">
-    <span style="color:rgba(240,234,225,.5);max-width:150mm;letter-spacing:.02em;text-transform:none;font-size:6.8pt;line-height:1.5">
-      © 2026 PT Global Sarana Angkasa. This document is provided for general information only and does not constitute an offer or contractual commitment. Figures reflect company records at the time of writing.</span>
-    <span class="pg">12</span>
-  </div>
-</section>
-
 </div>
 
 <style>
-  .toc-i{display:flex;justify-content:space-between;align-items:baseline;padding:2.2mm 0;border-top:.5pt solid var(--hair);color:var(--ink)}
+  .toc-i{display:flex;justify-content:space-between;align-items:baseline;padding:1.7mm 0;border-top:.5pt solid var(--hair);color:var(--ink)}
   .toc-i span{color:var(--muted);font-variant-numeric:tabular-nums}
   .unit .ut{font-family:var(--sans);font-size:8pt;font-weight:600;color:var(--ink);line-height:1.25}
   .unit .uh{font-family:var(--sans);font-size:8.6pt;color:var(--body);margin-top:1mm}
