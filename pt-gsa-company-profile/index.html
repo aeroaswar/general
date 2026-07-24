@@ -4,747 +4,605 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>PT Global Sarana Angkasa — Company Profile</title>
-<meta name="description" content="PT Global Sarana Angkasa (PT GSA) company profile — Swiss / International Typographic Style, A4." />
+<meta name="description" content="PT Global Sarana Angkasa (PT GSA) — international air cargo General Sales Agent. Company profile." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   /* ============================================================
      PT GSA — Company Profile
-     Swiss / International Typographic Style.
-     Single grotesque sans-serif family (Inter) throughout —
-     no serif type anywhere. Palette restricted to ink / paper / one
-     red accent. Strict 8-column grid, hairline rules, numbered
-     sections, duotone (grayscale) photography.
+     Editorial system adapted from the PT MMI Company Profile 2026:
+     warm ivory paper, charcoal ink, a single warm terracotta used
+     only in data exhibits, serif display + humanist-sans text,
+     duotone photography, hairline-ruled tables, running heads.
      ============================================================ */
-
   :root{
-    --ink:#0A0A0A;
-    --paper:#FFFFFF;
-    --paper-dim:#F4F2ED;
-    --red:#E8491D;
-    --line:#0A0A0A;
-    --line-soft:rgba(10,10,10,.18);
-    --mm-page-w:210mm;
-    --mm-page-h:297mm;
-    --mm-margin-x:14mm;
+    --paper:#F0EAE1; --panel:#E7DFD2; --panel2:#EDE7DC;
+    --ink:#221E1A; --body:#4C453C; --muted:#8B8477; --faint:#A9A295;
+    --hair:#D3CCBE; --hair2:#C9C1B2;
+    --bar:#B2947F; --track:#E1D9CC; --tan:#BBA588;
+    --serif:'Newsreader',Georgia,'Times New Roman',serif;
+    --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --mx:18mm;      /* page side margin */
   }
-  *{box-sizing:border-box; margin:0; padding:0}
-  html,body{background:#5b5b5b}
-  body{
-    font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink);
-    -webkit-font-smoothing:antialiased;
-  }
-  .doc{display:flex; flex-direction:column; align-items:center; gap:8mm; padding:8mm 0 24mm}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#6f6a62}
+  body{font-family:var(--sans);color:var(--body);-webkit-font-smoothing:antialiased;font-feature-settings:"kern" 1;}
+  .doc{display:flex;flex-direction:column;align-items:center;gap:8mm;padding:8mm 0 24mm}
 
-  .page{
-    width:var(--mm-page-w); height:var(--mm-page-h);
-    background:var(--paper);
-    position:relative;
-    overflow:hidden;
-    flex:none;
-    box-shadow:0 2px 24px rgba(0,0,0,.35);
-  }
-  .page.dark{background:var(--ink); color:var(--paper)}
+  .page{position:relative;width:210mm;height:297mm;background:var(--paper);overflow:hidden;flex:none;
+        box-shadow:0 2px 26px rgba(0,0,0,.34)}
+  .page.dark{background:var(--ink)}
 
-  /* folio system — running head/foot repeated on every page */
-  .folio{
-    position:absolute; left:var(--mm-margin-x); right:var(--mm-margin-x);
-    display:flex; align-items:baseline; justify-content:space-between;
-    font-size:7.6pt; font-weight:600; letter-spacing:.14em; text-transform:uppercase;
-  }
-  .folio-top{top:11mm}
-  .folio-bottom{bottom:11mm; padding-top:2.4mm; border-top:.75pt solid currentColor}
-  .page.dark .folio{color:var(--paper)}
-  .page:not(.dark) .folio{color:var(--ink)}
+  /* running head / foot */
+  .rh,.rf{position:absolute;left:var(--mx);right:var(--mx);display:flex;justify-content:space-between;align-items:baseline;
+          font-family:var(--sans);font-size:7.4pt;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .rh{top:13mm;padding-bottom:3mm;border-bottom:.5pt solid var(--hair)}
+  .rh .sec{color:var(--ink);font-weight:600}
+  .rf{bottom:12mm;padding-top:3mm;border-top:.5pt solid var(--hair);color:var(--muted)}
+  .rf .pg{color:var(--ink);font-weight:600;letter-spacing:.1em}
+  .page.dark .rh{border-color:rgba(240,234,225,.22);color:rgba(240,234,225,.6)}
+  .page.dark .rf{border-color:rgba(240,234,225,.22);color:rgba(240,234,225,.6)}
+  .page.dark .rh .sec,.page.dark .rf .pg{color:var(--paper)}
 
-  .content{
-    position:absolute; left:var(--mm-margin-x); right:var(--mm-margin-x);
-    top:22mm; bottom:18mm;
-    display:grid; grid-template-columns:repeat(8,1fr); column-gap:5mm;
-    grid-auto-rows:min-content;
-  }
+  .wrap{position:absolute;left:var(--mx);right:var(--mx);top:24mm;bottom:22mm}
 
-  .section-num{ font-size:15mm; font-weight:800; color:var(--red); line-height:1; letter-spacing:-.02em }
-  .section-title{
-    font-size:9.5mm; font-weight:900; text-transform:uppercase; letter-spacing:-.01em; line-height:.98;
-    margin-top:2mm;
-  }
-  .eyebrow{ font-size:8.5pt; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--red) }
+  /* type */
+  .eyebrow{font-family:var(--sans);font-size:7.6pt;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  h1.h1{font-family:var(--serif);font-weight:500;font-size:27pt;line-height:1.04;color:var(--ink);letter-spacing:-.01em}
+  h2.h2{font-family:var(--serif);font-weight:500;font-size:15pt;line-height:1.12;color:var(--ink)}
+  .lead{font-family:var(--sans);font-size:10.5pt;line-height:1.6;color:var(--body)}
+  p.body{font-family:var(--sans);font-size:9.6pt;line-height:1.62;color:var(--body)}
+  p.body + p.body{margin-top:3.4mm}
+  .label{font-family:var(--sans);font-size:7.4pt;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .serif{font-family:var(--serif)}
+  .rule{border:0;border-top:.5pt solid var(--hair)}
+  .rule-ink{border:0;border-top:1pt solid var(--ink)}
+  .tnum{font-variant-numeric:tabular-nums}
 
-  .rule{ border:0; border-top:.75pt solid var(--line); }
-  .rule-soft{ border:0; border-top:.6pt solid var(--line-soft) }
+  /* stat blocks */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+  .stat{padding-top:4mm;border-top:1pt solid var(--ink)}
+  .stat + .stat{padding-left:7mm}
+  .stat .n{font-family:var(--serif);font-weight:500;font-size:23pt;color:var(--ink);line-height:1}
+  .stat .n small{font-size:11pt;color:var(--muted)}
+  .stat .c{font-family:var(--sans);font-size:8.4pt;color:var(--body);margin-top:2.2mm;line-height:1.4}
 
-  p.body-copy{ font-size:11pt; line-height:1.62; font-weight:400 }
-  .label{ font-size:8pt; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--red) }
+  /* tables */
+  table.t{width:100%;border-collapse:collapse}
+  table.t th{font-family:var(--sans);font-size:7.4pt;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+             color:var(--muted);text-align:left;padding:0 0 3mm 0;border-bottom:1pt solid var(--ink);vertical-align:bottom}
+  table.t td{font-family:var(--sans);font-size:9.2pt;line-height:1.45;color:var(--body);
+             padding:3.2mm 0;border-bottom:.5pt solid var(--hair);vertical-align:top}
+  table.t td.k{color:var(--ink);font-weight:600;padding-right:5mm;white-space:nowrap}
+  table.t td.k.serif{font-family:var(--serif);font-weight:500;font-size:10.5pt}
 
-  img.photo{ display:block; width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.06) brightness(1.02); }
-  .photo-cap{ font-size:8pt; font-weight:600; letter-spacing:.05em; text-transform:uppercase; margin-top:2mm; color:var(--ink) }
+  /* key/value list */
+  .kv{display:grid;grid-template-columns:38mm 1fr;row-gap:0}
+  .kv .k{font-family:var(--sans);font-size:7.4pt;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+         color:var(--muted);padding:3.4mm 0;border-top:.5pt solid var(--hair)}
+  .kv .v{font-family:var(--sans);font-size:9.4pt;color:var(--ink);padding:3.4mm 0;border-top:.5pt solid var(--hair)}
+  .kv .v .sub{color:var(--body)}
 
-  .tabular{ font-variant-numeric:tabular-nums }
+  /* dark feature block */
+  .feature{background:var(--ink);color:var(--paper);padding:14mm 14mm}
+  .feature .eyebrow{color:var(--tan)}
+  .feature .q{font-family:var(--serif);font-weight:400;font-size:15.5pt;line-height:1.34;color:#EFE9DF;margin-top:6mm}
 
-  @media screen{
-    .doc{min-height:100vh}
-  }
+  /* bar chart (MMI exhibit style) */
+  .barwrap{display:grid;grid-template-columns:1fr;row-gap:2.6mm}
+  .bar{display:grid;grid-template-columns:34mm 1fr auto;align-items:center;column-gap:4mm}
+  .bar .bl{font-family:var(--sans);font-size:8.6pt;color:var(--ink)}
+  .bar .bl small{color:var(--muted)}
+  .bar .bt{position:relative;height:6.2mm;background:var(--track)}
+  .bar .bf{position:absolute;left:0;top:0;bottom:0;background:var(--bar)}
+  .bar .bv{font-family:var(--sans);font-size:8.8pt;font-weight:600;color:var(--ink);text-align:right;min-width:20mm}
+
+  /* photos — warm duotone */
+  .duo{filter:grayscale(1) sepia(.30) brightness(1.02) contrast(1.03)}
+  .figcap{font-family:var(--serif);font-style:italic;font-size:8.4pt;color:var(--muted);margin-top:2.4mm}
+
+  .logo-dark{filter:brightness(0) invert(1) sepia(.18) saturate(1.1) opacity(.94)}   /* cream on dark */
+  .logo-ink{filter:brightness(0) saturate(0) opacity(.86)}                            /* charcoal on light */
+
   @media print{
     html,body{background:none}
-    .doc{padding:0; gap:0; display:block}
-    .page{box-shadow:none; page-break-after:always}
-    @page{ size:A4; margin:0 }
+    .doc{padding:0;gap:0;display:block}
+    .page{box-shadow:none;page-break-after:always}
+    @page{size:A4;margin:0}
   }
 </style>
 </head>
 <body>
 <div class="doc">
 
-<!-- ============================================================
-     PAGE 01 — COVER
-     ============================================================ -->
+<!-- ========================= 01 · COVER ========================= -->
 <section class="page dark">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
+  <div style="position:absolute;inset:0">
+    <img class="duo" src="assets/hero-aircraft.png" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.5"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,15,.62) 0%,rgba(20,18,15,.30) 42%,rgba(20,18,15,.72) 100%)"></div>
   </div>
 
-  <div class="content" style="top:22mm; bottom:22mm; grid-template-rows:auto 1fr auto;">
-    <div style="grid-column:1/9;">
-      <img src="assets/gsa-logo.png" alt="PT GSA" style="display:block; height:15mm; width:auto;"/>
-    </div>
-
-    <div style="grid-column:1/9; align-self:end;">
-      <div style="width:60%; aspect-ratio:16/10; margin-bottom:14mm;">
-        <img class="photo" src="assets/hero-aircraft.png" alt="" style="filter:grayscale(1) contrast(1.1)"/>
-      </div>
-      <p class="eyebrow" style="color:var(--red)">Company Profile — Air Cargo GSA</p>
-      <h1 style="font-size:26mm; font-weight:900; text-transform:uppercase; line-height:.94; letter-spacing:-.02em; margin-top:3mm;">
-        PT Global<br/>Sarana Angkasa
-      </h1>
-      <hr class="rule" style="border-color:var(--red); width:26mm; margin-top:8mm;"/>
-    </div>
+  <div class="rh" style="border:0;top:15mm">
+    <img src="assets/gsa-logo.png" alt="PT GSA" class="logo-dark" style="height:12mm;width:auto;position:relative;top:-4mm"/>
+    <span style="color:rgba(240,234,225,.82);letter-spacing:.22em">Jakarta · Indonesia</span>
   </div>
 
-  <div class="folio folio-bottom">
-    <span>Established 2006</span>
-    <span>01 / 11</span>
-  </div>
-</section>
-
-<!-- ============================================================
-     PAGE 02 — PROFILE
-     ============================================================ -->
-<section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
-  </div>
-
-  <div class="content">
-    <div style="grid-column:1/9; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">01</span>
-      <span class="section-title">Profile</span>
-    </div>
-    <hr class="rule" style="grid-column:1/9; margin-top:6mm;"/>
-
-    <div style="grid-column:1/6; margin-top:10mm;">
-      <p class="body-copy">
-        PT Global Sarana Angkasa (PT GSA) was established in 2006 to seize the
-        global air cargo business opportunities. Appointed by both domestic
-        and international carriers, we have demonstrated our ability to
-        compete effectively within the industry.
-      </p>
-      <p class="body-copy" style="margin-top:5mm;">
-        Currently, we have established business partnerships with several
-        international airlines under the GSA.
-      </p>
-
-      <div style="margin-top:14mm; display:grid; grid-template-columns:1fr 1fr 1fr; column-gap:4mm; border-top:1pt solid var(--ink); padding-top:4mm;">
-        <div>
-          <div class="tabular" style="font-size:9mm; font-weight:800; line-height:1;">2006</div>
-          <div class="label" style="color:var(--ink); margin-top:2mm;">Founded</div>
-        </div>
-        <div style="border-left:.6pt solid var(--line-soft); padding-left:4mm;">
-          <div class="tabular" style="font-size:9mm; font-weight:800; line-height:1;">GSA</div>
-          <div class="label" style="color:var(--ink); margin-top:2mm;">Business model</div>
-        </div>
-        <div style="border-left:.6pt solid var(--line-soft); padding-left:4mm;">
-          <div style="font-size:9mm; font-weight:800; line-height:1;">Global</div>
-          <div class="label" style="color:var(--ink); margin-top:2mm;">Cargo network</div>
-        </div>
-      </div>
-    </div>
-
-    <div style="grid-column:6/9; margin-top:10mm;">
-      <div style="width:100%; aspect-ratio:3/4;">
-        <img class="photo" src="assets/aircraft-nose.png" alt=""/>
-      </div>
-      <div class="photo-cap">Fig. 01 — Line, on approach</div>
-    </div>
-  </div>
-
-  <div class="folio folio-bottom">
-    <span>Profile</span>
-    <span>02 / 11</span>
-  </div>
-</section>
-
-<!-- ============================================================
-     PAGE 03 — ORGANIZATIONAL STRUCTURE
-     ============================================================ -->
-<section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
-  </div>
-
-  <div class="content">
-    <div style="grid-column:1/9; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">02</span>
-      <span class="section-title">Organizational Structure</span>
-    </div>
-    <hr class="rule" style="grid-column:1/9; margin-top:6mm;"/>
-
-    <!-- top tier -->
-    <div style="grid-column:1/9; margin-top:12mm; display:grid; grid-template-columns:2fr 1fr; column-gap:5mm; align-items:stretch;">
-      <div style="border:.75pt solid var(--ink); padding:5mm 6mm;">
-        <div class="label">Chief Executive Officer</div>
-        <div style="font-size:13pt; font-weight:800; margin-top:1.5mm;">Ade Wellington</div>
-      </div>
-      <div style="border:.75pt solid var(--line-soft); padding:5mm 6mm;">
-        <div class="label" style="color:var(--ink)">Executive Advisor</div>
-        <div style="font-size:13pt; font-weight:700; margin-top:1.5mm;">Nina</div>
-      </div>
-    </div>
-
-    <!-- trunk -->
-    <div style="grid-column:1/9; height:8mm; position:relative; margin-top:0;">
-      <div style="position:absolute; top:0; left:0; right:0; height:8mm; border-left:.75pt solid var(--ink); border-right:.75pt solid var(--ink); border-top:0;"></div>
-      <div style="position:absolute; top:0; left:0; right:0; border-top:.75pt solid var(--ink);"></div>
-    </div>
-
-    <!-- two senior-manager divisions -->
-    <div style="grid-column:1/5; border-top:.75pt solid var(--ink); padding-top:4mm;">
-      <div class="label">Cargo Division</div>
-      <div style="font-size:12pt; font-weight:800; margin-top:1mm;">Yosi — Cargo Senior Manager</div>
-
-      <div style="margin-top:6mm; display:grid; grid-template-columns:repeat(3,1fr); column-gap:4mm; border-top:.6pt solid var(--line-soft); padding-top:4mm;">
-        <div>
-          <div style="font-size:9pt; font-weight:700;">Sales Manager</div>
-          <div style="font-size:9.5pt; margin-top:.8mm;">Agung</div>
-          <hr class="rule-soft" style="margin:2.6mm 0;"/>
-          <div style="font-size:8.4pt; color:#333;">Novi</div>
-          <div style="font-size:8.4pt; color:#333;">Arzeti</div>
-        </div>
-        <div>
-          <div style="font-size:9pt; font-weight:700;">Operation Manager</div>
-          <div style="font-size:9.5pt; margin-top:.8mm;">Asep</div>
-          <hr class="rule-soft" style="margin:2.6mm 0;"/>
-          <div style="font-size:8.4pt; color:#333;">Wardiono</div>
-          <div style="font-size:8.4pt; color:#333;">Dedi</div>
-        </div>
-        <div>
-          <div style="font-size:9pt; font-weight:700;">Customer Service Mgr.</div>
-          <div style="font-size:9.5pt; margin-top:.8mm;">Shabi</div>
-          <hr class="rule-soft" style="margin:2.6mm 0;"/>
-          <div style="font-size:8.4pt; color:#333;">Sekar</div>
-          <div style="font-size:8.4pt; color:#333;">Rina</div>
-        </div>
-      </div>
-    </div>
-
-    <div style="grid-column:5/9; border-top:.75pt solid var(--ink); padding-top:4mm;">
-      <div class="label">Business Development Division</div>
-      <div style="font-size:12pt; font-weight:800; margin-top:1mm;">Rafif — Business Development Senior Manager</div>
-
-      <div style="margin-top:6mm; display:grid; grid-template-columns:repeat(3,1fr); column-gap:4mm; border-top:.6pt solid var(--line-soft); padding-top:4mm;">
-        <div>
-          <div style="font-size:9pt; font-weight:700;">Finance Manager</div>
-          <div style="font-size:9.5pt; margin-top:.8mm;">Jennifer</div>
-          <hr class="rule-soft" style="margin:2.6mm 0;"/>
-          <div style="font-size:8.4pt; color:#333;">Devy</div>
-        </div>
-        <div>
-          <div style="font-size:9pt; font-weight:700;">Pricing</div>
-          <div style="font-size:9.5pt; margin-top:.8mm;">Shabi</div>
-        </div>
-        <div>
-          <div style="font-size:9pt; font-weight:700;">Bus. Dev. &amp; IT</div>
-          <div style="font-size:9.5pt; margin-top:.8mm;">Gano</div>
-          <hr class="rule-soft" style="margin:2.6mm 0;"/>
-          <div style="font-size:8.4pt; color:#333;">Norman</div>
-        </div>
-      </div>
-    </div>
-
-    <p style="grid-column:1/9; font-size:7.6pt; color:#666; margin-top:10mm;">
-      Note — Shabi holds two functions in the source org chart: Customer Service Manager (Cargo Division) and Pricing (Business Development Division).
+  <div style="position:absolute;left:var(--mx);right:var(--mx);top:56%">
+    <div class="eyebrow" style="color:rgba(240,234,225,.72)">Company Profile</div>
+    <h1 class="h1" style="color:#F3EEE5;font-size:33pt;margin-top:5mm">PT Global Sarana<br/>Angkasa</h1>
+    <p class="lead" style="color:rgba(240,234,225,.82);max-width:120mm;margin-top:6mm">
+      International air cargo General Sales Agent — representing the world's carriers in the Indonesian market since 2006.
     </p>
   </div>
 
-  <div class="folio folio-bottom">
-    <span>Organizational Structure</span>
-    <span>03 / 11</span>
+  <div class="rf" style="border:0;bottom:14mm">
+    <span style="color:rgba(240,234,225,.72);letter-spacing:.2em">Air Cargo · GSA</span>
+    <span style="color:rgba(240,234,225,.72);letter-spacing:.16em">Prepared for partner introduction</span>
   </div>
 </section>
 
-<!-- ============================================================
-     PAGE 04 — MILESTONES
-     ============================================================ -->
+<!-- ================= 02 · ABOUT THE COMPANY ================= -->
 <section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
-  </div>
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">01&nbsp;&nbsp;About the company</span></div>
 
-  <div class="content">
-    <div style="grid-column:1/9; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">03</span>
-      <span class="section-title">Milestones</span>
+  <div class="wrap">
+    <h1 class="h1">About the company</h1>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:14mm;margin-top:9mm">
+      <div>
+        <p class="body">PT Global Sarana Angkasa (PT GSA) was established in 2006 to seize the
+          opportunities of the global air cargo business. Appointed by both domestic and
+          international carriers, the company has demonstrated its ability to compete
+          effectively within the industry.</p>
+        <p class="body">Today PT GSA holds General Sales Agent partnerships with several international
+          airlines, selling and managing their cargo capacity across the Indonesian market
+          and its connecting network.</p>
+      </div>
+      <div>
+        <div class="label" style="margin-bottom:2mm">Contents</div>
+        <div style="font-family:var(--sans);font-size:9pt">
+          <div class="toc-i">01 About the company<span>02</span></div>
+          <div class="toc-i">02 What we do<span>03</span></div>
+          <div class="toc-i">03 Organizational structure<span>04</span></div>
+          <div class="toc-i">04 Milestones<span>05</span></div>
+          <div class="toc-i">05 Airline partners<span>06</span></div>
+          <div class="toc-i">06 Services<span>07</span></div>
+          <div class="toc-i">07 Global network<span>08</span></div>
+          <div class="toc-i">08 Reach and cargo lanes<span>09</span></div>
+          <div class="toc-i">09 Marketing plan<span>10</span></div>
+          <div class="toc-i">10 Recognition and strengths<span>11</span></div>
+          <div class="toc-i">— Contact<span>12</span></div>
+        </div>
+      </div>
     </div>
-    <hr class="rule" style="grid-column:1/9; margin-top:6mm;"/>
 
-    <div style="grid-column:1/9; margin-top:20mm; display:grid; grid-template-columns:repeat(4,1fr); column-gap:6mm; border-top:1.25pt solid var(--ink); position:relative;">
-      <!-- year 2006 -->
-      <div style="position:relative; padding-top:10mm;">
-        <div style="position:absolute; top:-.6mm; left:0; width:1.25pt; height:10mm; background:var(--ink);"></div>
-        <div class="tabular" style="font-size:11mm; font-weight:800; color:var(--red);">2006</div>
-        <div style="margin-top:6mm;">
-          <div style="font-size:10pt; font-weight:700;">Top Air</div>
-          <div style="font-size:8pt; color:#555;">2006 – 2009</div>
+    <div class="stats" style="margin-top:12mm">
+      <div class="stat"><div class="n tnum">7,200<small> T</small></div><div class="c">Cargo delivered per year</div></div>
+      <div class="stat"><div class="n tnum">18+</div><div class="c">Years of experience</div></div>
+      <div class="stat"><div class="n tnum">190</div><div class="c">Destinations in the international network</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:14mm;margin-top:13mm">
+      <div>
+        <div class="label" style="margin-bottom:3mm">Company record</div>
+        <div class="kv">
+          <div class="k">Legal name</div><div class="v">PT Global Sarana Angkasa <span class="sub">— Perseroan Terbatas</span></div>
+          <div class="k">Line of business</div><div class="v">Air cargo General Sales Agent (GSA)</div>
+          <div class="k">Established</div><div class="v">2006</div>
+          <div class="k">Chief Executive</div><div class="v">Ade Wellington</div>
+          <div class="k">Executive Advisor</div><div class="v">Nina</div>
+          <div class="k">Registered office</div><div class="v">Jakarta, Indonesia</div>
         </div>
-        <div style="margin-top:5mm; padding-top:3mm; border-top:.5pt solid var(--line-soft);">
-          <div style="font-size:10pt; font-weight:700;">Garuda Indonesia</div>
-          <div style="font-size:8pt; color:#555;">Amsterdam &amp; Dubai · 2006–2009</div>
-        </div>
+        <p style="font-family:var(--sans);font-size:7.6pt;color:var(--muted);margin-top:4mm">Full registration and contact detail available to partners on request.</p>
       </div>
-      <!-- year 2010 -->
-      <div style="position:relative; padding-top:10mm;">
-        <div style="position:absolute; top:-.6mm; left:0; width:1.25pt; height:10mm; background:var(--ink);"></div>
-        <div class="tabular" style="font-size:11mm; font-weight:800; color:var(--red);">2010</div>
-        <div style="margin-top:6mm;">
-          <div style="font-size:10pt; font-weight:700;">NCA</div>
-          <div style="font-size:8pt; color:#555;">2010</div>
+      <div>
+        <div class="label" style="margin-bottom:3mm">Where we operate</div>
+        <div style="position:relative;background:var(--panel);padding:6mm">
+          <img src="assets/world-pacific.svg" alt="" style="width:100%;display:block;filter:saturate(.9)"/>
+          <!-- Jakarta hub dot at 35.2% / 53.4% of the 1000x500 map -->
+          <span style="position:absolute;left:calc(6mm + (100% - 12mm)*0.352);top:calc(6mm + (100% - 12mm)*0.534*0.5);width:6px;height:6px;background:var(--ink);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(178,148,127,.35)"></span>
         </div>
-        <div style="margin-top:5mm; padding-top:3mm; border-top:.5pt solid var(--line-soft);">
-          <div style="font-size:10pt; font-weight:700;">Africawest Cargo</div>
-          <div style="font-size:8pt; color:#555;">2010–2014</div>
-        </div>
-        <div style="margin-top:5mm; padding-top:3mm; border-top:.5pt solid var(--line-soft);">
-          <div style="font-size:10pt; font-weight:700;">Brussels / Ukraine Airlines, Coyne Airways</div>
-          <div style="font-size:8pt; color:#555;">2010–2014</div>
-        </div>
-      </div>
-      <!-- year 2012 -->
-      <div style="position:relative; padding-top:10mm;">
-        <div style="position:absolute; top:-.6mm; left:0; width:1.25pt; height:10mm; background:var(--ink);"></div>
-        <div class="tabular" style="font-size:11mm; font-weight:800; color:var(--red);">2012</div>
-        <div style="margin-top:6mm;">
-          <div style="font-size:10pt; font-weight:700;">Ethiopian Airlines</div>
-          <div style="font-size:8pt; color:#555;">2012</div>
-        </div>
-        <div style="margin-top:5mm; padding-top:3mm; border-top:.5pt solid var(--line-soft);">
-          <div style="font-size:10pt; font-weight:700;">China Southern</div>
-          <div style="font-size:8pt; color:#555;">2012</div>
-        </div>
-      </div>
-      <!-- year 2021 -->
-      <div style="position:relative; padding-top:10mm;">
-        <div style="position:absolute; top:-.6mm; left:0; width:1.25pt; height:10mm; background:var(--ink);"></div>
-        <div class="tabular" style="font-size:11mm; font-weight:800; color:var(--red);">2021</div>
-        <div style="margin-top:6mm;">
-          <div style="font-size:10pt; font-weight:700;">SriLankan Airlines</div>
-          <div style="font-size:8pt; color:#555;">2021</div>
-        </div>
-        <div style="margin-top:5mm; padding-top:3mm; border-top:.5pt solid var(--line-soft);">
-          <div style="font-size:10pt; font-weight:700;">Drukair</div>
-          <div style="font-size:8pt; color:#555;">2023</div>
-        </div>
-        <div style="margin-top:5mm; padding-top:3mm; border-top:.5pt solid var(--line-soft);">
-          <div style="font-size:10pt; font-weight:700;">T'Way Airlines</div>
-          <div style="font-size:8pt; color:#555;">2025</div>
-        </div>
+        <p style="font-family:var(--sans);font-size:8pt;color:var(--body);margin-top:3mm;line-height:1.5">
+          Head office in Jakarta (CGK / DPS gateways). Carrier partnerships reach across Asia, the Middle East, Africa, Europe and the Americas.</p>
       </div>
     </div>
   </div>
 
-  <div class="folio folio-bottom">
-    <span>Milestones</span>
-    <span>04 / 11</span>
-  </div>
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">02</span></div>
 </section>
 
-<!-- ============================================================
-     PAGE 05 — AIRLINE PARTNERS
-     ============================================================ -->
+<!-- ===================== 03 · WHAT WE DO ===================== -->
 <section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
-  </div>
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">02&nbsp;&nbsp;What we do</span></div>
 
-  <div class="content">
-    <div style="grid-column:1/9; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">04</span>
-      <span class="section-title">Airline Partners</span>
-    </div>
-    <p style="grid-column:1/9; font-size:10pt; color:#444; margin-top:4mm; max-width:120mm;">
-      Current GSA appointments held by PT Global Sarana Angkasa.
-    </p>
-    <hr class="rule" style="grid-column:1/9; margin-top:5mm;"/>
+  <div class="wrap">
+    <h1 class="h1">What we do</h1>
 
-    <div style="grid-column:1/9; margin-top:12mm; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; row-gap:0; column-gap:0; border-top:.75pt solid var(--ink); border-left:.75pt solid var(--ink);">
-      <div style="border-right:.75pt solid var(--ink); border-bottom:.75pt solid var(--ink); padding:10mm; display:flex; align-items:center; justify-content:center; height:52mm;">
-        <img src="assets/airline-ethiopian.png" alt="Ethiopian Airlines" style="max-width:70%; max-height:60%; object-fit:contain;"/>
+    <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:14mm;margin-top:9mm">
+      <div>
+        <p class="lead">A General Sales Agent is the carrier's commercial arm in a market it does not
+          staff itself. PT GSA is that arm in Indonesia.</p>
+        <p class="body" style="margin-top:5mm">Appointed by domestic and international airlines, we sell and steer their air
+          cargo capacity — building the customer relationships, optimising the revenue on
+          every flight, and running the operation, technology and settlement behind it.</p>
+        <p class="body">We are neither the airline nor the freight forwarder; we are the party that
+          connects the two, converting an airline's belly and freighter capacity into
+          booked, documented, revenue-earning cargo across the Indonesian network.</p>
       </div>
-      <div style="border-right:.75pt solid var(--ink); border-bottom:.75pt solid var(--ink); padding:10mm; display:flex; align-items:center; justify-content:center; height:52mm;">
-        <img src="assets/airline-srilankan.png" alt="SriLankan Airlines" style="max-width:70%; max-height:60%; object-fit:contain;"/>
-      </div>
-      <div style="border-right:.75pt solid var(--ink); border-bottom:.75pt solid var(--ink); padding:10mm; display:flex; align-items:center; justify-content:center; height:52mm;">
-        <img src="assets/airline-tway.png" alt="t'way" style="max-width:55%; max-height:50%; object-fit:contain;"/>
-      </div>
-      <div style="border-right:.75pt solid var(--ink); border-bottom:.75pt solid var(--ink); padding:10mm; display:flex; align-items:center; justify-content:center; height:52mm;">
-        <img src="assets/airline-drukair.png" alt="Drukair — Royal Bhutan Airlines" style="max-width:70%; max-height:60%; object-fit:contain;"/>
+      <div>
+        <div style="width:100%;aspect-ratio:4/3;overflow:hidden">
+          <img class="duo" src="assets/aircraft-nose.png" alt="" style="width:100%;height:100%;object-fit:cover"/>
+        </div>
+        <div class="figcap">On approach — a partner carrier inbound to a network gateway.</div>
       </div>
     </div>
 
-    <div style="grid-column:1/9; margin-top:6mm; display:grid; grid-template-columns:1fr 1fr; column-gap:0; text-align:center;">
-      <div class="label" style="color:var(--ink); padding-top:2mm;">Ethiopian Airlines</div>
-      <div class="label" style="color:var(--ink); padding-top:2mm;">SriLankan Airlines</div>
-      <div class="label" style="color:var(--ink); padding-top:2mm;">t'way</div>
-      <div class="label" style="color:var(--ink); padding-top:2mm;">Drukair — Royal Bhutan Airlines</div>
+    <div class="feature" style="position:absolute;left:var(--mx);right:var(--mx);bottom:0;height:78mm;display:flex;flex-direction:column;justify-content:center">
+      <div class="eyebrow">Our role</div>
+      <p class="q">Appointed by the world's carriers to represent them where it counts — turning
+        capacity into cargo, and cargo into a dependable, well-documented revenue stream.</p>
     </div>
   </div>
 
-  <div class="folio folio-bottom">
-    <span>Airline Partners</span>
-    <span>05 / 11</span>
-  </div>
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">03</span></div>
 </section>
 
-<!-- ============================================================
-     PAGE 06 — SERVICES
-     ============================================================ -->
+<!-- ============== 04 · ORGANIZATIONAL STRUCTURE ============== -->
 <section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
-  </div>
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">03&nbsp;&nbsp;Organizational structure</span></div>
 
-  <div class="content">
-    <div style="grid-column:1/6; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">05</span>
-      <span class="section-title">Our Services</span>
-    </div>
-    <div style="grid-column:6/9;">
-      <div style="width:100%; aspect-ratio:1/1;">
-        <img class="photo" src="assets/boardroom.png" alt=""/>
-      </div>
-    </div>
-    <hr class="rule" style="grid-column:1/9; margin-top:6mm;"/>
+  <div class="wrap">
+    <h1 class="h1">Organizational structure</h1>
+    <p class="body" style="max-width:150mm;margin-top:6mm">The company is led by the Chief Executive, supported by an Executive Advisor, over
+      two operating divisions — Cargo, and Business Development — each headed by a senior
+      manager and staffed by functional teams.</p>
 
-    <div style="grid-column:1/9; margin-top:10mm; display:grid; grid-template-columns:1fr 1fr; column-gap:8mm; row-gap:10mm;">
-      <div>
-        <div style="display:flex; align-items:baseline; gap:3mm;">
-          <span style="font-size:8pt; font-weight:800; color:var(--red);">A</span>
-          <span style="font-size:13pt; font-weight:800; text-transform:uppercase;">Sales &amp; Services</span>
-        </div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <ul style="list-style:none; margin-top:4mm; font-size:10pt; line-height:2;">
-          <li>Sales and Marketing</li>
-          <li>Relationship with Customer</li>
-          <li>Revenue Optimization</li>
-        </ul>
+    <!-- CEO -->
+    <div style="margin-top:12mm;display:grid;grid-template-columns:1fr 62mm;column-gap:6mm;align-items:stretch">
+      <div style="background:var(--ink);color:var(--paper);padding:6mm 7mm">
+        <div class="eyebrow" style="color:var(--tan)">Chief Executive</div>
+        <div class="serif" style="font-size:14pt;margin-top:1.5mm">Ade Wellington</div>
       </div>
-      <div>
-        <div style="display:flex; align-items:baseline; gap:3mm;">
-          <span style="font-size:8pt; font-weight:800; color:var(--red);">B</span>
-          <span style="font-size:13pt; font-weight:800; text-transform:uppercase;">Operation</span>
-        </div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <ul style="list-style:none; margin-top:4mm; font-size:10pt; line-height:2;">
-          <li>Total Cargo Management</li>
-          <li>Interline</li>
-          <li>Trained staff to work with system</li>
-        </ul>
+      <div style="background:var(--panel);padding:6mm 7mm">
+        <div class="label">Executive Advisor</div>
+        <div class="serif" style="font-size:12.5pt;color:var(--ink);margin-top:1.5mm">Nina</div>
       </div>
-      <div>
-        <div style="display:flex; align-items:baseline; gap:3mm;">
-          <span style="font-size:8pt; font-weight:800; color:var(--red);">C</span>
-          <span style="font-size:13pt; font-weight:800; text-transform:uppercase;">Technology</span>
-        </div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <ul style="list-style:none; margin-top:4mm; font-size:10pt; line-height:2;">
-          <li>Advanced Business Tools</li>
-          <li>Business Intelligence</li>
-          <li>Market Intelligence</li>
-        </ul>
+    </div>
+
+    <!-- two divisions -->
+    <div style="margin-top:5mm;display:grid;grid-template-columns:1fr 1fr;column-gap:6mm">
+      <div style="background:var(--panel);padding:5mm 6mm;text-align:center">
+        <div class="label">Cargo — Senior Manager</div>
+        <div class="serif" style="font-size:12pt;color:var(--ink);margin-top:1.5mm">Yosi</div>
       </div>
-      <div>
-        <div style="display:flex; align-items:baseline; gap:3mm;">
-          <span style="font-size:8pt; font-weight:800; color:var(--red);">D</span>
-          <span style="font-size:13pt; font-weight:800; text-transform:uppercase;">Finance</span>
-        </div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <ul style="list-style:none; margin-top:4mm; font-size:10pt; line-height:2;">
-          <li>Cost Management</li>
-          <li>Interlines Settlement</li>
-          <li>Financial Report</li>
-        </ul>
+      <div style="background:var(--panel);padding:5mm 6mm;text-align:center">
+        <div class="label">Business Development — Senior Manager</div>
+        <div class="serif" style="font-size:12pt;color:var(--ink);margin-top:1.5mm">Rafif</div>
       </div>
+    </div>
+
+    <!-- functional units -->
+    <div style="margin-top:5mm;display:grid;grid-template-columns:repeat(6,1fr);column-gap:4mm">
+      <div class="unit"><div class="ut">Sales</div><div class="uh">Agung</div><hr class="rule" style="margin:2.4mm 0"><div class="us">Novi</div><div class="us">Arzeti</div></div>
+      <div class="unit"><div class="ut">Operation</div><div class="uh">Asep</div><hr class="rule" style="margin:2.4mm 0"><div class="us">Wardiono</div><div class="us">Dedi</div></div>
+      <div class="unit"><div class="ut">Customer Service</div><div class="uh">Shabi</div><hr class="rule" style="margin:2.4mm 0"><div class="us">Sekar</div><div class="us">Rina</div></div>
+      <div class="unit"><div class="ut">Finance</div><div class="uh">Jennifer</div><hr class="rule" style="margin:2.4mm 0"><div class="us">Devy</div></div>
+      <div class="unit"><div class="ut">Pricing</div><div class="uh">Shabi</div></div>
+      <div class="unit"><div class="ut">Business Dev. &amp; IT</div><div class="uh">Gano</div><hr class="rule" style="margin:2.4mm 0"><div class="us">Norman (IT)</div></div>
+    </div>
+    <p style="font-family:var(--sans);font-size:7.6pt;color:var(--muted);margin-top:6mm">Sales, Operation and Customer Service report to the Cargo division; Finance, Pricing and Business Development &amp; IT to the Business Development division.</p>
+
+    <div style="position:absolute;left:var(--mx);right:var(--mx);bottom:0;height:52mm;overflow:hidden">
+      <img class="duo" src="assets/facility-office-2.png" alt="" style="width:100%;height:100%;object-fit:cover"/>
     </div>
   </div>
 
-  <div class="folio folio-bottom">
-    <span>Our Services</span>
-    <span>06 / 11</span>
-  </div>
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">04</span></div>
 </section>
 
-<!-- ============================================================
-     PAGE 07 — MARKETING PLAN
-     ============================================================ -->
+<!-- ===================== 05 · MILESTONES ===================== -->
 <section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">04&nbsp;&nbsp;Milestones</span></div>
+
+  <div class="wrap">
+    <h1 class="h1">Milestones</h1>
+    <p class="body" style="max-width:150mm;margin-top:6mm">Two decades of carrier appointments — from the company's first agencies in 2006 to
+      its most recent partnerships.</p>
+
+    <table class="t" style="margin-top:9mm">
+      <thead><tr><th style="width:20mm">Year</th><th>Carrier</th><th style="width:52mm">Sector / route</th><th style="width:30mm">Period</th></tr></thead>
+      <tbody>
+        <tr><td class="k serif">2006</td><td>Top Air</td><td>Domestic &amp; regional</td><td class="tnum">2006 – 2009</td></tr>
+        <tr><td class="k"></td><td>Garuda Indonesia</td><td>Amsterdam &amp; Dubai</td><td class="tnum">2006 – 2009</td></tr>
+        <tr><td class="k serif">2010</td><td>NCA — Nippon Cargo Airlines</td><td>Freighter</td><td class="tnum">2010</td></tr>
+        <tr><td class="k"></td><td>Africawest Cargo</td><td>Africa</td><td class="tnum">2010 – 2014</td></tr>
+        <tr><td class="k"></td><td>Brussels Airlines · Ukraine Airlines · Coyne Airways</td><td>Europe &amp; CIS</td><td class="tnum">2010 – 2014</td></tr>
+        <tr><td class="k serif">2012</td><td>Ethiopian Airlines</td><td>Africa, Middle East</td><td class="tnum">2012</td></tr>
+        <tr><td class="k"></td><td>China Southern</td><td>Asia</td><td class="tnum">2012</td></tr>
+        <tr><td class="k serif">2021</td><td>SriLankan Airlines</td><td>South Asia</td><td class="tnum">2021</td></tr>
+        <tr><td class="k"></td><td>Drukair — Royal Bhutan Airlines</td><td>South Asia</td><td class="tnum">2023</td></tr>
+        <tr><td class="k"></td><td>T'Way Airlines</td><td>East Asia</td><td class="tnum">2025</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="content">
-    <div style="grid-column:1/9; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">06</span>
-      <span class="section-title">Marketing Plan</span>
-    </div>
-    <hr class="rule" style="grid-column:1/9; margin-top:6mm;"/>
-
-    <div style="grid-column:1/9; margin-top:10mm; display:grid; grid-template-columns:repeat(3,1fr); column-gap:6mm; row-gap:12mm;">
-      <div>
-        <span style="font-size:8pt; font-weight:800; color:var(--red);">01</span>
-        <div style="font-size:12pt; font-weight:800; text-transform:uppercase; margin-top:2mm;">Transhipment</div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <p style="font-size:9.5pt; margin-top:4mm; line-height:1.6;">Bringing ex HKG, China, Taiwan and do re-document in CGK/DPS.</p>
-      </div>
-      <div>
-        <span style="font-size:8pt; font-weight:800; color:var(--red);">02</span>
-        <div style="font-size:12pt; font-weight:800; text-transform:uppercase; margin-top:2mm;">Perishable</div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <p style="font-size:9.5pt; margin-top:4mm; line-height:1.6;">Aggressive sales for perishable products such as fruits, seafood and tropical fish.</p>
-      </div>
-      <div>
-        <span style="font-size:8pt; font-weight:800; color:var(--red);">03</span>
-        <div style="font-size:12pt; font-weight:800; text-transform:uppercase; margin-top:2mm;">DG &amp; Pharmacy Product</div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <p style="font-size:9.5pt; margin-top:4mm; line-height:1.6;">Exploring niche products such as DG and pharmacy cargo.</p>
-      </div>
-      <div>
-        <span style="font-size:8pt; font-weight:800; color:var(--red);">04</span>
-        <div style="font-size:12pt; font-weight:800; text-transform:uppercase; margin-top:2mm;">Interlines</div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <p style="font-size:9.5pt; margin-top:4mm; line-height:1.6;">Settings SPA/Interlines between our existing airlines and other airlines.</p>
-      </div>
-      <div>
-        <span style="font-size:8pt; font-weight:800; color:var(--red);">05</span>
-        <div style="font-size:12pt; font-weight:800; text-transform:uppercase; margin-top:2mm;">Branding</div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <p style="font-size:9.5pt; margin-top:4mm; line-height:1.6;">Agent award, gathering, and famtrip programs.</p>
-      </div>
-      <div>
-        <span style="font-size:8pt; font-weight:800; color:var(--red);">06</span>
-        <div style="font-size:12pt; font-weight:800; text-transform:uppercase; margin-top:2mm;">Advertising</div>
-        <hr class="rule-soft" style="margin-top:3mm;"/>
-        <p style="font-size:9.5pt; margin-top:4mm; line-height:1.6;">Sponsoring cargo events and merchandising.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="folio folio-bottom">
-    <span>Marketing Plan</span>
-    <span>07 / 11</span>
-  </div>
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">05</span></div>
 </section>
 
-<!-- ============================================================
-     PAGE 08 — RECOGNITION
-     ============================================================ -->
+<!-- ================== 06 · AIRLINE PARTNERS ================== -->
 <section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
-  </div>
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">05&nbsp;&nbsp;Airline partners</span></div>
 
-  <div class="content">
-    <div style="grid-column:1/9; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">07</span>
-      <span class="section-title">Recognition</span>
-    </div>
-    <hr class="rule" style="grid-column:1/9; margin-top:6mm;"/>
+  <div class="wrap">
+    <h1 class="h1">Airline partners</h1>
+    <p class="body" style="max-width:150mm;margin-top:6mm">Current General Sales Agent appointments held by PT Global Sarana Angkasa.</p>
 
-    <div style="grid-column:1/4; margin-top:14mm;">
-      <div style="width:100%; aspect-ratio:3/4;">
-        <img class="photo" src="assets/award-trophy.png" alt="Award trophy"/>
-      </div>
-      <div class="photo-cap">Fig. 02 — ICAC &amp; Cargo Times Award, 2020</div>
+    <div style="margin-top:10mm;display:grid;grid-template-columns:1fr 1fr;border-top:1pt solid var(--ink);border-left:.5pt solid var(--hair)">
+      <div class="pcell"><img src="assets/airline-ethiopian.png" alt="Ethiopian Airlines"/></div>
+      <div class="pcell"><img src="assets/airline-srilankan.png" alt="SriLankan Airlines"/></div>
+      <div class="pcell"><img src="assets/airline-tway.png" alt="t'way" style="max-width:44%"/></div>
+      <div class="pcell"><img src="assets/airline-drukair.png" alt="Drukair — Royal Bhutan Airlines"/></div>
     </div>
 
-    <div style="grid-column:5/9; margin-top:22mm;">
-      <p class="eyebrow">2020</p>
-      <h2 style="font-size:15mm; font-weight:900; line-height:1.02; text-transform:uppercase; margin-top:3mm;">
-        The Best Cargo Airlines in Indonesia
-      </h2>
-      <p class="body-copy" style="margin-top:8mm;">
-        For the Africa, Middle East and Latin America sector — awarded by
-        ICAC &amp; Cargo Times Award in 2020.
-      </p>
-    </div>
+    <table class="t" style="margin-top:11mm">
+      <thead><tr><th>Airline</th><th style="width:52mm">Sector</th><th style="width:30mm">Appointed</th></tr></thead>
+      <tbody>
+        <tr><td class="k serif">Ethiopian Airlines</td><td>Africa, Middle East</td><td class="tnum">2012</td></tr>
+        <tr><td class="k serif">SriLankan Airlines</td><td>South Asia</td><td class="tnum">2021</td></tr>
+        <tr><td class="k serif">T'Way Airlines</td><td>East Asia</td><td class="tnum">2025</td></tr>
+        <tr><td class="k serif">Drukair — Royal Bhutan Airlines</td><td>South Asia</td><td class="tnum">2023</td></tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="folio folio-bottom">
-    <span>Recognition</span>
-    <span>08 / 11</span>
-  </div>
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">06</span></div>
 </section>
 
-<!-- ============================================================
-     PAGE 09 — INFRASTRUCTURE & FACILITIES
-     ============================================================ -->
+<!-- ====================== 07 · SERVICES ====================== -->
 <section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
-  </div>
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">06&nbsp;&nbsp;Services</span></div>
 
-  <div class="content">
-    <div style="grid-column:1/9; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">08</span>
-      <span class="section-title">Infrastructure &amp; Facilities</span>
-    </div>
-    <hr class="rule" style="grid-column:1/9; margin-top:6mm;"/>
+  <div class="wrap">
+    <h1 class="h1">Services</h1>
+    <p class="body" style="max-width:150mm;margin-top:6mm">A complete General Sales Agent capability — commercial, operational, technological
+      and financial — behind every carrier we represent.</p>
 
-    <div style="grid-column:1/5; margin-top:10mm;">
-      <div style="width:100%; aspect-ratio:4/3;">
-        <img class="photo" src="assets/facility-office-1.png" alt="Office"/>
+    <div style="margin-top:11mm;display:grid;grid-template-columns:1fr 1fr;column-gap:14mm;row-gap:11mm">
+      <div>
+        <div class="label" style="color:var(--ink);border-top:1pt solid var(--ink);padding-top:3mm">A&nbsp;&nbsp;Sales &amp; Services</div>
+        <ul class="slist"><li>Sales and marketing</li><li>Relationship with customers</li><li>Revenue optimisation</li></ul>
       </div>
-      <div class="photo-cap">Office — open workspace</div>
-    </div>
-    <div style="grid-column:5/9; margin-top:10mm;">
-      <div style="width:100%; aspect-ratio:4/3;">
-        <img class="photo" src="assets/facility-meeting-room.png" alt="Meeting room"/>
+      <div>
+        <div class="label" style="color:var(--ink);border-top:1pt solid var(--ink);padding-top:3mm">B&nbsp;&nbsp;Operation</div>
+        <ul class="slist"><li>Total cargo management</li><li>Interline</li><li>Trained staff working to system</li></ul>
       </div>
-      <div class="photo-cap">Meeting room</div>
+      <div>
+        <div class="label" style="color:var(--ink);border-top:1pt solid var(--ink);padding-top:3mm">C&nbsp;&nbsp;Technology</div>
+        <ul class="slist"><li>Advanced business tools</li><li>Business intelligence</li><li>Market intelligence</li></ul>
+      </div>
+      <div>
+        <div class="label" style="color:var(--ink);border-top:1pt solid var(--ink);padding-top:3mm">D&nbsp;&nbsp;Finance</div>
+        <ul class="slist"><li>Cost management</li><li>Interline settlement</li><li>Financial reporting</li></ul>
+      </div>
     </div>
 
-    <div style="grid-column:1/5; margin-top:8mm;">
-      <div style="width:100%; aspect-ratio:4/3;">
-        <img class="photo" src="assets/facility-office-2.png" alt="Workstation"/>
-      </div>
-      <div class="photo-cap">Workstation</div>
-    </div>
-    <div style="grid-column:5/9; margin-top:8mm;">
-      <div style="width:100%; aspect-ratio:4/3;">
-        <img class="photo" src="assets/facility-vehicle.png" alt="Company vehicle"/>
-      </div>
-      <div class="photo-cap">Company vehicle</div>
+    <div style="position:absolute;left:var(--mx);right:var(--mx);bottom:0;height:56mm;overflow:hidden">
+      <img class="duo" src="assets/boardroom.png" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 35%"/>
     </div>
   </div>
 
-  <div class="folio folio-bottom">
-    <span>Infrastructure &amp; Facilities</span>
-    <span>09 / 11</span>
-  </div>
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">07</span></div>
 </section>
 
-<!-- ============================================================
-     PAGE 10 — KEY SUCCESS FACTORS
-     ============================================================ -->
+<!-- =================== 08 · GLOBAL NETWORK =================== -->
 <section class="page">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">07&nbsp;&nbsp;Global network</span></div>
+
+  <div class="wrap">
+    <h1 class="h1">Global network</h1>
+    <p class="body" style="max-width:158mm;margin-top:6mm">Primary cargo lanes from the Jakarta (CGK) and Denpasar (DPS) gateways to Europe and
+      the United States — westbound across Asia and the Middle East, and eastbound across
+      the Pacific.</p>
+
+    <div style="margin-top:8mm;background:var(--panel);padding:6mm 6mm 4mm">
+      <svg viewBox="18 52 964 292" style="width:100%;display:block" xmlns="http://www.w3.org/2000/svg">
+        <image href="assets/world-pacific.svg" x="0" y="0" width="1000" height="500"/>
+        <style>
+          .route{fill:none;stroke:#B2947F;stroke-width:1.5;opacity:.92}
+          .node{fill:#221E1A}.hub{fill:#8B8477}.origin{fill:#221E1A}
+          .lbl{font-family:'Inter',sans-serif;font-size:8px;font-weight:600;fill:#6E675C;letter-spacing:.04em}
+          .lblo{font-family:'Inter',sans-serif;font-size:8.5px;font-weight:700;fill:#221E1A;letter-spacing:.04em}
+          .reg{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;fill:#221E1A;letter-spacing:.14em}
+        </style>
+        <!-- routes -->
+        <path class="route" d="M351.8,267.0 Q210.3,124.6 68.8,104.7"/>
+        <path class="route" d="M351.8,267.0 Q209.9,126.4 68.0,108.6"/>
+        <path class="route" d="M351.8,267.0 Q215.6,129.4 79.3,111.0"/>
+        <path class="route" d="M351.8,267.0 Q203.1,123.4 54.3,107.0"/>
+        <path class="route" d="M351.8,267.0 Q207.2,128.2 62.6,113.9"/>
+        <path class="route" d="M351.8,267.0 Q601.2,124.1 850.6,137.1"/>
+        <path class="route" d="M351.8,267.0 Q581.6,122.2 811.4,133.4"/>
+        <path class="route" d="M351.8,267.0 Q539.2,135.4 726.6,155.7"/>
+        <!-- gateway dots -->
+        <circle class="node" cx="68.8" cy="104.7" r="3"/><circle class="node" cx="68.0" cy="108.6" r="3"/>
+        <circle class="node" cx="79.3" cy="111.0" r="3"/><circle class="node" cx="54.3" cy="107.0" r="3"/>
+        <circle class="node" cx="62.6" cy="113.9" r="3"/>
+        <circle class="node" cx="850.6" cy="137.1" r="3.4"/><circle class="node" cx="811.4" cy="133.4" r="3.4"/>
+        <circle class="node" cx="726.6" cy="155.7" r="3.4"/>
+        <!-- hub + origins -->
+        <circle class="hub" cx="209.3" cy="179.9" r="2.8"/>
+        <text class="lbl" x="203" y="174" text-anchor="end">DUBAI</text>
+        <circle class="origin" cx="351.8" cy="267.0" r="5"/><circle class="origin" cx="375.5" cy="274.3" r="4"/>
+        <text class="lblo" x="351.8" y="285" text-anchor="middle">JAKARTA · CGK</text>
+        <text class="lbl" x="384" y="291" text-anchor="start">DENPASAR · DPS</text>
+        <!-- region + US city labels -->
+        <text class="reg" x="66" y="90" text-anchor="middle">EUROPE</text>
+        <text class="lbl" x="726.6" y="170" text-anchor="middle">LOS ANGELES</text>
+        <text class="lbl" x="811.4" y="126" text-anchor="middle">CHICAGO</text>
+        <text class="lbl" x="856" y="133" text-anchor="start">NEW YORK</text>
+      </svg>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:14mm;margin-top:9mm">
+      <div>
+        <div class="label" style="color:var(--ink);border-top:1pt solid var(--ink);padding-top:3mm">Europe gateways</div>
+        <p style="font-family:var(--sans);font-size:9pt;color:var(--body);line-height:1.7;margin-top:3mm">
+          Amsterdam (AMS) · Brussels (BRU) · Frankfurt (FRA) · London (LHR) · Paris (CDG)</p>
+      </div>
+      <div>
+        <div class="label" style="color:var(--ink);border-top:1pt solid var(--ink);padding-top:3mm">United States gateways</div>
+        <p style="font-family:var(--sans);font-size:9pt;color:var(--body);line-height:1.7;margin-top:3mm">
+          New York (JFK) · Chicago (ORD) · Los Angeles (LAX)</p>
+      </div>
+    </div>
+    <p style="font-family:var(--sans);font-size:7.6pt;color:var(--muted);margin-top:5mm">Pacific-centred projection. Lanes shown are the company's primary Europe- and US-bound cargo routings from its Indonesian gateways; Dubai indicates a Middle-East connecting hub.</p>
   </div>
 
-  <div class="content" style="grid-template-rows:auto auto 1fr auto;">
-    <div style="grid-column:1/9; display:flex; align-items:baseline; gap:5mm;">
-      <span class="section-num">09</span>
-      <span class="section-title">Key Success Factors</span>
-    </div>
-    <hr class="rule" style="grid-column:1/9; margin-top:6mm;"/>
-
-    <div style="grid-column:1/6; margin-top:10mm;">
-      <p class="body-copy">
-        The critical success factors which contribute to the success of
-        PT Global Sarana Angkasa are as follow:
-      </p>
-      <div style="margin-top:8mm;">
-        <div style="border-top:.6pt solid var(--line-soft); padding-top:4mm;">
-          <p style="font-size:10.5pt; line-height:1.55;">We have over 7,200 tons a year of existing cargo that we could explore more.</p>
-        </div>
-        <div style="border-top:.6pt solid var(--line-soft); padding-top:4mm; margin-top:5mm;">
-          <p style="font-size:10.5pt; line-height:1.55;">We are experienced in GSA business in Indonesia and worldwide.</p>
-        </div>
-        <div style="border-top:.6pt solid var(--line-soft); padding-top:4mm; margin-top:5mm;">
-          <p style="font-size:10.5pt; line-height:1.55;">We have strong support from customer and government in Indonesia, as well as International Network.</p>
-        </div>
-      </div>
-    </div>
-
-    <div style="grid-column:6/9; margin-top:10mm;">
-      <div style="width:100%; aspect-ratio:3/4;">
-        <img class="photo" src="assets/mountain-summit.png" alt=""/>
-      </div>
-    </div>
-
-    <div style="grid-column:1/9; align-self:end; margin-top:14mm; display:grid; grid-template-columns:repeat(3,1fr); border-top:1.25pt solid var(--ink);">
-      <div style="padding-top:5mm; border-right:.6pt solid var(--line-soft);">
-        <div class="tabular" style="font-size:15mm; font-weight:800; line-height:1; white-space:nowrap;">7,200<span style="font-size:8mm;"> T</span></div>
-        <div class="label" style="color:var(--ink); margin-top:3mm;">Cargo delivered per year</div>
-      </div>
-      <div style="padding-top:5mm; padding-left:6mm; border-right:.6pt solid var(--line-soft);">
-        <div class="tabular" style="font-size:15mm; font-weight:800; line-height:1;">18+</div>
-        <div class="label" style="color:var(--ink); margin-top:3mm;">Years experience</div>
-      </div>
-      <div style="padding-top:5mm; padding-left:6mm;">
-        <div class="tabular" style="font-size:15mm; font-weight:800; line-height:1;">190</div>
-        <div class="label" style="color:var(--ink); margin-top:3mm;">International network</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="folio folio-bottom">
-    <span>Key Success Factors</span>
-    <span>10 / 11</span>
-  </div>
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">08</span></div>
 </section>
 
-<!-- ============================================================
-     PAGE 11 — CLOSING
-     ============================================================ -->
+<!-- ================ 09 · REACH AND CARGO LANES ================ -->
+<section class="page">
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">08&nbsp;&nbsp;Reach and cargo lanes</span></div>
+
+  <div class="wrap">
+    <h1 class="h1">Reach and cargo lanes</h1>
+    <p class="body" style="max-width:158mm;margin-top:6mm">Great-circle distance from Jakarta (CGK) to each primary gateway — a measure of the
+      network's reach across the two long-haul theatres the company serves.</p>
+
+    <div class="stats" style="margin-top:10mm">
+      <div class="stat"><div class="n tnum">11,400<small> km</small></div><div class="c">Average lane to Europe (5 gateways)</div></div>
+      <div class="stat"><div class="n tnum">15,500<small> km</small></div><div class="c">Average lane to the United States (3 gateways)</div></div>
+      <div class="stat"><div class="n tnum">8</div><div class="c">Primary long-haul gateways</div></div>
+    </div>
+
+    <div style="margin-top:13mm">
+      <div class="label" style="color:var(--muted);margin-bottom:5mm">Distance from Jakarta (CGK) by gateway — km, great-circle</div>
+      <div class="barwrap">
+        <div class="bar"><div class="bl">London <small>· LHR</small></div><div class="bt"><div class="bf" style="width:72.5%"></div></div><div class="bv tnum">11,721</div></div>
+        <div class="bar"><div class="bl">Paris <small>· CDG</small></div><div class="bt"><div class="bf" style="width:71.4%"></div></div><div class="bv tnum">11,548</div></div>
+        <div class="bar"><div class="bl">Brussels <small>· BRU</small></div><div class="bt"><div class="bf" style="width:70.4%"></div></div><div class="bv tnum">11,388</div></div>
+        <div class="bar"><div class="bl">Amsterdam <small>· AMS</small></div><div class="bt"><div class="bf" style="width:70.2%"></div></div><div class="bv tnum">11,354</div></div>
+        <div class="bar"><div class="bl">Frankfurt <small>· FRA</small></div><div class="bt"><div class="bf" style="width:68.7%"></div></div><div class="bv tnum">11,107</div></div>
+        <div class="bar"><div class="bl">Los Angeles <small>· LAX</small></div><div class="bt"><div class="bf" style="width:89.3%"></div></div><div class="bv tnum">14,450</div></div>
+        <div class="bar"><div class="bl">Chicago <small>· ORD</small></div><div class="bt"><div class="bf" style="width:97.5%"></div></div><div class="bv tnum">15,777</div></div>
+        <div class="bar"><div class="bl">New York <small>· JFK</small></div><div class="bt"><div class="bf" style="width:100%"></div></div><div class="bv tnum">16,177</div></div>
+      </div>
+      <p style="font-family:var(--sans);font-size:7.6pt;color:var(--muted);margin-top:5mm">Bars scaled to the longest lane (New York, JFK). Distances are great-circle from Jakarta Soekarno-Hatta (CGK); actual flown routings via connecting hubs are longer.</p>
+    </div>
+  </div>
+
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">09</span></div>
+</section>
+
+<!-- =================== 10 · MARKETING PLAN =================== -->
+<section class="page">
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">09&nbsp;&nbsp;Marketing plan</span></div>
+
+  <div class="wrap">
+    <h1 class="h1">Marketing plan</h1>
+    <p class="body" style="max-width:150mm;margin-top:6mm">Six initiatives directing where PT GSA grows volume and builds the network.</p>
+
+    <div style="margin-top:11mm;display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:12mm;row-gap:12mm">
+      <div class="mp"><div class="mpn">01</div><h2 class="h2">Transhipment</h2><p class="body" style="margin-top:2.5mm">Bringing cargo ex Hong Kong, China and Taiwan, and re-documenting it in CGK / DPS.</p></div>
+      <div class="mp"><div class="mpn">02</div><h2 class="h2">Perishable</h2><p class="body" style="margin-top:2.5mm">Aggressive sales for perishable products — fruits, seafood and tropical fish.</p></div>
+      <div class="mp"><div class="mpn">03</div><h2 class="h2">DG &amp; Pharmacy</h2><p class="body" style="margin-top:2.5mm">Exploring niche products such as dangerous-goods and pharmaceutical cargo.</p></div>
+      <div class="mp"><div class="mpn">04</div><h2 class="h2">Interlines</h2><p class="body" style="margin-top:2.5mm">Setting SPA / interline agreements between our carriers and other airlines.</p></div>
+      <div class="mp"><div class="mpn">05</div><h2 class="h2">Branding</h2><p class="body" style="margin-top:2.5mm">Agent awards, gatherings and familiarisation trips (famtrips).</p></div>
+      <div class="mp"><div class="mpn">06</div><h2 class="h2">Advertising</h2><p class="body" style="margin-top:2.5mm">Sponsoring cargo events and merchandising.</p></div>
+    </div>
+  </div>
+
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">10</span></div>
+</section>
+
+<!-- ============= 11 · RECOGNITION AND STRENGTHS ============= -->
+<section class="page">
+  <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec">10&nbsp;&nbsp;Recognition and strengths</span></div>
+
+  <div class="wrap">
+    <h1 class="h1">Recognition and strengths</h1>
+
+    <div style="display:grid;grid-template-columns:52mm 1fr;column-gap:12mm;margin-top:9mm;align-items:start">
+      <div>
+        <div style="width:100%;aspect-ratio:3/4;overflow:hidden;background:var(--panel)">
+          <img class="duo" src="assets/award-trophy.png" alt="" style="width:100%;height:100%;object-fit:cover"/>
+        </div>
+        <div class="figcap">ICAC &amp; Cargo Times Award, 2020.</div>
+      </div>
+      <div>
+        <div class="eyebrow">Recognition · 2020</div>
+        <h2 class="h2" style="font-size:17pt;margin-top:3mm">The Best Cargo Airlines in Indonesia for the Africa, Middle East and Latin America sector</h2>
+        <p class="body" style="margin-top:4mm">Awarded by ICAC &amp; Cargo Times Award in 2020 — recognition of PT GSA's strength on
+          the long-haul sectors it represents.</p>
+      </div>
+    </div>
+
+    <div class="label" style="color:var(--muted);margin-top:14mm">Key success factors</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:10mm;margin-top:4mm">
+      <div style="border-top:.5pt solid var(--hair);padding-top:3mm"><p class="body">Over 7,200 tons a year of existing cargo — a base the company continues to build on.</p></div>
+      <div style="border-top:.5pt solid var(--hair);padding-top:3mm"><p class="body">Experienced in the GSA business in Indonesia and worldwide.</p></div>
+      <div style="border-top:.5pt solid var(--hair);padding-top:3mm"><p class="body">Strong support from customers and government in Indonesia, and an international network.</p></div>
+    </div>
+
+    <div class="stats" style="margin-top:13mm">
+      <div class="stat"><div class="n tnum">7,200<small> T</small></div><div class="c">Cargo delivered per year</div></div>
+      <div class="stat"><div class="n tnum">18+</div><div class="c">Years of experience</div></div>
+      <div class="stat"><div class="n tnum">190</div><div class="c">Destinations in the network</div></div>
+    </div>
+  </div>
+
+  <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">11</span></div>
+</section>
+
+<!-- ====================== 12 · CONTACT ====================== -->
 <section class="page dark">
-  <div class="folio folio-top">
-    <span>PT Global Sarana Angkasa</span>
-    <span>Company Profile</span>
+  <div style="position:absolute;inset:0">
+    <img class="duo" src="assets/hero-aircraft.png" alt="" style="width:100%;height:100%;object-fit:cover;opacity:.4;object-position:center 30%"/>
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,18,15,.72),rgba(20,18,15,.62))"></div>
   </div>
 
-  <div class="content" style="top:0; bottom:0; align-content:center; justify-items:center; text-align:center;">
-    <div style="grid-column:1/9;">
-      <img src="assets/gsa-logo.png" alt="PT GSA" style="display:block; height:13mm; width:auto; margin:0 auto 14mm;"/>
-      <h2 style="font-size:24mm; font-weight:900; text-transform:uppercase; letter-spacing:-.01em;">Thank You</h2>
+  <div class="rh" style="border:0;top:15mm">
+    <img src="assets/gsa-logo.png" alt="PT GSA" class="logo-dark" style="height:11mm;width:auto;position:relative;top:-4mm"/>
+    <span style="color:rgba(240,234,225,.82);letter-spacing:.22em">Contact</span>
+  </div>
 
-      <div style="margin-top:22mm; display:inline-block; border-top:.6pt solid rgba(255,255,255,.35); padding-top:5mm;">
-        <p style="font-size:8pt; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.55);">
-          Contact details — not provided in source material
-        </p>
-        <p style="font-size:9pt; margin-top:3mm; color:rgba(255,255,255,.8);">
-          Address · Phone · Email · Website
-        </p>
-      </div>
+  <div style="position:absolute;left:var(--mx);right:var(--mx);top:40%">
+    <h1 class="h1" style="color:#F3EEE5;font-size:26pt">Contact us</h1>
+    <p class="lead" style="color:rgba(240,234,225,.82);max-width:120mm;margin-top:5mm">For cargo sales, interline, and GSA partnership enquiries, talk to us about the next lane.</p>
+
+    <div style="margin-top:10mm;display:grid;grid-template-columns:34mm 1fr;max-width:150mm">
+      <div class="clabel">Office</div><div class="cval">Jakarta, Indonesia</div>
+      <div class="clabel">Telephone</div><div class="cval">To be provided</div>
+      <div class="clabel">Email</div><div class="cval">To be provided</div>
+      <div class="clabel">Website</div><div class="cval">To be provided</div>
     </div>
+    <p style="font-family:var(--sans);font-size:7.4pt;color:rgba(240,234,225,.5);margin-top:8mm;max-width:150mm">Contact details were not present in the source material and are shown as placeholders for the company to complete.</p>
   </div>
 
-  <div class="folio folio-bottom">
-    <span>PT Global Sarana Angkasa</span>
-    <span>11 / 11</span>
+  <div class="rf" style="bottom:13mm">
+    <span style="color:rgba(240,234,225,.5);max-width:150mm;letter-spacing:.02em;text-transform:none;font-size:6.8pt;line-height:1.5">
+      © 2026 PT Global Sarana Angkasa. This document is provided for general information only and does not constitute an offer or contractual commitment. Figures reflect company records at the time of writing.</span>
+    <span class="pg">12</span>
   </div>
 </section>
 
 </div>
+
+<style>
+  .toc-i{display:flex;justify-content:space-between;align-items:baseline;padding:2.2mm 0;border-top:.5pt solid var(--hair);color:var(--ink)}
+  .toc-i span{color:var(--muted);font-variant-numeric:tabular-nums}
+  .unit .ut{font-family:var(--sans);font-size:8pt;font-weight:600;color:var(--ink);line-height:1.25}
+  .unit .uh{font-family:var(--sans);font-size:8.6pt;color:var(--body);margin-top:1mm}
+  .unit .us{font-family:var(--sans);font-size:7.8pt;color:var(--muted);line-height:1.5}
+  ul.slist{list-style:none;margin-top:4mm}
+  ul.slist li{font-family:var(--sans);font-size:9.6pt;color:var(--body);padding:2.4mm 0;border-top:.5pt solid var(--hair)}
+  .pcell{display:flex;align-items:center;justify-content:center;height:50mm;border-right:.5pt solid var(--hair);border-bottom:.5pt solid var(--hair);padding:9mm}
+  .pcell img{max-width:66%;max-height:56%;object-fit:contain;filter:grayscale(1) contrast(1.08) opacity(.9)}
+  .mp .mpn{font-family:var(--serif);font-size:12pt;color:var(--bar);margin-bottom:2mm}
+  .clabel{font-family:var(--sans);font-size:7.4pt;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,234,225,.55);padding:3mm 0;border-top:.5pt solid rgba(240,234,225,.2)}
+  .cval{font-family:var(--sans);font-size:9.6pt;color:#F0EAE1;padding:3mm 0;border-top:.5pt solid rgba(240,234,225,.2)}
+</style>
 </body>
 </html>
