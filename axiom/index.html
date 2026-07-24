@@ -41,8 +41,9 @@
 
 /* ── Home · chapters ── */
 .chapters{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.chapter{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:4px;padding:34px 32px;overflow:hidden;transition:border-color .35s var(--ease),background-color .35s var(--ease),transform .35s var(--ease)}
-.chapter:hover{border-color:var(--accent-line);background:var(--accent-soft);transform:translateY(-4px)}
+.chapter{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:4px;padding:34px 32px;overflow:hidden;transition:border-color .35s var(--ease),background-color .35s var(--ease),transform .35s var(--ease),box-shadow .35s var(--ease)}
+.chapter:hover,.chapter:focus-visible{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-4px);box-shadow:0 22px 60px -28px rgba(200,138,78,.6)}
+.chapter:hover .chapter-num,.chapter:focus-visible .chapter-num{color:var(--accent-bright)}
 .chapter-num{font-family:var(--display);font-weight:300;font-size:44px;line-height:1;color:var(--accent);opacity:.9}
 .chapter-tag{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted-2);font-weight:500;margin-top:8px}
 .chapter h3{font-family:var(--display);font-weight:400;font-size:clamp(22px,2.6vw,28px);letter-spacing:-.01em;margin:20px 0 10px;color:var(--ink)}
@@ -125,28 +126,28 @@
         </div>
       </div>
       <div class="chapters" data-stagger>
-        <a class="chapter magnetic" href="performance.html">
+        <a class="chapter" href="performance.html">
           <span class="chapter-num tab">01</span>
           <span class="chapter-tag">The Shop · Human Performance</span>
           <h3>Human Performance &amp; Longevity</h3>
           <p>The live storefront — the five pillars, the range, the Certificate of Analysis, and a WhatsApp quote closed by a person.</p>
           <span class="go">Enter the shop <span class="ar">→</span></span>
         </a>
-        <a class="chapter magnetic" href="plan.html">
+        <a class="chapter" href="plan.html">
           <span class="chapter-num tab">02</span>
           <span class="chapter-tag">Business Model · Plan · P&amp;L</span>
           <h3>Business Model &amp; Launch Plan</h3>
           <p>The reconciled board strategy — five pillars, a decade-long market, pricing by proof and margin, and ninety days to first orders.</p>
           <span class="go">Read the plan <span class="ar">→</span></span>
         </a>
-        <a class="chapter magnetic" href="brand.html">
+        <a class="chapter" href="brand.html">
           <span class="chapter-num tab">03</span>
           <span class="chapter-tag">Brand Guidelines · v1.0</span>
           <h3>Brand Guidelines</h3>
           <p>The full system — logo, warm-dark palette, Jost &amp; Inter, motion, voice, and the Research-Use standard that holds it all.</p>
           <span class="go">Read the brand <span class="ar">→</span></span>
         </a>
-        <a class="chapter magnetic" href="gtm.html">
+        <a class="chapter" href="gtm.html">
           <span class="chapter-num tab">04</span>
           <span class="chapter-tag">Go-to-Market · 8 parts</span>
           <h3>Go-to-Market Strategy</h3>
