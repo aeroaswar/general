@@ -47,6 +47,8 @@
   .page.dark .rh .sec,.page.dark .rf .pg{color:var(--paper)}
 
   .wrap{position:absolute;left:var(--mx);right:var(--mx);top:24mm;bottom:22mm}
+  .wrap.vc{display:flex;flex-direction:column}                 /* keep title at top, centre content below */
+  .vc-fill{flex:1;display:flex;flex-direction:column;justify-content:center;min-height:0}
 
   /* type */
   .eyebrow{font-family:var(--sans);font-size:7.6pt;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gsa-orange)}
@@ -346,12 +348,13 @@
 <section class="page">
   <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec"><b>04</b>&nbsp;&nbsp;Milestones</span></div>
 
-  <div class="wrap">
+  <div class="wrap vc">
     <h1 class="h1">Milestones</h1>
     <p class="body" style="max-width:150mm;margin-top:6mm">Two decades of carrier appointments — from the company's first agencies in 2006 to
       its most recent partnerships.</p>
 
-    <table class="t" style="margin-top:9mm">
+    <div class="vc-fill">
+    <table class="t">
       <thead><tr><th style="width:20mm">Year</th><th>Carrier</th><th style="width:52mm">Sector / route</th><th style="width:30mm">Period</th></tr></thead>
       <tbody>
         <tr><td class="k serif yr">2006</td><td>Top Air</td><td>Domestic &amp; regional</td><td class="tnum">2006 – 2009</td></tr>
@@ -366,6 +369,7 @@
         <tr><td class="k"></td><td>T'Way Airlines</td><td>East Asia</td><td class="tnum">2025</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">05</span></div>
@@ -375,15 +379,16 @@
 <section class="page">
   <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec"><b>05</b>&nbsp;&nbsp;Airline partners</span></div>
 
-  <div class="wrap">
+  <div class="wrap vc">
     <h1 class="h1">Airline partners</h1>
     <p class="body" style="max-width:150mm;margin-top:6mm">Current General Sales Agent appointments held by PT Global Sarana Angkasa.</p>
 
-    <div style="margin-top:10mm;display:grid;grid-template-columns:1fr 1fr;border-top:1pt solid var(--ink);border-left:.5pt solid var(--hair)">
+    <div class="vc-fill">
+    <div style="display:grid;grid-template-columns:1fr 1fr;border-top:1pt solid var(--ink);border-left:.5pt solid var(--hair)">
       <div class="pcell"><img src="assets/airline-ethiopian.png" alt="Ethiopian Airlines"/></div>
       <div class="pcell"><img src="assets/airline-srilankan.png" alt="SriLankan Airlines"/></div>
-      <div class="pcell"><img src="assets/airline-tway.png" alt="t'way" style="max-width:44%"/></div>
       <div class="pcell"><img src="assets/airline-drukair.png" alt="Drukair — Royal Bhutan Airlines"/></div>
+      <div class="pcell"><img src="assets/airline-tway.png" alt="t'way" style="max-width:44%"/></div>
     </div>
 
     <table class="t" style="margin-top:11mm">
@@ -391,10 +396,11 @@
       <tbody>
         <tr><td class="k serif">Ethiopian Airlines</td><td>Africa, Middle East</td><td class="tnum">2012</td></tr>
         <tr><td class="k serif">SriLankan Airlines</td><td>South Asia</td><td class="tnum">2021</td></tr>
-        <tr><td class="k serif">T'Way Airlines</td><td>East Asia</td><td class="tnum">2025</td></tr>
         <tr><td class="k serif">Drukair — Royal Bhutan Airlines</td><td>South Asia</td><td class="tnum">2023</td></tr>
+        <tr><td class="k serif">T'Way Airlines</td><td>East Asia</td><td class="tnum">2025</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">06</span></div>
@@ -440,13 +446,14 @@
 <section class="page">
   <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec"><b>07</b>&nbsp;&nbsp;Global network</span></div>
 
-  <div class="wrap">
+  <div class="wrap vc">
     <h1 class="h1">Global network</h1>
     <p class="body" style="max-width:158mm;margin-top:6mm">Primary cargo lanes from the Jakarta (CGK) and Denpasar (DPS) gateways to Europe and
       the United States — westbound across Asia and the Middle East, and eastbound across
       the Pacific.</p>
 
-    <div style="margin-top:8mm;background:var(--panel);padding:6mm 6mm 4mm">
+    <div class="vc-fill">
+    <div style="background:var(--panel);padding:6mm 6mm 4mm">
       <svg viewBox="18 52 964 292" style="width:100%;display:block" xmlns="http://www.w3.org/2000/svg">
         <image href="assets/world-pacific.svg" x="0" y="0" width="1000" height="500"/>
         <style>
@@ -498,6 +505,7 @@
       </div>
     </div>
     <p style="font-family:var(--sans);font-size:7.6pt;color:var(--muted);margin-top:5mm">Pacific-centred projection. Lanes shown are the company's primary Europe- and US-bound cargo routings from its Indonesian gateways; Dubai indicates a Middle-East connecting hub.</p>
+    </div>
   </div>
 
   <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">08</span></div>
@@ -507,12 +515,13 @@
 <section class="page">
   <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec"><b>08</b>&nbsp;&nbsp;Reach and cargo lanes</span></div>
 
-  <div class="wrap">
+  <div class="wrap vc">
     <h1 class="h1">Reach and cargo lanes</h1>
     <p class="body" style="max-width:158mm;margin-top:6mm">Great-circle distance from Jakarta (CGK) to each primary gateway — a measure of the
       network's reach across the two long-haul theatres the company serves.</p>
 
-    <div class="stats" style="margin-top:10mm">
+    <div class="vc-fill">
+    <div class="stats" style="margin-top:0">
       <div class="stat"><div class="n tnum">11,400<small> km</small></div><div class="c">Average lane to Europe (5 gateways)</div></div>
       <div class="stat"><div class="n tnum">15,500<small> km</small></div><div class="c">Average lane to the United States (3 gateways)</div></div>
       <div class="stat"><div class="n tnum">8</div><div class="c">Primary long-haul gateways</div></div>
@@ -532,6 +541,7 @@
       </div>
       <p style="font-family:var(--sans);font-size:7.6pt;color:var(--muted);margin-top:5mm">Bars scaled to the longest lane (New York, JFK). Distances are great-circle from Jakarta Soekarno-Hatta (CGK); actual flown routings via connecting hubs are longer.</p>
     </div>
+    </div>
   </div>
 
   <div class="rf"><span>PT Global Sarana Angkasa</span><span class="pg">09</span></div>
@@ -541,17 +551,19 @@
 <section class="page">
   <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec"><b>09</b>&nbsp;&nbsp;Marketing plan</span></div>
 
-  <div class="wrap">
+  <div class="wrap vc">
     <h1 class="h1">Marketing plan</h1>
     <p class="body" style="max-width:150mm;margin-top:6mm">Six initiatives directing where PT GSA grows volume and builds the network.</p>
 
-    <div style="margin-top:11mm;display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:12mm;row-gap:12mm">
+    <div class="vc-fill">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:12mm;row-gap:12mm">
       <div class="mp"><div class="mpn">01</div><h2 class="h2">Transhipment</h2><p class="body" style="margin-top:2.5mm">Bringing cargo ex Hong Kong, China and Taiwan, and re-documenting it in CGK / DPS.</p></div>
       <div class="mp"><div class="mpn">02</div><h2 class="h2">Perishable</h2><p class="body" style="margin-top:2.5mm">Aggressive sales for perishable products — fruits, seafood and tropical fish.</p></div>
       <div class="mp"><div class="mpn">03</div><h2 class="h2">DG &amp; Pharmacy</h2><p class="body" style="margin-top:2.5mm">Exploring niche products such as dangerous-goods and pharmaceutical cargo.</p></div>
       <div class="mp"><div class="mpn">04</div><h2 class="h2">Interlines</h2><p class="body" style="margin-top:2.5mm">Setting SPA / interline agreements between our carriers and other airlines.</p></div>
       <div class="mp"><div class="mpn">05</div><h2 class="h2">Branding</h2><p class="body" style="margin-top:2.5mm">Agent awards, gatherings and familiarisation trips (famtrips).</p></div>
       <div class="mp"><div class="mpn">06</div><h2 class="h2">Advertising</h2><p class="body" style="margin-top:2.5mm">Sponsoring cargo events and merchandising.</p></div>
+    </div>
     </div>
   </div>
 
@@ -562,10 +574,11 @@
 <section class="page">
   <div class="rh"><span>PT Global Sarana Angkasa — Company Profile</span><span class="sec"><b>10</b>&nbsp;&nbsp;Recognition and strengths</span></div>
 
-  <div class="wrap">
+  <div class="wrap vc">
     <h1 class="h1">Recognition and strengths</h1>
 
-    <div style="display:grid;grid-template-columns:52mm 1fr;column-gap:12mm;margin-top:9mm;align-items:start">
+    <div class="vc-fill">
+    <div style="display:grid;grid-template-columns:52mm 1fr;column-gap:12mm;margin-top:2mm;align-items:start">
       <div>
         <div style="width:100%;aspect-ratio:3/4;overflow:hidden;background:var(--panel)">
           <img class="duo" src="assets/award-trophy.png" alt="" style="width:100%;height:100%;object-fit:cover"/>
@@ -591,6 +604,7 @@
       <div class="stat"><div class="n tnum">7,200<small> T</small></div><div class="c">Cargo delivered per year</div></div>
       <div class="stat"><div class="n tnum">18+</div><div class="c">Years of experience</div></div>
       <div class="stat"><div class="n tnum">190</div><div class="c">Destinations in the network</div></div>
+    </div>
     </div>
   </div>
 
