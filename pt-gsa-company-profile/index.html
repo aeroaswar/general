@@ -20,7 +20,8 @@
     --paper:#F0EAE1; --panel:#E7DFD2; --panel2:#EDE7DC;
     --ink:#221E1A; --body:#4C453C; --muted:#8B8477; --faint:#A9A295;
     --hair:#D3CCBE; --hair2:#C9C1B2;
-    --bar:#B2947F; --track:#E1D9CC; --tan:#BBA588;
+    --gsa-orange:#F36523; --gsa-red:#ED1B24;                 /* PT GSA brand, from the logo */
+    --bar:#F36523; --track:#E7DECF; --tan:#F36523;
     --serif:'Newsreader',Georgia,'Times New Roman',serif;
     --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     --mx:18mm;      /* page side margin */
@@ -40,7 +41,7 @@
   .rh{top:13mm;padding-bottom:3mm;border-bottom:.5pt solid var(--hair)}
   .rh .sec{color:var(--ink);font-weight:600}
   .rf{bottom:12mm;padding-top:3mm;border-top:.5pt solid var(--hair);color:var(--muted)}
-  .rf .pg{color:var(--ink);font-weight:600;letter-spacing:.1em}
+  .rf .pg{color:var(--gsa-red);font-weight:700;letter-spacing:.1em}
   .page.dark .rh{border-color:rgba(240,234,225,.22);color:rgba(240,234,225,.6)}
   .page.dark .rf{border-color:rgba(240,234,225,.22);color:rgba(240,234,225,.6)}
   .page.dark .rh .sec,.page.dark .rf .pg{color:var(--paper)}
@@ -48,7 +49,7 @@
   .wrap{position:absolute;left:var(--mx);right:var(--mx);top:24mm;bottom:22mm}
 
   /* type */
-  .eyebrow{font-family:var(--sans);font-size:7.6pt;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  .eyebrow{font-family:var(--sans);font-size:7.6pt;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gsa-orange)}
   h1.h1{font-family:var(--serif);font-weight:500;font-size:27pt;line-height:1.04;color:var(--ink);letter-spacing:-.01em}
   h2.h2{font-family:var(--serif);font-weight:500;font-size:15pt;line-height:1.12;color:var(--ink)}
   .lead{font-family:var(--sans);font-size:10.5pt;line-height:1.6;color:var(--body)}
@@ -65,7 +66,7 @@
   .stat{padding-top:4mm;border-top:1pt solid var(--ink)}
   .stat + .stat{padding-left:7mm}
   .stat .n{font-family:var(--serif);font-weight:500;font-size:23pt;color:var(--ink);line-height:1}
-  .stat .n small{font-size:11pt;color:var(--muted)}
+  .stat .n small{font-size:11pt;color:var(--gsa-orange)}
   .stat .c{font-family:var(--sans);font-size:8.4pt;color:var(--body);margin-top:2.2mm;line-height:1.4}
 
   /* tables */
@@ -124,13 +125,14 @@
   </div>
 
   <div class="rh" style="border:0;top:15mm">
-    <img src="assets/gsa-logo.png" alt="PT GSA" class="logo-dark" style="height:12mm;width:auto;position:relative;top:-4mm"/>
+    <img src="assets/gsa-logo.png" alt="PT GSA" style="height:12mm;width:auto;position:relative;top:-4mm"/>
     <span style="color:rgba(240,234,225,.82);letter-spacing:.22em">Jakarta · Indonesia</span>
   </div>
 
   <div style="position:absolute;left:var(--mx);right:var(--mx);top:56%">
-    <div class="eyebrow" style="color:rgba(240,234,225,.72)">Company Profile</div>
+    <div class="eyebrow" style="color:var(--gsa-orange)">Company Profile</div>
     <h1 class="h1" style="color:#F3EEE5;font-size:33pt;margin-top:5mm">PT Global Sarana<br/>Angkasa</h1>
+    <div style="width:26mm;border-top:2pt solid var(--gsa-red);margin-top:7mm"></div>
     <p class="lead" style="color:rgba(240,234,225,.82);max-width:120mm;margin-top:6mm">
       International air cargo General Sales Agent — representing the world's carriers in the Indonesian market since 2006.
     </p>
@@ -201,7 +203,7 @@
         <div style="position:relative;background:var(--panel);padding:6mm">
           <img src="assets/world-pacific.svg" alt="" style="width:100%;display:block;filter:saturate(.9)"/>
           <!-- Jakarta hub dot at 35.2% / 53.4% of the 1000x500 map -->
-          <span style="position:absolute;left:calc(6mm + (100% - 12mm)*0.352);top:calc(6mm + (100% - 12mm)*0.534*0.5);width:6px;height:6px;background:var(--ink);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(178,148,127,.35)"></span>
+          <span style="position:absolute;left:calc(6mm + (100% - 12mm)*0.352);top:calc(6mm + (100% - 12mm)*0.534*0.5);width:6px;height:6px;background:var(--gsa-red);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 3px rgba(243,101,35,.35)"></span>
         </div>
         <p style="font-family:var(--sans);font-size:8pt;color:var(--body);margin-top:3mm;line-height:1.5">
           Head office in Jakarta (CGK / DPS gateways). Carrier partnerships reach across Asia, the Middle East, Africa, Europe and the Americas.</p>
@@ -409,8 +411,8 @@
       <svg viewBox="18 52 964 292" style="width:100%;display:block" xmlns="http://www.w3.org/2000/svg">
         <image href="assets/world-pacific.svg" x="0" y="0" width="1000" height="500"/>
         <style>
-          .route{fill:none;stroke:#B2947F;stroke-width:1.5;opacity:.92}
-          .node{fill:#221E1A}.hub{fill:#8B8477}.origin{fill:#221E1A}
+          .route{fill:none;stroke:#ED1B24;stroke-width:1.5;opacity:.9}
+          .node{fill:#221E1A}.hub{fill:#8B8477}.origin{fill:#ED1B24}
           .lbl{font-family:'Inter',sans-serif;font-size:8px;font-weight:600;fill:#6E675C;letter-spacing:.04em}
           .lblo{font-family:'Inter',sans-serif;font-size:8.5px;font-weight:700;fill:#221E1A;letter-spacing:.04em}
           .reg{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;fill:#221E1A;letter-spacing:.14em}
@@ -564,7 +566,7 @@
   </div>
 
   <div class="rh" style="border:0;top:15mm">
-    <img src="assets/gsa-logo.png" alt="PT GSA" class="logo-dark" style="height:11mm;width:auto;position:relative;top:-4mm"/>
+    <img src="assets/gsa-logo.png" alt="PT GSA" style="height:11mm;width:auto;position:relative;top:-4mm"/>
     <span style="color:rgba(240,234,225,.82);letter-spacing:.22em">Contact</span>
   </div>
 
