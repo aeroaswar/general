@@ -17,11 +17,11 @@
      duotone photography, hairline-ruled tables, running heads.
      ============================================================ */
   :root{
-    --paper:#F0EAE1; --panel:#E7DFD2; --panel2:#EDE7DC;
+    --paper:#F8F5EF; --panel:#ECE4D7; --panel2:#F2ECE1;
     --ink:#221E1A; --body:#4C453C; --muted:#8B8477; --faint:#A9A295;
-    --hair:#D3CCBE; --hair2:#C9C1B2;
+    --hair:#DAD3C6; --hair2:#CFC7B9;
     --gsa-orange:#F36523; --gsa-red:#ED1B24;                 /* PT GSA brand, from the logo */
-    --bar:#F36523; --track:#E7DECF; --tan:#F36523;
+    --bar:#F36523; --track:#EEE7DA; --tan:#F36523;
     --serif:'Newsreader',Georgia,'Times New Roman',serif;
     --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
     --mx:18mm;      /* page side margin */
@@ -261,7 +261,7 @@
       manager and staffed by functional teams.</p>
 
     <!-- hierarchy — top-down -->
-    <div style="margin-top:13mm">
+    <div style="margin-top:12mm">
 
       <!-- Level 1 · Chief Executive (+ Advisor) -->
       <div style="position:relative;display:flex;justify-content:center">
@@ -276,15 +276,23 @@
         <div style="position:absolute;left:calc(50% + 46mm);top:50%;width:3mm;height:.75pt;background:var(--hair2)"></div>
       </div>
 
-      <!-- connector · CEO down to the two-division bus -->
-      <div style="width:1pt;height:7mm;background:var(--gsa-red);margin:0 auto"></div>
-      <div style="position:relative;width:50%;height:.75pt;background:var(--ink);margin:0 auto">
-        <div style="position:absolute;left:0;top:0;width:.75pt;height:7mm;background:var(--ink)"></div>
-        <div style="position:absolute;right:0;top:0;width:.75pt;height:7mm;background:var(--ink)"></div>
+      <!-- trunk down from CEO centre -->
+      <div style="width:.75pt;height:8mm;background:var(--ink);margin:0 auto"></div>
+
+      <!-- connector row · drops land on each division centre (same grid as divisions) -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:16mm">
+        <div style="position:relative;height:8mm">
+          <div style="position:absolute;top:0;left:50%;right:-8mm;height:.75pt;background:var(--ink)"></div>
+          <div style="position:absolute;top:0;bottom:0;left:calc(50% - .4pt);width:.75pt;background:var(--ink)"></div>
+        </div>
+        <div style="position:relative;height:8mm">
+          <div style="position:absolute;top:0;left:-8mm;right:50%;height:.75pt;background:var(--ink)"></div>
+          <div style="position:absolute;top:0;bottom:0;left:calc(50% - .4pt);width:.75pt;background:var(--ink)"></div>
+        </div>
       </div>
 
       <!-- Level 2 · divisions -->
-      <div style="margin-top:7mm;display:grid;grid-template-columns:1fr 1fr;column-gap:16mm">
+      <div style="display:grid;grid-template-columns:1fr 1fr;column-gap:16mm">
         <div style="background:var(--panel);padding:5mm 6mm;text-align:center">
           <div class="label">Cargo — Senior Manager</div>
           <div class="serif" style="font-size:13pt;color:var(--ink);margin-top:1.2mm">Yosi</div>
@@ -300,29 +308,29 @@
         <!-- Cargo -->
         <div>
           <div style="width:.75pt;height:6mm;background:var(--ink);margin:0 auto"></div>
-          <div style="position:relative;width:66.6%;height:.75pt;background:var(--ink);margin:0 auto">
-            <div style="position:absolute;left:0;top:0;width:.75pt;height:5mm;background:var(--ink)"></div>
-            <div style="position:absolute;left:calc(50% - .4pt);top:0;width:.75pt;height:5mm;background:var(--ink)"></div>
-            <div style="position:absolute;right:0;top:0;width:.75pt;height:5mm;background:var(--ink)"></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);column-gap:4mm;height:6mm">
+            <div style="position:relative"><div style="position:absolute;top:0;left:50%;right:-2mm;height:.75pt;background:var(--ink)"></div><div style="position:absolute;top:0;bottom:0;left:calc(50% - .4pt);width:.75pt;background:var(--ink)"></div></div>
+            <div style="position:relative"><div style="position:absolute;top:0;left:-2mm;right:-2mm;height:.75pt;background:var(--ink)"></div><div style="position:absolute;top:0;bottom:0;left:calc(50% - .4pt);width:.75pt;background:var(--ink)"></div></div>
+            <div style="position:relative"><div style="position:absolute;top:0;left:-2mm;right:50%;height:.75pt;background:var(--ink)"></div><div style="position:absolute;top:0;bottom:0;left:calc(50% - .4pt);width:.75pt;background:var(--ink)"></div></div>
           </div>
-          <div style="margin-top:5mm;display:grid;grid-template-columns:repeat(3,1fr);column-gap:3mm">
-            <div class="unit"><div class="ut">Sales</div><div class="uh">Agung</div><hr class="rule" style="margin:2.2mm 0"><div class="us">Novi</div><div class="us">Arzeti</div></div>
-            <div class="unit"><div class="ut">Operation</div><div class="uh">Asep</div><hr class="rule" style="margin:2.2mm 0"><div class="us">Wardiono</div><div class="us">Dedi</div></div>
-            <div class="unit"><div class="ut">Customer Service</div><div class="uh">Shabi</div><hr class="rule" style="margin:2.2mm 0"><div class="us">Sekar</div><div class="us">Rina</div></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);column-gap:4mm;text-align:center">
+            <div class="unit"><div class="ut">Sales</div><div class="uh">Agung</div><hr class="rule" style="margin:2.2mm auto;width:16mm"><div class="us">Novi</div><div class="us">Arzeti</div></div>
+            <div class="unit"><div class="ut">Operation</div><div class="uh">Asep</div><hr class="rule" style="margin:2.2mm auto;width:16mm"><div class="us">Wardiono</div><div class="us">Dedi</div></div>
+            <div class="unit"><div class="ut">Customer Service</div><div class="uh">Shabi</div><hr class="rule" style="margin:2.2mm auto;width:16mm"><div class="us">Sekar</div><div class="us">Rina</div></div>
           </div>
         </div>
         <!-- Business Development -->
         <div>
           <div style="width:.75pt;height:6mm;background:var(--ink);margin:0 auto"></div>
-          <div style="position:relative;width:66.6%;height:.75pt;background:var(--ink);margin:0 auto">
-            <div style="position:absolute;left:0;top:0;width:.75pt;height:5mm;background:var(--ink)"></div>
-            <div style="position:absolute;left:calc(50% - .4pt);top:0;width:.75pt;height:5mm;background:var(--ink)"></div>
-            <div style="position:absolute;right:0;top:0;width:.75pt;height:5mm;background:var(--ink)"></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);column-gap:4mm;height:6mm">
+            <div style="position:relative"><div style="position:absolute;top:0;left:50%;right:-2mm;height:.75pt;background:var(--ink)"></div><div style="position:absolute;top:0;bottom:0;left:calc(50% - .4pt);width:.75pt;background:var(--ink)"></div></div>
+            <div style="position:relative"><div style="position:absolute;top:0;left:-2mm;right:-2mm;height:.75pt;background:var(--ink)"></div><div style="position:absolute;top:0;bottom:0;left:calc(50% - .4pt);width:.75pt;background:var(--ink)"></div></div>
+            <div style="position:relative"><div style="position:absolute;top:0;left:-2mm;right:50%;height:.75pt;background:var(--ink)"></div><div style="position:absolute;top:0;bottom:0;left:calc(50% - .4pt);width:.75pt;background:var(--ink)"></div></div>
           </div>
-          <div style="margin-top:5mm;display:grid;grid-template-columns:repeat(3,1fr);column-gap:3mm">
-            <div class="unit"><div class="ut">Finance</div><div class="uh">Jennifer</div><hr class="rule" style="margin:2.2mm 0"><div class="us">Devy</div></div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);column-gap:4mm;text-align:center">
+            <div class="unit"><div class="ut">Finance</div><div class="uh">Jennifer</div><hr class="rule" style="margin:2.2mm auto;width:16mm"><div class="us">Devy</div></div>
             <div class="unit"><div class="ut">Pricing</div><div class="uh">Shabi</div></div>
-            <div class="unit"><div class="ut">Business Dev. &amp; IT</div><div class="uh">Gano</div><hr class="rule" style="margin:2.2mm 0"><div class="us">Norman (IT)</div></div>
+            <div class="unit"><div class="ut">Business Dev. &amp; IT</div><div class="uh">Gano</div><hr class="rule" style="margin:2.2mm auto;width:16mm"><div class="us">Norman (IT)</div></div>
           </div>
         </div>
       </div>
