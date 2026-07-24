@@ -1,7 +1,8 @@
 /* AXIOM — interaction layer (Brand Guidelines §10).
    One signature ease, 700ms reveals, ≤18px rise, 65ms stagger, play once.
-   Gate → sting → hero (shop page). Nav hides on scroll-down. Magnetic hover on
-   fine pointers. Everything static under prefers-reduced-motion.
+   Gate → sting → hero (shop page). Nav hides on scroll-down. Buttons and
+   cards highlight on hover via CSS — no cursor-follow movement.
+   Everything static under prefers-reduced-motion.
    The custom dot/ring cursor has been removed — normal cursor only. */
 (function () {
   'use strict';
@@ -199,16 +200,7 @@
     if (sp) { sp.textContent = '99.2%'; var m2 = document.getElementById('coa-meter'); if (m2) m2.style.width = '99.2%'; }
   }
 
-  /* ══ Magnetic hover — pull 0.32, release on signature ease (fine pointers) ══ */
-  if (fine && !reduced) {
-    document.querySelectorAll('.magnetic').forEach(function (el) {
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        gsap.to(el, { x: (e.clientX - r.left - r.width / 2) * 0.32, y: (e.clientY - r.top - r.height / 2) * 0.32, duration: 0.35, ease: 'power2.out' });
-      });
-      el.addEventListener('pointerleave', function () { gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: EASE }); });
-    });
-  }
+  /* ══ Buttons and cards highlight on hover (CSS) — no cursor-follow movement. ══ */
 
   /* ══ ?cap=<section-id> — deterministic static capture (house convention) ══ */
   var cap = params.get('cap');
