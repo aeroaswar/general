@@ -1,33 +1,32 @@
 /* ============================================================
    PT TANRA DAYA JAYA — Company Profile 2026
-   Industrial Luxury · A4 print deck
+   Industrial Luxury · Light edition · A4 print deck
+   All-sans typography: Space Grotesk + JetBrains Mono
    ============================================================ */
 
 :root {
-  --coal:        #0C0E11;
-  --coal-2:      #111419;
-  --panel:       #171B21;
-  --panel-2:     #1D222A;
-  --ivory:       #EDE8DD;
-  --ivory-dim:   #C8C4BA;
-  --muted:       #8E959E;
-  --gold:        #C8A554;
-  --gold-light:  #E6C87E;
-  --gold-deep:   #9A7B35;
-  --hairline:    rgba(200, 165, 84, 0.30);
-  --hairline-2:  rgba(237, 232, 221, 0.10);
-  --serif: 'Fraunces', Georgia, serif;
+  --paper:       #F7F3EA;   /* warm ivory canvas */
+  --paper-2:     #FDFBF5;   /* raised card */
+  --paper-dim:   #EFE9DC;   /* recessed panel */
+  --ink:         #152238;   /* deep navy ink */
+  --ink-2:       #44506A;   /* secondary text */
+  --gray:        #6E7686;   /* captions */
+  --gold:        #B08D3C;   /* gold for text on light */
+  --gold-light:  #C8A554;
+  --gold-pale:   #E6C87E;
+  --hairline:    rgba(176, 141, 60, 0.45);
+  --hairline-2:  rgba(21, 34, 56, 0.14);
   --sans:  'Space Grotesk', 'Helvetica Neue', Arial, sans-serif;
   --mono:  'JetBrains Mono', 'Courier New', monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html, body { background: #26282c; }
+html, body { background: #D8D2C4; }
 
 body {
   font-family: var(--sans);
-  color: var(--ivory);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -38,10 +37,10 @@ body {
   width: 210mm;
   height: 297mm;
   position: relative;
-  background: var(--coal);
+  background: var(--paper);
   overflow: hidden;
   margin: 10mm auto;
-  box-shadow: 0 6px 40px rgba(0,0,0,.5);
+  box-shadow: 0 6px 40px rgba(40,35,20,.28);
 }
 
 @page { size: A4 portrait; margin: 0; }
@@ -64,11 +63,6 @@ body {
   pointer-events: none;
   z-index: 30;
 }
-.frame::after {
-  /* corner ticks */
-  content: '';
-  position: absolute; inset: 0;
-}
 
 /* running header */
 .runhead {
@@ -83,14 +77,14 @@ body {
 .runhead .brand img { height: 7mm; width: auto; display: block; }
 .runhead .brand span {
   font-family: var(--sans);
-  font-weight: 600; font-size: 8.2pt; letter-spacing: 0.28em;
-  color: var(--ivory);
+  font-weight: 700; font-size: 8.2pt; letter-spacing: 0.28em;
+  color: var(--ink);
   white-space: nowrap;
 }
 .runhead .doc {
   font-family: var(--mono);
   font-size: 6.6pt; letter-spacing: 0.22em;
-  color: var(--muted);
+  color: var(--gray);
 }
 
 /* running footer / folio */
@@ -108,7 +102,7 @@ body {
 .folio .num {
   font-family: var(--mono);
   font-size: 6.6pt; letter-spacing: 0.2em;
-  color: var(--muted);
+  color: var(--gray);
 }
 
 /* content zone between header/footer */
@@ -134,41 +128,55 @@ body {
 }
 
 h1.display {
-  font-family: var(--serif);
-  font-weight: 340;
-  font-variation-settings: 'opsz' 100;
-  color: var(--ivory);
-  line-height: 1.02;
-  letter-spacing: -0.01em;
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.06;
+  letter-spacing: -0.015em;
 }
-h1.display em {
-  font-style: italic; color: var(--gold-light); font-weight: 380;
+h1.display em, .statement em, .cover h1 em {
+  font-style: normal; color: var(--gold); font-weight: 600;
+}
+
+.en-cap {
+  margin-top: 2.6mm;
+  font-family: var(--mono);
+  font-size: 6.6pt; letter-spacing: 0.2em;
+  color: var(--gray); text-transform: uppercase;
 }
 
 .lede {
-  font-size: 10.5pt; line-height: 1.75; color: var(--ivory-dim);
+  font-size: 10.5pt; line-height: 1.75; color: var(--ink-2);
   font-weight: 400;
 }
-.lede strong { color: var(--ivory); font-weight: 600; }
+.lede strong { color: var(--ink); font-weight: 600; }
 
-.body-sm { font-size: 8.8pt; line-height: 1.7; color: var(--muted); }
-
-.gold-rule { height: 0.3mm; background: var(--hairline); border: 0; }
+.body-sm { font-size: 8.8pt; line-height: 1.7; color: var(--gray); }
 
 .mono-tag {
-  font-family: var(--mono); font-size: 6.4pt; letter-spacing: 0.24em;
-  color: var(--muted); text-transform: uppercase;
+  font-family: var(--mono); font-size: 6.4pt; letter-spacing: .24em;
+  color: var(--gray); text-transform: uppercase;
 }
 
 .img-cover { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+/* framed photo card — the light-deck photo treatment */
 .photo-card {
   position: relative; overflow: hidden;
   border: 0.3mm solid var(--hairline-2);
+  outline: 0.3mm solid var(--hairline);
+  outline-offset: -2.2mm;
+  background: var(--ink);
 }
+.photo-card img { filter: brightness(1.16) saturate(1.02); }
 .photo-card .grade {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(12,14,17,0) 40%, rgba(12,14,17,.72) 100%);
+  background: linear-gradient(180deg, rgba(21,34,56,0) 55%, rgba(21,34,56,.62) 100%);
+}
+.photo-card .cap {
+  position: absolute; bottom: 3.6mm; left: 5mm;
+  font-family: var(--mono); font-size: 6.4pt; letter-spacing: .24em;
+  color: #F2EDE2; text-transform: uppercase; z-index: 3;
 }
 
 /* ============================================================
@@ -179,100 +187,139 @@ h1.display em {
 .cover .c-left {
   width: 58%;
   position: relative;
-  padding: 20mm 14mm 16mm 16mm;
+  padding: 20mm 12mm 16mm 16mm;
   display: flex; flex-direction: column;
   background:
-    radial-gradient(120% 60% at 0% 100%, rgba(200,165,84,0.07), transparent 60%),
-    var(--coal);
+    radial-gradient(120% 60% at 0% 100%, rgba(176,141,60,0.10), transparent 60%),
+    var(--paper);
 }
 .cover .c-right {
   width: 42%;
   position: relative;
+  padding: 7mm 7mm 7mm 0;
 }
-.cover .c-right img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.92) contrast(1.04); }
-.cover .c-right::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(12,14,17,.55), rgba(12,14,17,0) 45%);
+.cover .c-right .ph {
+  position: relative; height: 100%; overflow: hidden;
+  border: 0.3mm solid var(--hairline-2);
+  outline: 0.3mm solid var(--hairline);
+  outline-offset: -2.2mm;
 }
-.cover .c-right .edge {
-  position: absolute; top: 7mm; bottom: 7mm; left: 4mm;
-  width: 0.3mm; background: var(--hairline); z-index: 5;
+.cover .c-right img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(1.16) saturate(1.0) contrast(1.03);
 }
 
 .cover .doc-line {
   font-family: var(--mono); font-size: 7pt; letter-spacing: .3em;
-  color: var(--muted); display: flex; justify-content: space-between;
+  color: var(--gray); display: flex; justify-content: space-between;
 }
-.cover .mark { margin-top: 24mm; width: 34mm; }
+.cover .mark { margin-top: 22mm; width: 34mm; }
 .cover .mark img { width: 100%; display: block; }
 
 .cover .wordmark {
   margin-top: 8mm;
   font-family: var(--sans); font-weight: 700;
   font-size: 15pt; letter-spacing: 0.34em; line-height: 1.5;
-  color: var(--ivory);
+  color: var(--ink);
 }
 .cover .wordmark .pt { color: var(--gold); }
 
 .cover h1 {
-  margin-top: 15mm;
-  font-family: var(--serif); font-weight: 330;
-  font-size: 31pt; line-height: 1.08; letter-spacing: -0.012em;
-  color: var(--ivory);
+  margin-top: 14mm;
+  font-family: var(--sans); font-weight: 600;
+  font-size: 27pt; line-height: 1.12; letter-spacing: -0.015em;
+  color: var(--ink);
 }
-.cover h1 em { font-style: italic; color: var(--gold-light); }
 
 .cover .cover-sub {
   margin-top: 8mm;
-  font-size: 9.5pt; line-height: 1.75; color: var(--muted);
-  max-width: 78mm;
+  font-size: 9.5pt; line-height: 1.75; color: var(--gray);
+  max-width: 80mm;
 }
 
-.cover .cover-foot {
-  margin-top: auto;
-}
+.cover .cover-foot { margin-top: auto; }
 .cover .year-block {
   display: flex; align-items: flex-end; justify-content: space-between;
   border-top: 0.3mm solid var(--hairline);
   padding-top: 6mm;
 }
 .cover .year {
-  font-family: var(--serif); font-weight: 300;
+  font-family: var(--sans); font-weight: 300;
   font-size: 34pt; line-height: .9; color: var(--gold);
+  letter-spacing: -0.02em;
 }
 .cover .year-meta {
   text-align: right;
   font-family: var(--mono); font-size: 6.8pt; letter-spacing: .22em;
-  color: var(--muted); line-height: 2.1;
+  color: var(--gray); line-height: 2.1;
 }
 
 /* ============================================================
-   02 · TENTANG KAMI
+   RINGKASAN EKSEKUTIF
    ============================================================ */
 
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  height: 100%;
-  grid-template-rows: auto auto 1fr auto;
+.exec-lede {
+  margin-top: 8mm;
+  font-size: 12.5pt; line-height: 1.7; color: var(--ink-2);
+  max-width: 168mm;
 }
+.exec-lede strong { color: var(--ink); font-weight: 600; }
+
+.exec-stats {
+  margin-top: 9mm;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 0.3mm solid var(--hairline);
+  border-bottom: 0.3mm solid var(--hairline);
+}
+.exec-stats .st {
+  padding: 6mm 5mm;
+  border-right: 0.3mm solid var(--hairline-2);
+}
+.exec-stats .st:last-child { border-right: 0; }
+.exec-stats .n {
+  font-family: var(--sans); font-weight: 300; font-size: 26pt;
+  color: var(--ink); line-height: 1; letter-spacing: -0.02em;
+}
+.exec-stats .n small { font-size: 10pt; color: var(--gold); font-weight: 600; }
+.exec-stats .l {
+  margin-top: 2.6mm;
+  font-family: var(--mono); font-size: 6.2pt; letter-spacing: .2em;
+  color: var(--gray); text-transform: uppercase; line-height: 1.8;
+}
+
+.exec-svc {
+  margin-top: 8mm;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 5mm;
+}
+.exec-svc .sv {
+  background: var(--paper-2);
+  border: 0.3mm solid var(--hairline-2);
+  border-top: 0.6mm solid var(--gold-light);
+  padding: 4.5mm 4mm;
+}
+.exec-svc h3 {
+  font-family: var(--sans); font-weight: 600; font-size: 10.5pt;
+  color: var(--ink); letter-spacing: .01em;
+}
+.exec-svc p { margin-top: 1.8mm; font-size: 7.6pt; line-height: 1.55; color: var(--gray); }
+
+/* ============================================================
+   TENTANG KAMI
+   ============================================================ */
+
 .statement {
-  font-family: var(--serif); font-weight: 330;
-  font-size: 25pt; line-height: 1.16; letter-spacing: -0.008em;
-  color: var(--ivory);
-  max-width: 165mm;
+  font-family: var(--sans); font-weight: 600;
+  font-size: 21pt; line-height: 1.22; letter-spacing: -0.012em;
+  color: var(--ink);
+  max-width: 168mm;
 }
-.statement em { font-style: italic; color: var(--gold-light); }
 
 .about-cols {
   display: grid; grid-template-columns: 1fr 1fr; gap: 10mm;
   margin-top: 9mm;
 }
 
-.ledger {
-  border-top: 0.3mm solid var(--hairline);
-}
+.ledger { border-top: 0.3mm solid var(--hairline); }
 .ledger .row {
   display: grid;
   grid-template-columns: 34mm 1fr;
@@ -287,21 +334,21 @@ h1.display em {
 }
 .ledger .v {
   font-family: var(--mono); font-size: 7.6pt; letter-spacing: .02em;
-  color: var(--ivory-dim); line-height: 1.6;
+  color: var(--ink-2); line-height: 1.6;
 }
 
 /* ============================================================
-   03 · VISI MISI
+   VISI MISI
    ============================================================ */
 
 .vm-visi {
-  padding: 10mm 0 9mm;
+  padding: 9mm 0 9mm;
   border-bottom: 0.3mm solid var(--hairline);
 }
-.vm-visi .statement { font-size: 20.5pt; max-width: 170mm; }
+.vm-visi .statement { font-size: 17.5pt; max-width: 172mm; }
 
 .misi-grid {
-  margin-top: 9mm;
+  margin-top: 8mm;
   display: grid; grid-template-columns: 1fr 1fr; gap: 6mm 10mm;
 }
 .misi-item {
@@ -311,17 +358,17 @@ h1.display em {
   border-top: 0.3mm solid var(--hairline-2);
 }
 .misi-item .n {
-  font-family: var(--serif); font-weight: 300; font-style: italic;
-  font-size: 14pt; color: var(--gold); line-height: 1;
+  font-family: var(--mono); font-weight: 500;
+  font-size: 10pt; color: var(--gold); line-height: 1.4;
 }
 .misi-item h3 {
   font-family: var(--sans); font-weight: 600; font-size: 9.6pt;
-  letter-spacing: .02em; color: var(--ivory); margin-bottom: 1.6mm;
+  letter-spacing: .02em; color: var(--ink); margin-bottom: 1.6mm;
 }
-.misi-item p { font-size: 8.2pt; line-height: 1.65; color: var(--muted); }
+.misi-item p { font-size: 8.2pt; line-height: 1.65; color: var(--gray); }
 
 /* ============================================================
-   04 · JASA & LAYANAN
+   JASA & LAYANAN
    ============================================================ */
 
 .svc-grid {
@@ -330,63 +377,64 @@ h1.display em {
 }
 .svc-card {
   border: 0.3mm solid var(--hairline-2);
-  background: var(--coal-2);
+  background: var(--paper-2);
   display: flex; flex-direction: column;
 }
-.svc-card .ph { height: 62mm; position: relative; overflow: hidden; }
-.svc-card .ph img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.95); }
+.svc-card .ph { height: 60mm; position: relative; overflow: hidden; background: var(--ink); }
+.svc-card .ph img {
+  width: 100%; height: 100%; object-fit: cover;
+  filter: brightness(1.16) saturate(1.0);
+}
 .svc-card .ph .idx {
   position: absolute; top: 4mm; left: 4.5mm;
   font-family: var(--mono); font-size: 7pt; letter-spacing: .2em;
-  color: var(--ivory); background: rgba(12,14,17,.72);
+  color: var(--ink); background: rgba(247,243,234,.92);
   border: 0.3mm solid var(--hairline);
   padding: 1.4mm 2.6mm;
 }
 .svc-card .tx { padding: 5mm 5.5mm 5.5mm; }
 .svc-card h3 {
-  font-family: var(--serif); font-weight: 380; font-size: 14.5pt;
-  color: var(--ivory); letter-spacing: .005em;
+  font-family: var(--sans); font-weight: 600; font-size: 13.5pt;
+  color: var(--ink); letter-spacing: -0.005em;
 }
-.svc-card h3 span { color: var(--gold); font-style: italic; font-weight: 330; }
-.svc-card p { margin-top: 2.4mm; font-size: 8.2pt; line-height: 1.6; color: var(--muted); }
+.svc-card h3 span { color: var(--gold); }
+.svc-card p { margin-top: 2.4mm; font-size: 8.2pt; line-height: 1.6; color: var(--gray); }
 
 /* ============================================================
-   05 · PETA OPERASI
+   PETA OPERASI
    ============================================================ */
 
 .map-wrap {
-  margin-top: 22mm;
+  margin-top: 20mm;
   position: relative;
-  color: rgba(237, 232, 221, 0.34);
+  color: rgba(21, 34, 56, 0.30);
 }
 .map-wrap svg.dots { width: 100%; height: auto; display: block; }
 .map-overlay { position: absolute; inset: 0; }
 
-.site-pin {
-  position: absolute; transform: translate(-50%, -50%);
-}
+.site-pin { position: absolute; transform: translate(-50%, -50%); }
 .site-pin .ring {
   width: 5.6mm; height: 5.6mm; border-radius: 50%;
   border: 0.4mm solid var(--gold);
   display: grid; place-items: center;
-  background: rgba(12,14,17,.25);
+  background: rgba(247,243,234,.4);
 }
 .site-pin .core {
   width: 1.8mm; height: 1.8mm; border-radius: 50%;
-  background: var(--gold-light);
+  background: var(--ink);
 }
 .site-pin.hq .ring { border-style: dashed; }
 
 .site-label {
   position: absolute;
   font-family: var(--mono); font-size: 6.6pt; letter-spacing: .16em;
-  color: var(--ivory);
+  color: var(--ink);
   white-space: nowrap;
 }
-.site-label small { display: block; color: var(--muted); letter-spacing: .12em; font-size: 6pt; margin-top: 0.8mm; }
+.site-label small { display: block; color: var(--gray); letter-spacing: .12em; font-size: 6pt; margin-top: 0.8mm; }
 
 .map-facts {
-  margin-top: 22mm;
+  margin-top: 20mm;
   display: grid; grid-template-columns: repeat(4, 1fr);
   border-top: 0.3mm solid var(--hairline);
   border-bottom: 0.3mm solid var(--hairline);
@@ -398,38 +446,35 @@ h1.display em {
 }
 .map-facts .mf:last-child { border-right: 0; }
 .map-facts .n {
-  font-family: var(--serif); font-weight: 300; font-size: 24pt;
-  color: var(--gold-light); line-height: 1;
+  font-family: var(--sans); font-weight: 300; font-size: 24pt;
+  color: var(--gold); line-height: 1; letter-spacing: -0.02em;
 }
 .map-facts .l {
   font-family: var(--mono); font-size: 6.4pt; letter-spacing: .18em;
-  color: var(--muted); text-transform: uppercase; line-height: 1.7;
+  color: var(--gray); text-transform: uppercase; line-height: 1.7;
 }
 
 .site-cards {
-  margin-top: 18mm;
+  margin-top: 16mm;
   display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6mm;
 }
-.site-card {
-  border-top: 0.3mm solid var(--hairline);
-  padding-top: 4.5mm;
-}
+.site-card { border-top: 0.3mm solid var(--hairline); padding-top: 4.5mm; }
 .site-card .mono-tag { color: var(--gold); }
 .site-card h3 {
-  font-family: var(--serif); font-weight: 380; font-size: 13.5pt;
-  color: var(--ivory); margin: 2.4mm 0 2mm;
+  font-family: var(--sans); font-weight: 600; font-size: 12.5pt;
+  color: var(--ink); margin: 2.4mm 0 2mm; letter-spacing: -0.005em;
 }
-.site-card p { font-size: 8pt; line-height: 1.65; color: var(--muted); }
+.site-card p { font-size: 8pt; line-height: 1.65; color: var(--gray); }
 
 /* ============================================================
-   06 · STRUKTUR ORGANISASI
+   STRUKTUR ORGANISASI
    ============================================================ */
 
 .org { margin-top: 10mm; }
 .org-tier { display: flex; justify-content: center; gap: 10mm; }
 .org-node {
-  border: 0.3mm solid var(--hairline);
-  background: var(--panel);
+  border: 0.3mm solid var(--hairline-2);
+  background: var(--paper-2);
   padding: 4.5mm 9mm;
   text-align: center;
   min-width: 44mm;
@@ -439,10 +484,10 @@ h1.display em {
   color: var(--gold); text-transform: uppercase;
 }
 .org-node .name {
-  font-family: var(--serif); font-weight: 400; font-size: 13pt;
-  color: var(--ivory); margin-top: 1.8mm;
+  font-family: var(--sans); font-weight: 600; font-size: 12pt;
+  color: var(--ink); margin-top: 1.8mm; letter-spacing: -0.005em;
 }
-.org-node.exec { background: linear-gradient(180deg, var(--panel-2), var(--panel)); }
+.org-node.exec { border-top: 0.6mm solid var(--gold-light); }
 
 .org-stem { width: 0.3mm; height: 8mm; background: var(--hairline); margin: 0 auto; }
 .org-span { position: relative; height: 8mm; }
@@ -454,31 +499,27 @@ h1.display em {
   position: absolute; top: 0; width: 0.3mm; height: 8mm; background: var(--hairline);
 }
 
-.org-mgr-row {
-  display: grid; grid-template-columns: repeat(5, 1fr); gap: 4mm;
-}
+.org-mgr-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4mm; }
 .org-mgr {
   border: 0.3mm solid var(--hairline-2);
-  border-top: 0.5mm solid var(--gold-deep);
-  background: var(--coal-2);
+  border-top: 0.5mm solid var(--gold);
+  background: var(--paper-2);
   padding: 4mm 2mm 4.5mm;
   text-align: center;
 }
 .org-mgr .role {
   font-family: var(--mono); font-size: 5.8pt; letter-spacing: .22em;
-  color: var(--muted); text-transform: uppercase;
+  color: var(--gray); text-transform: uppercase;
 }
 .org-mgr .name {
   font-family: var(--sans); font-weight: 600; font-size: 10pt;
-  letter-spacing: .06em; color: var(--ivory); margin-top: 1.6mm;
+  letter-spacing: .04em; color: var(--ink); margin-top: 1.6mm;
 }
 
-.org-photo {
-  margin-top: 9mm; height: 96mm;
-}
+.org-photo { margin-top: 9mm; height: 92mm; }
 
 /* ============================================================
-   07 · UNIT ALAT BERAT
+   UNIT ALAT BERAT
    ============================================================ */
 
 .stat-row {
@@ -487,24 +528,23 @@ h1.display em {
   border-top: 0.3mm solid var(--hairline);
   border-bottom: 0.3mm solid var(--hairline);
 }
-.stat {
-  padding: 6.5mm 5mm;
-  border-right: 0.3mm solid var(--hairline-2);
-}
+.stat { padding: 6.5mm 5mm; border-right: 0.3mm solid var(--hairline-2); }
 .stat:last-child { border-right: 0; }
 .stat .n {
-  font-family: var(--serif); font-weight: 300;
-  font-size: 37pt; line-height: .95; color: var(--ivory);
+  font-family: var(--sans); font-weight: 300;
+  font-size: 34pt; line-height: .95; color: var(--ink);
+  letter-spacing: -0.02em;
 }
 .stat .n sup {
-  font-size: 10pt; color: var(--gold); font-style: italic; margin-left: 1mm;
+  font-family: var(--mono); font-size: 7.5pt; color: var(--gold);
+  margin-left: 1mm; letter-spacing: .08em;
 }
 .stat .lbl {
   margin-top: 3mm;
   font-family: var(--mono); font-size: 6.4pt; letter-spacing: .2em;
   color: var(--gold); text-transform: uppercase;
 }
-.stat .sub { margin-top: 1.4mm; font-size: 7.4pt; color: var(--muted); }
+.stat .sub { margin-top: 1.4mm; font-size: 7.4pt; color: var(--gray); }
 
 .spec-table { margin-top: 8mm; width: 100%; border-collapse: collapse; }
 .spec-table th {
@@ -517,19 +557,16 @@ h1.display em {
 .spec-table td {
   padding: 3.4mm 3mm 3.4mm 0;
   border-bottom: 0.3mm solid var(--hairline-2);
-  font-size: 8.6pt; color: var(--ivory-dim); vertical-align: baseline;
+  font-size: 8.6pt; color: var(--ink-2); vertical-align: baseline;
 }
-.spec-table td.cat { font-family: var(--sans); font-weight: 600; color: var(--ivory); font-size: 9.4pt; }
-.spec-table td.qty { font-family: var(--serif); font-size: 14pt; font-weight: 340; color: var(--ivory); }
+.spec-table td.cat { font-family: var(--sans); font-weight: 600; color: var(--ink); font-size: 9.4pt; }
+.spec-table td.qty { font-family: var(--sans); font-size: 14pt; font-weight: 400; color: var(--ink); }
 .spec-table td.rfu { font-family: var(--mono); font-size: 6.8pt; letter-spacing: .16em; color: var(--gold); }
-.spec-table tr.total td {
-  border-bottom: 0; border-top: 0.5mm solid var(--hairline);
-  padding-top: 4mm;
-}
-.spec-table tr.total td.qty { font-size: 18pt; color: var(--gold-light); }
+.spec-table tr.total td { border-bottom: 0; border-top: 0.5mm solid var(--hairline); padding-top: 4mm; }
+.spec-table tr.total td.qty { font-size: 18pt; font-weight: 500; color: var(--gold); }
 
 /* ============================================================
-   08 · ARMADA (gallery)
+   ARMADA (gallery)
    ============================================================ */
 
 .gal {
@@ -540,18 +577,51 @@ h1.display em {
   gap: 6mm;
 }
 .gal .g1 { grid-column: 1 / -1; }
-.gal figure { position: relative; overflow: hidden; border: 0.3mm solid var(--hairline-2); }
-.gal img { width: 100%; height: 100%; object-fit: cover; }
+.gal figure {
+  position: relative; overflow: hidden;
+  border: 0.3mm solid var(--hairline-2);
+  outline: 0.3mm solid var(--hairline);
+  outline-offset: -2.2mm;
+  background: var(--ink);
+}
+.gal img { width: 100%; height: 100%; object-fit: cover; filter: brightness(1.16); }
 .gal figcaption {
   position: absolute; left: 0; right: 0; bottom: 0;
   padding: 8mm 5mm 3.6mm;
-  background: linear-gradient(180deg, rgba(12,14,17,0), rgba(12,14,17,.82));
+  background: linear-gradient(180deg, rgba(21,34,56,0), rgba(21,34,56,.78));
   font-family: var(--mono); font-size: 6.6pt; letter-spacing: .2em;
-  color: var(--ivory-dim); text-transform: uppercase;
+  color: #F2EDE2; text-transform: uppercase;
 }
 
 /* ============================================================
-   09 · MILESTONES
+   MENGAPA KAMI
+   ============================================================ */
+
+.why-grid {
+  margin-top: 9mm;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6mm;
+}
+.why-card {
+  background: var(--paper-2);
+  border: 0.3mm solid var(--hairline-2);
+  border-top: 0.6mm solid var(--gold-light);
+  padding: 6.5mm 6mm;
+}
+.why-card .n {
+  font-family: var(--sans); font-weight: 300; font-size: 27pt;
+  color: var(--gold); line-height: 1; letter-spacing: -0.02em;
+}
+.why-card .n small { font-size: 11pt; font-weight: 500; }
+.why-card h3 {
+  font-family: var(--sans); font-weight: 600; font-size: 11.5pt;
+  color: var(--ink); margin-top: 3.2mm; letter-spacing: -0.005em;
+}
+.why-card p { margin-top: 2mm; font-size: 8.2pt; line-height: 1.65; color: var(--gray); }
+
+.why-photo { margin-top: 6mm; height: 58mm; }
+
+/* ============================================================
+   MILESTONES
    ============================================================ */
 
 .tl { margin-top: 9mm; position: relative; }
@@ -565,21 +635,22 @@ h1.display em {
   padding: 0 0 6.5mm;
 }
 .tl-item .yr {
-  font-family: var(--serif); font-weight: 330; font-size: 15pt;
-  color: var(--gold-light); text-align: left; line-height: 1.1;
+  font-family: var(--sans); font-weight: 300; font-size: 15pt;
+  color: var(--gold); text-align: left; line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 .tl-item .dot {
   position: absolute; left: 22mm; top: 2.2mm;
   width: 2.4mm; height: 2.4mm; border-radius: 50%;
   background: var(--gold); transform: translateX(-50%);
-  box-shadow: 0 0 0 1.2mm var(--coal), 0 0 0 1.5mm var(--hairline);
+  box-shadow: 0 0 0 1.2mm var(--paper), 0 0 0 1.5mm var(--hairline);
 }
 .tl-item .tx { padding-left: 4mm; }
 .tl-item h3 {
   font-family: var(--sans); font-weight: 600; font-size: 10pt;
-  color: var(--ivory); letter-spacing: .02em;
+  color: var(--ink); letter-spacing: .02em;
 }
-.tl-item p { margin-top: 1.6mm; font-size: 8.2pt; line-height: 1.62; color: var(--muted); max-width: 130mm; }
+.tl-item p { margin-top: 1.6mm; font-size: 8.2pt; line-height: 1.62; color: var(--gray); max-width: 130mm; }
 .tl-item .meta {
   margin-top: 1.8mm;
   font-family: var(--mono); font-size: 6.6pt; letter-spacing: .18em; color: var(--gold);
@@ -591,30 +662,34 @@ h1.display em {
   padding-top: 5.5mm;
   display: flex; align-items: baseline; justify-content: space-between;
 }
-.tl-total .lbl { font-family: var(--mono); font-size: 6.8pt; letter-spacing: .24em; color: var(--muted); text-transform: uppercase; }
-.tl-total .val { font-family: var(--serif); font-weight: 300; font-size: 26pt; color: var(--gold-light); }
-.tl-total .val small { font-size: 11pt; color: var(--muted); font-family: var(--sans); }
+.tl-total .lbl { font-family: var(--mono); font-size: 6.8pt; letter-spacing: .24em; color: var(--gray); text-transform: uppercase; }
+.tl-total .val {
+  font-family: var(--sans); font-weight: 300; font-size: 26pt;
+  color: var(--gold); letter-spacing: -0.02em;
+}
+.tl-total .val small { font-size: 11pt; color: var(--gray); font-weight: 400; }
 
 /* ============================================================
-   10 · PENGALAMAN (clients)
+   PENGALAMAN (clients)
    ============================================================ */
 
 .cli-grid { margin-top: 8mm; display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
 .cli-card {
   border: 0.3mm solid var(--hairline-2);
-  background: var(--coal-2);
+  background: var(--paper-2);
   padding: 6mm;
   display: flex; flex-direction: column; gap: 4mm;
 }
 .cli-card .head { display: flex; align-items: center; gap: 5mm; }
 .cli-card .chip {
   width: 24mm; height: 15mm; background: #fff; border-radius: 1.6mm;
+  border: 0.3mm solid var(--hairline-2);
   display: grid; place-items: center; overflow: hidden; flex: none;
 }
 .cli-card .chip img { width: 88%; height: 88%; object-fit: contain; }
 .cli-card h3 {
   font-family: var(--sans); font-weight: 600; font-size: 9.8pt;
-  letter-spacing: .03em; color: var(--ivory); line-height: 1.35;
+  letter-spacing: .03em; color: var(--ink); line-height: 1.35;
 }
 .cli-card .scope {
   font-family: var(--mono); font-size: 6.6pt; letter-spacing: .18em;
@@ -626,60 +701,68 @@ h1.display em {
   padding: 2.6mm 0; border-bottom: 0.3mm solid var(--hairline-2);
 }
 .cli-card .cli-ledger .row:last-child { border-bottom: 0; }
-.cli-card .cli-ledger .k { font-family: var(--mono); font-size: 6.2pt; letter-spacing: .16em; color: var(--muted); text-transform: uppercase; }
-.cli-card .cli-ledger .v { font-size: 8.2pt; color: var(--ivory-dim); text-align: right; }
+.cli-card .cli-ledger .k { font-family: var(--mono); font-size: 6.2pt; letter-spacing: .16em; color: var(--gray); text-transform: uppercase; }
+.cli-card .cli-ledger .v { font-size: 8.2pt; color: var(--ink-2); text-align: right; }
 
 /* ============================================================
-   11 · PENYERAPAN NICKEL ORE
+   PENYERAPAN NICKEL ORE + bar chart
    ============================================================ */
 
-.ton-layout { display: grid; grid-template-columns: 1fr 34mm; gap: 8mm; height: 100%; margin-top: 0; }
 .ton-rows { margin-top: 8mm; }
 .ton-row {
   display: grid; grid-template-columns: 26mm 1fr; gap: 7mm;
   align-items: center;
-  padding: 9.5mm 0;
+  padding: 10mm 0;
   border-bottom: 0.3mm solid var(--hairline-2);
 }
 .ton-row:first-child { border-top: 0.3mm solid var(--hairline); }
 .ton-row .chip {
   width: 26mm; height: 16mm; background: #fff; border-radius: 1.6mm;
+  border: 0.3mm solid var(--hairline-2);
   display: grid; place-items: center; overflow: hidden;
 }
 .ton-row .chip img { width: 88%; height: 88%; object-fit: contain; }
 .ton-row .n {
-  font-family: var(--serif); font-weight: 300; font-size: 25pt;
-  color: var(--ivory); line-height: 1;
+  font-family: var(--sans); font-weight: 300; font-size: 24pt;
+  color: var(--ink); line-height: 1; letter-spacing: -0.015em;
 }
-.ton-row .n small { font-size: 11pt; color: var(--gold); font-style: italic; }
-.ton-row .meta { margin-top: 2mm; font-family: var(--mono); font-size: 6.6pt; letter-spacing: .18em; color: var(--muted); text-transform: uppercase; }
-.ton-side { position: relative; overflow: hidden; border: 0.3mm solid var(--hairline-2); }
-.ton-side img { width: 100%; height: 100%; object-fit: cover; }
+.ton-row .n small { font-size: 10pt; color: var(--gold); font-weight: 600; }
+.ton-row .meta { margin-top: 2mm; font-family: var(--mono); font-size: 6.6pt; letter-spacing: .18em; color: var(--gray); text-transform: uppercase; }
+
+.ton-bar {
+  margin-top: 2.6mm;
+  height: 2.6mm; background: var(--paper-dim);
+  border: 0.3mm solid var(--hairline-2);
+  position: relative;
+}
+.ton-bar .fill {
+  position: absolute; inset: 0 auto 0 0;
+  background: linear-gradient(90deg, var(--ink) 0%, #2C3D5E 82%, var(--gold-light) 100%);
+}
+.ton-bar.na .fill { background: repeating-linear-gradient(45deg, var(--hairline-2) 0 1.2mm, transparent 1.2mm 2.4mm); }
 
 /* ============================================================
-   12 · K3 & LINGKUNGAN
+   K3 & LINGKUNGAN
    ============================================================ */
 
 .k3-grid { margin-top: 9mm; display: grid; grid-template-columns: 1fr 1fr; gap: 6mm 10mm; }
 .k3-item { border-top: 0.3mm solid var(--hairline-2); padding-top: 4.5mm; }
-.k3-item .n {
-  font-family: var(--mono); font-size: 7pt; letter-spacing: .2em; color: var(--gold);
-}
+.k3-item .n { font-family: var(--mono); font-size: 7pt; letter-spacing: .2em; color: var(--gold); }
 .k3-item h3 {
-  font-family: var(--serif); font-weight: 400; font-size: 13pt;
-  color: var(--ivory); margin: 2.2mm 0 2mm;
+  font-family: var(--sans); font-weight: 600; font-size: 12pt;
+  color: var(--ink); margin: 2.2mm 0 2mm; letter-spacing: -0.005em;
 }
-.k3-item p { font-size: 8.2pt; line-height: 1.65; color: var(--muted); }
+.k3-item p { font-size: 8.2pt; line-height: 1.65; color: var(--gray); }
 
-.k3-photo { position: absolute; left: 0; right: 0; bottom: 0; height: 80mm; }
+.k3-photo { position: absolute; left: 0; right: 0; bottom: 0; height: 78mm; }
 
 /* ============================================================
-   13 · LEGALITAS
+   LEGALITAS
    ============================================================ */
 
 .legal-note {
   margin-top: 7mm;
-  font-size: 9.5pt; line-height: 1.75; color: var(--ivory-dim); max-width: 150mm;
+  font-size: 9.5pt; line-height: 1.75; color: var(--ink-2); max-width: 150mm;
 }
 .legal-ledger { margin-top: 9mm; }
 .legal-ledger .row {
@@ -690,7 +773,7 @@ h1.display em {
 .legal-ledger .row:first-child { border-top: 0.3mm solid var(--hairline); }
 .legal-ledger .k {
   font-family: var(--sans); font-weight: 600; font-size: 9.4pt;
-  color: var(--ivory); line-height: 1.5;
+  color: var(--ink); line-height: 1.5;
 }
 .legal-ledger .k small {
   display: block; font-family: var(--mono); font-weight: 400;
@@ -698,56 +781,49 @@ h1.display em {
   text-transform: uppercase; margin-bottom: 1.6mm;
 }
 .legal-ledger .v {
-  font-family: var(--mono); font-size: 8pt; line-height: 1.8; color: var(--ivory-dim);
+  font-family: var(--mono); font-size: 8pt; line-height: 1.8; color: var(--ink-2);
 }
-.legal-close { margin-top: 8mm; font-size: 8.8pt; line-height: 1.7; color: var(--muted); max-width: 150mm; }
-.legal-close strong { color: var(--gold-light); font-weight: 600; }
+.legal-close { margin-top: 8mm; font-size: 8.8pt; line-height: 1.7; color: var(--gray); max-width: 150mm; }
+.legal-close strong { color: var(--gold); font-weight: 600; }
 
 /* ============================================================
-   14 · PENUTUP
+   PENUTUP
    ============================================================ */
 
-.close-page { }
-.close-page .bg { position: absolute; inset: 0; }
-.close-page .bg img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9); }
-.close-page .bg::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(12,14,17,.88) 0%, rgba(12,14,17,.55) 55%, rgba(12,14,17,.92) 100%);
+.close-page .zone { display: flex; flex-direction: column; }
+.close-page .close-inner {
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; text-align: center;
 }
-.close-page .zone { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-.close-page .statement { font-size: 27pt; text-align: center; max-width: 158mm; }
+.close-page .statement { font-size: 22pt; text-align: center; max-width: 158mm; }
 .close-page .sig {
-  margin-top: 12mm;
+  margin-top: 10mm;
   font-family: var(--mono); font-size: 7pt; letter-spacing: .3em; color: var(--gold);
   text-transform: uppercase;
 }
+.close-photo { height: 84mm; flex: none; }
 
 /* ============================================================
-   15 · KONTAK / BACK COVER
+   KONTAK / BACK COVER
    ============================================================ */
 
-.contact-page .zone {
-  display: flex; flex-direction: column;
-}
+.contact-page .zone { display: flex; flex-direction: column; }
 .contact-hero { margin-top: 16mm; text-align: center; }
 .contact-hero .mark { width: 30mm; margin: 0 auto; }
 .contact-hero .mark img { width: 100%; display: block; }
 .contact-hero .wordmark {
   margin-top: 7mm;
   font-family: var(--sans); font-weight: 700; font-size: 14pt;
-  letter-spacing: .36em; color: var(--ivory);
+  letter-spacing: .36em; color: var(--ink);
 }
 .contact-hero .wordmark .pt { color: var(--gold); }
 .contact-hero .tag {
   margin-top: 4mm;
   font-family: var(--mono); font-size: 6.8pt; letter-spacing: .28em;
-  color: var(--muted); text-transform: uppercase;
+  color: var(--gray); text-transform: uppercase;
 }
 
-.contact-ledger {
-  margin: 16mm auto 0; width: 128mm;
-}
+.contact-ledger { margin: 16mm auto 0; width: 128mm; }
 .contact-ledger .row {
   display: grid; grid-template-columns: 30mm 1fr; gap: 8mm;
   padding: 5mm 0; border-bottom: 0.3mm solid var(--hairline-2);
@@ -758,10 +834,10 @@ h1.display em {
   font-family: var(--mono); font-size: 6.4pt; letter-spacing: .22em;
   color: var(--gold); text-transform: uppercase;
 }
-.contact-ledger .v { font-size: 9.5pt; line-height: 1.7; color: var(--ivory-dim); }
+.contact-ledger .v { font-size: 9.5pt; line-height: 1.7; color: var(--ink-2); }
 
 .contact-page .colophon {
   margin-top: auto; text-align: center;
   font-family: var(--mono); font-size: 6.2pt; letter-spacing: .24em;
-  color: var(--muted);
+  color: var(--gray);
 }
