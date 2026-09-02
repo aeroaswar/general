@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Pertambangan — Toolkit Operasional</title>
+<meta name="description" content="Instrumen interaktif kalkulator produktivitas alat, RKAB, K3/HSE, template laporan, dan SOP tambang.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#0A0D0B;
+  --panel:#10140F;
+  --glass-fill:rgba(16,20,18,.38);
+  --glass-edge:rgba(255,255,255,.12);
+  --glass-sheen:rgba(255,255,255,.07);
+  --text-1:rgba(255,255,255,.94);
+  --text-2:rgba(255,255,255,.58);
+  --text-3:rgba(255,255,255,.38);
+  --good:#30D158;
+  --warn:#FF9F0A;
+  --orange:#FF7A1A;
+  --bad:#FF453A;
+  --info:#0A84FF;
+  --r-pill:9999px;
+  --r-card:24px;
+  --r-chip:12px;
+  --r-input:12px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Helvetica Neue",sans-serif;
+}
+*{box-sizing:border-box;}
+html{background:var(--canvas);}
+body{
+  margin:0;
+  font-family:var(--font);
+  background:var(--canvas);
+  color:var(--text-1);
+  font-weight:300;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:var(--canvas);}
+.bg .glow{
+  position:absolute;inset:-12%;filter:blur(60px);
+  background:
+    radial-gradient(34% 30% at 82% 10%,rgba(127,176,138,.30),transparent 60%),
+    radial-gradient(38% 36% at 8% 85%,rgba(46,110,90,.32),transparent 62%),
+    radial-gradient(26% 24% at 95% 75%,rgba(255,159,10,.10),transparent 60%);
+  animation:drift 36s ease-in-out infinite alternate;
+}
+@keyframes drift{0%{transform:translate(0,0) scale(1);}100%{transform:translate(-2%,2%) scale(1.05);}}
+.bg .terrain{
+  position:absolute;inset:0;opacity:.5;mix-blend-mode:soft-light;
+  filter:saturate(70%) brightness(.9) contrast(1.15);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='760'%3E%3Cfilter id='t'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.013' numOctaves='5' seed='11'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23t)'/%3E%3C/svg%3E");
+}
+.bg .grain{
+  position:absolute;inset:0;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.app{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
+a{color:inherit;}
+
+/* ---- glass primitives ---- */
+.glass{
+  position:relative;border-radius:var(--r-card);
+  background:linear-gradient(155deg,var(--glass-sheen),rgba(255,255,255,0) 32%),var(--glass-fill);
+  -webkit-backdrop-filter:blur(28px) saturate(170%) brightness(1.08);
+  backdrop-filter:blur(28px) saturate(170%) brightness(1.08);
+  border:1px solid var(--glass-edge);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 30px rgba(255,255,255,.02),0 26px 70px -20px rgba(0,0,0,.7);
+}
+.card{padding:24px;}
+@media(min-width:640px){.card{padding:28px;}}
+
+/* ---- topbar ---- */
+.topbar{padding:22px 24px;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.brand{display:flex;flex-direction:column;gap:6px;}
+.brand .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);font-weight:500;}
+.brand h1{margin:0;font-size:clamp(1.3rem,3vw,1.7rem);font-weight:300;letter-spacing:-.01em;color:var(--text-1);}
+.brand p{margin:0;font-size:13px;color:var(--text-2);max-width:52ch;}
+.source-pill{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--r-pill);
+  background:rgba(255,255,255,.05);border:1px solid var(--glass-edge);font-size:12px;color:var(--text-2);white-space:nowrap;
+}
+.source-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--good);flex:none;}
+
+/* ---- tabs ---- */
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:6px;margin-bottom:22px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{
+  flex:none;font-family:var(--font);border:1px solid transparent;background:transparent;color:var(--text-2);
+  padding:10px 18px;border-radius:var(--r-pill);font-size:13px;font-weight:400;cursor:pointer;transition:all .2s ease;
+}
+.tab-btn:hover{color:var(--text-1);}
+.tab-btn.active{background:rgba(255,255,255,.08);border-color:var(--glass-edge);color:var(--text-1);}
+
+/* ---- panels ---- */
+.tab-panel{display:none;animation:fadein .5s cubic-bezier(.16,1,.3,1);}
+.tab-panel.active{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.section-head{margin-bottom:18px;}
+.section-head h2{font-size:clamp(1.1rem,2.4vw,1.4rem);font-weight:300;margin:0 0 6px;letter-spacing:-.01em;}
+.section-head p{margin:0;color:var(--text-2);font-size:13.5px;max-width:70ch;}
+.grid{display:grid;gap:18px;margin-bottom:18px;}
+.grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr));}
+.grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+.grid.cols-5{grid-template-columns:repeat(auto-fit,minmax(190px,1fr));}
+
+/* ---- nav cards (beranda) ---- */
+.nav-card{cursor:pointer;padding:22px;display:flex;flex-direction:column;gap:10px;transition:transform .25s cubic-bezier(.16,1,.3,1),border-color .25s;}
+.nav-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.22);}
+.nav-card .ic{width:38px;height:38px;border-radius:12px;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;}
+.nav-card .ic svg{width:18px;height:18px;stroke:var(--text-1);}
+.nav-card h3{margin:2px 0 0;font-size:15px;font-weight:500;}
+.nav-card p{margin:0;font-size:12.5px;color:var(--text-2);}
+
+/* ---- stat tiles ---- */
+.stat-tile{padding:20px 22px;}
+.stat-tile .label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-3);font-weight:500;}
+.stat-tile .value{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:200;letter-spacing:-.02em;margin-top:6px;}
+.stat-tile .value small{font-size:13px;font-weight:400;color:var(--text-2);margin-left:4px;}
+
+/* ---- form fields ---- */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.field label{font-size:12px;color:var(--text-2);font-weight:400;}
+.field .unit{font-size:11px;color:var(--text-3);}
+input[type=text],input[type=number],select,textarea{
+  font-family:var(--font);background:rgba(255,255,255,.05);border:1px solid var(--glass-edge);color:var(--text-1);
+  border-radius:var(--r-input);padding:10px 12px;font-size:14px;font-weight:400;width:100%;transition:border-color .2s;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(255,255,255,.35);}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--good);flex:none;}
+textarea{resize:vertical;min-height:60px;}
+.input-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;}
+
+/* ---- calc card ---- */
+.calc-card{padding:22px;display:flex;flex-direction:column;gap:2px;}
+.calc-card .calc-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.calc-card .calc-title h3{margin:0;font-size:14.5px;font-weight:500;}
+.calc-card .formula{font-size:11px;color:var(--text-3);font-family:ui-monospace,"SF Mono",Menlo,monospace;background:rgba(255,255,255,.04);padding:6px 10px;border-radius:8px;margin-bottom:14px;line-height:1.5;}
+.calc-result{margin-top:10px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.calc-result .num{font-size:clamp(1.5rem,3.4vw,2rem);font-weight:200;letter-spacing:-.02em;}
+.calc-result .num small{font-size:13px;color:var(--text-2);font-weight:400;margin-left:4px;}
+.calc-note{font-size:11.5px;color:var(--text-3);margin-top:8px;}
+
+/* ---- badge ---- */
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--r-pill);font-size:11.5px;font-weight:500;letter-spacing:.02em;white-space:nowrap;}
+.badge::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;}
+.badge.good{background:rgba(48,209,88,.14);color:var(--good);}
+.badge.warn{background:rgba(255,159,10,.14);color:var(--warn);}
+.badge.orange{background:rgba(255,122,26,.16);color:var(--orange);}
+.badge.bad{background:rgba(255,69,58,.14);color:var(--bad);}
+.badge.neutral{background:rgba(255,255,255,.06);color:var(--text-2);}
+
+/* ---- progress ---- */
+.progress-wrap{margin-bottom:14px;}
+.progress-wrap .bar-label{font-size:12px;color:var(--text-2);margin-bottom:8px;display:block;}
+.bar{height:6px;border-radius:var(--r-pill);background:rgba(255,255,255,.08);overflow:hidden;}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--good),#7FB08A);border-radius:var(--r-pill);transition:width .4s cubic-bezier(.16,1,.3,1);width:0%;}
+
+/* ---- checklist ---- */
+.checklist{display:grid;gap:2px;}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 4px;border-radius:10px;cursor:pointer;font-size:13.5px;transition:background .2s;}
+.check-item:hover{background:rgba(255,255,255,.03);}
+.check-item .check-meta{margin-left:auto;font-size:11px;color:var(--text-3);white-space:nowrap;padding-left:10px;}
+.check-item input{margin-top:2px;}
+
+/* ---- tables ---- */
+.table-wrap{overflow-x:auto;border-radius:16px;border:1px solid rgba(255,255,255,.08);}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:13px;}
+th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);padding:12px 14px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.08);white-space:nowrap;}
+td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle;color:var(--text-2);}
+tr:last-child td{border-bottom:none;}
+td .cell-input{background:transparent;border:1px solid transparent;padding:6px 8px;border-radius:8px;}
+td .cell-input:hover{border-color:rgba(255,255,255,.1);}
+td .cell-input:focus{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.3);}
+td .cell-input.num{width:100px;}
+.col-no{color:var(--text-3);width:36px;}
+.dev-value{font-variant-numeric:tabular-nums;font-weight:500;color:var(--text-1);}
+
+/* ---- buttons ---- */
+.btn{
+  font-family:var(--font);display:inline-flex;align-items:center;gap:8px;border:1px solid var(--glass-edge);
+  background:rgba(255,255,255,.06);color:var(--text-1);padding:10px 18px;border-radius:var(--r-pill);
+  font-size:13px;font-weight:500;cursor:pointer;transition:all .2s;
+}
+.btn:hover{background:rgba(255,255,255,.1);}
+.btn.primary{background:rgba(127,176,138,.18);border-color:rgba(127,176,138,.4);color:#B7E0C1;}
+.btn.primary:hover{background:rgba(127,176,138,.28);}
+.btn.ghost{background:transparent;}
+.icon-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--glass-edge);background:rgba(255,255,255,.05);color:var(--text-2);cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .2s;flex:none;}
+.icon-btn:hover{background:rgba(255,69,58,.15);color:var(--bad);border-color:rgba(255,69,58,.3);}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0;}
+
+/* ---- accordion ---- */
+details.acc{border-radius:16px;border:1px solid rgba(255,255,255,.08);margin-bottom:10px;overflow:hidden;}
+details.acc summary{list-style:none;cursor:pointer;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:500;color:var(--text-1);}
+details.acc summary::-webkit-details-marker{display:none;}
+details.acc summary .chev{transition:transform .25s;color:var(--text-3);flex:none;}
+details.acc[open] summary .chev{transform:rotate(180deg);}
+details.acc .acc-body{padding:0 18px 18px;font-size:13px;color:var(--text-2);}
+.acc-tag{font-size:10.5px;color:var(--text-3);font-weight:400;margin-right:10px;}
+
+/* ---- step flow ---- */
+.step-flow{display:flex;flex-direction:column;position:relative;padding-left:6px;}
+.step{display:flex;gap:14px;position:relative;padding-bottom:22px;}
+.step:last-child{padding-bottom:0;}
+.step .dot-wrap{display:flex;flex-direction:column;align-items:center;flex:none;}
+.step .dot{width:9px;height:9px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 4px rgba(255,159,10,.15);margin-top:5px;}
+.step .line{width:1px;flex:1;background:rgba(255,255,255,.12);margin-top:4px;}
+.step:last-child .line{display:none;}
+.step .txt{font-size:13.5px;color:var(--text-1);padding-top:0;}
+.step .txt .n{color:var(--text-3);font-size:11px;margin-right:6px;}
+
+/* ---- HIRADC matrix ---- */
+.matrix-wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;}
+.matrix{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;width:min(320px,100%);}
+.matrix .cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:12px;font-weight:500;color:rgba(0,0,0,.75);transition:transform .15s;}
+.matrix .cell.sel{transform:scale(1.12);box-shadow:0 0 0 2px #fff;color:#000;}
+.matrix .cell.r-good{background:var(--good);}
+.matrix .cell.r-warn{background:var(--warn);}
+.matrix .cell.r-orange{background:var(--orange);}
+.matrix .cell.r-bad{background:var(--bad);}
+.axis-note{font-size:11px;color:var(--text-3);margin-top:8px;}
+
+/* ---- misc ---- */
+.divider{height:1px;background:rgba(255,255,255,.08);margin:26px 0;}
+.small-note{font-size:12px;color:var(--text-3);}
+footer{text-align:center;padding:40px 20px 10px;color:var(--text-3);font-size:12px;}
+.two-col{display:grid;gap:22px;grid-template-columns:1.4fr 1fr;}
+@media(max-width:860px){.two-col{grid-template-columns:1fr;}}
+.grid>*,.two-col>*{min-width:0;}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--text-2);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+@media print{
+  .bg,.tabs,.topbar .source-pill,.toolbar,.tab-btn{display:none !important;}
+  body{background:#fff;color:#111;}
+  .glass{background:#fff !important;border:1px solid #ccc !important;box-shadow:none !important;backdrop-filter:none !important;color:#111;}
+  .tab-panel{display:none !important;}
+  .tab-panel.printing{display:block !important;}
+}
+</style>
+</head>
+<body>
+<div class="bg"><div class="glow"></div><div class="terrain"></div><div class="grain"></div></div>
+
+<div class="app">
+
+  <header class="topbar glass">
+    <div class="brand">
+      <span class="eyebrow">AI Pertambangan · Toolkit Operasional</span>
+      <h1>Instrumen Operasional Tambang</h1>
+      <p>Kalkulator produktivitas, RKAB, K3/HSE, template laporan &amp; SOP — disatukan dari paket dokumen AI Pertambangan menjadi satu alat interaktif.</p>
+    </div>
+    <span class="source-pill"><span class="dot"></span> Disarikan dari 8 dokumen sumber · Google Drive</span>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab-btn active" data-tab="beranda">Beranda</button>
+    <button class="tab-btn" data-tab="kalkulator">Kalkulator Produktivitas</button>
+    <button class="tab-btn" data-tab="rkab">RKAB</button>
+    <button class="tab-btn" data-tab="k3">K3 / HSE</button>
+    <button class="tab-btn" data-tab="laporan">Template Laporan</button>
+    <button class="tab-btn" data-tab="sop">SOP</button>
+  </nav>
+
+  <main>
+
+    <!-- ================= BERANDA ================= -->
+    <section id="beranda" class="tab-panel active">
+      <div class="grid cols-3" style="margin-bottom:22px;">
+        <div class="glass stat-tile"><div class="label">Formula Kalkulator</div><div class="value">8<small>rumus produktivitas alat</small></div></div>
+        <div class="glass stat-tile"><div class="label">Item Checklist RKAB</div><div class="value">26<small>data + lampiran</small></div></div>
+        <div class="glass stat-tile"><div class="label">SOP Referensi</div><div class="value">3<small>+ formulir siap pakai</small></div></div>
+      </div>
+
+      <div class="section-head">
+        <h2>Lima instrumen, satu toolkit</h2>
+        <p>Setiap bagian bisa dipakai langsung di lapangan atau di kantor site. Data checklist &amp; formulir tersimpan otomatis di perangkat Anda (localStorage) — tidak terkirim ke server manapun.</p>
+      </div>
+      <div class="grid cols-5" style="margin-bottom:26px;">
+        <div class="glass nav-card" data-goto="kalkulator">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h4"/></svg></div>
+          <h3>Kalkulator Produktivitas</h3>
+          <p>Cycle time, produktivitas, PA/UA, match factor, fuel ratio, cost/ton, stripping ratio — dihitung langsung.</p>
+        </div>
+        <div class="glass nav-card" data-goto="rkab">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 4h10v16H9z"/><path d="M5 8h4M5 12h4M5 16h4"/></svg></div>
+          <h3>RKAB Builder</h3>
+          <p>Kerangka 12 BAB, checklist data &amp; lampiran, kalkulator deviasi rencana vs realisasi.</p>
+        </div>
+        <div class="glass nav-card" data-goto="k3">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg></div>
+          <h3>K3 / HSE</h3>
+          <p>JSA, matriks risiko HIRADC interaktif, jenis permit to work, checklist P2H harian.</p>
+        </div>
+        <div class="glass nav-card" data-goto="laporan">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12h6M9 16h6M9 8h3"/></svg></div>
+          <h3>Template Laporan</h3>
+          <p>Form harian produksi, struktur laporan mingguan/bulanan, notulen &amp; action plan.</p>
+        </div>
+        <div class="glass nav-card" data-goto="sop">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="6" r="2"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M12 8v4M12 12l-5 4M12 12l5 4"/></svg></div>
+          <h3>SOP</h3>
+          <p>Pelaporan Kinerja, Penilaian Risiko, Pengawasan Peralatan — alur langkah + formulir.</p>
+        </div>
+      </div>
+
+      <div class="glass card">
+        <div class="section-head"><h2>Sumber</h2></div>
+        <p class="small-note" style="max-width:75ch;line-height:1.7;">
+          Konten dalam toolkit ini disarikan dari folder Google Drive <strong>AI PERTAMBANGAN</strong> — paket produk yang dibagikan ke akun Anda, berisi materi SOP (folder <em>MATERI PERTAMBANGAN</em>: SOP Pelaporan Kinerja, SOP Penilaian Risiko, SOP Pengawasan Sistem Peralatan Tambang) dan empat dokumen bonus (folder <em>BONUS</em>: Bank Template Laporan, Paket Dokumen K3/HSE, Template RKAB Lengkap, Kalkulator Produktivitas Alat). Folder tersebut juga berisi satu PDF akses ke asisten chat khusus (custom GPT pihak ketiga) — tautan tersebut sengaja tidak disertakan di sini karena merupakan akses berbayar milik akun lain; buka langsung dari Drive bila diperlukan.
+        </p>
+        <p class="small-note" style="margin-top:10px;">
+          Semua rumus, threshold, dan struktur dokumen di sini bersifat standar industri umum. Sesuaikan dengan regulasi terbaru (UU Minerba, PP 96/2021, Kepmen ESDM) dan kondisi spesifik site sebelum dipakai untuk pelaporan resmi atau pengajuan RKAB.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= KALKULATOR ================= -->
+    <section id="kalkulator" class="tab-panel">
+      <div class="section-head">
+        <h2>Kalkulator Produktivitas Alat</h2>
+        <p>8 rumus standar industri tambang. Isi angka aktual site Anda — hasil dan status (hijau/kuning/merah) terhitung otomatis terhadap target acuan.</p>
+      </div>
+
+      <div class="grid cols-2">
+        <!-- Cycle Time -->
+        <div class="glass calc-card">
+          <div class="calc-title"><h3>1 · Cycle Time (Waktu Edar)</h3></div>
+          <div class="formula">CT = Loading + Hauling + Dumping + Return + Spotting</div>
+          <div class="input-row">
+            <div class="field"><label>Loading (menit)</label><input type="number" id="ct_loading" value="0.5" step="0.1"></div>
+            <div class="field"><label>Hauling (menit)</label><input type="number" id="ct_hauling" value="4" step="0.1"></div>
+            <div class="field"><label>Dumping (menit)</label><input type="number" id="ct_dumping" value="0.3" step="0.1"></div>
+            <div class="field"><label>Return (menit)</label><input type="number" id="ct_return" value="3" step="0.1"></div>
+            <div class="field"><label>Spotting (menit)</label><input type="number" id="ct_spotting" value="0.2" step="0.1"></div>
+          </div>
+          <div class="calc-result"><div class="num" id="ct_result">0<small>menit/rit</small></div><span class="badge neutral" id="ct_sec_badge">0 dtk</span></div>
+          <div class="calc-note">Fokus perbaikan pada komponen terbesar — biasanya hauling. Nilai CT (detik) dipakai otomatis di kalkulator Produktivitas di bawah.</div>
+        </div>
+
+        <!-- Productivity -->
+        <div class="glass calc-card">
+          <div class="calc-title"><h3>2 · Produktivitas Alat (per jam)</h3></div>
+          <div class="formula">Prod = (3600 / CT detik) × Kapasitas × Fill Factor × Efisiensi</div>
+          <div class="input-row">
+            <div class="field"><label>Kapasitas (ton)</label><input type="number" id="prod_capacity" value="30" step="0.5"></div>
+            <div class="field"><label>Fill Factor (0–1)</label><input type="number" id="prod_fill" value="0.9" step="0.01" min="0" max="1"></div>
+            <div class="field"><label>Efisiensi (0–1)</label><input type="number" id="prod_eff" value="0.83" step="0.01" min="0" max="1"></div>
+          </div>
+          <div class="calc-result"><div class="num" id="prod_result">0<small>ton/jam</small></div><span class="badge neutral" id="fill_badge">Fill factor</span></div>
+          <div class="calc-note">Fill factor: seberapa penuh bucket/vessel terisi. Efisiensi: faktor jam kerja efektif per 60 menit. Target fill factor &gt; 0,85.</div>
+        </div>
+
+        <!-- PA -->
+        <div class="glass calc-card">
+          <div class="calc-title"><h3>3 · Availability (Kesiapan Alat)</h3></div>
+          <div class="formula">PA = (Total Jam − Jam Breakdown) / Total Jam × 100%</div>
+          <div class="input-row">
+            <div class="field"><label>Total jam</label><input type="number" id="pa_total" value="720"></div>
+            <div class="field"><label>Jam breakdown</label><input type="number" id="pa_breakdown" value="90"></div>
+          </div>
+          <div class="calc-result"><div class="num" id="pa_result">0<small>%</small></div><span class="badge" id="pa_badge">—</span></div>
+          <div class="calc-note">Physical Availability (PA) target umumnya &gt; 85%. Rendah = masalah maintenance/spare part.</div>
+        </div>
+
+        <!-- UA -->
+        <div class="glass calc-card">
+          <div class="calc-title"><h3>4 · Utilization (Pemanfaatan)</h3></div>
+          <div class="formula">UA = Jam Kerja Aktual / Jam Tersedia × 100%</div>
+          <div class="input-row">
+            <div class="field"><label>Jam kerja aktual</label><input type="number" id="ua_actual" value="580"></div>
+            <div class="field"><label>Jam tersedia</label><input type="number" id="ua_available" value="630"></div>
+          </div>
+          <div class="calc-result"><div class="num" id="ua_result">0<small>%</small></div><span class="badge" id="ua_badge">—</span></div>
+          <div class="calc-note">Use of Availability (UA). Rendah = banyak idle: antre, delay operator, cuaca, standby.</div>
+        </div>
+
+        <!-- Match Factor -->
+        <div class="glass calc-card">
+          <div class="calc-title"><h3>5 · Match Factor (Keseimbangan)</h3></div>
+          <div class="formula">MF = (Jml Truck × CT Loader) / (Jml Loader × CT Truck)</div>
+          <div class="input-row">
+            <div class="field"><label>Jumlah truck</label><input type="number" id="mf_truck" value="5"></div>
+            <div class="field"><label>CT loader (menit)</label><input type="number" id="mf_ctloader" value="1.5" step="0.1"></div>
+            <div class="field"><label>Jumlah loader</label><input type="number" id="mf_loader" value="1"></div>
+            <div class="field"><label>CT truck (menit)</label><input type="number" id="mf_cttruck" value="8" step="0.1"></div>
+          </div>
+          <div class="calc-result"><div class="num" id="mf_result">0<small>MF</small></div><span class="badge" id="mf_badge">—</span></div>
+          <div class="calc-note">MF ≈ 1 ideal. MF&lt;1: loader menganggur (truck kurang). MF&gt;1: truck antre (truck berlebih). Target 0,9–1,1.</div>
+        </div>
+
+        <!-- Fuel Ratio -->
+        <div class="glass calc-card">
+          <div class="calc-title"><h3>6 · Fuel Ratio (Rasio BBM)</h3></div>
+          <div class="formula">FR = Konsumsi Fuel (liter) / Produksi (bcm atau ton)</div>
+          <div class="input-row">
+            <div class="field"><label>Konsumsi fuel (liter)</label><input type="number" id="fr_liter" value="4200"></div>
+            <div class="field"><label>Produksi (bcm/ton)</label><input type="number" id="fr_prod" value="12000"></div>
+          </div>
+          <div class="calc-result"><div class="num" id="fr_result">0<small>ltr/bcm</small></div></div>
+          <div class="calc-note">Naik tiba-tiba = indikasi masalah mesin, jalan rusak, atau operator boros. Pantau tren harian.</div>
+        </div>
+
+        <!-- Cost per Ton -->
+        <div class="glass calc-card">
+          <div class="calc-title"><h3>7 · Cost per Ton (Biaya per Ton)</h3></div>
+          <div class="formula">CPT = Total Biaya Operasi / Total Produksi (ton)</div>
+          <div class="input-row">
+            <div class="field"><label>Total biaya (Rp)</label><input type="number" id="cpt_biaya" value="1800000000"></div>
+            <div class="field"><label>Total produksi (ton)</label><input type="number" id="cpt_prod" value="30000"></div>
+          </div>
+          <div class="calc-result"><div class="num" id="cpt_result">Rp0<small>/ton</small></div></div>
+          <div class="calc-note">Komponen: alat, fuel, manpower, maintenance, hauling, overhead. Metrik profitabilitas paling penting.</div>
+        </div>
+
+        <!-- Stripping Ratio -->
+        <div class="glass calc-card">
+          <div class="calc-title"><h3>8 · Stripping Ratio (Nisbah Kupas)</h3></div>
+          <div class="formula">SR = Volume Overburden (bcm) / Produksi (ton)</div>
+          <div class="input-row">
+            <div class="field"><label>Overburden (bcm)</label><input type="number" id="sr_ob" value="90000"></div>
+            <div class="field"><label>Produksi (ton)</label><input type="number" id="sr_prod" value="30000"></div>
+          </div>
+          <div class="calc-result"><div class="num" id="sr_result">0<small>bcm/ton</small></div></div>
+          <div class="calc-note">Makin tinggi SR, makin mahal biaya per ton. Bandingkan dengan SR rencana di RKAB.</div>
+        </div>
+      </div>
+
+      <div class="glass card">
+        <div class="section-head"><h2>Tabel target &amp; indikator acuan</h2></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Indikator</th><th>Target baik</th><th>Perlu perhatian</th></tr></thead>
+            <tbody>
+              <tr><td>Physical Availability (PA)</td><td><span class="badge good">&gt; 85%</span></td><td><span class="badge bad">&lt; 75%</span></td></tr>
+              <tr><td>Use of Availability (UA)</td><td><span class="badge good">&gt; 80%</span></td><td><span class="badge bad">&lt; 65%</span></td></tr>
+              <tr><td>Match Factor (MF)</td><td><span class="badge good">0,9 – 1,1</span></td><td><span class="badge bad">&lt; 0,8 atau &gt; 1,2</span></td></tr>
+              <tr><td>Fill Factor</td><td><span class="badge good">&gt; 0,85</span></td><td><span class="badge bad">&lt; 0,7</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= RKAB ================= -->
+    <section id="rkab" class="tab-panel">
+      <div class="section-head">
+        <h2>RKAB Builder</h2>
+        <p>Rencana Kerja &amp; Anggaran Biaya — dokumen wajib tahunan pemegang IUP/IUPK. Kerangka, checklist data, lampiran standar, dan kalkulator deviasi.</p>
+      </div>
+
+      <div class="glass card" style="margin-bottom:18px;">
+        <div class="section-head"><h2>Kerangka RKAB — 12 BAB</h2></div>
+        <div id="rkab_bab_acc"></div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:18px;">
+        <div class="glass card">
+          <div class="section-head"><h2>Checklist data yang diperlukan</h2><p>Tandai saat data sudah lengkap. Tersimpan otomatis di perangkat ini.</p></div>
+          <div class="progress-wrap" id="rkab_data_progress"><span class="bar-label">0/14 selesai (0%)</span><div class="bar"><div class="bar-fill"></div></div></div>
+          <div class="checklist" id="rkab_data_list"></div>
+        </div>
+        <div class="glass card">
+          <div class="section-head"><h2>Daftar lampiran standar</h2></div>
+          <div class="progress-wrap" id="rkab_lampiran_progress"><span class="bar-label">0/12 selesai (0%)</span><div class="bar"><div class="bar-fill"></div></div></div>
+          <div class="checklist" id="rkab_lampiran_list"></div>
+        </div>
+      </div>
+
+      <div class="glass card">
+        <div class="section-head"><h2>Evaluasi deviasi — rencana vs realisasi</h2>
+          <p>Deviasi &lt;10% umumnya wajar · 10–25% perlu penjelasan naratif · &gt;25% wajib analisis akar masalah pada RKAB berikutnya.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th style="min-width:200px;">Komponen</th><th>Rencana</th><th>Realisasi</th><th>Deviasi</th><th>Keterangan</th><th></th></tr></thead>
+            <tbody id="deviasi_tbody"></tbody>
+          </table>
+        </div>
+        <div class="toolbar"><button class="btn" id="deviasi_add">+ Tambah baris</button></div>
+      </div>
+    </section>
+
+    <!-- ================= K3/HSE ================= -->
+    <section id="k3" class="tab-panel">
+      <div class="section-head">
+        <h2>K3 / HSE</h2>
+        <p>Kerangka dokumen mengacu SMKP (Sistem Manajemen Keselamatan Pertambangan). Wajib diverifikasi bersama KTT/PJO atau ahli K3 site sebelum diterapkan.</p>
+      </div>
+
+      <div class="glass card" style="margin-bottom:18px;">
+        <div class="section-head"><h2>JSA — Job Safety Analysis</h2><p>Klik sel untuk mengedit. Baris bisa ditambah/dihapus.</p></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th style="min-width:180px;">Langkah pekerjaan</th><th style="min-width:180px;">Potensi bahaya</th><th style="min-width:220px;">Pengendalian risiko</th><th></th></tr></thead>
+            <tbody id="jsa_tbody"></tbody>
+          </table>
+        </div>
+        <div class="toolbar"><button class="btn" id="jsa_add">+ Tambah baris</button></div>
+      </div>
+
+      <div class="glass card" style="margin-bottom:18px;">
+        <div class="section-head"><h2>HIRADC — Matriks Penilaian Risiko</h2><p>Nilai risiko = Kemungkinan (1–5) × Keparahan (1–5).</p></div>
+        <div class="matrix-wrap">
+          <div style="display:flex;gap:16px;">
+            <div class="field" style="min-width:140px;"><label>Kemungkinan</label>
+              <select id="hiradc_k">
+                <option value="5">5 · Hampir pasti</option><option value="4">4 · Sering</option><option value="3" selected>3 · Kadang</option><option value="2">2 · Jarang</option><option value="1">1 · Hampir tidak pernah</option>
+              </select>
+            </div>
+            <div class="field" style="min-width:140px;"><label>Keparahan</label>
+              <select id="hiradc_s">
+                <option value="1">1 · Ringan</option><option value="2">2 · Sedang</option><option value="3" selected>3 · Berat</option><option value="4">4 · Serius</option><option value="5">5 · Fatal</option>
+              </select>
+            </div>
+          </div>
+          <div style="flex:1;min-width:220px;">
+            <div class="matrix" id="hiradc_matrix"></div>
+            <div class="axis-note">Baris = Kemungkinan (5 di atas → 1 di bawah) · Kolom = Keparahan (1 → 5)</div>
+          </div>
+          <div style="min-width:180px;">
+            <div class="calc-result" style="border:none;padding:0;flex-direction:column;align-items:flex-start;gap:10px;">
+              <div class="num" id="hiradc_score">0<small>skor risiko</small></div>
+              <span class="badge" id="hiradc_badge">—</span>
+            </div>
+            <div class="legend" style="margin-top:16px;">
+              <span><i style="background:var(--good)"></i>1–3 Rendah</span>
+              <span><i style="background:var(--warn)"></i>4–7 Sedang</span>
+              <span><i style="background:var(--orange)"></i>8–14 Tinggi</span>
+              <span><i style="background:var(--bad)"></i>15–25 Ekstrem</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="glass card">
+          <div class="section-head"><h2>Permit to Work — jenis &amp; syarat</h2></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th style="min-width:170px;">Jenis izin kerja</th><th style="min-width:260px;">Syarat wajib sebelum kerja</th></tr></thead>
+              <tbody id="ptw_tbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="glass card">
+          <div class="section-head"><h2>P2H — Checklist inspeksi harian unit</h2></div>
+          <div class="progress-wrap" id="p2h_progress"><span class="bar-label">0/12 selesai (0%)</span><div class="bar"><div class="bar-fill"></div></div></div>
+          <div class="checklist" id="p2h_list"></div>
+          <div class="toolbar"><button class="btn" onclick="printPanel('k3')">Cetak checklist</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TEMPLATE LAPORAN ================= -->
+    <section id="laporan" class="tab-panel">
+      <div class="section-head">
+        <h2>Template Laporan</h2>
+        <p>Form harian produksi, struktur laporan mingguan/bulanan, dan notulen meeting &amp; action plan — struktur siap pakai.</p>
+      </div>
+
+      <div class="glass card" style="margin-bottom:18px;">
+        <div class="section-head"><h2>Form Harian Produksi (Daily Report)</h2></div>
+        <div class="table-wrap">
+          <table id="daily_table">
+            <thead><tr><th style="min-width:180px;">Parameter</th><th>Shift 1</th><th>Shift 2</th><th>Total</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="grid cols-2" style="margin-top:16px;">
+          <div class="field"><label>Catatan shift</label><textarea id="daily_catatan" data-key="daily-catatan"></textarea></div>
+          <div class="field"><label>Pengawas</label><input type="text" id="daily_pengawas" data-key="daily-pengawas"></div>
+        </div>
+        <div class="toolbar"><button class="btn" onclick="printPanel('laporan')">Cetak form</button></div>
+      </div>
+
+      <div class="two-col" style="margin-bottom:18px;">
+        <div class="glass card">
+          <div class="section-head"><h2>Struktur laporan mingguan</h2></div>
+          <div class="table-wrap">
+            <table><thead><tr><th>Bagian</th><th>Isi</th></tr></thead><tbody id="weekly_tbody"></tbody></table>
+          </div>
+        </div>
+        <div class="glass card">
+          <div class="section-head"><h2>Struktur laporan bulanan</h2></div>
+          <ol id="monthly_list" style="margin:0;padding-left:20px;font-size:13px;color:var(--text-2);display:grid;gap:8px;"></ol>
+        </div>
+      </div>
+
+      <div class="glass card">
+        <div class="section-head"><h2>Notulen Meeting &amp; Action Plan</h2></div>
+        <div class="grid cols-3">
+          <div class="field"><label>Tanggal</label><input type="text" data-key="not-tanggal" placeholder="dd/mm/yyyy"></div>
+          <div class="field"><label>Waktu</label><input type="text" data-key="not-waktu"></div>
+          <div class="field"><label>Tempat</label><input type="text" data-key="not-tempat"></div>
+          <div class="field"><label>Pemimpin rapat</label><input type="text" data-key="not-pemimpin"></div>
+          <div class="field"><label>Peserta</label><input type="text" data-key="not-peserta"></div>
+          <div class="field"><label>Agenda</label><input type="text" data-key="not-agenda"></div>
+        </div>
+        <div class="table-wrap" style="margin-top:10px;">
+          <table>
+            <thead><tr><th class="col-no">No</th><th style="min-width:180px;">Masalah / Keputusan</th><th style="min-width:160px;">Tindakan</th><th>PIC</th><th>Deadline</th><th>Status</th><th></th></tr></thead>
+            <tbody id="notulen_tbody"></tbody>
+          </table>
+        </div>
+        <div class="toolbar">
+          <button class="btn" id="notulen_add">+ Tambah baris</button>
+          <button class="btn" onclick="printPanel('laporan')">Cetak notulen</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SOP ================= -->
+    <section id="sop" class="tab-panel">
+      <div class="section-head">
+        <h2>SOP Referensi</h2>
+        <p>3 SOP dari paket dokumen — tujuan, cakupan, alur prosedur, dan formulir siap isi.</p>
+      </div>
+      <div id="sop_container"></div>
+    </section>
+
+  </main>
+
+  <footer>AI Pertambangan Toolkit — disusun dari materi Google Drive folder "AI PERTAMBANGAN". Semua data checklist &amp; formulir tersimpan lokal di perangkat Anda.</footer>
+</div>
+
+<script>
+/* ---------------- data ---------------- */
+const RKAB_BAB = [
+ ['I','Pendahuluan','Profil perusahaan, legalitas (IUP/IUPK), lokasi & luas WIUP, riwayat singkat, status kegiatan tahun berjalan.'],
+ ['II','Persetujuan RKAB Sebelumnya','Ringkasan realisasi vs rencana tahun lalu, evaluasi pencapaian, kendala utama, tindak lanjut.'],
+ ['III','Kegiatan Eksplorasi','Rencana & realisasi eksplorasi lanjutan, pemboran, sampling, estimasi sumber daya & cadangan (jika ada).'],
+ ['IV','Kegiatan Operasi Produksi','Rencana produksi (OB removal, coal/mineral getting), metode tambang, sequence penambangan, target tonase.'],
+ ['V','Pengolahan & Pemurnian','Rencana crushing/screening/washing, recovery, kualitas produk, kapasitas fasilitas pengolahan.'],
+ ['VI','Pemasaran','Rencana penjualan, buyer, volume, harga acuan (HBA/HPM), jadwal pengiriman, tujuan ekspor/domestik.'],
+ ['VII','Perlindungan Lingkungan','Pengelolaan air, sediment pond, revegetasi, reklamasi, pemantauan, dana jaminan reklamasi & pascatambang.'],
+ ['VIII','K3 & Keselamatan Pertambangan','Program SMKP, statistik kecelakaan, rencana pelatihan, inspeksi, emergency response, target zero accident.'],
+ ['IX','Tenaga Kerja','Rencana kebutuhan manpower, komposisi lokal vs non-lokal, program pelatihan & sertifikasi.'],
+ ['X','Investasi & Keuangan','Rencana investasi, biaya operasi, proyeksi pendapatan, PNBP, royalti, iuran tetap, pajak.'],
+ ['XI','Rencana Anggaran Biaya','Rincian biaya produksi, hauling, fuel, maintenance, HSE, lingkungan, overhead per komponen.'],
+ ['XII','Pengembangan Masyarakat (PPM)','Program PPM: pendidikan, kesehatan, ekonomi, infrastruktur, sosial-budaya, kelembagaan.'],
+];
+const RKAB_CHECKLIST = [
+ ['Dokumen IUP/IUPK & peta WIUP terbaru','Legal / Perizinan'],
+ ['Laporan realisasi produksi tahun berjalan','Operasional / Produksi'],
+ ['Data cadangan & sumber daya (JORC/SNI)','Geologi / Eksplorasi'],
+ ['Sequence & desain tambang tahun rencana','Mine Plan / Engineering'],
+ ['Daftar alat & status kepemilikan/sewa','Plant / Logistik'],
+ ['Data produktivitas alat historis','Produksi / Dispatch'],
+ ['Rencana & harga penjualan (kontrak buyer)','Marketing / Sales'],
+ ['Data biaya operasi per komponen','Finance / Cost Control'],
+ ['Statistik K3 & program SMKP','HSE / K3'],
+ ['Dokumen lingkungan (RKL-RPL, izin)','Environment'],
+ ['Rencana reklamasi & pascatambang','Environment / Mine Plan'],
+ ['Data tenaga kerja & rencana rekrutmen','HRD'],
+ ['Program & anggaran PPM','External Relations / CSR'],
+ ['Proyeksi keuangan & investasi','Finance'],
+];
+const RKAB_LAMPIRAN = ['Peta situasi & topografi WIUP','Peta rencana kemajuan tambang','Peta geologi & sebaran cadangan','Tabel rencana produksi bulanan','Daftar peralatan & spesifikasi','Struktur organisasi perusahaan','Peta rencana reklamasi','Layout sediment pond & drainase','Rencana anggaran biaya rinci (RAB)','Jadwal & program K3 tahunan','Sertifikat & izin lingkungan','Dokumen jaminan reklamasi'];
+const DEVIASI_SEED = [
+ {komp:'Overburden Removal (bcm)', rencana:100000, realisasi:96000},
+ {komp:'Produksi (ton)', rencana:32000, realisasi:30000},
+ {komp:'Penjualan (ton)', rencana:32000, realisasi:29500},
+ {komp:'Stripping Ratio', rencana:3.1, realisasi:3.2},
+ {komp:'Biaya per Ton (Rp)', rencana:58000, realisasi:60000},
+ {komp:'Availability Alat (%)', rencana:87, realisasi:83},
+];
+const WEEKLY_STRUCT = [
+ ['Ringkasan Eksekutif','Highlight pencapaian minggu ini vs target, 3–5 poin utama.'],
+ ['Produksi','Tabel produksi harian, akumulasi vs target mingguan, % pencapaian.'],
+ ['Kendala & Delay','Daftar delay terbesar, durasi, penyebab, dampak ke produksi.'],
+ ['K3/HSE','Statistik: near miss, insiden, jam kerja aman, temuan inspeksi.'],
+ ['Alat','Availability & utilization per unit, breakdown signifikan, status maintenance.'],
+ ['Fuel','Konsumsi mingguan, fuel ratio, tren vs minggu lalu.'],
+ ['Action Plan','Rencana perbaikan minggu depan, PIC, deadline.'],
+];
+const MONTHLY_STRUCT = ['Ringkasan eksekutif & pencapaian KPI utama','Produksi bulanan vs RKAB (OB, produksi, SR)','Penjualan & pengiriman (volume, buyer, revenue)','Analisis biaya & cost per ton','Performa alat (PA, UA, MF, breakdown mayor)','Konsumsi fuel & efisiensi','K3/HSE (statistik, program, temuan audit)','Lingkungan (monitoring, reklamasi, kepatuhan)','Progres reklamasi & pascatambang','Evaluasi deviasi & analisis akar masalah','Rencana & action plan bulan depan','Lampiran (foto, grafik, tabel detail)'];
+const JSA_SEED = [
+ {langkah:'Persiapan & positioning unit', bahaya:'Unit bergerak, blind spot, tabrakan', kendali:'Klakson 3x, spotter, jarak aman, cek mirror & kamera'},
+ {langkah:'Loading material ke dump truck', bahaya:'Material jatuh, swing bucket, terguling', kendali:'Operator bersertifikat, area steril, sudut swing aman'},
+ {langkah:'Hauling di jalan tambang', bahaya:'Selip, tabrakan, jalan rusak, debu', kendali:'Batas kecepatan, jaga jarak, water spraying, cek rem'},
+ {langkah:'Dumping di disposal', bahaya:'Terguling di edge, longsor material', kendali:'Tanggul pengaman, spotter, jarak dari edge min 3m'},
+ {langkah:'Maintenance/perbaikan unit', bahaya:'Terjepit, energi tersimpan, terbakar', kendali:'LOTO (Lock Out Tag Out), APAR standby, izin kerja'},
+];
+const PTW_TYPES = [
+ ['Hot Work (pengelasan/gerinda)','Fire watcher standby, APAR ready, area bebas material mudah terbakar, gas test bila perlu'],
+ ['Confined Space (ruang terbatas)','Gas test (O2, CO, H2S), ventilasi, standby person, alat komunikasi, rescue plan'],
+ ['Working at Height (ketinggian)','Body harness, anchor point, scaffolding certified, area barikade di bawah'],
+ ['Lifting/Crane (pengangkatan)','SIO operator, rigging inspeksi, SWL diperiksa, area steril, aba-aba rigger'],
+ ['Excavation (penggalian)','Cek utilitas bawah tanah, shoring/sloping, akses keluar-masuk, barikade'],
+ ['Electrical Work (kelistrikan)','LOTO, tegangan diverifikasi nol, APD listrik, teknisi bersertifikat'],
+];
+const P2H_ITEMS = ['Rem utama & rem parkir','Lampu (depan, belakang, sein, rotary)','Klakson & alarm mundur','Kondisi ban & tekanan angin','Level oli mesin & hidrolik','Air radiator & kebocoran','Kaca spion & kamera','Sabuk pengaman','APAR terisi & tersegel','Kondisi kabin & wiper','Tuas kontrol & responsif','Kebocoran fuel/oli di area kerja'];
+const DAILY_PARAMS = [
+ ['Overburden Removal (bcm)', true],
+ ['Coal/Mineral Getting (ton)', true],
+ ['Ritase (rit)', true],
+ ['Jam Kerja Alat (jam)', true],
+ ['Jam Delay (jam)', true],
+ ['Konsumsi Fuel (liter)', true],
+ ['Curah Hujan (mm)', true],
+];
+const NOTULEN_SEED = [
+ {no:1, masalah:'', tindakan:'', pic:'', deadline:'', status:'Open'},
+ {no:2, masalah:'', tindakan:'', pic:'', deadline:'', status:'Open'},
+ {no:3, masalah:'', tindakan:'', pic:'', deadline:'', status:'Open'},
+];
+const SOP_DATA = [
+ {id:'pelaporan', nomor:'34', judul:'SOP Pelaporan Kinerja',
+   tujuan:'Mengumpulkan, menganalisis, dan melaporkan data kinerja operasional tambang untuk memantau efisiensi, keberlanjutan, dan kepatuhan terhadap standar operasional serta regulasi LK3.',
+   cakupan:'Karyawan — Koordinator Tambang sebagai subyek utama.',
+   steps:['Penetapan Kriteria Pelaporan','Pengumpulan Data Kinerja','Pengolahan & Analisis Data','Penyusunan Laporan Kinerja','Verifikasi & Validasi Laporan','Distribusi Laporan Kinerja','Evaluasi & Umpan Balik','Tindak Lanjut (jika diperlukan)'],
+   form:[['Nama pelapor',''],['Jabatan',''],['Departemen',''],['Periode pelaporan',''],['Total produksi (ton)',''],['Efisiensi energi (%)',''],['Kepatuhan regulasi',''],['Temuan utama',''],['Rekomendasi perbaikan',''],['Penanggung jawab tindak lanjut',''],['Disetujui oleh','']]},
+ {id:'risiko', nomor:'2', judul:'SOP Penilaian Risiko',
+   tujuan:'Mengidentifikasi, mengevaluasi, dan mengendalikan potensi bahaya serta risiko pada aktivitas operasional tambang untuk melindungi pekerja, aset, dan lingkungan.',
+   cakupan:'Pekerja — Koordinator Tambang sebagai subyek utama.',
+   steps:['Identifikasi Bahaya','Penilaian Risiko (probabilitas × dampak)','Pengembangan Strategi Pengendalian Risiko','Implementasi Strategi Pengendalian Risiko','Evaluasi & Pembaruan Berkala'],
+   form:[['Lokasi',''],['Dipelihara oleh',''],['Bahaya teridentifikasi',''],['Probabilitas (Rendah/Sedang/Tinggi)',''],['Dampak (Rendah/Sedang/Tinggi)',''],['Tingkat risiko',''],['Strategi pengendalian risiko',''],['Interval evaluasi berikutnya',''],['Disetujui oleh','']]},
+ {id:'peralatan', nomor:'18', judul:'SOP Pengawasan Sistem Peralatan Tambang',
+   tujuan:'Mengatur tata cara pengawasan sistem peralatan tambang untuk memastikan keamanan, kesehatan, dan keselamatan kerja (K3) bagi karyawan dan lingkungan sekitar tambang.',
+   cakupan:'Karyawan — dari petugas pengawas hingga manajemen perusahaan.',
+   steps:['Inspeksi Berkala Seluruh Peralatan Tambang','Pengecekan APAR, Kabel/Listrik, Kendaraan, Alat Angkut & APD','Perbaikan/Penggantian Alat Rusak','Pelaporan Hasil Inspeksi ke Manajemen','Tindak Lanjut Perbaikan oleh Manajemen','Pelatihan Karyawan Terkait','Sertifikasi Karyawan Sesuai Standar K3'],
+   form:[['Tanggal inspeksi',''],['Petugas pengawas',''],['Alat pemadam kebakaran (Baik/Rusak)',''],['Kabel & peralatan listrik (Baik/Rusak)',''],['Kondisi kendaraan tambang (Baik/Rusak)',''],['Kondisi alat angkut (Baik/Rusak)',''],['Peralatan keselamatan lain (Baik/Rusak)',''],['Catatan tambahan','']]},
+];
+
+/* ---------------- helpers ---------------- */
+const $=(id)=>document.getElementById(id);
+function el(tag,cls,html){const e=document.createElement(tag);if(cls)e.className=cls;if(html!==undefined)e.innerHTML=html;return e;}
+function fmtNum(n,d=2){if(!isFinite(n))return '0';return n.toLocaleString('id-ID',{minimumFractionDigits:d,maximumFractionDigits:d});}
+function fmtRp(n){return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n||0);}
+function num(id){return parseFloat($(id).value)||0;}
+
+/* ---------------- tabs ---------------- */
+function switchTab(id){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===id));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active', p.id===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+  history.replaceState(null,'','#'+id);
+}
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+document.querySelectorAll('[data-goto]').forEach(c=>c.addEventListener('click',()=>switchTab(c.dataset.goto)));
+function printPanel(id){switchTab(id);document.getElementById(id).classList.add('printing');window.print();setTimeout(()=>document.getElementById(id).classList.remove('printing'),500);}
+
+/* ---------------- kalkulator ---------------- */
+function badgeSet(elm,status,text){elm.className='badge '+status;elm.textContent=text;}
+function calcCT(){
+  const mins=['ct_loading','ct_hauling','ct_dumping','ct_return','ct_spotting'].reduce((s,i)=>s+num(i),0);
+  $('ct_result').innerHTML=fmtNum(mins,1)+'<small>menit/rit</small>';
+  $('ct_sec_badge').textContent=fmtNum(mins*60,0)+' dtk';
+  return mins*60;
+}
+function calcProd(){
+  const ctSec=calcCT();
+  const cap=num('prod_capacity'), fill=num('prod_fill'), eff=num('prod_eff');
+  const prod=ctSec>0?(3600/ctSec)*cap*fill*eff:0;
+  $('prod_result').innerHTML=fmtNum(prod,0)+'<small>ton/jam</small>';
+  badgeSet($('fill_badge'), fill>0.85?'good':fill<0.7?'bad':'warn', 'Fill '+fmtNum(fill*100,0)+'%');
+}
+function calcPA(){
+  const total=num('pa_total'), bd=num('pa_breakdown');
+  const pa=total>0?((total-bd)/total*100):0;
+  $('pa_result').innerHTML=fmtNum(pa,1)+'<small>%</small>';
+  badgeSet($('pa_badge'), pa>85?'good':pa<75?'bad':'warn', pa>85?'Baik':pa<75?'Rendah':'Perlu perhatian');
+}
+function calcUA(){
+  const act=num('ua_actual'), avail=num('ua_available');
+  const ua=avail>0?(act/avail*100):0;
+  $('ua_result').innerHTML=fmtNum(ua,1)+'<small>%</small>';
+  badgeSet($('ua_badge'), ua>80?'good':ua<65?'bad':'warn', ua>80?'Baik':ua<65?'Rendah':'Perlu perhatian');
+}
+function calcMF(){
+  const t=num('mf_truck'), ctl=num('mf_ctloader'), l=num('mf_loader'), ctt=num('mf_cttruck');
+  const mf=(l>0&&ctt>0)?((t*ctl)/(l*ctt)):0;
+  $('mf_result').innerHTML=fmtNum(mf,2)+'<small>MF</small>';
+  const st=(mf>=0.9&&mf<=1.1)?'good':(mf<0.8||mf>1.2)?'bad':'warn';
+  badgeSet($('mf_badge'), st, mf<0.9?'Loader idle':mf>1.1?'Truck antre':'Seimbang');
+}
+function calcFR(){
+  const liter=num('fr_liter'), prod=num('fr_prod');
+  $('fr_result').innerHTML=fmtNum(prod>0?liter/prod:0,3)+'<small>ltr/bcm</small>';
+}
+function calcCPT(){
+  const biaya=num('cpt_biaya'), prod=num('cpt_prod');
+  $('cpt_result').innerHTML=fmtRp(prod>0?biaya/prod:0)+'<small>/ton</small>';
+}
+function calcSR(){
+  const ob=num('sr_ob'), prod=num('sr_prod');
+  $('sr_result').innerHTML=fmtNum(prod>0?ob/prod:0,2)+'<small>bcm/ton</small>';
+}
+['ct_loading','ct_hauling','ct_dumping','ct_return','ct_spotting','prod_capacity','prod_fill','prod_eff'].forEach(id=>$(id).addEventListener('input',calcProd));
+['pa_total','pa_breakdown'].forEach(id=>$(id).addEventListener('input',calcPA));
+['ua_actual','ua_available'].forEach(id=>$(id).addEventListener('input',calcUA));
+['mf_truck','mf_ctloader','mf_loader','mf_cttruck'].forEach(id=>$(id).addEventListener('input',calcMF));
+['fr_liter','fr_prod'].forEach(id=>$(id).addEventListener('input',calcFR));
+['cpt_biaya','cpt_prod'].forEach(id=>$(id).addEventListener('input',calcCPT));
+['sr_ob','sr_prod'].forEach(id=>$(id).addEventListener('input',calcSR));
+calcProd();calcPA();calcUA();calcMF();calcFR();calcCPT();calcSR();
+
+/* ---------------- checklist renderer ---------------- */
+function renderChecklist(container,items,progressWrap){
+  items.forEach((item,i)=>{
+    const label=el('label','check-item');
+    const input=document.createElement('input');
+    input.type='checkbox';
+    input.dataset.key=container.id+'-'+i;
+    label.appendChild(input);
+    label.appendChild(el('span','',typeof item==='string'?item:item[0]));
+    if(Array.isArray(item)) label.appendChild(el('span','check-meta',item[1]));
+    container.appendChild(label);
+    input.addEventListener('change',()=>updateProgress(container,progressWrap));
+  });
+}
+function updateProgress(container,progressWrap){
+  const boxes=[...container.querySelectorAll('input[type=checkbox]')];
+  const done=boxes.filter(b=>b.checked).length;
+  const pct=boxes.length?Math.round(done/boxes.length*100):0;
+  progressWrap.querySelector('.bar-fill').style.width=pct+'%';
+  progressWrap.querySelector('.bar-label').textContent=done+'/'+boxes.length+' selesai ('+pct+'%)';
+}
+renderChecklist($('rkab_data_list'),RKAB_CHECKLIST,$('rkab_data_progress'));
+renderChecklist($('rkab_lampiran_list'),RKAB_LAMPIRAN,$('rkab_lampiran_progress'));
+renderChecklist($('p2h_list'),P2H_ITEMS,$('p2h_progress'));
+
+/* ---------------- RKAB accordion ---------------- */
+RKAB_BAB.forEach(([no,judul,isi])=>{
+  const d=el('details','acc');
+  d.innerHTML='<summary><span><span class="acc-tag">BAB '+no+'</span>'+judul+'</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><div class="acc-body">'+isi+'</div>';
+  $('rkab_bab_acc').appendChild(d);
+});
+
+/* ---------------- editable table engine ---------------- */
+class EditableTable{
+  constructor(tbody,storageKey,seed,renderRow){
+    this.tbody=tbody;this.key='aipt.'+storageKey;this.renderRow=renderRow;
+    let saved=null;
+    try{saved=JSON.parse(localStorage.getItem(this.key)||'null');}catch(e){}
+    this.rows=(saved&&saved.length)?saved:JSON.parse(JSON.stringify(seed));
+    this.render();
+  }
+  render(){this.tbody.innerHTML='';this.rows.forEach((row,i)=>this.tbody.appendChild(this.renderRow(row,i,this)));}
+  update(i,field,value){this.rows[i][field]=value;this.save();}
+  save(){try{localStorage.setItem(this.key,JSON.stringify(this.rows));}catch(e){}}
+  addRow(seedRow){this.rows.push(JSON.parse(JSON.stringify(seedRow)));this.save();this.render();}
+  removeRow(i){this.rows.splice(i,1);this.save();this.render();}
+}
+
+/* --- deviasi table --- */
+function deviasiStatus(pct){const a=Math.abs(pct);return a<10?'good':a<=25?'warn':'bad';}
+function deviasiLabel(pct){const a=Math.abs(pct);return a<10?'Wajar':a<=25?'Perlu Penjelasan':'Wajib Analisis Akar Masalah';}
+function renderDeviasiRow(row,i,table){
+  const tr=document.createElement('tr');
+  const tdKomp=document.createElement('td');
+  const inKomp=document.createElement('input');inKomp.type='text';inKomp.className='cell-input';inKomp.value=row.komp;
+  inKomp.addEventListener('input',()=>table.update(i,'komp',inKomp.value));
+  tdKomp.appendChild(inKomp);
+
+  const tdRenc=document.createElement('td');
+  const inRenc=document.createElement('input');inRenc.type='number';inRenc.className='cell-input num';inRenc.value=row.rencana;
+  const tdReal=document.createElement('td');
+  const inReal=document.createElement('input');inReal.type='number';inReal.className='cell-input num';inReal.value=row.realisasi;
+  const tdDev=document.createElement('td');tdDev.className='dev-value';
+  const tdBadge=document.createElement('td');
+  const badgeEl=document.createElement('span');badgeEl.className='badge';
+  tdBadge.appendChild(badgeEl);
+
+  function calc(){
+    const r=table.rows[i];
+    const dev=r.rencana?((r.realisasi-r.rencana)/r.rencana*100):0;
+    tdDev.textContent=(dev>=0?'+':'')+fmtNum(dev,1)+'%';
+    const st=deviasiStatus(dev);
+    badgeEl.className='badge '+st;
+    badgeEl.textContent=deviasiLabel(dev);
+  }
+  inRenc.addEventListener('input',()=>{table.update(i,'rencana',parseFloat(inRenc.value)||0);calc();});
+  inReal.addEventListener('input',()=>{table.update(i,'realisasi',parseFloat(inReal.value)||0);calc();});
+  tdRenc.appendChild(inRenc);tdReal.appendChild(inReal);
+  calc();
+
+  const tdDel=document.createElement('td');
+  const delBtn=document.createElement('button');delBtn.className='icon-btn';delBtn.type='button';delBtn.textContent='✕';
+  delBtn.addEventListener('click',()=>table.removeRow(i));
+  tdDel.appendChild(delBtn);
+
+  tr.append(tdKomp,tdRenc,tdReal,tdDev,tdBadge,tdDel);
+  return tr;
+}
+const deviasiTable=new EditableTable($('deviasi_tbody'),'deviasi',DEVIASI_SEED,renderDeviasiRow);
+$('deviasi_add').addEventListener('click',()=>deviasiTable.addRow({komp:'Komponen baru',rencana:0,realisasi:0}));
+
+/* --- JSA table --- */
+function renderJsaRow(row,i,table){
+  const tr=document.createElement('tr');
+  ['langkah','bahaya','kendali'].forEach(field=>{
+    const td=document.createElement('td');
+    const inp=document.createElement('input');inp.type='text';inp.className='cell-input';inp.value=row[field];
+    inp.addEventListener('input',()=>table.update(i,field,inp.value));
+    td.appendChild(inp);tr.appendChild(td);
+  });
+  const tdDel=document.createElement('td');
+  const delBtn=document.createElement('button');delBtn.className='icon-btn';delBtn.type='button';delBtn.textContent='✕';
+  delBtn.addEventListener('click',()=>table.removeRow(i));
+  tdDel.appendChild(delBtn);tr.appendChild(tdDel);
+  return tr;
+}
+const jsaTable=new EditableTable($('jsa_tbody'),'jsa',JSA_SEED,renderJsaRow);
+$('jsa_add').addEventListener('click',()=>jsaTable.addRow({langkah:'',bahaya:'',kendali:''}));
+
+/* --- notulen table --- */
+function renderNotulenRow(row,i,table){
+  const tr=document.createElement('tr');
+  const tdNo=document.createElement('td');tdNo.className='col-no';tdNo.textContent=i+1;tr.appendChild(tdNo);
+  ['masalah','tindakan','pic','deadline'].forEach(field=>{
+    const td=document.createElement('td');
+    const inp=document.createElement('input');inp.type='text';inp.className='cell-input';inp.value=row[field];
+    inp.addEventListener('input',()=>table.update(i,field,inp.value));
+    td.appendChild(inp);tr.appendChild(td);
+  });
+  const tdStatus=document.createElement('td');
+  const sel=document.createElement('select');sel.className='cell-input';
+  ['Open','In Progress','Done'].forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;if(s===row.status)o.selected=true;sel.appendChild(o);});
+  sel.addEventListener('change',()=>table.update(i,'status',sel.value));
+  tdStatus.appendChild(sel);tr.appendChild(tdStatus);
+  const tdDel=document.createElement('td');
+  const delBtn=document.createElement('button');delBtn.className='icon-btn';delBtn.type='button';delBtn.textContent='✕';
+  delBtn.addEventListener('click',()=>table.removeRow(i));
+  tdDel.appendChild(delBtn);tr.appendChild(tdDel);
+  return tr;
+}
+const notulenTable=new EditableTable($('notulen_tbody'),'notulen',NOTULEN_SEED,renderNotulenRow);
+$('notulen_add').addEventListener('click',()=>notulenTable.addRow({masalah:'',tindakan:'',pic:'',deadline:'',status:'Open'}));
+
+/* ---------------- HIRADC matrix ---------------- */
+function riskLevel(score){
+  if(score<=3)return{label:'Rendah',cls:'good'};
+  if(score<=7)return{label:'Sedang',cls:'warn'};
+  if(score<=14)return{label:'Tinggi',cls:'orange'};
+  return{label:'Ekstrem',cls:'bad'};
+}
+function renderHiradcMatrix(){
+  const wrap=$('hiradc_matrix');wrap.innerHTML='';
+  const k=parseInt($('hiradc_k').value,10), s=parseInt($('hiradc_s').value,10);
+  for(let ki=5;ki>=1;ki--){
+    for(let si=1;si<=5;si++){
+      const score=ki*si;const lvl=riskLevel(score);
+      const cell=el('div','cell r-'+lvl.cls,score);
+      if(ki===k&&si===s)cell.classList.add('sel');
+      wrap.appendChild(cell);
+    }
+  }
+  const score=k*s,lvl=riskLevel(score);
+  $('hiradc_score').innerHTML=score+'<small>skor risiko</small>';
+  badgeSet($('hiradc_badge'),lvl.cls,lvl.label);
+}
+$('hiradc_k').addEventListener('change',renderHiradcMatrix);
+$('hiradc_s').addEventListener('change',renderHiradcMatrix);
+renderHiradcMatrix();
+
+/* ---------------- static reference tables ---------------- */
+PTW_TYPES.forEach(([jenis,syarat])=>{
+  const tr=el('tr','',`<td>${jenis}</td><td>${syarat}</td>`);
+  $('ptw_tbody').appendChild(tr);
+});
+WEEKLY_STRUCT.forEach(([bagian,isi])=>{
+  const tr=el('tr','',`<td>${bagian}</td><td>${isi}</td>`);
+  $('weekly_tbody').appendChild(tr);
+});
+MONTHLY_STRUCT.forEach(item=>$('monthly_list').appendChild(el('li','',item)));
+
+/* ---------------- daily report table ---------------- */
+(function(){
+  const tbody=$('daily_table').querySelector('tbody');
+  DAILY_PARAMS.forEach(([label],i)=>{
+    const tr=document.createElement('tr');
+    const tdLabel=document.createElement('td');tdLabel.textContent=label;
+    const tdS1=document.createElement('td'),tdS2=document.createElement('td'),tdTotal=document.createElement('td');
+    const in1=document.createElement('input');in1.type='number';in1.className='cell-input num';in1.dataset.key='daily-'+i+'-s1';
+    const in2=document.createElement('input');in2.type='number';in2.className='cell-input num';in2.dataset.key='daily-'+i+'-s2';
+    const totalSpan=document.createElement('span');totalSpan.className='dev-value';totalSpan.textContent='0';
+    function recalc(){const t=(parseFloat(in1.value)||0)+(parseFloat(in2.value)||0);totalSpan.textContent=fmtNum(t,1);}
+    in1.addEventListener('input',recalc);in2.addEventListener('input',recalc);
+    tdS1.appendChild(in1);tdS2.appendChild(in2);tdTotal.appendChild(totalSpan);
+    tr.append(tdLabel,tdS1,tdS2,tdTotal);
+    tbody.appendChild(tr);
+    tr._recalc=recalc;
+  });
+  tbody._recalcAll=()=>[...tbody.querySelectorAll('tr')].forEach(tr=>tr._recalc&&tr._recalc());
+})();
+
+/* ---------------- SOP ---------------- */
+SOP_DATA.forEach(sop=>{
+  const wrap=el('div','glass card',null);
+  wrap.style.marginBottom='18px';
+  const head=el('div','section-head',`<h2><span class="acc-tag">No. ${sop.nomor}</span>${sop.judul}</h2><p>${sop.tujuan}</p>`);
+  wrap.appendChild(head);
+  wrap.appendChild(el('p','small-note',`<strong>Cakupan:</strong> ${sop.cakupan}`));
+
+  const flow=el('div','step-flow');
+  sop.steps.forEach((s,i)=>{
+    const step=el('div','step');
+    step.innerHTML=`<div class="dot-wrap"><div class="dot"></div><div class="line"></div></div><div class="txt"><span class="n">${String(i+1).padStart(2,'0')}</span>${s}</div>`;
+    flow.appendChild(step);
+  });
+  wrap.appendChild(flow);
+
+  const details=el('details','acc');
+  const summary=el('summary','',`<span>Buka formulir ${sop.judul}</span><svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>`);
+  details.appendChild(summary);
+  const body=el('div','acc-body grid cols-2');
+  sop.form.forEach(([label],idx)=>{
+    const field=el('div','field');
+    field.appendChild(el('label','',label));
+    const input=document.createElement('input');input.type='text';input.dataset.key='sop-'+sop.id+'-'+idx;
+    field.appendChild(input);
+    body.appendChild(field);
+  });
+  details.appendChild(body);
+  wrap.appendChild(details);
+  const toolbar=el('div','toolbar');
+  const printBtn=el('button','btn','Cetak formulir');
+  printBtn.type='button';
+  printBtn.addEventListener('click',()=>{details.open=true;printPanel('sop');});
+  toolbar.appendChild(printBtn);
+  wrap.appendChild(toolbar);
+
+  $('sop_container').appendChild(wrap);
+});
+
+/* ---------------- persistence for [data-key] inputs ---------------- */
+function initPersistence(){
+  document.querySelectorAll('[data-key]').forEach(elm=>{
+    const key='aipt.'+elm.dataset.key;
+    const saved=localStorage.getItem(key);
+    if(saved!==null){
+      if(elm.type==='checkbox')elm.checked=(saved==='1');
+      else elm.value=saved;
+    }
+    const evt=(elm.tagName==='SELECT'||elm.type==='checkbox')?'change':'input';
+    elm.addEventListener(evt,()=>{
+      localStorage.setItem(key, elm.type==='checkbox'?(elm.checked?'1':'0'):elm.value);
+    });
+  });
+}
+initPersistence();
+updateProgress($('rkab_data_list'),$('rkab_data_progress'));
+updateProgress($('rkab_lampiran_list'),$('rkab_lampiran_progress'));
+updateProgress($('p2h_list'),$('p2h_progress'));
+if($('daily_table').querySelector('tbody')._recalcAll)$('daily_table').querySelector('tbody')._recalcAll();
+
+/* ---------------- initial route ---------------- */
+(function(){
+  const hash=location.hash.replace('#','');
+  if(hash&&document.getElementById(hash))switchTab(hash);
+})();
+</script>
+</body>
+</html>
