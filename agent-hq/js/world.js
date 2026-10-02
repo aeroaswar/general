@@ -118,7 +118,8 @@ export function buildWorld(cfg) {
 
   // ── stairs to the mezzanine, office shell, roof garden ─────────────────────
   const office = rooms.get('office');
-  if (office) addMezzanine(above, office, nightMats);
+  if (office?.cfg.floor === 'upper') addMezzanine(above, office, nightMats);
+  else if (office) addGarden(above, office.rect.cx + 2.2, 0, office.rect.z1 + 3.4, nightMats);
 
   // basement outer shell (earth tray seen from outside when the basement is open)
   const shell = box(33, 0.4, 25, '#5d4a3b'); shell.position.set(0, FLOOR_Y.basement - 0.4, 0);
@@ -298,7 +299,13 @@ function addMezzanine(above, office, nightMats) {
   const roofY = y + WALL_H.upper;
   const roof = box(r.w + 0.2, 0.22, r.d + 0.2, '#efe6dc'); roof.position.set(r.cx, roofY + 0.11, r.cz);
   above.add(roof);
-  const g = new THREE.Group(); g.position.y = roofY + 0.22;
+  addGarden(above, r.cx, roofY + 0.22, r.cz, nightMats, r.w, r.d);
+}
+
+/** Planters, a small tree, a bench and string lights — on the office roof, or on the lawn beside it. */
+function addGarden(above, cx, gy, cz, nightMats, w = 10, d = 6) {
+  const r = { w, d };
+  const g = new THREE.Group(); g.position.y = gy;
   for (const [x, zz] of [[-4, -2.2], [-1.5, -2.2], [1.5, -2.2], [4, -2.2]]) {
     g.add(at(box(2.0, 0.45, 0.8, '#b08463'), x, 0.22, zz));
     for (let k = 0; k < 3; k++) {
@@ -324,6 +331,6 @@ function addMezzanine(above, office, nightMats) {
   for (const [w, d, x, zz] of [[r.w, 0.15, 0, -r.d / 2], [r.w, 0.15, 0, r.d / 2], [0.15, r.d, -r.w / 2, 0], [0.15, r.d, r.w / 2, 0]]) {
     g.add(at(box(w, 0.35, d, '#e2d6c8'), x, 0.17, zz));
   }
-  g.position.x = r.cx; g.position.z = r.cz;
+  g.position.x = cx; g.position.z = cz;
   above.add(g);
 }

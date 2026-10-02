@@ -283,11 +283,20 @@
     },
     {
       "id": "badger",
-      "room": "ani",
+      "room": "mmi",
       "kind": "agent",
       "status": "offline",
       "source": "none",
-      "reason": "No repo connected \u2014 this room is SAMPLE",
+      "reason": "No data source for ANI yet (planned: MMI One)",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "mole",
+      "room": "mme",
+      "kind": "agent",
+      "status": "offline",
+      "source": "none",
+      "reason": "No data source for SMU yet",
       "updated_at": "2026-10-02T03:00:00Z"
     },
     {

@@ -30,15 +30,14 @@ shows **STALE** after 10 minutes.
 
 | Room | Agent | Live source | What it shows |
 |---|---|---|---|
-| MMI Trading Desk | Fox + Kurs Clerk bot | git, GitHub API, `site/assets/hma.json`, `holidays-id.json` | PRs and branches. Price basis is FRESH or STALE by the 1st/15th rule, rolled past weekends and holidays. The clerk walks to the board only when the HMA bot really ran in the last 10 min. |
-| MME Coal Desk | Raven | git, GitHub API, `README.md` | Open "Placeholders to confirm" count, as pins on the board |
+| MMI · ANI (nickel) | Fox (MMI) + Badger (PT ANI) + Kurs Clerk bot | git, GitHub API, `site/assets/hma.json`, `holidays-id.json` | MMI side: PRs and branches; price basis FRESH or STALE by the 1st/15th rule, rolled past weekends and holidays; the clerk walks to the board only when the HMA bot really ran in the last 10 min. ANI side: **offline**, no data source yet (planned: MMI One). |
+| MME · SMU (coal) | Raven (MME, contractor & trader) + Mole (PT SMU, coal IUP holder) | git, GitHub API, `README.md` | MME side: open "Placeholders to confirm" count as pins. SMU side: **offline**, no data source yet. |
 | AXIOM Lab | Heron + Gatekeeper | git, GitHub API, `docs/DECISIONS.md`, migration file names | Decision count, one drawer per migration, the `gates` CI result |
 | IJBA Race Control | Otter | git, GitHub API, `site/*.html` names | jetsport.id pages. The master plan cabinet is locked and never read. |
 | Creative Studio | Raccoon | git, GitHub API, `CLAUDE.md` projects table | One tile per workspace project |
-| Supervisor Office | Aero | aggregate | Review tray: one paper per room waiting on you |
+| Supervisor Office (glass corner office, east end) | Aero | aggregate | Review tray: one paper per room waiting on you |
 | Coordination Den (basement) | Octopus | aggregate | Task board for all agents. Pipes glow by each room's status. |
 | Knowledge Library (basement) | — | file names only | One shelf per repo, one spine per `docs/*.md` / `skills/*.md` |
-| ANI Field Annex | Badger | none | **SAMPLE**. No repo connected. |
 | Glu Studio, Portfolio Den | — | none | Locked doors |
 
 **Status rules,** applied in order (`scripts/collect.py → derive_agent_status`, covered by tests):
@@ -113,4 +112,4 @@ npm i --no-save playwright-core && node scripts/verify.cjs   # browser: errors, 
 - **Headless frame rate:** measured in software GL it's not meaningful. On a laptop GPU it is expected
   to be smooth, but that hasn't been measured on a real device yet.
 - **Paths:** characters walk straight lines between door and anchor nodes, so they can clip through furniture.
-- **ANI, Glu and the portfolio:** these have no repo, so their rooms stay sample or locked until a source exists.
+- **ANI, SMU, Glu and the portfolio:** these have no data source yet. ANI and SMU share their group's room and read offline; Glu and the portfolio are locked doors.

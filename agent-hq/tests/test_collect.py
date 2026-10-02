@@ -187,6 +187,23 @@ class Confidentiality(unittest.TestCase):
                     self.assertFalse(p == ex or (ex.endswith("/") and p.startswith(ex)), f"{key}:{p}")
 
 
+class GroupRooms(unittest.TestCase):
+    """ANI shares the MMI room and SMU shares the MME room; with no source they must read offline, never guessed."""
+
+    def test_partners_are_offline_placeholders(self):
+        cfg = json.loads((HQ / "agents.config.json").read_text())
+        with tempfile.TemporaryDirectory() as empty:
+            st = C.collect(cfg, Path(empty), token=None, fetch=False, now=NOW)
+        by = {a["id"]: a for a in st["agents"]}
+        self.assertEqual((by["badger"]["room"], by["badger"]["status"], by["badger"]["source"]), ("mmi", "offline", "none"))
+        self.assertEqual((by["mole"]["room"], by["mole"]["status"]), ("mme", "offline"))
+        self.assertEqual(by["fox"]["status"], "offline")       # no clone on this machine → offline, not idle
+
+    def test_ani_annex_is_gone(self):
+        cfg = json.loads((HQ / "agents.config.json").read_text())
+        self.assertNotIn("ani", [r["id"] for r in cfg["rooms"]])
+
+
 class Gate(unittest.TestCase):
     def test_gate_passes_on_sample_state(self):
         sys.path.insert(0, str(HQ / "scripts"))

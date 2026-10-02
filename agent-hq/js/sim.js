@@ -87,7 +87,8 @@ export class Sim {
   /** spec: { id, char, home, role: 'agent'|'boss'|'bot'|'static', anchor } */
   add(spec) {
     const R = this.world.rooms.get(spec.home);
-    const a = spec.anchor ? R.anchors[spec.anchor] : (R.anchors.desk || R.anchors.console || Object.values(R.anchors)[0]);
+    const pre = spec.prefix || '';
+    const a = spec.anchor ? R.anchors[spec.anchor] : (R.anchors[pre + 'desk'] || R.anchors.desk || R.anchors.console || Object.values(R.anchors)[0]);
     const anc = Array.isArray(a) ? a[0] : a;
     const actor = { ...spec, R, node: anc?.node || null, path: [], target: null, pose: anc?.sit ? (anc === R.anchors.desk ? 'type' : 'sit') : 'stand',
                     wait: this.rand() * 6, queue: [], seg: null };
@@ -123,15 +124,18 @@ export class Sim {
       }
       return this.coffee(a);
     }
-    // room agents
+    // room agents (partners use their own p_* spots and share the rest)
     const roll = r();
-    const extras = Object.entries(R.anchors).filter(([k]) => !['desk', 'shelf', 'board', 'dock', 'botBoard', 'gate'].includes(k))
+    const pre = a.prefix || '';
+    const own = k => R.anchors[pre + k] || (pre ? null : R.anchors[k]);
+    const extras = Object.entries(R.anchors)
+      .filter(([k]) => pre ? k.startsWith(pre) && !['desk', 'shelf', 'board'].includes(k.slice(pre.length))
+                           : !k.startsWith('p_') && !['desk', 'shelf', 'board', 'dock', 'botBoard', 'gate'].includes(k))
       .map(([, v]) => v).filter(v => v && !Array.isArray(v) && v.node);
-    if (roll < 0.36 && R.anchors.desk) return [stay(R.anchors.desk, 'type', 12, 26)];
-    if (roll < 0.56 && R.anchors.shelf) return [stay(R.anchors.shelf, 'read', 6, 11)];
-    if (roll < 0.72 && R.anchors.board) return [stay(R.anchors.board, 'stand', 4, 7)];
+    if (roll < 0.36 && own('desk')) return [stay(own('desk'), 'type', 12, 26)];
+    if (roll < 0.56 && own('shelf')) return [stay(own('shelf'), 'read', 6, 11)];
+    if (roll < 0.72 && own('board')) return [stay(own('board'), 'stand', 4, 7)];
     if (roll < 0.86 && extras.length) return [stay(pick(extras), 'stand', 4, 7)];
-    if (R.cfg.id === 'ani') return [stay(R.anchors.desk, 'type', 10, 18)];
     return this.coffee(a);
   }
 
@@ -143,7 +147,7 @@ export class Sim {
     const roll = r();
     if (roll < 0.45) seq.push({ anc: cafe.anchors.beanbags[Math.floor(r() * 3)], pose: 'sitlow', dur: 6 + r() * 6 });
     else if (roll < 0.75) seq.push({ anc: cafe.anchors.arcade[Math.floor(r() * 2)], pose: 'stand', dur: 5 + r() * 5 });
-    seq.push({ anc: a.R.anchors.desk || Object.values(a.R.anchors)[0], pose: 'type', dur: 8 + r() * 8 });
+    seq.push({ anc: a.R.anchors[(a.prefix || '') + 'desk'] || a.R.anchors.desk || Object.values(a.R.anchors)[0], pose: 'type', dur: 8 + r() * 8 });
     return seq;
   }
 
@@ -198,7 +202,7 @@ export class Sim {
   settle() {
     for (const a of this.actors) {
       const R = a.R;
-      const anc = a.role === 'bot' ? R.anchors.dock : (R.anchors.desk || R.anchors.console || a.R.anchors[a.anchor]);
+      const anc = a.role === 'bot' ? R.anchors.dock : (R.anchors[(a.prefix || '') + 'desk'] || R.anchors.desk || R.anchors.console || a.R.anchors[a.anchor]);
       if (anc) { a.char.root.position.copy(anc.pos); a.char.root.rotation.y = anc.face; a.node = anc.node; }
       a.path = []; a.queue = []; a.pose = anc?.sit ? 'sit' : 'stand';
       a.char.animate(0, a.pose, 0);

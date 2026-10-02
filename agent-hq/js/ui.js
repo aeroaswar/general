@@ -154,6 +154,7 @@ export function createUI(cfg, handlers) {
       ${state && state.mode !== 'live' ? '<span class="chip sample">SAMPLE DATA</span>' : ''}${document.body.classList.contains('is-stale') ? '<span class="chip stale">STALE</span>' : ''}</header>`;
     if (r.note) body += `<p class="note">${esc(r.note)}</p>`;
     body += agentCard(a, r.agent);
+    for (const p of r.partners || []) body += agentCard(state?.agents?.find(x => x.id === p.id), p, `${p.company} · ${p.role}`);
     for (const bot of r.bots || []) body += agentCard(state?.agents?.find(x => x.id === bot.id), { ...bot, species: 'bot' }, bot.role);
     body += signals(id, rs);
     body += activity(rs);

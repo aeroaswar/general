@@ -446,8 +446,12 @@ def collect(cfg: dict, root: Path, token: str | None, fetch: bool, now: dt.datet
             st = derive_bot_status(bf, now, th)
             agents.append({"id": bot["id"], "room": rid, "kind": "bot", **st, "updated_at": iso(now)})
 
-    # rooms with no repo: honest placeholders
+    # partners sharing a room (ANI with MMI, SMU with MME) and rooms with no repo: honest placeholders
     for room in cfg["rooms"]:
+        for p in room.get("partners", []):
+            agents.append({"id": p["id"], "room": room["id"], "kind": "agent", "status": "offline", "source": "none",
+                           "reason": p.get("source_note") or f"No data source for {p.get('company', p['id'])} yet",
+                           "updated_at": iso(now)})
         if room.get("kind") == "sample" and room.get("agent"):
             agents.append({"id": room["agent"]["id"], "room": room["id"], "kind": "agent", "status": "offline",
                            "source": "none", "reason": "No repo connected — this room is SAMPLE",

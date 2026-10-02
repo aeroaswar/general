@@ -122,47 +122,75 @@ export function furnish(R, { cfg, nightMats, pickables }) {
 
   switch (c.id) {
     case 'mmi': {
-      const [dx, dz] = P(0.3, 0.42);
+      // MMI side (left two thirds): trading desk, price board, playbooks, tug & barge model
+      const [dx, dz] = P(0.26, 0.42);
       R.anchors.desk = deskSet(g, dx, y, dz, FACE.north, { accent: c.accent, screen: '#3c5a73' });
-      const wb = wallBoard(g, R, 'north', 0.33, 1.75, 3.2, 1.75, drawMMI, { frame: '#6d5b50' });
+      const wb = wallBoard(g, R, 'north', 0.28, 1.75, 3.2, 1.75, drawMMI, { frame: '#6d5b50' });
       R.anchors.board = wb.anchor;
       const [sx, sz] = P(0.035, 0.7);
       R.anchors.shelf = shelf(g, sx + 0.25, y, sz, FACE.east, 2.4, 2.0,
         ['#6d5b50', '#a8876f', '#c9b8a6', '#8a6d58', '#e6dcd5']);
-      // tug + barge model on a table
-      const [tx, tz] = P(0.72, 0.62);
+      const [tx, tz] = P(0.36, 0.8);
       g.add(at(box(1.9, 0.75, 1.0, '#d8b48c'), tx, y + 0.375, tz));
       const barge = new THREE.Group();
       barge.add(at(box(1.2, 0.18, 0.42, '#7a5b45'), 0, 0.09, 0), at(box(1.05, 0.12, 0.36, '#5c4636'), 0, 0.21, 0));
       for (let i = 0; i < 3; i++) barge.add(at(sphere(0.12, '#4a4038'), -0.35 + i * 0.35, 0.28, 0));
       barge.add(at(box(0.36, 0.22, 0.3, '#d0453a'), 0.86, 0.11, 0), at(box(0.18, 0.18, 0.18, '#f4f0ea'), 0.82, 0.3, 0));
       barge.position.set(tx - 0.2, y + 0.75, tz); g.add(barge);
-      // Kurs Clerk dock + its spot by the board
-      const [kx, kz] = P(0.62, 0.14);
+      R.anchors.barge = { pos: new THREE.Vector3(tx, y, tz - 1.0), face: 0 };
+      const [kx, kz] = P(0.52, 0.14);
       g.add(at(cyl(0.38, 0.42, 0.08, '#c9a24a', 16, { metalness: 0.5, roughness: 0.4 }), kx, y + 0.04, kz));
       R.anchors.dock = { pos: new THREE.Vector3(kx, y, kz), face: 0 };
-      R.anchors.botBoard = { pos: new THREE.Vector3(r.x0 + r.w * 0.45, y, r.z0 + 1.2), face: Math.PI };
-      g.add(at(plant(1.1), ...P(0.95, 0.08).flatMap((v, i) => i === 0 ? [v - 0.3, y] : [v + 0.3])));
-      lamp(g, ...[P(0.08, 0.1)[0] + 0.3, y, P(0.08, 0.1)[1] + 0.3], nightMats);
+      R.anchors.botBoard = { pos: new THREE.Vector3(r.x0 + r.w * 0.4, y, r.z0 + 1.2), face: Math.PI };
+      lamp(g, P(0.06, 0.1)[0] + 0.3, y, P(0.06, 0.1)[1] + 0.3, nightMats);
+      // ANI side (right third): the IUP holder — grade control, core samples, hard hats
+      rug(g, ...[P(0.82, 0.5)[0], y, P(0.82, 0.5)[1]], 3.6, 7.0, '#efe5d3', '#8a6a3b');
+      const [ax, az] = P(0.8, 0.42);
+      R.anchors.p_desk = deskSet(g, ax, y, az, FACE.north, { accent: '#8a6a3b', screen: '#6b5a3a' });
+      const ab = wallBoard(g, R, 'north', 0.8, 1.8, 2.3, 1.2, drawANI, { frame: '#8a6a3b' });
+      R.anchors.p_board = ab.anchor;
+      const rack = new THREE.Group();
+      rack.add(at(box(2.0, 0.9, 0.5, '#9b7653'), 0, 0.45, 0));
+      for (let i = 0; i < 6; i++) for (let k = 0; k < 3; k++) {
+        const sc = cyl(0.07, 0.07, 0.3, ['#7a4b2a', '#b5793f', '#5e6b4e'][(i + k) % 3], 8); sc.rotation.z = Math.PI / 2;
+        sc.position.set(-0.75 + i * 0.3, 0.98, -0.12 + k * 0.12); rack.add(sc);
+      }
+      rack.position.set(...[P(0.8, 0.86)[0], y, P(0.8, 0.86)[1]]); g.add(rack);
+      R.anchors.p_shelf = { pos: new THREE.Vector3(rack.position.x, y, rack.position.z - 0.9), face: 0, read: true };
+      const [hx, hz] = P(0.96, 0.7);
+      g.add(at(box(0.5, 0.9, 0.5, '#9b7653'), hx - 0.2, y + 0.45, hz));
+      for (let i = 0; i < 3; i++) g.add(at(hardhat(), hx - 0.2, y + 0.9 + i * 0.25, hz));
+      R.anchors.p_hats = { pos: new THREE.Vector3(hx - 1.1, y, hz), face: Math.PI / 2 };
+      g.add(at(plant(1.0), ...[P(0.96, 0.08)[0] - 0.2, y, P(0.96, 0.08)[1] + 0.2]));
       break;
     }
     case 'mme': {
-      const [dx, dz] = P(0.5, 0.42);
+      // MME side (left): coal-trading ledger desk, to-confirm pinboard, printed profiles
+      const [dx, dz] = P(0.3, 0.42);
       R.anchors.desk = deskSet(g, dx, y, dz, FACE.north, { accent: c.accent, top: '#e9e2d8', screen: '#3a3a3a' });
-      const wb = wallBoard(g, R, 'north', 0.5, 1.75, 2.6, 1.6, drawMME, { frame: '#8b6f4f' });
+      const wb = wallBoard(g, R, 'north', 0.3, 1.75, 2.6, 1.6, drawMME, { frame: '#8b6f4f' });
       R.anchors.board = wb.anchor;
-      R.anchors.shelf = shelf(g, ...[P(0.965, 0.45)[0] - 0.25, y, P(0.965, 0.45)[1]], FACE.west, 2.2, 2.0,
-        ['#A50E12', '#1A1714', '#F3EEE6', '#8B8172', '#D8CFC0']);
-      // printed profile stacks
-      const [px, pz] = P(0.2, 0.7);
+      const [px, pz] = P(0.2, 0.78);
       g.add(at(box(1.6, 0.75, 0.9, '#e9e2d8'), px, y + 0.375, pz));
       for (let i = 0; i < 4; i++) {
         const st = box(0.42, 0.06 + i * 0.03, 0.3, i % 2 ? '#F3EEE6' : '#ffffff');
         st.position.set(px - 0.55 + i * 0.37, y + 0.78 + (0.03 + i * 0.015), pz); g.add(st);
       }
       g.add(at(box(0.42, 0.02, 0.3, '#A50E12'), px - 0.55, y + 0.85, pz));
-      rug(g, ...[P(0.5, 0.72)[0], y, P(0.5, 0.72)[1]], 3.2, 2.0, '#efe4d6', '#A50E12');
-      g.add(at(plant(1.0), ...[P(0.08, 0.92)[0], y, P(0.08, 0.92)[1]]));
+      R.anchors.shelf = { pos: new THREE.Vector3(px, y, pz - 1.0), face: 0, read: true };
+      // SMU side (right): the coal IUP holder — mine plan board, coal stockpile, miner's lamp rack
+      rug(g, ...[P(0.76, 0.5)[0], y, P(0.76, 0.5)[1]], 4.0, 7.0, '#e8e3dc', '#1A1714');
+      const [sx2, sz2] = P(0.74, 0.42);
+      R.anchors.p_desk = deskSet(g, sx2, y, sz2, FACE.north, { accent: '#1A1714', top: '#e9e2d8', screen: '#4a4a4a' });
+      const sb = wallBoard(g, R, 'north', 0.75, 1.8, 2.4, 1.2, drawSMU, { frame: '#1A1714' });
+      R.anchors.p_board = sb.anchor;
+      const pile = new THREE.Group();
+      for (const [ox, oz, rr2, hh] of [[0, 0, 0.75, 0.8], [0.7, 0.3, 0.5, 0.55], [-0.6, 0.25, 0.45, 0.5]]) {
+        const cn = cone(rr2, hh, '#26221f', 9); cn.position.set(ox, hh / 2, oz); pile.add(cn);
+      }
+      pile.position.set(...[P(0.78, 0.84)[0], y, P(0.78, 0.84)[1]]); g.add(pile);
+      R.anchors.p_shelf = { pos: new THREE.Vector3(pile.position.x - 0.2, y, pile.position.z - 1.3), face: 0, read: true };
+      g.add(at(plant(1.0), ...[P(0.06, 0.92)[0], y, P(0.06, 0.92)[1]]));
       break;
     }
     case 'axiom': {
@@ -298,29 +326,6 @@ export function furnish(R, { cfg, nightMats, pickables }) {
       lamp(g, ...[P(0.08, 0.15)[0], y, P(0.08, 0.15)[1]], nightMats);
       break;
     }
-    case 'ani': {
-      const [dx, dz] = P(0.5, 0.55);
-      R.anchors.desk = deskSet(g, dx, y, dz, FACE.north, { accent: '#8a6a3b', screen: '#6b5a3a' });
-      const wb = wallBoard(g, R, 'north', 0.5, 1.8, 2.6, 1.2, (ctx, w, h, data) => {
-        rr(ctx, 0, 0, w, h, 0, '#f1e6d0'); txt(ctx, 'ANI FIELD ANNEX', 24, 56, 36, '#5a4524', 700);
-        rr(ctx, 24, 90, 300, 54, 27, '#e0a23a'); txt(ctx, 'SAMPLE ROOM', 174, 128, 28, '#fff', 700, 'center');
-        txt(ctx, 'No repo connected — nothing here is live.', 24, 200, 26, '#5a4524', 500);
-      }, { frame: '#8a6a3b' });
-      R.anchors.board = wb.anchor;
-      // core-sample rack
-      const rack = new THREE.Group();
-      rack.add(at(box(2.0, 0.9, 0.5, '#9b7653'), 0, 0.45, 0));
-      for (let i = 0; i < 6; i++) for (let k = 0; k < 3; k++) {
-        const s = cyl(0.07, 0.07, 0.3, ['#7a4b2a', '#b5793f', '#5e6b4e'][(i + k) % 3], 8); s.rotation.z = Math.PI / 2;
-        s.position.set(-0.75 + i * 0.3, 0.98, -0.12 + k * 0.12); rack.add(s);
-      }
-      rack.position.set(...[P(0.2, 0.86)[0], y, P(0.2, 0.86)[1]]); g.add(rack);
-      R.anchors.shelf = { pos: new THREE.Vector3(rack.position.x, y, rack.position.z - 0.9), face: 0, read: true };
-      for (let i = 0; i < 3; i++) g.add(at(hardhat(), P(0.85, 0.85)[0], y + 0.9 + i * 0.25, P(0.85, 0.85)[1]));
-      R.anchors.hats = { pos: new THREE.Vector3(P(0.85, 0.85)[0] - 0.9, y, P(0.85, 0.85)[1] - 0.4), face: Math.PI / 2 };
-      g.add(at(box(0.5, 0.9, 0.5, '#9b7653'), P(0.85, 0.85)[0], y + 0.45, P(0.85, 0.85)[1]));
-      break;
-    }
     default: {
       // Any repo room added in agents.config.json gets a working set: desk, shelf, and a board
       // showing its last commit and agent status, so a new room is one config entry.
@@ -349,40 +354,39 @@ export function furnish(R, { cfg, nightMats, pickables }) {
       break;
     }
     case 'office': {
-      const [dx, dz] = P(0.38, 0.5);
-      R.anchors.desk = deskSet(g, dx, y, dz, FACE.west, { accent: '#D01530', top: '#f4efe9', screen: '#D01530' });
-      // review tray: one paper per room waiting on review
+      // glass corner office at the east end of the hallway; door on the west wall
+      const [dx, dz] = P(0.5, 0.52);
+      R.anchors.desk = deskSet(g, dx, y, dz, FACE.north, { accent: '#D01530', top: '#f4efe9', screen: '#D01530' });
       const tray = new THREE.Group();
       tray.add(at(box(0.5, 0.06, 0.38, '#8d6a4a'), 0, 0, 0));
       const papers = [];
-      for (let i = 0; i < 8; i++) { const p = box(0.42, 0.02, 0.3, i % 2 ? '#ffffff' : '#fdf3e3'); p.position.y = 0.05 + i * 0.025; p.rotation.y = (i % 3 - 1) * 0.06; tray.add(p); papers.push(p); }
-      tray.position.set(dx - 0.25, y + 0.82, dz + 0.55); g.add(tray);
+      for (let i = 0; i < 8; i++) { const pp = box(0.42, 0.02, 0.3, i % 2 ? '#ffffff' : '#fdf3e3'); pp.position.y = 0.05 + i * 0.025; pp.rotation.y = (i % 3 - 1) * 0.06; tray.add(pp); papers.push(pp); }
+      tray.position.set(dx + 0.55, y + 0.82, dz + 0.1); g.add(tray);
       R.updaters.push(data => {
         const n = (data?.state?.agents || []).filter(a => a.status === 'waiting_review' && a.id !== 'aero').length;
-        papers.forEach((p, i) => { p.visible = i < Math.min(n, 8); });
+        papers.forEach((pp, i) => { pp.visible = i < Math.min(n, 8); });
       });
-      // review screen on a stand, facing the desk
+      // review screen on a stand at the north side, facing the desk
       const scr = board(2.6, 1.5, drawReview, { frame: '#1d1d1d', emissive: true });
-      scr.group.position.set(r.x0 + 0.7, y + 1.55, r.cz); scr.group.rotation.y = Math.PI / 2;
-      g.add(scr.group, at(box(0.12, 0.8, 0.12, '#333'), r.x0 + 0.68, y + 0.4, r.cz));
+      scr.group.position.set(r.cx, y + 1.55, r.z0 + 0.7); g.add(scr.group, at(box(0.12, 0.8, 0.12, '#333'), r.cx, y + 0.4, r.z0 + 0.66));
       R.boards.push(scr);
-      R.anchors.board = { pos: new THREE.Vector3(r.x0 + 1.9, y, r.cz), face: -Math.PI / 2 };
-      // helmet + IJWS poster stand
+      R.anchors.board = { pos: new THREE.Vector3(r.cx - 0.6, y, r.z0 + 1.9), face: Math.PI };
+      // helmet + IJWS poster on the east side
       const helm = sphere(0.24, '#D01530', { roughness: 0.4 }); helm.scale.set(1, 0.85, 1.1);
-      g.add(at(box(0.6, 1.0, 0.5, '#e9e0d6'), r.x1 - 1.2, y + 0.5, r.z0 + 0.7), at(helm, r.x1 - 1.2, y + 1.18, r.z0 + 0.7));
+      g.add(at(box(0.5, 1.0, 0.6, '#e9e0d6'), r.x1 - 0.6, y + 0.5, r.z0 + 0.8), at(helm, r.x1 - 0.6, y + 1.18, r.z0 + 0.8));
       const poster = board(1.0, 1.4, (ctx, w, h) => {
         const gr = ctx.createLinearGradient(0, 0, 0, h); gr.addColorStop(0, '#05112B'); gr.addColorStop(1, '#1650B4');
         ctx.fillStyle = gr; ctx.fillRect(0, 0, w, h);
         txt(ctx, 'IJWS', w / 2, h * 0.36, 70, '#fff', 700, 'center'); txt(ctx, '2026', w / 2, h * 0.5, 44, '#D01530', 700, 'center');
         txt(ctx, 'Ancol · Jakarta', w / 2, h * 0.86, 22, '#d6e8f8', 500, 'center');
       }, { frame: '#fff' });
-      poster.group.position.set(r.x1 - 2.6, y + 1.3, r.z0 + 0.45); g.add(poster.group, at(box(0.06, 0.6, 0.06, '#555'), r.x1 - 2.6, y + 0.3, r.z0 + 0.45));
-      // sofa
+      poster.group.position.set(r.x1 - 0.5, y + 1.3, r.cz + 0.6); poster.group.rotation.y = -Math.PI / 2;
+      g.add(poster.group, at(box(0.06, 0.6, 0.06, '#555'), r.x1 - 0.5, y + 0.3, r.cz + 0.6));
       const sofa = new THREE.Group();
       sofa.add(at(box(2.0, 0.4, 0.8, '#f0b6a8'), 0, 0.3, 0), at(box(2.0, 0.6, 0.2, '#e89f90'), 0, 0.6, -0.35));
-      sofa.position.set(r.cx + 1.2, y, r.z1 - 0.9); sofa.rotation.y = Math.PI; g.add(sofa);
-      R.anchors.sofa = { pos: new THREE.Vector3(r.cx + 1.2, y + 0.05, r.z1 - 1.0), face: Math.PI, sit: true };
-      g.add(at(plant(1.0), r.x0 + 0.6, y, r.z1 - 0.6), at(plant(0.8), r.x1 - 0.5, y, r.z1 - 1.6));
+      sofa.position.set(r.cx + 0.8, y, r.z1 - 0.9); sofa.rotation.y = Math.PI; g.add(sofa);
+      R.anchors.sofa = { pos: new THREE.Vector3(r.cx + 0.8, y + 0.05, r.z1 - 1.0), face: Math.PI, sit: true };
+      g.add(at(plant(1.0), r.x0 + 0.6, y, r.z1 - 0.6), at(plant(0.8), r.x1 - 0.5, y, r.z1 - 0.5));
       break;
     }
     case 'den': {
@@ -503,6 +507,17 @@ function drawMMI(ctx, w, h, data) {
   fitTxt(ctx, `Ni ${f(v.ni)} · Co ${f(v.co)} · Fe ${f(v.fe)} · Cr ${f(v.cr)} ${H.unit || ''}`, 24, h - 60, 20, w - 48, '#4d4038');
   fitTxt(ctx, `site/assets/hma.json · updated ${s.updatedAt} by ${s.updatedBy}`, 24, h - 26, 17, w - 48, '#9a8b7d');
 }
+
+function drawPartner(ctx, w, h, title, sub, accent, bg) {
+  rr(ctx, 0, 0, w, h, 0, bg);
+  txt(ctx, title, 24, 58, 36, accent, 700);
+  fitTxt(ctx, sub, 24, 100, 24, w - 48, '#5a4c40', 500);
+  rr(ctx, 24, 130, 300, 50, 25, '#a9a39b');
+  txt(ctx, 'NO DATA SOURCE', 174, 165, 24, '#fff', 700, 'center');
+  txt(ctx, 'Status stays offline until one is connected.', 24, 226, 22, '#5a4c40', 500);
+}
+function drawANI(ctx, w, h) { drawPartner(ctx, w, h, 'PT ANI', 'IUP-OP holder · Halmahera Timur', '#5a4524', '#f1e6d0'); }
+function drawSMU(ctx, w, h) { drawPartner(ctx, w, h, 'PT SMU', 'Sarana Mandiri Utama · coal IUP', '#1A1714', '#F3EEE6'); }
 
 function drawMME(ctx, w, h, data) {
   ctx.fillStyle = '#c99d6b'; ctx.fillRect(0, 0, w, h);

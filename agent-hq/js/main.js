@@ -74,13 +74,13 @@ async function boot() {
   const sim = new Sim(world, rand);
   const chars = new Map();
   const pickables = [...world.pickables];
-  const addChar = (id, species, home, role, anchor) => {
+  const addChar = (id, species, home, role, anchor, prefix) => {
     const R = world.rooms.get(home);
     const c = makeCharacter(species);
     (R.cfg.floor === 'basement' ? world.below : world.above).add(c.root);
     c.root.traverse(o => { if (o.isMesh) { o.userData.roomId = home; o.userData.agentId = id; pickables.push(o); } });
     chars.set(id, c);
-    sim.add({ id, char: c, home, role, anchor });
+    sim.add({ id, char: c, home, role, anchor, prefix });
     return c;
   };
   for (const r of cfg.rooms) {
@@ -88,6 +88,7 @@ async function boot() {
       const role = r.agent.id === 'aero' ? 'boss' : r.agent.id === 'octopus' ? 'static' : 'agent';
       addChar(r.agent.id, r.agent.species, r.id, role, r.agent.id === 'octopus' ? 'console' : null);
     }
+    for (const p of r.partners || []) addChar(p.id, p.species, r.id, 'agent', null, 'p_');
     for (const b of r.bots || []) addChar(b.id, b.species, r.id, b.species === 'turnstile' ? 'static' : 'bot', b.species === 'turnstile' ? 'gate' : 'dock');
   }
   addChar('barista', 'bear', 'cafe', 'static', 'barista');

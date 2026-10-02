@@ -9,6 +9,7 @@ const SPECIES = {
   otter:   { body: '#8b5a3c', belly: '#d9b896', head: '#8b5a3c', ear: 'round', snout: '#d9b896', tail: 'otter', outfit: '#1650B4', stripe: '#D01530' },
   raccoon: { body: '#8d8f96', belly: '#d8d9dc', head: '#8d8f96', ear: 'pointy', snout: '#e7e7e9', tail: 'raccoon', mask: true, outfit: '#5b8f7b' },
   badger:  { body: '#7d7f84', belly: '#e9e9e9', head: '#f2f2f2', ear: 'round', snout: '#f2f2f2', tail: 'short', badger: true, outfit: '#8a6a3b', hardhat: true },
+  mole:    { body: '#5a4f4a', belly: '#7a6e68', head: '#5a4f4a', ear: 'none', snout: '#f0a3a8', tail: 'short', outfit: '#2b2b30', minerhat: true },
   bear:    { body: '#a0745a', belly: '#e8d3bf', head: '#a0745a', ear: 'round', snout: '#e8d3bf', tail: 'short', outfit: '#ffffff', apron: true },
   human:   { body: '#f0c9a8', belly: '#f0c9a8', head: '#f0c9a8', ear: 'none', outfit: '#D01530', human: true },
 };
@@ -63,6 +64,11 @@ export function makeCharacter(species, opts = {}) {
   if (S.badger) for (const s of [-1, 1]) { const st = box(0.08, 0.04, 0.5, '#2b2b30'); st.position.set(s * 0.1, 0.28, 0.02); head.add(st); }
   if (S.visor) { const v = box(0.46, 0.08, 0.06, '#A50E12'); v.position.set(0, 0.1, 0.27); head.add(v); }
   if (S.hardhat) { const hh = sphere(0.3, '#f2c230'); hh.scale.y = 0.6; hh.position.y = 0.18; head.add(hh, at(cyl(0.36, 0.36, 0.03, '#f2c230', 14), 0, 0.12, 0)); }
+  if (S.minerhat) {
+    const hh = sphere(0.3, '#1d1d20'); hh.scale.y = 0.6; hh.position.y = 0.18; head.add(hh, at(cyl(0.36, 0.36, 0.03, '#1d1d20', 14), 0, 0.12, 0));
+    const lampM = new THREE.MeshStandardMaterial({ color: '#fff3c4', emissive: '#ffd36b', emissiveIntensity: 0.9 });
+    const lp = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.06, 10), lampM); lp.rotation.x = Math.PI / 2; lp.position.set(0, 0.26, 0.27); head.add(lp);
+  }
   if (S.human) {
     const hair = sphere(0.31, '#2b2522'); hair.scale.set(1, 0.7, 1); hair.position.set(0, 0.1, -0.03); head.add(hair);
     const cap = cyl(0.3, 0.31, 0.12, '#D01530', 14); cap.position.y = 0.2; head.add(cap);
