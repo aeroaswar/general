@@ -283,24 +283,6 @@
       }
     },
     {
-      "id": "glu",
-      "short": "Glu",
-      "name": "Glu Studio",
-      "kind": "locked",
-      "floor": "ground",
-      "rect": [
-        -22,
-        -4,
-        6,
-        4
-      ],
-      "door": "east",
-      "accent": "#c98aa0",
-      "accent2": "#f7e9ee",
-      "floorColor": "#d9d2cc",
-      "note": "No repo connected."
-    },
-    {
       "id": "portfolio",
       "short": "Portfolio",
       "name": "Portfolio Den",
@@ -308,9 +290,9 @@
       "floor": "ground",
       "rect": [
         -22,
-        0,
+        -3,
         6,
-        4
+        6
       ],
       "door": "east",
       "accent": "#3d7a5a",

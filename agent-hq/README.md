@@ -38,7 +38,7 @@ shows **STALE** after 10 minutes.
 | Supervisor Office (glass corner office, east end) | Aero | aggregate | Review tray: one paper per room waiting on you |
 | Coordination Den (basement) | Octopus | aggregate | Task board for all agents. Pipes glow by each room's status. |
 | Knowledge Library (basement) | — | file names only | One shelf per repo, one spine per `docs/*.md` / `skills/*.md` |
-| Glu Studio, Portfolio Den | — | none | Locked doors |
+| Portfolio Den | — | none | Locked door |
 
 **Status rules,** applied in order (`scripts/collect.py → derive_agent_status`, covered by tests):
 
@@ -112,4 +112,4 @@ npm i --no-save playwright-core && node scripts/verify.cjs   # browser: errors, 
 - **Headless frame rate:** measured in software GL it's not meaningful. On a laptop GPU it is expected
   to be smooth, but that hasn't been measured on a real device yet.
 - **Paths:** characters walk straight lines between door and anchor nodes, so they can clip through furniture.
-- **ANI, SMU, Glu and the portfolio:** these have no data source yet. ANI and SMU share their group's room and read offline; Glu and the portfolio are locked doors.
+- **ANI, SMU and the portfolio:** these have no data source yet. ANI and SMU share their group's room and read offline; the portfolio is a locked door.

@@ -346,7 +346,6 @@ export function furnish(R, { cfg, nightMats, pickables }) {
       g.add(at(plant(1.0), ...[P(0.08, 0.9)[0], y, P(0.08, 0.9)[1]]));
       break;
     }
-    case 'glu':
     case 'portfolio': {
       for (const [fx, fz] of [[0.3, 0.4], [0.6, 0.6]]) {
         const s = box(1.1, 0.8, 0.9, '#e9e4dd'); s.position.set(...[P(fx, fz)[0], y + 0.4, P(fx, fz)[1]]); g.add(s);
