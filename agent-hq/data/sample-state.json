@@ -1,0 +1,312 @@
+{
+  "generated_at": "2026-10-02T03:00:00Z",
+  "mode": "sample",
+  "timezone": "Asia/Jakarta",
+  "collector": {
+    "version": "sample",
+    "github_token": false,
+    "fetched": false,
+    "errors": []
+  },
+  "rooms": {
+    "mmi": {
+      "id": "mmi",
+      "repo": "sample/mmi",
+      "branch": "main",
+      "exists": true,
+      "last_commit": {
+        "sha": "0000000",
+        "subject": "Sample: refresh the price basis",
+        "author": "sample",
+        "at": "2026-10-02T03:00:00Z"
+      },
+      "branches": [
+        {
+          "name": "claude/sample-ops",
+          "at": "2026-10-02T02:40:00Z",
+          "subject": "Sample: ops tracker tweak",
+          "ahead": 3
+        }
+      ],
+      "open_prs": null,
+      "workflows": null,
+      "signals": {
+        "hma": {
+          "hma": {
+            "period": "II",
+            "monthLabel": "Sample month",
+            "effective": "2026-09-15",
+            "due": "2026-10-01",
+            "fresh": false,
+            "values": {
+              "ni": 10000.0,
+              "co": 20000.0,
+              "fe": 1.0,
+              "cr": 5.0
+            },
+            "unit": "USD/DMT"
+          },
+          "kurs": {
+            "effective": "2026-10-01",
+            "rate": 16000.0,
+            "due": "2026-10-01",
+            "fresh": true
+          },
+          "updatedAt": "2026-10-01",
+          "updatedBy": "sample",
+          "confidence": {
+            "hma": "SAMPLE \u2014 not a real figure",
+            "kurs": "SAMPLE \u2014 not a real figure"
+          },
+          "holidays_provisional": false
+        },
+        "library": [
+          {
+            "path": "docs/company-profile.md",
+            "title": "Company profile"
+          },
+          {
+            "path": "docs/business-model.md",
+            "title": "Business model"
+          },
+          {
+            "path": "docs/pricing.md",
+            "title": "Pricing"
+          },
+          {
+            "path": "docs/operations-workflow.md",
+            "title": "Operations workflow"
+          },
+          {
+            "path": "docs/glossary.md",
+            "title": "Glossary"
+          }
+        ]
+      }
+    },
+    "mme": {
+      "id": "mme",
+      "repo": "sample/mme",
+      "branch": "main",
+      "exists": true,
+      "last_commit": {
+        "sha": "0000000",
+        "subject": "Sample: profile copy edit",
+        "author": "sample",
+        "at": "2026-10-02T03:00:00Z"
+      },
+      "branches": [],
+      "open_prs": [
+        {
+          "number": 1,
+          "title": "Sample: landing page polish",
+          "draft": true,
+          "head": "claude/sample",
+          "updated_at": "2026-09-30T10:00:00Z",
+          "url": "#"
+        }
+      ],
+      "workflows": null,
+      "signals": {
+        "placeholders_open": 3,
+        "library": []
+      }
+    },
+    "axiom": {
+      "id": "axiom",
+      "repo": "sample/axiom",
+      "branch": "main",
+      "exists": true,
+      "last_commit": {
+        "sha": "0000000",
+        "subject": "Sample: catalogue fix",
+        "author": "sample",
+        "at": "2026-10-02T03:00:00Z"
+      },
+      "branches": [],
+      "open_prs": [],
+      "workflows": [
+        {
+          "file": "ci.yml",
+          "name": "gates",
+          "branch": "main",
+          "status": "completed",
+          "conclusion": "failure",
+          "at": "2026-10-02T01:00:00Z",
+          "event": "push",
+          "url": "#"
+        }
+      ],
+      "signals": {
+        "decisions": 4,
+        "migrations": {
+          "count": 3,
+          "latest": "0003_sample.sql"
+        },
+        "library": [
+          {
+            "path": "docs/decisions.md",
+            "title": "Decisions"
+          }
+        ]
+      }
+    },
+    "ijba": {
+      "id": "ijba",
+      "repo": "sample/ijba",
+      "branch": "main",
+      "exists": true,
+      "last_commit": {
+        "sha": "0000000",
+        "subject": "Sample: race notice draft",
+        "author": "sample",
+        "at": "2026-10-02T03:00:00Z"
+      },
+      "branches": [],
+      "open_prs": [],
+      "workflows": null,
+      "signals": {
+        "site_pages": [
+          "index.html",
+          "sample-notice.html"
+        ],
+        "library": [
+          {
+            "path": "docs/about.md",
+            "title": "About"
+          },
+          {
+            "path": "docs/overview.md",
+            "title": "Overview"
+          }
+        ]
+      }
+    },
+    "studio": {
+      "id": "studio",
+      "repo": "sample/general",
+      "branch": "main",
+      "exists": true,
+      "last_commit": {
+        "sha": "0000000",
+        "subject": "Sample: new hero section",
+        "author": "sample",
+        "at": "2026-10-02T03:00:00Z"
+      },
+      "branches": [],
+      "open_prs": null,
+      "workflows": null,
+      "signals": {
+        "projects": [
+          {
+            "name": "sample-site",
+            "port": 4100
+          },
+          {
+            "name": "sample-hero",
+            "port": 4101
+          },
+          {
+            "name": "sample-gallery",
+            "port": 4102
+          }
+        ],
+        "library": []
+      }
+    }
+  },
+  "agents": [
+    {
+      "id": "fox",
+      "room": "mmi",
+      "kind": "agent",
+      "status": "working",
+      "source": "git",
+      "reason": "SAMPLE \u2014 commit on claude/sample-ops 20 min ago",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "kurs-clerk",
+      "room": "mmi",
+      "kind": "bot",
+      "status": "idle",
+      "source": "git",
+      "reason": "SAMPLE \u2014 last commit yesterday",
+      "active_at": "2026-10-01T09:00:00Z",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "raven",
+      "room": "mme",
+      "kind": "agent",
+      "status": "waiting_review",
+      "source": "github_api",
+      "reason": "SAMPLE \u2014 1 open PR",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "heron",
+      "room": "axiom",
+      "kind": "agent",
+      "status": "blocked",
+      "source": "github_api",
+      "reason": "SAMPLE \u2014 ci.yml failed on main",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "gatekeeper",
+      "room": "axiom",
+      "kind": "bot",
+      "status": "blocked",
+      "source": "github_api",
+      "reason": "SAMPLE \u2014 ci.yml failed",
+      "active_at": "2026-10-02T01:00:00Z",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "otter",
+      "room": "ijba",
+      "kind": "agent",
+      "status": "idle",
+      "source": "git",
+      "reason": "SAMPLE \u2014 no agent activity in the last 2 h",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "raccoon",
+      "room": "studio",
+      "kind": "agent",
+      "status": "unknown",
+      "source": "none",
+      "reason": "SAMPLE \u2014 shows how an unreadable source looks",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "badger",
+      "room": "ani",
+      "kind": "agent",
+      "status": "offline",
+      "source": "none",
+      "reason": "No repo connected \u2014 this room is SAMPLE",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "aero",
+      "room": "office",
+      "kind": "agent",
+      "status": "waiting_review",
+      "source": "aggregate",
+      "reason": "SAMPLE \u2014 1 room waiting on your review",
+      "updated_at": "2026-10-02T03:00:00Z"
+    },
+    {
+      "id": "octopus",
+      "room": "den",
+      "kind": "agent",
+      "status": "blocked",
+      "source": "aggregate",
+      "reason": "SAMPLE \u2014 1 working \u00b7 1 waiting review \u00b7 2 blocked",
+      "updated_at": "2026-10-02T03:00:00Z"
+    }
+  ]
+}

@@ -33,6 +33,7 @@ No-build Three.js + GSAP scroll experiences — serve via `python3 -m http.serve
 | `vectr-scroll` | 4188 | Iso world; camera keyframes w/ station dwells, red→cyan path handoff |
 | `phantom-sphere` | 4173 | Inside-a-sphere WebGL gallery; damped drag, FLIP card→detail transition |
 | `mara-voss-portfolio` | 4181 | Awwwards-style portfolio; GSAP + Lenis + shader hero |
+| `agent-hq` | 4199 | Aero HQ: tycoon-style isometric office where each repo (mmi, mme, axiom, ijba, general) is a room with an agent character; status read from the repos by `scripts/collect.py` (run it alongside the server), `window.__hq` snap handle, `?cap=<room-id|basement|0..1>` capture mode |
 
 Build-step projects (Vite/React/Tailwind + framer-motion):
 

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Aero HQ</title>
+  <meta name="description" content="A cozy isometric office where each repo is a room and every status shown is read from the repos.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Cpath d=%22M16 3 29 10v12l-13 7-13-7V10z%22 fill=%22%23f2b48a%22/%3E%3Cpath d=%22M16 3 29 10 16 17 3 10z%22 fill=%22%23ffe1c8%22/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/hq.css">
+  <script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+  <script src="vendor/gsap.min.js" defer></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body data-mode="overview">
+  <div id="sky" aria-hidden="true"></div>
+  <main id="stage"></main>
+  <div id="labels" aria-label="Rooms"></div>
+
+  <header id="hud">
+    <div class="brand"><b>Aero HQ</b><span id="mode-chip" class="chip">…</span></div>
+    <div id="freshness" class="muted small">loading…</div>
+  </header>
+
+  <nav id="tools" aria-label="View controls">
+    <button id="btn-rotl" title="Rotate left (Q)" aria-label="Rotate left"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.3-5.6M4 4v4h4"/></svg></button>
+    <button id="btn-rotr" title="Rotate right (E)" aria-label="Rotate right"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg></button>
+    <button id="btn-basement" title="Basement (B)" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v10h14V10M9 20v-5h6v5"/></svg><span>Basement</span></button>
+    <button id="btn-music" title="Lo-fi music" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 18V6l11-2v12M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm11-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg><span>Music</span></button>
+    <button id="btn-sfx" title="Office sounds" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4zm12 0a4 4 0 0 1 0 6"/></svg><span>Sounds</span></button>
+    <button id="btn-help" title="Help" aria-label="Help"><svg viewBox="0 0 24 24"><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14m0 3h.01"/><circle cx="12" cy="12" r="9"/></svg></button>
+  </nav>
+
+  <aside id="legend" aria-label="Status legend">
+    <span style="--c:#3fa66b"><i></i>Working</span>
+    <span style="--c:#e0a23a"><i></i>Waiting review</span>
+    <span style="--c:#d64545"><i></i>Blocked</span>
+    <span style="--c:#7d93ad"><i></i>Idle</span>
+    <span style="--c:#a9a39b"><i></i>Offline</span>
+    <span style="--c:#b9b2c4"><i></i>Unknown</span>
+    <em>Walking, typing and coffee breaks are decoration. Only the colours are status.</em>
+  </aside>
+
+  <section id="panel" hidden tabindex="-1" aria-label="Room details">
+    <button id="panel-close" aria-label="Close">×</button>
+    <div id="panel-body"></div>
+  </section>
+
+  <div id="inside-ui">
+    <div class="bar"><b id="inside-title"></b><span class="muted small">WASD / arrows to move · drag to look · Esc to leave</span>
+      <button id="inside-exit">Leave room</button></div>
+    <div id="dpad" aria-label="Move">
+      <button data-dir="up" aria-label="Forward">▲</button>
+      <button data-dir="left" aria-label="Left">◀</button>
+      <button data-dir="down" aria-label="Back">▼</button>
+      <button data-dir="right" aria-label="Right">▶</button>
+    </div>
+  </div>
+
+  <div id="help" hidden role="dialog" aria-label="How to use Aero HQ">
+    <button id="help-close" aria-label="Close">×</button>
+    <h3>Aero HQ</h3>
+    <ul>
+      <li><b>Zoom</b>: scroll or pinch · <b>Rotate</b>: drag, or Q / E · <b>Pan</b>: right-drag, shift-drag or two fingers</li>
+      <li><b>Room details</b>: click a room or its label · <b>Step inside</b>: double-click, or the button in the panel</li>
+      <li><b>Basement</b> (B): the coordination den and the knowledge library</li>
+      <li>Tab moves between rooms. Esc closes panels and leaves a room.</li>
+    </ul>
+    <p class="small">Each badge shows its <b>reason</b> and <b>source</b>. <b>SAMPLE</b> means the data is fictional. <b>STALE</b> means the collector hasn't written for over 10 minutes. <b>Unknown</b> means the source needs a GitHub token.</p>
+  </div>
+
+  <div id="fallback" hidden><h3>Aero HQ</h3><p></p><ul></ul></div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+{
+  "title": "Aero HQ",
+  "port": 4199,
+  "timezone": "Asia/Jakarta",
+  "repos_root": "../..",
+  "github_owner": "aeroaswar",
+  "day_night": true,
+  "thresholds": {
+    "working_minutes": 120,
+    "stale_state_minutes": 10,
+    "bot_active_minutes": 10,
+    "recent_branch_days": 14
+  },
+  "repos": {
+    "mmi":     { "dir": "mmi",     "github": "aeroaswar/mmi",     "branch": "main", "visibility": "private" },
+    "mme":     { "dir": "mme",     "github": "aeroaswar/mme",     "branch": "main", "visibility": "private" },
+    "ijba":    { "dir": "ijba",    "github": "aeroaswar/ijba",    "branch": "main", "visibility": "private" },
+    "axiom":   { "dir": "axiom",   "github": "aeroaswar/axiom",   "branch": "claude/axiom-files-migration-kql8bb", "visibility": "public" },
+    "general": { "dir": "general", "github": "aeroaswar/general", "branch": null, "visibility": "private" }
+  },
+  "allowed_reads": {
+    "mmi":     ["site/assets/hma.json", "site/assets/holidays-id.json"],
+    "axiom":   ["docs/DECISIONS.md"],
+    "mme":     ["README.md"],
+    "general": ["CLAUDE.md"]
+  },
+  "excluded_paths": {
+    "ijba": ["docs/master-plan.md", "sponsorship/"],
+    "mmi":  [],
+    "mme":  []
+  },
+  "rooms": [
+    {
+      "id": "mmi", "short": "MMI", "name": "MMI Trading Desk", "kind": "repo", "repo": "mmi",
+      "floor": "ground", "rect": [-16, -12, 11, 9], "door": "south", "connects": ["mme"],
+      "accent": "#6d5b50", "accent2": "#e6dcd5", "floorColor": "#f2e4d6",
+      "signals": ["hma", "library"],
+      "agent": { "id": "fox", "name": "Fox", "species": "fox", "role": "Trading-desk analyst · mmi-desk",
+                 "personality": "Precise, price-obsessed" },
+      "bots": [ { "id": "kurs-clerk", "name": "Kurs Clerk", "species": "robot",
+                  "role": "Keeps the HMA/kurs price basis current",
+                  "workflows": ["update-hma.yml", "set-hma.yml", "hma-from-image.yml"],
+                  "commit_author": "github-actions[bot]" } ]
+    },
+    {
+      "id": "mme", "short": "MME", "name": "MME Coal Desk", "kind": "repo", "repo": "mme",
+      "floor": "ground", "rect": [-5, -12, 10, 9], "door": "south",
+      "accent": "#A50E12", "accent2": "#F3EEE6", "floorColor": "#f4ece2",
+      "signals": ["placeholders", "library"],
+      "agent": { "id": "raven", "name": "Raven", "species": "raven", "role": "Coal-trading desk · mme-desk",
+                 "personality": "Formal, ledger-minded" }
+    },
+    {
+      "id": "axiom", "short": "AXIOM", "name": "AXIOM Lab", "kind": "repo", "repo": "axiom",
+      "floor": "ground", "rect": [5, -12, 11, 9], "door": "south",
+      "accent": "#C88A4E", "accent2": "#070605", "floorColor": "#ece6de",
+      "signals": ["decisions", "migrations", "library"],
+      "agent": { "id": "heron", "name": "Heron", "species": "heron", "role": "Platform engineer · axiom-lab",
+                 "personality": "Exacting, rule-bound" },
+      "bots": [ { "id": "gatekeeper", "name": "Gatekeeper", "species": "turnstile",
+                  "role": "Runs the gates CI on every PR", "workflows": ["ci.yml"] } ]
+    },
+    {
+      "id": "ijba", "short": "IJBA", "name": "IJBA Race Control", "kind": "repo", "repo": "ijba",
+      "floor": "ground", "rect": [-16, 3, 11, 9], "door": "north",
+      "accent": "#1650B4", "accent2": "#D01530", "floorColor": "#e3ecf7",
+      "signals": ["site_pages", "library"],
+      "agent": { "id": "otter", "name": "Otter", "species": "otter", "role": "Race ops & federation · ijba-race",
+                 "personality": "High-energy" }
+    },
+    {
+      "id": "cafe", "short": "Café", "name": "Café & Arcade", "kind": "shared",
+      "floor": "ground", "rect": [-5, 3, 10, 9], "door": "north",
+      "accent": "#d98f6b", "accent2": "#fff4e8", "floorColor": "#f6e7d8"
+    },
+    {
+      "id": "studio", "short": "Studio", "name": "Creative Studio", "kind": "repo", "repo": "general",
+      "floor": "ground", "rect": [5, 3, 11, 9], "door": "north",
+      "accent": "#5b8f7b", "accent2": "#eef6f1", "floorColor": "#e9f1ea",
+      "signals": ["projects", "library"],
+      "agent": { "id": "raccoon", "name": "Raccoon", "species": "raccoon", "role": "Designer · creative workspace",
+                 "personality": "Playful tinkerer" }
+    },
+    {
+      "id": "ani", "short": "ANI", "name": "ANI Field Annex", "kind": "sample",
+      "floor": "ground", "rect": [16, -4, 7, 8], "door": "west",
+      "accent": "#8a6a3b", "accent2": "#f1e6d0", "floorColor": "#efe5d3",
+      "note": "No repo connected. Everything in this room is SAMPLE.",
+      "agent": { "id": "badger", "name": "Badger", "species": "badger", "role": "Grade control (sample)",
+                 "personality": "Methodical" }
+    },
+    {
+      "id": "glu", "short": "Glu", "name": "Glu Studio", "kind": "locked",
+      "floor": "ground", "rect": [-22, -4, 6, 4], "door": "east",
+      "accent": "#c98aa0", "accent2": "#f7e9ee", "floorColor": "#d9d2cc",
+      "note": "No repo connected."
+    },
+    {
+      "id": "portfolio", "short": "Portfolio", "name": "Portfolio Den", "kind": "locked",
+      "floor": "ground", "rect": [-22, 0, 6, 4], "door": "east",
+      "accent": "#3d7a5a", "accent2": "#e6f2ea", "floorColor": "#d9d2cc",
+      "note": "No repo connected."
+    },
+    {
+      "id": "hall", "name": "Hallway", "kind": "hall",
+      "floor": "ground", "rect": [-16, -3, 32, 6], "floorColor": "#eadbc8"
+    },
+    {
+      "id": "office", "short": "Office", "name": "Supervisor Office", "kind": "supervisor",
+      "floor": "upper", "rect": [-5, -3, 10, 6], "door": "east:0.87",
+      "accent": "#D01530", "accent2": "#ffffff", "floorColor": "#efe7f0",
+      "agent": { "id": "aero", "name": "Aero", "species": "human", "role": "Supervisor",
+                 "personality": "Decisive, restless" }
+    },
+    {
+      "id": "den", "short": "Den", "name": "Coordination Den", "kind": "den",
+      "floor": "basement", "rect": [-16, -12, 20, 24],
+      "accent": "#3f8f9a", "accent2": "#16262b", "floorColor": "#34444a",
+      "agent": { "id": "octopus", "name": "Octopus", "species": "octopus", "role": "Orchestrator",
+                 "personality": "Calm, many arms" }
+    },
+    {
+      "id": "library", "short": "Library", "name": "Knowledge Library", "kind": "library",
+      "floor": "basement", "rect": [4, -12, 12, 24],
+      "accent": "#b07a3c", "accent2": "#2a211c", "floorColor": "#4a3e36"
+    }
+  ]
+}
