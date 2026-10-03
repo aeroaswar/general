@@ -1,0 +1,5 @@
+# Generated locally by scripts/collect.py from private repos — never commit.
+data/state.json
+data/*.tmp
+scratch_shots/
+__pycache__/
