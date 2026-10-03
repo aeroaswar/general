@@ -1,6 +1,7 @@
 // DOM layer: HUD, room labels, the detail panel / bottom sheet, legend, Step-Inside controls.
 import * as THREE from 'three';
 import { STATUS } from './kit.js';
+import { loadWiup } from './wiup.js';
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const SOURCE = { git: 'local git', github_api: 'GitHub API', aggregate: 'aggregate of all rooms', none: 'no source', file: 'repo file' };
@@ -168,6 +169,15 @@ export function createUI(cfg, handlers) {
         (list.length ? list.map(x => `<li><button class="link" data-goto="${esc(x.room)}">${esc(x.id)}</button> ${badge(x.status)}<div class="small muted">${esc(x.reason)}</div></li>`).join('')
                      : '<li class="muted">Nothing waiting.</li>') + '</ul></div>';
     }
+    if (r.kind === 'supervisor' && cfg.wiup?.url) {
+      const W = wiup;
+      body += `<div class="card"><h4>Peta WIUP</h4>` + (W
+        ? `<p class="small">${W.total.toLocaleString('id-ID')} wilayah izin usaha pertambangan on the map table, from the ESDM geoportal (${esc(String(W.fetched || '').slice(0, 10))}).</p><ul class="list small">` +
+          W.groups.filter(g => g.key !== 'lain').map(g => `<li><span class="dot" style="background:${g.color}"></span>${esc(g.name)}: <b>${g.n}</b> WIUP · ${g.op} operasi produksi</li>`).join('') +
+          `</ul>${W.highlight ? `<p class="small">Ringed: <b>PT ${esc(W.highlight.name)}</b> · ${esc(W.highlight.kegiatan)} · ${Math.round(W.highlight.area_ha).toLocaleString('id-ID')} ha</p>` : ''}`
+        : '<p class="small muted">The map data has not loaded.</p>') +
+        `<a class="primary linkbtn" href="${esc(cfg.wiup.url)}" target="_blank" rel="noopener">Open Peta WIUP Indonesia ↗</a></div>`;
+    }
     if (r.kind === 'library') {
       body += cfg.rooms.filter(x => x.kind === 'repo').map(x => {
         const lib = state?.rooms?.[x.id]?.signals?.library;
@@ -180,6 +190,8 @@ export function createUI(cfg, handlers) {
     for (const b of $('#panel-body').querySelectorAll('[data-goto]')) b.addEventListener('click', () => handlers.onSelectRoom(b.dataset.goto));
   }
 
+  let wiup = null;
+  loadWiup().then(W => { wiup = W; if (openId) render(openId); });
   const v = new THREE.Vector3();
   const api = {
     setState(s, m = {}) { state = s; meta = m; hud(); if (openId) render(openId); },

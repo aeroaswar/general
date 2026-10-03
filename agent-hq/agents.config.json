@@ -376,5 +376,9 @@
       "accent2": "#2a211c",
       "floorColor": "#4a3e36"
     }
-  ]
+  ],
+  "wiup": {
+    "url": "https://peta-wiup-aero.netlify.app/",
+    "note": "Peta WIUP Indonesia (the owner's site, from the local AI folder); the map table draws data/wiup-points.json"
+  }
 }

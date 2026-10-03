@@ -46,6 +46,7 @@ The office can also run as a private claude.ai page with no collector behind it.
 | Coordination Den (basement) | Octopus | aggregate | Task board for all agents. Pipes glow by each room's status. |
 | Knowledge Library (basement) | — | file names only | One shelf per repo, one spine per `docs/*.md` / `skills/*.md` |
 | Portfolio Den | — | none | Locked door |
+| Peta WIUP map table (in the Supervisor Office) | — | `data/wiup-points.json` (ESDM geoportal, public) | 8,596 permits as dots by commodity, PT ANI ringed; the office panel lists the counts and opens the Peta WIUP Indonesia site. Rebuild with `scripts/make_wiup.py <wiup.json>`. |
 
 **Status rules,** applied in order (`scripts/collect.py → derive_agent_status`, covered by tests):
 

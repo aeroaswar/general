@@ -1,6 +1,7 @@
 // Room furnishings. Every board/prop that shows a number reads it from state.json via redraw().
 import * as THREE from 'three';
 import { box, cyl, sphere, cone, at, plant, mat, board, txt, fitTxt, rr, lerpColor, STATUS } from './kit.js';
+import { loadWiup, drawWiupMap } from './wiup.js';
 
 const WALL_IN = 0.32; // distance from a wall line to stand a board/shelf
 
@@ -386,6 +387,15 @@ export function furnish(R, { cfg, nightMats, pickables }) {
       sofa.position.set(r.cx + 0.8, y, r.z1 - 0.9); sofa.rotation.y = Math.PI; g.add(sofa);
       R.anchors.sofa = { pos: new THREE.Vector3(r.cx + 0.8, y + 0.05, r.z1 - 1.0), face: Math.PI, sit: true };
       g.add(at(plant(1.0), r.x0 + 0.6, y, r.z1 - 0.6), at(plant(0.8), r.x1 - 0.5, y, r.z1 - 0.5));
+      // Peta WIUP map table in the north-west corner: every ESDM permit as a dot, PT ANI ringed
+      const [tx, tz] = [r.x0 + 1.25, r.z0 + 1.45];
+      g.add(at(box(1.6, 0.08, 1.15, '#3b3631'), tx, y + 0.86, tz));
+      for (const [lx, lz] of [[-0.7, -0.48], [0.7, -0.48], [-0.7, 0.48], [0.7, 0.48]]) g.add(at(box(0.07, 0.82, 0.07, '#3b3631'), tx + lx, y + 0.41, tz + lz));
+      const wiup = { W: null };
+      const map = board(1.5, 1.05, (ctx, w, h) => drawWiupMap(ctx, w, h, wiup.W), { frame: '#3b3631', px: 520 });
+      map.group.rotation.x = -Math.PI / 2 + 0.18; map.group.position.set(tx, y + 0.95, tz); g.add(map.group);
+      loadWiup().then(W => { wiup.W = W; map.redraw(); });
+      R.anchors.map = { pos: new THREE.Vector3(tx, y, tz + 0.95), face: Math.PI };
       break;
     }
     case 'den': {
