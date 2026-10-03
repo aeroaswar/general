@@ -65,15 +65,18 @@ export function createUI(cfg, handlers) {
   function agentFor(roomId) { return state?.agents?.find(a => a.room === roomId && a.kind === 'agent'); }
 
   function hud() {
-    const live = state?.mode === 'live';
+    const live = state?.mode === 'live', snap = live && !!state?.snapshot;
     const chip = $('#mode-chip');
-    chip.textContent = live ? 'LIVE' : 'SAMPLE DATA';
+    chip.textContent = snap ? 'SNAPSHOT' : live ? 'LIVE' : 'SAMPLE DATA';
     chip.className = 'chip ' + (live ? 'live' : 'sample');
     const fresh = $('#freshness');
     if (!state) { fresh.textContent = 'loading…'; return; }
     const age = (Date.now() - new Date(state.generated_at).getTime()) / 60000;
-    const stale = live && (meta.fetchFailed || age > cfg.thresholds.stale_state_minutes);
-    fresh.innerHTML = live
+    // a published snapshot (collect.py --snapshot) is a picture of one moment, not a collector that stopped
+    const stale = live && !snap && (meta.fetchFailed || age > cfg.thresholds.stale_state_minutes);
+    fresh.innerHTML = snap
+      ? `snapshot of the repos, ${new Date(state.generated_at).toLocaleString('en-GB', { timeZone: 'Asia/Jakarta', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })} WIB`
+      : live
       ? (stale ? `<span class="chip stale">STALE</span> data ${rel(state.generated_at)}${meta.fetchFailed ? ' · collector unreachable' : ''}`
                : `updated ${rel(state.generated_at)}${state.collector?.github_token ? '' : ' · no GitHub token: PR/CI unknown'}`)
       : 'state.json not found — showing fictional sample';

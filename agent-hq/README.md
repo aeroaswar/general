@@ -26,6 +26,13 @@ shows **STALE** after 10 minutes.
   CI fields show *unknown* and "waiting review" falls back to unmerged `claude/*` branches.
 - **No `state.json`:** the page loads `data/sample-state.json`, which is fictional data with a **SAMPLE DATA** chip.
 
+## Publish a snapshot
+
+The office can also run as a private claude.ai page with no collector behind it. Collect once with
+`python3 scripts/collect.py --snapshot --out <dir>/data/state.json`, run `scripts/gate.py` on that file, then publish
+`index.html` with `css/`, `js/`, `vendor/`, `agents.config.json` and both state files. A snapshot shows its time
+(SNAPSHOT · 3 Oct 21:07 WIB) instead of turning STALE; republish to refresh it.
+
 ## What is live and what is sample
 
 | Room | Agent | Live source | What it shows |

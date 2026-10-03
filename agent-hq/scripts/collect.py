@@ -489,6 +489,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--watch", action="store_true", help="re-collect every --interval seconds")
     ap.add_argument("--interval", type=int, default=60)
     ap.add_argument("--fetch", action="store_true", help="git fetch each repo before reading it")
+    ap.add_argument("--snapshot", action="store_true", help="mark the state as a one-off snapshot (a published page shows its time, never STALE)")
     ap.add_argument("--out", default=str(STATE_PATH))
     args = ap.parse_args(argv)
 
@@ -497,6 +498,8 @@ def main(argv: list[str] | None = None) -> int:
     token = os.environ.get("GITHUB_TOKEN") or None
     while True:
         state = collect(cfg, root, token, args.fetch)
+        if args.snapshot:
+            state["snapshot"] = True
         write_state(state, Path(args.out))
         n = len(state["agents"])
         print(f"[{state['generated_at']}] {n} agents · token={'yes' if token else 'no'} · "
